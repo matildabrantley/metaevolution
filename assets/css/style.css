@@ -1,0 +1,22 @@
+* {
+    font-family: 'Pangolin', cursive;
+}
+
+body {
+    background-color: black;
+}
+
+.jumbotron {
+    border-radius: 10px;
+    transition: box-shadow 2s;
+    box-shadow: 0px 0px 10px 10px rgb(220, 53, 69);
+}
+
+h1 span {
+    transition: font-size 2s, color 2s;
+}
+
+h1 span:hover {
+    font-size: 3.5rem;
+    color: white;
+}
