@@ -1,2 +1,2 @@
-# clever-little-things
+# Clever Little Things
 Game of hierarchical evolution

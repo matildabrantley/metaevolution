@@ -1,0 +1,24 @@
+{
+  "name": "clever-little-things",
+  "version": "1.0.0",
+  "description": "Game of hierarchical evolution",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matildabrantley/clever-little-things.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matildabrantley/clever-little-things/issues"
+  },
+  "homepage": "https://github.com/matildabrantley/clever-little-things#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "neataptic": "^1.4.7"
+  }
+}
