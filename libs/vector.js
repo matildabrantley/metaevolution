@@ -1,16 +1,11 @@
-class Vector2d {
+//2d vector class
+class Vector {
 	constructor(x, y, min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_INTEGER){
         this.x = x;
 	    this.y = y;
 		this.min = min;
 		this.max = max;
     }
-
-	//return new instance of this vector
-	getCopy() {
-		var newInstance = new Vector2d(this.x, this.y, this.min, this.max);
-		return newInstance;
-	}
 
 	//distance between two 2d points using Math.hypot
 	distance(vector) {
@@ -54,7 +49,11 @@ class Vector2d {
 		this.y = this.clamp(y);
 	}
 
-	/*setAngle(angle) {
+	clamp (number) {
+		return Math.min(Math.max(number, this.min), this.max);
+	}
+
+	setAngle(angle) {
 		this.x = Math.cos(angle);
 		this.y = Math.sin(angle);
 		return this;
@@ -66,10 +65,24 @@ class Vector2d {
 
 	angleDifference(vector) {
 		return (this.getAngle() - vector.getAngle());
-	}*/
+	}
 
-	clamp (number) {
-		return Math.min(Math.max(number, this.min), this.max);
+	//get 2d vector magnitude
+	getMagnitude () {
+		return Math.sqrt(this.x * this.x + this.y * this.y);
+	};
+	
+	// set 2d vector magnitude
+	setMagnitude (mag) {
+		var angle = this.getAngle(); 
+		this.x = Math.cos(angle) * mag;
+		this.y = Math.sin(angle) * mag;
+	}
+
+	//return new instance of this vector
+	getCopy() {
+		var newInstance = new Vector(this.x, this.y, this.min, this.max);
+		return newInstance;
 	}
 }
 
