@@ -54,7 +54,7 @@ class Net {
 				for (let j = 0; j <this.layerSizes[i].length; j++)
 					if (i == 0 ||this.charges[i][j] > this.thresholds[i][j])
 						for (let k = 0; k <this.layerSizes[i + 1].length; k++)
-							populace[netID].charges[i + 1][k] +=this.charges[i][j] *this.weights[i][j][k];
+						this.charges[i + 1][k] +=this.charges[i][j] * this.weights[i][j][k];
 		}
 		//return output layer
 		return this.charges[this.numLayers-1];;

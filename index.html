@@ -33,15 +33,12 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
-    this.load.image('star', './assets/star.png');
-    this.load.spritesheet('alien', './assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+    this.load.image('star', './assets/images/star.png');
+    this.load.spritesheet('alien', './assets/images/guy.png', { frameWidth: 32, frameHeight: 48 });
 }
 
 function create ()
 {
-    //  You can enable the Attractors plugin either via the game config (see above), or explicitly in code:
-    // this.matter.enableAttractorPlugin();
-
     this.matter.world.setBounds();
 
     this.matter.add.imageStack('alien', null, 0, 500, 50, 2, 0, 0, {
@@ -73,8 +70,3 @@ function create ()
 
 </body>
 </html>
-
-<!-- 
-this.load.image('sky', './assets/sky.png');
-this.load.image('star', './assets/star.png');
-this.load.spritesheet('dude', './assets/dude.png', { frameWidth: 32, frameHeight: 48 }); -->
