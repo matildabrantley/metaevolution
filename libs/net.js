@@ -79,7 +79,7 @@ class Net {
 		for (let layer = 0; layer < otherNet.charges.length; layer++) {
 			for (let neuron = 0; neuron < otherNet.charges[i].length; neuron++) {
 				for (let k = 0; k < otherNet.charges[i].length; k++) {	
-					this.weights[i][j] = otherNet.weights[i][j];
+					this.weights[layer][neuron] = otherNet.weights[layer][neuron];
 					if (Math.random() < mutRate)
 				}
 			}
@@ -88,7 +88,7 @@ class Net {
 		for (let layer = 0; layer < otherNet.charges.length - 1; layer++)
 		{
 			for (let neuron = 0; neuron < otherNet.charges[i].length; neuron++)
-				this.thresholds[i][j] = otherNet.thresholds[i][j];
+				this.thresholds[layer][neuron] = otherNet.thresholds[layer][neuron];
 		}
 	}
 
