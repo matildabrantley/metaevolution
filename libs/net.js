@@ -37,9 +37,6 @@ class Net {
 				else
 					thresholds[i][j] = Math.random() * 10;
 		}
-
-		//save layerSizes
-		this.layerSizes = layerSizes;
 	}
 
 	activate(input) {
@@ -55,46 +52,41 @@ class Net {
 				//charge checked against threshold
 				if (i == 0 ||this.charges[i][j] > this.thresholds[i][j]) {
 					//each weight
-					for (let k = 0; k <this.layerSizes[i + 1].length; k++)
+					for (let k = 0; k <this.charges[i + 1].length; k++)
 						this.charges[i + 1][k] +=this.charges[i][j] * this.weights[i][j][k];
 				}
 			}
-			//squish next layer after its been all charged up
-			for (let k = 0; k <this.layerSizes[i + 1].length; k++) 
-
-
+			//squish next layer after its been all charged up, except output layer
+			// for (let next = 0; next < this.charges[i + 1].length; next++) 
 		}
 		//return output layer
-		return this.charges[this.numLayers-1];;
+		return this.charges[this.charges.length -1];;
 	}
 
 	//copy over this net's weights with another net's weights, mutating in the process
 	replaceAndMutate (otherNet, mutationRate=0) { 
 		//weights overwritten
-		for (var i = 0; i < otherNet.numLayers; i++)
-		{
-			for (var j = 0; j < otherNet.layerSizes[i].length; j++)
-			{
-				for (var k = 0; k < otherNet.layerSizes[i].length; k++)
-				{	
+		for (let i = 0; i < otherNet.charges.length; i++) {
+			for (let j = 0; j < otherNet.charges[i].length; j++) {
+				for (let k = 0; k < otherNet.charges[i].length; k++) {	
 					this.weights[i][j] = otherNet.weights[i][j];
 					if (Math.random() < mutRate)
 				}
 			}
 		}
 		//thresholds overwritten
-		for (var i = 0; i < otherNet.numLayers - 1; i++)
+		for (let i = 0; i < otherNet.charges.length - 1; i++)
 		{
-			for (var j = 0; j < otherNet.layerSizes[i].length; j++)
+			for (let j = 0; j < otherNet.charges[i].length; j++)
 				this.thresholds[i][j] = otherNet.thresholds[i][j];
 		}
 	}
 
-	//activation functions
-	//for output layer
-	sigmoid(x) { return 1 / (1 + Math.exp(-x)); };
-	//for hidden layer
-	relu(x) { return Math.max(0, x); };
+	// //activation functions
+	// //for output layer
+	// sigmoid(x) { return 1 / (1 + Math.exp(-x)); };
+	// //for hidden layer
+	// relu(x) { return Math.max(0, x); };
 }
 
 module.exports = Net;
