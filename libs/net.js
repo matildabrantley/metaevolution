@@ -13,8 +13,8 @@ class Net {
 		}
 		
 		//fully interconnected random weights 
-		this.weights = new Array(layerSizes.length);
-		for (let layer = 0; layer < layerSizes.length - 1; layer++)
+		this.weights = new Array(layerSizes.length - 1);
+		for (let layer = 0; layer < this.weights.length; layer++)
 		{
 			this.weights[layer] = new Array(layerSizes[layer]);
 			for (let neuron = 0; neuron < layerSizes[layer]; neuron++)
@@ -26,15 +26,15 @@ class Net {
 		}
 		
 		//random thresholds
-		this.thresholds = new Array(layerSizes.length);
-		for (let layer = 0; layer < layerSizes.length - 1; layer++)
+		this.thresholds = new Array(layerSizes.length - 1);
+		for (let layer = 0; layer < this.thresholds.length; layer++)
 		{
-			this.weights[layer] = new Array(layerSizes[layer].length);
-			for (let neuron = 0; neuron < layerSizes[layer].length; neuron++)
+			this.thresholds[layer] = new Array(layerSizes[layer]);
+			for (let neuron = 0; neuron < layerSizes[layer]; neuron++)
 				if (layer == 0)
-					thresholds[layer][neuron] = 0;
+					this.thresholds[layer][neuron] = 0;
 				else
-					thresholds[layer][neuron] = Math.random() * 5;
+					this.thresholds[layer][neuron] = Math.random() * 5;
 		}
 	}
 
@@ -58,9 +58,9 @@ class Net {
 						this.charges[nextLayer][w] += this.charges[layer][neuron] * this.weights[layer][neuron][w];
 				}
 			}
-			//ReLU next layer after its been all charged up, except output layer (which instead gets sigmoid'ed)
+			//activation function on next layer's neurons after they're all charged up (ReLU for now)
 			for (let neuron = 0; neuron < this.charges[nextLayer].length; neuron++) 
-				charges[nextLayer][neuron] = this.relu(charges[nextLayer][neuron]);
+				this.charges[nextLayer][neuron] = this.sigmoid(this.charges[nextLayer][neuron]);
 		}
 	
 		//squish outputs with sigmoid
@@ -69,7 +69,7 @@ class Net {
 
 
 		//return output layer
-		return this.charges[outputLayer];;
+		return this.charges[outputLayer];
 	}
 
 	//copy over this net's weights with another net's weights, mutating in the process
@@ -93,12 +93,12 @@ class Net {
 
 	//Activation functions:
 	//sigmoid for output layer
-	sigmoid(x, base = 2) { return 1 / (1 + Math.pow(base, -x)); };
+	sigmoid(x, base = 2.5) { return 1 / (1 + Math.pow(base, -x)); };
 	//ReLU for hidden layer
 	relu(x) { return Math.max(0, x); };
 }
 
-let testNet = new Net(2, 2, 2);
+const testNet = new Net(2, 3, 4);
 testNet.activate([1,1]);
 
 //module.exports = Net;
