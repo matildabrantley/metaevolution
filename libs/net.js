@@ -7,9 +7,9 @@ class Net {
 		this.charges = new Array(layerSizes.length);
 		for (let layer = 0; layer < layerSizes.length; layer++)
 		{
-			this.charges[i] = new Array(this.layerSizes[i].length);
-			for (let neuron = 0; neuron < this.layerSizes[i].length; neuron++)
-				this.charges[i][j] = 0;
+			this.charges[layer] = new Array(this.layerSizes[layer].length);
+			for (let neuron = 0; neuron < this.layerSizes[layer].length; neuron++)
+				this.charges[layer][neuron] = 0;
 		}
 		
 		
@@ -17,12 +17,12 @@ class Net {
 		this.weights = new Array(layerSizes.length);
 		for (let layer = 0; layer < layerSizes.length - 1; layer++)
 		{
-			this.weights[i] = new Array(this.layerSizes[i].length);
-			for (let neuron = 0; neuron < this.layerSizes[i].length; neuron++)
+			this.weights[layer] = new Array(this.layerSizes[layer].length);
+			for (let neuron = 0; neuron < this.layerSizes[layer].length; neuron++)
 			{
-				this.weights[i][j] = new Array(this.layerSizes[i + 1])
-				for (let k = 0; k < this.layerSizes[i + 1].length; k++)
-					this.weights[i][j][k] = Math.random();
+				this.weights[layer][neuron] = new Array(this.layerSizes[layer + 1])
+				for (let w = 0; w < this.layerSizes[i + layer].length; w++)
+					this.weights[layer][neuron][w] = Math.random();
 			}
 		}
 		
@@ -30,23 +30,26 @@ class Net {
 		this.thresholds = new Array(layerSizes.length);
 		for (let layer = 0; layer < layerSizes.length - 1; layer++)
 		{
-			this.weights[i] = new Array(this.layerSizes[i].length);
-			for (let neuron = 0; neuron < this.layerSizes[i].length; neuron++)
-				if (i == 0)
-					thresholds[i][j] = 0;
+			this.weights[layer] = new Array(this.layerSizes[layer].length);
+			for (let neuron = 0; neuron < this.layerSizes[layer].length; neuron++)
+				if (layer == 0)
+					thresholds[layer][neuron] = 0;
 				else
-					thresholds[i][j] = Math.random() * 5;
+					thresholds[layer][neuron] = Math.random() * 5;
 		}
 	}
 
+	//Run the net, feeding charges forward based on weights
 	activate(input) {
-
 		//input is array
 		this.charges[0] = input;
+		
+		//layer index of output
+		let outputLayer = this.charges.length - 1;
 
-		//charges propogate forward
+		//Propagate charges forward
 		//each layer
-		for (let layer = 0, nextLayer = 1; layer < this.charges.length - 1; layer++, nextLayer++) {
+		for (let layer = 0, nextLayer = 1; layer < outputLayer; layer++, nextLayer++) {
 			//each neuron
 			for (let neuron = 0; neuron < this.charges[layer].length; neuron++) {
 				//charge checked against threshold
@@ -56,16 +59,18 @@ class Net {
 						this.charges[nextLayer][w] += this.charges[layer][neuron] * this.weights[layer][neuron][w];
 				}
 			}
-			//ReLU next layer after its been all charged up, except output layer (which gets sigmoid'ed)
-			// for (let neuron = 0; neuron < this.charges[nextLayer].length; neuron++) 
-			// 	charges[nextLayer][neuron]
+			//ReLU next layer after its been all charged up, except output layer (which instead gets sigmoid'ed)
+			for (let neuron = 0; neuron < this.charges[nextLayer].length; neuron++) 
+				charges[nextLayer][neuron] = this.relu(charges[nextLayer][neuron]);
 		}
 	
-		// let outputLayer = this.charges.length - 1;
-		// for (let neuron = 0; neuron < this.charges[nextLayer].length; neuron++)
+		//squish outputs with sigmoid
+		for (let neuron = 0; neuron < this.charges[outputLayer].length; neuron++)
+			this.charges[outputLayer][neuron] = this.sigmoid(this.charges[outputLayer][neuron]);
+
 
 		//return output layer
-		return this.charges[this.charges.length -1];;
+		return this.charges[outputLayer];;
 	}
 
 	//copy over this net's weights with another net's weights, mutating in the process
@@ -87,7 +92,7 @@ class Net {
 		}
 	}
 
-	//activation functions
+	//Activation functions:
 	//sigmoid for output layer
 	sigmoid(x) { return 1 / (1 + Math.exp(-x)); };
 	//ReLU for hidden layer
