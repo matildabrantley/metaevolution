@@ -12,7 +12,6 @@ class Net {
 				this.charges[layer][neuron] = 0;
 		}
 		
-		
 		//fully interconnected random weights 
 		this.weights = new Array(layerSizes.length);
 		for (let layer = 0; layer < layerSizes.length - 1; layer++)
@@ -21,7 +20,7 @@ class Net {
 			for (let neuron = 0; neuron < this.layerSizes[layer].length; neuron++)
 			{
 				this.weights[layer][neuron] = new Array(this.layerSizes[layer + 1])
-				for (let w = 0; w < this.layerSizes[i + layer].length; w++)
+				for (let w = 0; w < this.layerSizes[layer + 1].length; w++)
 					this.weights[layer][neuron][w] = Math.random();
 			}
 		}
@@ -41,10 +40,10 @@ class Net {
 
 	//Run the net, feeding charges forward based on weights
 	activate(input) {
-		//input is array
+		//set first layer to input array
 		this.charges[0] = input;
 		
-		//layer index of output
+		//index of output layer
 		let outputLayer = this.charges.length - 1;
 
 		//Propagate charges forward
@@ -87,7 +86,7 @@ class Net {
 		//thresholds overwritten
 		for (let layer = 0; layer < otherNet.charges.length - 1; layer++)
 		{
-			for (let neuron = 0; neuron < otherNet.charges[i].length; neuron++)
+			for (let neuron = 0; neuron < otherNet.charges[layer].length; neuron++)
 				this.thresholds[layer][neuron] = otherNet.thresholds[layer][neuron];
 		}
 	}
