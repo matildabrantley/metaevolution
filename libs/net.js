@@ -35,13 +35,13 @@ class Net {
 				if (i == 0)
 					thresholds[i][j] = 0;
 				else
-					thresholds[i][j] = Math.random() * 10;
+					thresholds[i][j] = Math.random() * 5;
 		}
 	}
 
 	activate(input) {
 
-		//input is arrays
+		//input is array
 		this.charges[0] = input;
 
 		//charges propogate forward
@@ -87,11 +87,11 @@ class Net {
 		}
 	}
 
-	// //activation functions
-	// //for output layer
-	// sigmoid(x) { return 1 / (1 + Math.exp(-x)); };
-	// //for hidden layer
-	// relu(x) { return Math.max(0, x); };
+	//activation functions
+	//sigmoid for output layer
+	sigmoid(x) { return 1 / (1 + Math.exp(-x)); };
+	//ReLU for hidden layer
+	relu(x) { return Math.max(0, x); };
 }
 
 module.exports = Net;
