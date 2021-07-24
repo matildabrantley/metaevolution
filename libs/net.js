@@ -58,14 +58,14 @@ class Net {
 						this.charges[nextLayer][w] += this.charges[layer][neuron] * this.weights[layer][neuron][w];
 				//}
 			}
-			//activation function on next layer's neurons after they're all charged up (ReLU for now)
+			//activation function on next layer's neurons after they're all charged up
 			for (let neuron = 0; neuron < this.charges[nextLayer].length; neuron++) 
-				this.charges[nextLayer][neuron] = this.sigmoid(this.charges[nextLayer][neuron]);
+				this.charges[nextLayer][neuron] = this.zeroCentered(this.charges[nextLayer][neuron]);
 		}
 	
 		//squish outputs with sigmoid
 		for (let neuron = 0; neuron < this.charges[outputLayer].length; neuron++)
-			this.charges[outputLayer][neuron] = this.sigmoid(this.charges[outputLayer][neuron]);
+			this.charges[outputLayer][neuron] = this.zeroCentered(this.charges[outputLayer][neuron]);
 
 
 		//return output layer
@@ -92,13 +92,15 @@ class Net {
 	}
 
 	//Activation functions:
-	//sigmoid for output layer
-	sigmoid(x, base = 2.5) { return 1 / (1 + Math.pow(base, -x)); };
-	//ReLU for hidden layer
+	//0.5-centered sigmoid (negatives cannot propagate)
+	pointFiveCentered(x, base = 2.5) { return 1 / (1 + Math.pow(base, -x)); };
+	//0-centered sigmoid (negatives can propagate)
+	zeroCentered(x, scale = 1) { return Math.tanh(x) * scale; };
+	//ReLU for hidden layer (no negatives, no max positive)
 	relu(x) { return Math.max(0, x); };
 }
 
-const testNet = new Net(2, 3, 3, 3,3, 3,3, 3, 3);
+const testNet = new Net(2, 3, 3);
 console.log(testNet.activate([1,1]));
 console.log(testNet.activate([-1,-1]));
 console.log(testNet.activate([1,-1]));
