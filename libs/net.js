@@ -34,7 +34,7 @@ class Net {
 				if (layer == 0)
 					this.thresholds[layer][neuron] = 0;
 				else
-					this.thresholds[layer][neuron] = Math.random() * 5;
+					this.thresholds[layer][neuron] = 0;//Math.random() * 5 - 2.5;
 		}
 	}
 
@@ -52,11 +52,11 @@ class Net {
 			//each neuron
 			for (let neuron = 0; neuron < this.charges[layer].length; neuron++) {
 				//charge checked against threshold
-				if (layer == 0 ||this.charges[layer][neuron] > this.thresholds[layer][neuron]) {
+				//if (layer == 0 ||this.charges[layer][neuron] > this.thresholds[layer][neuron]) {
 					//each weight
 					for (let w = 0; w < this.charges[nextLayer].length; w++)
 						this.charges[nextLayer][w] += this.charges[layer][neuron] * this.weights[layer][neuron][w];
-				}
+				//}
 			}
 			//activation function on next layer's neurons after they're all charged up (ReLU for now)
 			for (let neuron = 0; neuron < this.charges[nextLayer].length; neuron++) 
@@ -98,7 +98,12 @@ class Net {
 	relu(x) { return Math.max(0, x); };
 }
 
-const testNet = new Net(2, 3, 4);
-testNet.activate([1,1]);
+const testNet = new Net(2, 3, 3, 3,3, 3,3, 3, 3);
+console.log(testNet.activate([1,1]));
+console.log(testNet.activate([-1,-1]));
+console.log(testNet.activate([1,-1]));
+console.log(testNet.activate([-1,1]));
+console.log(testNet.activate([0,0]));
+
 
 //module.exports = Net;
