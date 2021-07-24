@@ -2,10 +2,12 @@
 <html>
 <head>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser.min.js"></script>
+    <script src="/libs/net.js"></script>
 </head>
 <body>
 
-    <script>
+<script>
+    const testNet = new Net(2, 2, 2);
     var config = {
     type: Phaser.AUTO,
     width: 800,

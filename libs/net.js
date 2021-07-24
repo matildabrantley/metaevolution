@@ -7,8 +7,8 @@ class Net {
 		this.charges = new Array(layerSizes.length);
 		for (let layer = 0; layer < layerSizes.length; layer++)
 		{
-			this.charges[layer] = new Array(this.layerSizes[layer].length);
-			for (let neuron = 0; neuron < this.layerSizes[layer].length; neuron++)
+			this.charges[layer] = new Array(layerSizes[layer]);
+			for (let neuron = 0; neuron < layerSizes[layer]; neuron++)
 				this.charges[layer][neuron] = 0;
 		}
 		
@@ -16,11 +16,11 @@ class Net {
 		this.weights = new Array(layerSizes.length);
 		for (let layer = 0; layer < layerSizes.length - 1; layer++)
 		{
-			this.weights[layer] = new Array(this.layerSizes[layer].length);
-			for (let neuron = 0; neuron < this.layerSizes[layer].length; neuron++)
+			this.weights[layer] = new Array(layerSizes[layer]);
+			for (let neuron = 0; neuron < layerSizes[layer]; neuron++)
 			{
-				this.weights[layer][neuron] = new Array(this.layerSizes[layer + 1])
-				for (let w = 0; w < this.layerSizes[layer + 1].length; w++)
+				this.weights[layer][neuron] = new Array(layerSizes[layer + 1])
+				for (let w = 0; w < layerSizes[layer + 1]; w++)
 					this.weights[layer][neuron][w] = Math.random();
 			}
 		}
@@ -29,8 +29,8 @@ class Net {
 		this.thresholds = new Array(layerSizes.length);
 		for (let layer = 0; layer < layerSizes.length - 1; layer++)
 		{
-			this.weights[layer] = new Array(this.layerSizes[layer].length);
-			for (let neuron = 0; neuron < this.layerSizes[layer].length; neuron++)
+			this.weights[layer] = new Array(layerSizes[layer].length);
+			for (let neuron = 0; neuron < layerSizes[layer].length; neuron++)
 				if (layer == 0)
 					thresholds[layer][neuron] = 0;
 				else
@@ -79,7 +79,7 @@ class Net {
 			for (let neuron = 0; neuron < otherNet.charges[layer].length; neuron++) {
 				for (let w = 0; w < otherNet.charges[layer].length; w++) {	
 					this.weights[layer][neuron][w] = otherNet.weights[layer][neuron][w];
-					if (Math.random() < mutRate)
+					//if (Math.random() < mutationRate)
 				}
 			}
 		}
@@ -93,9 +93,12 @@ class Net {
 
 	//Activation functions:
 	//sigmoid for output layer
-	sigmoid(x) { return 1 / (1 + Math.exp(-x)); };
+	sigmoid(x, base = 2) { return 1 / (1 + Math.pow(base, -x)); };
 	//ReLU for hidden layer
 	relu(x) { return Math.max(0, x); };
 }
 
-module.exports = Net;
+let testNet = new Net(2, 2, 2);
+testNet.activate([1,1]);
+
+//module.exports = Net;
