@@ -77,9 +77,9 @@ class Net {
 	replaceAndMutate (otherNet, mutationRate=0) { 
 		//weights overwritten
 		for (let layer = 0; layer < otherNet.charges.length; layer++) {
-			for (let neuron = 0; neuron < otherNet.charges[i].length; neuron++) {
-				for (let k = 0; k < otherNet.charges[i].length; k++) {	
-					this.weights[layer][neuron] = otherNet.weights[layer][neuron];
+			for (let neuron = 0; neuron < otherNet.charges[layer].length; neuron++) {
+				for (let w = 0; w < otherNet.charges[layer].length; w++) {	
+					this.weights[layer][neuron][w] = otherNet.weights[layer][neuron][w];
 					if (Math.random() < mutRate)
 				}
 			}
