@@ -7,7 +7,7 @@
 <body>
 
 <script>
-    const testNet = new Net(2, 2, 2);
+    const net = new Net(2, 2, 2);
     var config = {
     type: Phaser.AUTO,
     width: 800,
@@ -43,8 +43,8 @@ function create ()
 {
     this.matter.world.setBounds();
 
-    this.matter.add.imageStack('alien', null, 0, 500, 50, 2, 0, 0, {
-        mass: 1,
+    this.matter.add.imageStack('alien', null, 0, 500, 1, 1, 0, 0, {
+        mass: 10,
         ignorePointer: true
     });
 

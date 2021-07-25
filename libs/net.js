@@ -24,18 +24,6 @@ class Net {
 					this.weights[layer][neuron][w] = (Math.random() * 2) - 1;
 			}
 		}
-		
-		//random thresholds
-		this.thresholds = new Array(layerSizes.length - 1);
-		for (let layer = 0; layer < this.thresholds.length; layer++)
-		{
-			this.thresholds[layer] = new Array(layerSizes[layer]);
-			for (let neuron = 0; neuron < layerSizes[layer]; neuron++)
-				if (layer == 0)
-					this.thresholds[layer][neuron] = 0;
-				else
-					this.thresholds[layer][neuron] = 0;//Math.random() * 5 - 2.5;
-		}
 	}
 
 	//Run the net, feeding charges forward based on weights
@@ -46,30 +34,41 @@ class Net {
 		//index of output layer
 		let outputLayer = this.charges.length - 1;
 
+
+		//set a standard net-wide threshold for both positive and negitive charges
+		let threshold = 0.0;
+
 		//Propagate charges forward
 		//each layer
 		for (let layer = 0, nextLayer = 1; layer < outputLayer; layer++, nextLayer++) {
 			//each neuron
 			for (let neuron = 0; neuron < this.charges[layer].length; neuron++) {
-				//charge checked against threshold
-				//if (layer == 0 || this.charges[layer][neuron] > this.charges[layer - 1].length / 2  ) {
+				//absolute value of charge checked against a standard threshold
+				if (layer == 0 || Math.abs(this.charges[layer][neuron]) > threshold) {
 					//each weight
 					for (let w = 0; w < this.charges[nextLayer].length; w++)
 						this.charges[nextLayer][w] += this.charges[layer][neuron] * this.weights[layer][neuron][w];
-				//}
+				}
 			}
 			//activation function on next layer's neurons after they're all charged up
 			for (let neuron = 0; neuron < this.charges[nextLayer].length; neuron++) 
-				this.charges[nextLayer][neuron] = this.zeroCentered(this.charges[nextLayer][neuron]);
+				this.charges[nextLayer][neuron] = this.zeroCenteredCurve(this.charges[nextLayer][neuron]);
 		}
 	
 		//squish outputs with sigmoid
 		for (let neuron = 0; neuron < this.charges[outputLayer].length; neuron++)
-			this.charges[outputLayer][neuron] = this.zeroCentered(this.charges[outputLayer][neuron]);
+			this.charges[outputLayer][neuron] = this.zeroCenteredCurve(this.charges[outputLayer][neuron]);
 
 
 		//return output layer
 		return this.charges[outputLayer];
+	}
+
+	//reset charges to 0 (except input layer which gets replaced anyway)
+	clearCharges() {
+		for (let layer = 1; layer < this.charges.length; layer++)
+			for (let neuron = 0; neuron < this.charges[layer].length; neuron++)
+				this.charges[layer][neuron] = 0;
 	}
 
 	//copy over this net's weights with another net's weights, mutating in the process
@@ -83,29 +82,26 @@ class Net {
 				}
 			}
 		}
-		//thresholds overwritten
-		for (let layer = 0; layer < otherNet.charges.length - 1; layer++)
-		{
-			for (let neuron = 0; neuron < otherNet.charges[layer].length; neuron++)
-				this.thresholds[layer][neuron] = otherNet.thresholds[layer][neuron];
-		}
 	}
 
 	//Activation functions:
 	//0.5-centered sigmoid (negatives cannot propagate)
-	pointFiveCentered(x, base = 2.5) { return 1 / (1 + Math.pow(base, -x)); };
+	oneHalfCenteredCurve(x, base = 2) { return 1 / (1 + Math.pow(base, -x)); };
 	//0-centered sigmoid (negatives can propagate)
-	zeroCentered(x, scale = 1) { return Math.tanh(x) * scale; };
-	//ReLU for hidden layer (no negatives, no max positive)
+	zeroCenteredCurve(x, base = 10) { return (2 / (1 + Math.pow(base, -x)) - 1); };
+	//ReLU for hidden layer (only positives, no max positive)
 	relu(x) { return Math.max(0, x); };
 }
 
-const testNet = new Net(2, 3, 3, 3);
-console.log(testNet.activate([1,1]));
-console.log(testNet.activate([-1,-1]));
-console.log(testNet.activate([1,-1]));
-console.log(testNet.activate([-1,1]));
-console.log(testNet.activate([0,0]));
+const testNet = () => {
+	const net = new Net(2, 20, 2);
+	console.log(net.activate([1,1]));
+	console.log(net.activate([-1,-1]));
+	console.log(net.activate([1,-1]));
+	console.log(net.activate([-1,1]));
+	console.log(net.activate([0,0]));
+}
 
+testNet()
 
-//module.exports = Net;
+module.exports = Net;
