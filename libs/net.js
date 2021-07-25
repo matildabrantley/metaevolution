@@ -21,7 +21,7 @@ class Net {
 			{
 				this.weights[layer][neuron] = new Array(layerSizes[layer + 1])
 				for (let w = 0; w < layerSizes[layer + 1]; w++)
-					this.weights[layer][neuron][w] = Math.random();
+					this.weights[layer][neuron][w] = (Math.random() * 2) - 1;
 			}
 		}
 		
@@ -52,7 +52,7 @@ class Net {
 			//each neuron
 			for (let neuron = 0; neuron < this.charges[layer].length; neuron++) {
 				//charge checked against threshold
-				//if (layer == 0 ||this.charges[layer][neuron] > this.thresholds[layer][neuron]) {
+				//if (layer == 0 || this.charges[layer][neuron] > this.charges[layer - 1].length / 2  ) {
 					//each weight
 					for (let w = 0; w < this.charges[nextLayer].length; w++)
 						this.charges[nextLayer][w] += this.charges[layer][neuron] * this.weights[layer][neuron][w];
@@ -100,7 +100,7 @@ class Net {
 	relu(x) { return Math.max(0, x); };
 }
 
-const testNet = new Net(2, 3, 3);
+const testNet = new Net(2, 3, 3, 3);
 console.log(testNet.activate([1,1]));
 console.log(testNet.activate([-1,-1]));
 console.log(testNet.activate([1,-1]));
