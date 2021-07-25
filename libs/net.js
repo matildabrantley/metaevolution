@@ -28,6 +28,7 @@ class Net {
 
 	//Run the net, feeding charges forward based on weights
 	activate(input) {
+		this.clearCharges();
 		//set first layer to input array
 		this.charges[0] = input;
 		
@@ -101,7 +102,6 @@ const testNet = () => {
 	console.log(net.activate([-1,1]));
 	console.log(net.activate([0,0]));
 }
-
-testNet()
+//testNet()
 
 module.exports = Net;
