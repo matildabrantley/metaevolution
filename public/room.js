@@ -1,4 +1,4 @@
-const Thing = require('./creature');
+const Creature = require('./creature');
 const Vector = require('./vector');
 
 class Room {
@@ -13,7 +13,7 @@ class Room {
         this.pop = pop; //population
         this.things = new Array(pop);
         for (var c = 0; c < pop; c++)
-            this.things[c] = new Thing(this, new Vector(rand(0, size), rand(0, size))); //random positions
+            this.things[c] = new Creature(this, new Vector(rand(0, size), rand(0, size))); //random positions
     }
 
     update() {

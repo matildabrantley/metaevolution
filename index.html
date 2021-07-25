@@ -1,73 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser.min.js"></script>
-    <script src="/libs/net.js"></script>
+    <script src="node_modules/matter-js/build/matter.min.js"></script>
+    <script src="/public/net.js"></script>
 </head>
-<body>
+<body onload='Start()'>
 
 <script>
-    const net = new Net(2, 2, 2);
-    var config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    backgroundColor: '#000000',
-    parent: 'phaser-example',
-    physics: {
-        default: 'matter',
-        matter: {
-            gravity: {
-                scale: 0
-            },
-            plugins: {
-                attractors: true
-            }
-        }
-    },
-    scene: {
-        preload: preload,
-        create: create
+    function Start() {
+        var Engine = Matter.Engine,
+        Render = Matter.Render,
+        World = Matter.World,
+        Bodies = Matter.Bodies;
+        
+        var engine = Engine.create();
+        
+        var render = Render.create({
+                        element: document.body,
+                        engine: engine,
+                        options: {
+                            width: 800,
+                            height: 400,
+                            wireframes: false
+                        }
+                    });
+                    
+        var boxA = Bodies.rectangle(400, 200, 80, 80);
+        var ballA = Bodies.circle(380, 100, 40, 10);
+        var ballB = Bodies.circle(460, 10, 40, 10);
+        var ground = Bodies.rectangle(400, 380, 810, 60, { isStatic: true });
+        
+        World.add(engine.world, [boxA, ballA, ballB, ground]);
+        
+        Engine.run(engine);
+        Render.run(render);
     }
-};
-
-var game = new Phaser.Game(config);
-
-function preload ()
-{
-    this.load.image('star', './assets/images/star.png');
-    this.load.spritesheet('alien', './assets/images/guy.png', { frameWidth: 32, frameHeight: 48 });
-}
-
-function create ()
-{
-    this.matter.world.setBounds();
-
-    this.matter.add.imageStack('alien', null, 0, 500, 1, 1, 0, 0, {
-        mass: 10,
-        ignorePointer: true
-    });
-
-    var sun = this.matter.add.image(400, 200, 'star', null, {
-        shape: {
-            type: 'circle',
-            radius: 16
-        },
-        plugin: {
-            attractors: [
-                function (bodyA, bodyB) {
-                    return {
-                        x: (bodyA.position.x - bodyB.position.x) * 0.000001,
-                        y: (bodyA.position.y - bodyB.position.y) * 0.000001
-                    };
-                }
-            ]
-        }
-    });
-
-    this.matter.add.mouseSpring();
-}
-
     </script>
 
 </body>

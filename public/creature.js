@@ -1,5 +1,6 @@
 const Net = require('./net');
 const Vector = require('./vector');
+const Matter = require('./matter-js')
 
 class Creature {
     constructor(x, y){//(room, vector, color = 0xffffff){
@@ -74,4 +75,4 @@ thing.update();
 thing.update();
 thing.update();
 
-//module.exports = Creature;
+module.exports = Creature;
