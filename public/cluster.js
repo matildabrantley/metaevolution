@@ -1,6 +1,6 @@
 
 //Just a perceptron/feedforward net for now
-class Net {
+class Cluster {
 	constructor(...layerSizes)
 	{		
 		//initialize all charges to zero
@@ -21,7 +21,7 @@ class Net {
 			{
 				this.weights[layer][neuron] = new Array(layerSizes[layer + 1])
 				for (let w = 0; w < layerSizes[layer + 1]; w++)
-					this.weights[layer][neuron][w] = (Math.random() * 2) - 1;
+					this.weights[layer][neuron][w] = randZeroCentered();
 			}
 		}
 	}
@@ -73,13 +73,15 @@ class Net {
 	}
 
 	//copy over this net's weights with another net's weights, mutating in the process
-	replaceAndMutate (otherNet, mutationRate=0) { 
+	replaceAndMutate (otherCluster, mutationRate=0) { 
 		//weights overwritten
-		for (let layer = 0; layer < otherNet.charges.length; layer++) {
-			for (let neuron = 0; neuron < otherNet.charges[layer].length; neuron++) {
-				for (let w = 0; w < otherNet.charges[layer].length; w++) {	
-					this.weights[layer][neuron][w] = otherNet.weights[layer][neuron][w];
-					//if (Math.random() < mutationRate)
+		for (let layer in otherCluster.weights) {
+			for (let neuron in otherCluster.weights[layer]) {
+				for (let w in otherCluster.weights[layer][neuron]) {	
+					if (mutationRate > Math.random())
+						this.weights[layer][neuron][w] = randZeroCentered();
+					else
+						this.weights[layer][neuron][w] = otherCluster.weights[layer][neuron][w];
 				}
 			}
 		}
@@ -94,14 +96,16 @@ class Net {
 	relu(x) { return Math.max(0, x); };
 }
 
-const testNet = () => {
-	const net = new Net(2, 20, 2);
+const randZeroCentered = () => (Math.random() * 2) - 1;
+
+const testCluster = () => {
+	const net = new Cluster(2, 20, 2);
 	console.log(net.activate([1,1]));
 	console.log(net.activate([-1,-1]));
 	console.log(net.activate([1,-1]));
 	console.log(net.activate([-1,1]));
 	console.log(net.activate([0,0]));
 }
-//testNet()
+//testCluster()
 
-// module.exports = Net;
+// module.exports = Cluster;

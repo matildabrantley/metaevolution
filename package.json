@@ -20,6 +20,7 @@
   "homepage": "https://github.com/matildabrantley/clever-little-things#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "matter-js": "^0.17.1"
+    "matter-js": "^0.17.1",
+    "phaser": "^3.55.2"
   }
 }
