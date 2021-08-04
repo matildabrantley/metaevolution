@@ -7,21 +7,38 @@ class Group {
         //pass each body to a different creature
         for (let i = 0; i < this.lifeforms.length; i++)
             this.lifeforms[i] = new Life(bodies[i]); 
-        this.groupTimer = 0;
-        this.generationLength = 100;
+        this.timer1 = 0;
+        this.genLength = 50;
+        
+        //for updateFast()
+        this.timer2 = 0;
+        this.fastGenLength = 50;
     }
 
-    updateAll() {
-        this.groupTimer++;
+    //normal updating within Phaser's/Matter's loop
+    updateWithEngine() {
+        this.timer1++;
         for (let i=0; i < this.lifeforms.length; i++) 
-            this.lifeforms[i].update();
+            this.lifeforms[i].updateWithEngine();
 
-        if (this.groupTimer % this.generationLength == 0){
-           this.individualGenetics();
+        if (this.timer1 % this.genLength == 0){
+           this.selection();
         }
     }
 
-    individualGenetics() {
+    //simplified fast updating without a framework/renderer/engine, and very limited physics
+    async updateFast() {
+        this.timer2++;
+        for (let i=0; i < this.lifeforms.length; i++) 
+            this.lifeforms[i].updateFast();
+
+        if (this.timer2 % this.fastGenLength == 0){
+            this.selection();
+        }
+    }
+
+    //generational change in group where fitness is sorted and replacement and mutation occur
+    selection() {
         //fitness sorting function in which more fit lifeforms move to front
         this.lifeforms.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
         

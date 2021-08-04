@@ -53,12 +53,12 @@ class Cluster {
 			}
 			//activation function on next layer's neurons after they're all charged up
 			for (let neuron = 0; neuron < this.charges[nextLayer].length; neuron++) 
-				this.charges[nextLayer][neuron] = this.zeroCenteredCurve(this.charges[nextLayer][neuron]);
+				this.charges[nextLayer][neuron] = zeroCenteredCurve(this.charges[nextLayer][neuron]);
 		}
 	
 		//squish outputs with sigmoid
 		for (let neuron = 0; neuron < this.charges[outputLayer].length; neuron++)
-			this.charges[outputLayer][neuron] = this.zeroCenteredCurve(this.charges[outputLayer][neuron]);
+			this.charges[outputLayer][neuron] = zeroCenteredCurve(this.charges[outputLayer][neuron]);
 
 
 		//return output layer
@@ -86,18 +86,24 @@ class Cluster {
 			}
 		}
 	}
-
-	//Activation functions:
-	//0.5-centered sigmoid (negatives cannot propagate)
-	oneHalfCenteredCurve(x, base = 2) { return 1 / (1 + Math.pow(base, -x)); };
-	//0-centered sigmoid (negatives can propagate)
-	zeroCenteredCurve(x, base = 10) { return (2 / (1 + Math.pow(base, -x)) - 1); };
-	//ReLU for hidden layer (only positives, no max positive)
-	relu(x) { return Math.max(0, x); };
 }
 
-const randZeroCentered = () => (Math.random() * 2) - 1;
+// *********
+//  Helpers
+// *********
 
+//Activation functions:
+//0.5-centered sigmoid (negatives cannot propagate)
+const oneHalfCenteredCurve = (x, base = 2) => 1 / (1 + Math.pow(base, -x));
+//0-centered sigmoid (negatives can propagate)
+const zeroCenteredCurve = (x, base = 10) => 2 / (1 + Math.pow(base, -x)) - 1;
+//ReLU for hidden layer (only positives, no max positive)
+const relu = (x) => Math.max(0, x);
+
+//Random between -1 and 1
+const randZeroCentered = () => Math.random() * 2 - 1;
+
+/*
 const testCluster = () => {
 	const net = new Cluster(2, 20, 2);
 	console.log(net.activate([1,1]));
@@ -106,6 +112,7 @@ const testCluster = () => {
 	console.log(net.activate([-1,1]));
 	console.log(net.activate([0,0]));
 }
-//testCluster()
+testCluster() 
+*/
 
 // module.exports = Cluster;

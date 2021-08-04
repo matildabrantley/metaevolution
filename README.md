@@ -1,2 +1,2 @@
 # Clever Little Things
-Game of hierarchical evolution
+Game of Open-ended AI through Hierarchical Evolution
