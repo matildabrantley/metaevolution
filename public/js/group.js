@@ -8,7 +8,7 @@ class Group {
         for (let i = 0; i < this.lifeforms.length; i++)
             this.lifeforms[i] = new Life(bodies[i]); 
         this.timer1 = 0;
-        this.genLength = 50;
+        this.genLength = 150;
         
         //for updateFast()
         this.timer2 = 0;

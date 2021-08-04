@@ -23,6 +23,8 @@ function start() {
     };
     
     var game = new Phaser.Game(config);
+    let circleGroup;
+    let starGroup;
     
     function preload () {
         this.load.image('star', '/public/sprites/star.png');
@@ -30,38 +32,37 @@ function start() {
     }
     
     function create () {
-        //this.physics...
-        //TODO:: Finish changing to arcade physics!
-        //TODO:: Finish changing to arcade physics!
-        //TODO:: Finish changing to arcade physics!
-        //TODO:: Finish changing to arcade physics!
-        //TODO:: Finish changing to arcade physics!
-        //TODO:: Finish changing to arcade physics!
-        //TODO:: Finish changing to arcade physics!
-        //TODO:: Finish changing to arcade physics!
-        //TODO:: Finish changing to arcade physics!
-        //TODO:: Finish changing to arcade physics!
-        //TODO:: Finish changing to arcade physics!
-        //TODO:: Finish changing to arcade physics!
-        //TODO:: Finish changing to arcade physics!
-        //TODO:: Finish changing to arcade physics!
-        //TODO:: Finish changing to arcade physics!
+
         //TODO:: Finish changing to arcade physics!
 
-        let bodies = [];
+        let livingGroup = [];
+        circleGroup = this.add.group();
         for (let i=0; i < 10; i++){
             let circleBody = this.physics.add.image((i+1)*10, (i+1)*10, 'circle');
             circleBody.setCircle(30);
-            bodies.push(circleBody);
+            livingGroup.push(circleBody);
+            circleGroup.add(circleBody);
         }
-
-        group = new Group(bodies);
+        starGroup = this.add.group();
+        for (let i=0; i < 10; i++){
+            let starBody = this.physics.add.image((i+1)*10 + 100, (i+1)*10, 'star');
+            starBody.setCircle(30);
+            starGroup.add(starBody);
+        }
+        
+        group = new Group(livingGroup);
 
     }
 
     function update () {
         group.updateWithEngine();
+        this.physics.collide(circleGroup, starGroup, eat);
     }
+
+    function eat (creature, food) {
+        food.destroy();
+    }
+
     
 }
 
