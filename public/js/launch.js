@@ -35,10 +35,12 @@ function start() {
 
         //TODO:: Finish changing to arcade physics!
 
+        Phaser.Physics.Arcade.Body.prototype.fitness = 0;
         let livingGroup = [];
         circleGroup = this.add.group();
         for (let i=0; i < 10; i++){
             let circleBody = this.physics.add.image((i+1)*10, (i+1)*10, 'circle');
+            circleBody.fitness = 0;
             circleBody.setCircle(30);
             livingGroup.push(circleBody);
             circleGroup.add(circleBody);
@@ -61,6 +63,7 @@ function start() {
 
     function eat (creature, food) {
         food.destroy();
+        creature.fitness++;
     }
 
     
