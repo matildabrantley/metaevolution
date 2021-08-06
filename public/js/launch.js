@@ -69,4 +69,4 @@ function start() {
     
 }
 
-start();
+//start();
