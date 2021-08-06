@@ -1,22 +1,24 @@
-const r = React.createElement;
 
+let r = React.createElement;
 class TestButton extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(super_components) {
+    super(super_components);
     this.state = { clicked: false };
   }
 
   render() {
-    if (this.state.clicked)
-      return 'Clicked button.';
+    if (this.state.clicked) {
+      return 'Clicked this.';
+    }
 
-    return r (
+    return r(
       'button',
       { onClick: () => this.setState({ clicked: true }) },
-      'Clicked'
+      'Click'
     );
   }
 }
 
-const bContainer = document.getElementById('#button_container');
-ReactDOM.render(r(TestButton), bContainer);
+const domContainer = document.querySelector('#button_container');
+
+ReactDOM.render(r(TestButton), domContainer);
