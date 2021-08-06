@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'libs')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // routes
 // app.use(routes);

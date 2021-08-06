@@ -27,8 +27,8 @@ function start() {
     let starGroup;
     
     function preload () {
-        this.load.image('star', '/public/sprites/star.png');
-        this.load.image('circle', '/public/sprites/circle.png');
+        this.load.image('star', '/sprites/star.png');
+        this.load.image('circle', '/sprites/circle.png');
     }
     
     function create () {
@@ -69,4 +69,4 @@ function start() {
     
 }
 
-//start();
+start();
