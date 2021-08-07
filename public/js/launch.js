@@ -1,6 +1,8 @@
 // const Matter = require('matter-js');
 let width = 800;
 let height = 600;
+let maxLifeforms = 10;
+let maxStars = 10;
 
 function start() {
     let group;
@@ -25,7 +27,9 @@ function start() {
     var game = new Phaser.Game(config);
     let circleGroup;
     let starGroup;
-    let starCount;
+    let distTexts = [];
+    let loneStar;
+    let distances = [];
     
     function preload () {
         this.load.image('star', 'sprites/star.png');
@@ -33,12 +37,12 @@ function start() {
     }
     
     function create () {
-
-        starCount = this.add.text(500, 50, 'hello');
+        loneStar = this.physics.add.image(width/2, height/2, 'star');
+        loneStar.setCircle(30);
 
         let livingGroup = [];
         circleGroup = this.add.group();
-        for (let i=0; i < 10; i++){
+        for (let i=0; i < maxLifeforms; i++){
             let circleBody = this.physics.add.image((i+1)*10, (i+1)*10, 'circle');
             circleBody.fitness = 0;
             circleBody.setCircle(30);
@@ -46,24 +50,30 @@ function start() {
             circleGroup.add(circleBody);
         }
         starGroup = this.add.group();
-        for (let i=0; i < 10; i++){
-            let starBody = this.physics.add.image((i+1)*10 + 100, (i+1)*10, 'star');
-            starBody.setCircle(30);
-            starGroup.add(starBody);
-        }
+        // for (let i=0; i < maxStars; i++){
+        //     let starBody = this.physics.add.image((i+1)*10 + 100, (i+1)*10, 'star');
+        //     starBody.setCircle(30);
+        //     starGroup.add(starBody);
+        // }
         
-        group = new Group(livingGroup);
+        group = new Group(livingGroup, loneStar);
 
+        for (let i=0; i < circleGroup.getLength(); i++)
+            distTexts.push(this.add.text(500, i*50 + 20, 'hello'));
     }
 
     function update () {
-        starCount.setText(starGroup.getLength());
+        let i = 0;
+        circleGroup.children.each(function(creature) {
+            distTexts[i].setText(Phaser.Math.Distance.BetweenPoints(loneStar, creature));
+            i++;
+        }, this);
 
-        if (starGroup.getLength() < 10) {
-            let starBody = this.physics.add.image(Math.random() * width, Math.random() * height, 'star');
-            starBody.setCircle(30);
-            starGroup.add(starBody);
-        }
+        // if (starGroup.getLength() < maxStars) {
+        //     let starBody = this.physics.add.image(Math.random() * width, Math.random() * height, 'star');
+        //     starBody.setCircle(30);
+        //     starGroup.add(starBody);
+        // }
         group.updateWithEngine();
         this.physics.collide(circleGroup, starGroup, eat);
     }
