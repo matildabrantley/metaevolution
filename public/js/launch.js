@@ -28,7 +28,7 @@ function start() {
     let starCount;
     
     function preload () {
-        this.load.image('star', '   sprites/star.png');
+        this.load.image('star', 'sprites/star.png');
         this.load.image('circle', 'sprites/circle.png');
     }
     
@@ -59,6 +59,11 @@ function start() {
     function update () {
         starCount.setText(starGroup.getLength());
 
+        if (starGroup.getLength() < 10) {
+            let starBody = this.physics.add.image(Math.random() * width, Math.random() * height, 'star');
+            starBody.setCircle(30);
+            starGroup.add(starBody);
+        }
         group.updateWithEngine();
         this.physics.collide(circleGroup, starGroup, eat);
     }
