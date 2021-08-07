@@ -24,6 +24,8 @@ class Life {
         this.body.setVelocity(outputs[0]*25, outputs[1]*25);
         //this.body.setAngularVelocity(outputs[3]);
         
+        //this.fitness = 
+
         this.fitness -= this.body.body.velocity.y;
         this.fitness -= this.body.body.velocity.x;
     }
