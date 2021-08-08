@@ -1,15 +1,18 @@
 // const Life = require('./life');
 // const Vector = require('./vector');
 
-class Group {
-    constructor(bodies){
+class Group /*extends Phaser.GameObjects.Group*/ {
+    constructor(bodies, goal){
         this.lifeforms = new Array(bodies.length);
         //pass each body to a different creature
-        for (let i = 0; i < this.lifeforms.length; i++)
+        for (let i = 0; i < this.lifeforms.length; i++){
             this.lifeforms[i] = new Life(bodies[i]); 
+            this.lifeforms[i].startingDistFromGoal = Phaser.Math.Distance.BetweenPoints(goal, bodies[i]);
+        }
         this.timer1 = 0;
         this.genLength = 150;
-        
+        this.goal = goal;
+
         //for updateFast()
         this.timer2 = 0;
         this.fastGenLength = 50;
@@ -18,8 +21,14 @@ class Group {
     //normal updating within Phaser's/Matter's loop
     updateWithEngine() {
         this.timer1++;
-        for (let i=0; i < this.lifeforms.length; i++) 
-            this.lifeforms[i].updateWithEngine();
+        for (let life of this.lifeforms) {
+            life.updateWithEngine(this.goal);
+            //Better for fitness to be managed by group for many reasons
+            life.fitness += Phaser.Math.Distance.BetweenPoints(this.goal, life.body) / (life.startingDistFromGoal + 1);
+            let a = 1;
+        }
+
+            
 
         if (this.timer1 % this.genLength == 0){
            this.selection();
@@ -48,7 +57,7 @@ class Group {
         // }
 
         for (let i in this.lifeforms)
-            this.lifeforms[i].body.setPosition(40 * i + 20, 40 * i + 20);
+            this.lifeforms[i].body.setPosition(250, 250);
 
         this.lifeforms[this.lifeforms.length - 1].mind.cluster.replaceAndMutate(this.lifeforms[0].mind.cluster, 0.1);
         this.lifeforms[this.lifeforms.length - 2].mind.cluster.replaceAndMutate(this.lifeforms[0].mind.cluster, 0.15);

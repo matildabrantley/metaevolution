@@ -1,34 +1,33 @@
 // const Cluster = require('./cluster');
 // const Vector = require('./vector');
 // const Matter = require('matter-js');
-class Life {
-    constructor(body, mind = new Mind()){
-        this.body = body;
+class Life extends Phaser.Physics.Arcade.Sprite {
+
+    constructor (scene, x, y, sprite, mind = new Mind())
+    {
+        super(scene, x, y, sprite);
+        scene.add.existing(this);
+        scene.physics.add.existing(this);
+
         this.mind = mind; 
         
-        this.goal = goal;
-        this.startingDistFromGoal = Phaser.Math.Distance.BetweenPoints(goal, body)
         this.fitness = 0;
 
         //for updateWithEngine
-        this.body.setVelocity(1, -1);
-        this.body.setAngularVelocity(6.5);
-        this.body.setBounce(1);
+        this.setVelocity(10, 10);
+        this.setAngularVelocity(6.5);
+        this.setBounce(1);
 
         // only for fast updating (no rendering and only limited physics)
-        this.x;
-        this.y;
+        // this.x;
+        // this.y;
     }
 
     //for updating within update loop of Phaser or Matter
-    updateWithEngine() {
-        this.mind.update(this.goal.position.x, this.goal.position.y);      
-        let outputs = this.mind.update(1, 1);      
-        this.body.setVelocity(outputs[0]*25, outputs[1]*25);
+    updateWithEngine(goal) {
+        let outputs = this.mind.update(goal.body.x, goal.body.y);          
+        this.setVelocity(outputs[0]*25, outputs[1]*25);
         //this.body.setAngularVelocity(outputs[3]);
-        
-        let fitnessDelta = Phaser.Math.Distance.BetweenPoints(this.goal, this.body) / (this.startingDistFromGoal + 1);
-        this.fitness += fitnessDelta;
     }
 
     //
