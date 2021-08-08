@@ -10,8 +10,10 @@ class Group extends Phaser.Physics.Arcade.Group {
 
         this.timer1 = 0;
         this.genLength = 5;
+        this.selectionCutoff = 0.08;
         this.goal = goal;
-        this.selectionCutoff = 0.15;
+        // this.goalDeltaX = 0;
+        // this.goalDeltaY = 0;
 
         //for updateFast()
         this.timer2 = 0;
@@ -30,6 +32,12 @@ class Group extends Phaser.Physics.Arcade.Group {
     updateWithEngine() {
         this.timer1++;
         for (let life of this.lives) {
+
+            // this.goalDeltaX += (Math.random()-0.5) * 3;
+            // this.goalDeltaY += (Math.random()-0.5) * 3;
+            if (this.timer1 % 10 == 0)
+                this.goal.setVelocity((Math.random()-0.5) * 300, (Math.random()-0.5) * 300);
+
             life.update(this.goal);
 
             //Better for fitness to be managed by group for many reasons
@@ -103,8 +111,10 @@ class Group extends Phaser.Physics.Arcade.Group {
         }
 
         //reset
+        let newStartingX = Math.random() * 800;
+        let newStartingY = Math.random() * 600;
         for (let life of this.lives){
-            life.setPosition(Math.random() * 800, Math.random() * 600);
+            life.setPosition(newStartingX, newStartingY);
             this.goal.setPosition(Math.random() * 800, Math.random() * 600);
             life.startingDistFromGoal = Phaser.Math.Distance.BetweenPoints(life, this.goal);
             life.fitness = 0;
