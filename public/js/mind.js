@@ -2,7 +2,7 @@
 // const Vector = require('./vector');
 // const Matter = require('matter-js');
 class Mind {
-    constructor(body, numInputs = 2, numOutputs = 3){
+    constructor(body, numInputs = 4, numOutputs = 3){
         this.inputs = new Array(numInputs);
         this.outputs = new Array(numOutputs);
 
@@ -13,7 +13,7 @@ class Mind {
     update(...inputs) {
         this.inputs = inputs;
         //TODO: Normalize inputs here if needed
-        
+
         this.outputs = this.cluster.activate(inputs);
 
         return this.outputs;
