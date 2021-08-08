@@ -2,12 +2,12 @@
 // const Vector = require('./vector');
 // const Matter = require('matter-js');
 class Mind {
-    constructor(body, numInputs = 7, numOutputs = 3){
+    constructor(body, numInputs = 3, numOutputs = 3){
         this.inputs = new Array(numInputs);
         this.outputs = new Array(numOutputs);
 
         //Feedforward Neural Network
-        this.cluster = new Cluster(numInputs, 5, numOutputs);
+        this.cluster = new Cluster(numInputs, 5, 4, numOutputs);
     }
 
     update(...inputs) {
