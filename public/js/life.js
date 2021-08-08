@@ -24,7 +24,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
     }
 
     //for updating within update loop of Phaser or Matter
-    updateWithEngine(goal) {
+    update(goal) {
         let outputs = this.mind.update(goal.body.x, goal.body.y);          
         this.setVelocity(outputs[0]*25, outputs[1]*25);
         //this.body.setAngularVelocity(outputs[3]);

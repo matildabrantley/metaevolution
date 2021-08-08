@@ -39,18 +39,16 @@ let maxStars = 10;
         loneStar = this.physics.add.image(width/2, height/2, 'star');
         loneStar.setCircle(30);
 
-        let livingGroup = [];
-        circleGroup = this.add.group();
+        //circleGroup = this.add.group();
+        circleGroup = new Group(this.physics.world, this, config);
 
-        circleGroup.add(new Life(this, 250, 250, 'circle'));
+        // group.add(new Life(this, 250, 250, 'circle'));
 
-        //for (let i=0; i < maxLifeforms; i++){
-            //let circleBody = this.physics.add.image(250, 250, 'circle');
-            //circleBody.fitness = 0;
-            //circleBody.setCircle(30);
-            //livingGroup.push(circleBody);
-            //circleGroup.add(circleBody);
-        //}
+        for (let i=0; i < maxLifeforms; i++){
+            let circleBody = new Life(this, 250, 250, 'circle');
+            circleBody.setCircle(30);
+            circleGroup.add(circleBody);
+        }
         //starGroup = this.add.group();
         // for (let i=0; i < maxStars; i++){
         //     let starBody = this.physics.add.image((i+1)*10 + 100, (i+1)*10, 'star');
@@ -76,7 +74,7 @@ let maxStars = 10;
         //     starBody.setCircle(30);
         //     starGroup.add(starBody);
         // }
-        //group.updateWithEngine();
+        circleGroup.updateWithEngine();
         //this.physics.collide(circleGroup, starGroup, eat);
     }
 

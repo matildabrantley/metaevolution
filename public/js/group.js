@@ -1,14 +1,17 @@
 // const Life = require('./life');
 // const Vector = require('./vector');
 
-class Group /*extends Phaser.GameObjects.Group*/ {
-    constructor(bodies, goal){
-        this.lifeforms = new Array(bodies.length);
-        //pass each body to a different creature
-        for (let i = 0; i < this.lifeforms.length; i++){
-            this.lifeforms[i] = new Life(bodies[i]); 
-            this.lifeforms[i].startingDistFromGoal = Phaser.Math.Distance.BetweenPoints(goal, bodies[i]);
-        }
+class Group extends Phaser.Physics.Arcade.Group {
+    constructor(world, scene, config, goal){
+        super(world, scene, config);
+
+
+        // this.lifeforms = new Array(bodies.length);
+        // //pass each body to a different creature
+        // for (let i = 0; i < this.lifeforms.length; i++){
+        //     this.lifeforms[i] = new Life(bodies[i]); 
+        //     this.lifeforms[i].startingDistFromGoal = Phaser.Math.Distance.BetweenPoints(goal, bodies[i]);
+        // }
         this.timer1 = 0;
         this.genLength = 150;
         this.goal = goal;
@@ -21,14 +24,17 @@ class Group /*extends Phaser.GameObjects.Group*/ {
     //normal updating within Phaser's/Matter's loop
     updateWithEngine() {
         this.timer1++;
-        for (let life of this.lifeforms) {
-            life.updateWithEngine(this.goal);
-            //Better for fitness to be managed by group for many reasons
-            life.fitness += Phaser.Math.Distance.BetweenPoints(this.goal, life.body) / (life.startingDistFromGoal + 1);
-            let a = 1;
-        }
+        // for (let life of this.lifeforms) {
+        //     life.updateWithEngine(this.goal);
+        //     //Better for fitness to be managed by group for many reasons
+        //     life.fitness += Phaser.Math.Distance.BetweenPoints(this.goal, life.body) / (life.startingDistFromGoal + 1);
+        //     let a = 1;
+        // }
 
-            
+        this.children.each(function(life) {
+            life.update(this.goal);
+        }, this);
+     
 
         if (this.timer1 % this.genLength == 0){
            this.selection();
