@@ -33,7 +33,8 @@ class Group extends Phaser.Physics.Arcade.Group {
         for (let life of this.lives) {
             life.update(this.goal);
             //Better for fitness to be managed by group for many reasons
-            life.fitness += Phaser.Math.Distance.BetweenPoints(this.goal, life.body) / (life.startingDistFromGoal + 1);
+            life.fitness += life.x;
+            life.fitness += life.y;
         }
 
         if (this.timer1 % this.genLength == 0){
@@ -58,7 +59,8 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.lives.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
         
         for (let i=this.lives.length-1; i > this.lives.length * 0.1; i--) {
-            this.lives[i].mind.cluster.replaceAndMutate(this.lives[0].mind.cluster, 0.1);
+            let moreFit = Math.floor(Math.random() * Math.floor(this.lives.length * 0.1));
+            this.lives[i].mind.cluster.replaceAndMutate(this.lives[moreFit].mind.cluster, 0.1);
         }
 
         //reset
