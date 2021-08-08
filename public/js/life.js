@@ -25,7 +25,9 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
     //for updating within update loop of Phaser or Matter
     update(goal) {
-        let outputs = this.mind.update(squish(this.x), squish(this.y), squish(goal.x), squish(goal.y));           
+        let angle = Phaser.Math.Angle.BetweenPoints(this, goal)
+
+        let outputs = this.mind.update(angle, angle, angle, squish(this.x), squish(this.y), squish(goal.x), squish(goal.y));           
         this.setVelocity(outputs[0]*250 * Math.random(), outputs[1]*250 * Math.random());
         //this.setAngularVelocity(outputs[3]);
     }
