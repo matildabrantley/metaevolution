@@ -14,7 +14,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         //     this.lives[i].startingDistFromGoal = Phaser.Math.Distance.BetweenPoints(goal, bodies[i]);
         // }
         this.timer1 = 0;
-        this.genLength = 550;
+        this.genLength = 150;
         this.goal = goal;
 
         //for updateFast()
@@ -57,13 +57,15 @@ class Group extends Phaser.Physics.Arcade.Group {
         //fitness sorting function in which more fit lives move to front
         this.lives.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
         
-        // for (let i in this.lives) {
-        //     lives[i].mutate((i+1) / this.lives.length);
-        //     lives[i].fitness = 0;
-        // }
+        for (let i=this.lives.length-1; i > this.lives.length * 0.1; i--) {
+            this.lives[i].mind.cluster.replaceAndMutate(this.lives[0].mind.cluster, 0.1);
+        }
 
-        for (let i in this.lives)
+        //reset
+        for (let i in this.lives){
             this.lives[i].setPosition(250, 250);
+            this.lives[i].fitness = 0;
+        }
 
         this.lives[this.lives.length - 1].mind.cluster.replaceAndMutate(this.lives[0].mind.cluster, 0.1);
         this.lives[this.lives.length - 2].mind.cluster.replaceAndMutate(this.lives[0].mind.cluster, 0.15);

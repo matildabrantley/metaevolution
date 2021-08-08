@@ -1,7 +1,7 @@
 // const Matter = require('matter-js');
 let width = 800;
 let height = 600;
-let maxLifeforms = 15000;
+let maxLifeforms = 100;
 let maxStars = 10;
 
     let group;
@@ -40,9 +40,7 @@ let maxStars = 10;
         loneStar.setCircle(30);
 
         //circleGroup = this.add.group();
-        circleGroup = new Group(this.physics.world, this, config, loneStar);
-
-        // group.add(new Life(this, 250, 250, 'circle'));
+        circleGroup = new Group(this.physics.world, this, config, loneStar);;
 
         for (let i=0; i < maxLifeforms; i++){
             let circleBody = new Life(this, 250, 250, 'circle');
@@ -56,8 +54,6 @@ let maxStars = 10;
         //     starBody.setCircle(30);
         //     starGroup.add(starBody);
         // }
-        
-        //group = new Group(livingGroup, loneStar);
 
         //for (let i=0; i < circleGroup.getLength(); i++)
          //   distTexts.push(this.add.text(500, i*50 + 20, 'hello'));
@@ -76,7 +72,7 @@ let maxStars = 10;
         //     starGroup.add(starBody);
         // }
         circleGroup.updateWithEngine();
-        //this.physics.collide(circleGroup, starGroup, eat);
+        //this.physics.collide(circleGroup, loneStar, eat);
     }
 
     // function render () {
@@ -85,5 +81,5 @@ let maxStars = 10;
 
     function eat (creature, food) {
         food.destroy();
-        creature.fitness++;
+        // creature.fitness++;
     }
