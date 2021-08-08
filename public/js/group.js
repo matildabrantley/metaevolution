@@ -8,9 +8,9 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.scene = scene;
 
         this.timer1 = 0;
-        this.genLength = 500;
+        this.genLength = 10;
         this.goal = goal;
-        this.fitnessCutoff = 0.05;
+        this.fitnessCutoff = 0.15;
 
         //for updateFast()
         this.timer2 = 0;
@@ -56,18 +56,16 @@ class Group extends Phaser.Physics.Arcade.Group {
 
     //generational change in group where fitness is sorted and replacement and mutation occur
     selection() {
+        if (this.genLength < 500)
+            this.genLength += 10;
+        this.timer1 = 0;
+
         //fitness sorting function in which more fit lives move to front
         this.lives.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
-        
+
         for (let i=this.lives.length-1; i > this.lives.length * this.fitnessCutoff; i--) {
             let moreFit = Math.floor(Math.random() * Math.floor(this.lives.length * this.fitnessCutoff));
             this.lives[i].mind.cluster.replaceAndMutate(this.lives[moreFit].mind.cluster, 0.05);
-        }
-
-        //reset
-        for (let i in this.lives){
-            this.lives[i].setPosition(250, 250);
-            this.lives[i].fitness = 0;
         }
 
         //Elite Selection: Best 10 always get a spot in next generation without mutation
@@ -81,6 +79,16 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.lives[this.lives.length - 8].mind.cluster.replaceAndMutate(this.lives[3].mind.cluster, 0);
         this.lives[this.lives.length - 9].mind.cluster.replaceAndMutate(this.lives[4].mind.cluster, 0);
         this.lives[this.lives.length - 10].mind.cluster.replaceAndMutate(this.lives[5].mind.cluster, 0);
+
+        //reset
+        for (let life of this.lives){
+            life.setPosition(Math.random() * 800, Math.random() * 600);
+            this.goal.setPosition(Math.random() * 800, Math.random() * 600);
+            life.startingDistFromGoal = Phaser.Math.Distance.BetweenPoints(life, this.goal);
+            life.fitness = 0;
+            
+        }
+       
     }
 
 }

@@ -25,7 +25,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
     //for updating within update loop of Phaser or Matter
     update(goal) {
-        let outputs = this.mind.update(this.x * 0.01, this.y * 0.01, goal.x * 0.01, goal.y * 0.01);           
+        let outputs = this.mind.update(squish(this.x), squish(this.y), squish(goal.x), squish(goal.y));           
         this.setVelocity(outputs[0]*250 * Math.random(), outputs[1]*250 * Math.random());
         //this.setAngularVelocity(outputs[3]);
     }
@@ -39,8 +39,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
     mutate() {
         
     }
-
-
 }
+
+const squish = (x, base = 2) => 1 / (1 + Math.pow(base, -x));
 
 // module.exports = Life;
