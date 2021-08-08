@@ -9,7 +9,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.world = world;
 
         this.timer1 = 0;
-        this.genLength = 10;
+        this.genLength = 5;
         this.goal = goal;
         this.selectionCutoff = 0.15;
 
@@ -61,43 +61,45 @@ class Group extends Phaser.Physics.Arcade.Group {
     //generational change in group where fitness is sorted and replacement and mutation occur
     selection() {
         if (this.genLength < 500)
-            this.genLength += 10;
+            this.genLength += 5;
         this.timer1 = 0;
 
         //fitness sorting function in which more fit lives move to front
         this.lives.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
 
+        //vast majority of population replaced by sexual offspring of top X% (X = selectionCutoff)
         for (let i=this.lives.length-1; i > this.lives.length * this.selectionCutoff; i--) {
-            let moreFit = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
-            this.lives[i].mind.cluster.replaceAndMutate(this.lives[moreFit].mind.cluster, 0.05);
+            let mom = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
+            let dad = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
+            this.lives[i].mind.cluster.sexual(this.lives[mom].mind.cluster, this.lives[dad].mind.cluster, 0.05);
         }
 
-        //Elite Selection: Best 5 always get spot(s) in next generation without mutation
-        if (this.lives.length > 3) {
-            this.lives[this.lives.length - 1].mind.cluster.replaceAndMutate(this.lives[0].mind.cluster, 0);
-            this.lives[this.lives.length - 2].mind.cluster.replaceAndMutate(this.lives[0].mind.cluster, 0);
-            this.lives[this.lives.length - 3].mind.cluster.replaceAndMutate(this.lives[1].mind.cluster, 0);
-        } if (this.lives.length > 6) {
-            this.lives[this.lives.length - 4].mind.cluster.replaceAndMutate(this.lives[0].mind.cluster, 0);
-            this.lives[this.lives.length - 5].mind.cluster.replaceAndMutate(this.lives[0].mind.cluster, 0);
-            this.lives[this.lives.length - 6].mind.cluster.replaceAndMutate(this.lives[1].mind.cluster, 0);
-        } if (this.lives.length > 10) {         
-            this.lives[this.lives.length - 7].mind.cluster.replaceAndMutate(this.lives[1].mind.cluster, 0);
-            this.lives[this.lives.length - 8].mind.cluster.replaceAndMutate(this.lives[2].mind.cluster, 0);
-            this.lives[this.lives.length - 9].mind.cluster.replaceAndMutate(this.lives[2].mind.cluster, 0);
-            this.lives[this.lives.length - 10].mind.cluster.replaceAndMutate(this.lives[3].mind.cluster, 0);
+        //Elite Selection: Best 10 always get spot(s) in next generation without mutation
+        if (this.lives.length > 3) { //two clones of 1st and one clone of 2nd
+            this.lives[this.lives.length - 1].mind.cluster.asexual(this.lives[0].mind.cluster, 0);
+            this.lives[this.lives.length - 2].mind.cluster.asexual(this.lives[0].mind.cluster, 0);
+            this.lives[this.lives.length - 3].mind.cluster.asexual(this.lives[1].mind.cluster, 0);
+        } if (this.lives.length > 6) { //three children of mating 1st/2nd
+            this.lives[this.lives.length - 4].mind.cluster.sexual(this.lives[0].mind.cluster, this.lives[1].mind.cluster, 0);
+            this.lives[this.lives.length - 5].mind.cluster.sexual(this.lives[0].mind.cluster, this.lives[1].mind.cluster, 0);
+            this.lives[this.lives.length - 6].mind.cluster.sexual(this.lives[0].mind.cluster, this.lives[1].mind.cluster, 0);
+        } if (this.lives.length > 10) {   //mating between 1st/3rd and 2nd/3rd, and clones of 3rd and 4th      
+            this.lives[this.lives.length - 7].mind.cluster.sexual(this.lives[0].mind.cluster, this.lives[2].mind.cluster, 0);
+            this.lives[this.lives.length - 7].mind.cluster.sexual(this.lives[1].mind.cluster, this.lives[2].mind.cluster, 0);
+            this.lives[this.lives.length - 9].mind.cluster.asexual(this.lives[2].mind.cluster, 0);
+            this.lives[this.lives.length - 10].mind.cluster.asexual(this.lives[3].mind.cluster, 0);
         } if (this.lives.length > 15) {         
-            this.lives[this.lives.length - 11].mind.cluster.replaceAndMutate(this.lives[3].mind.cluster, 0);
-            this.lives[this.lives.length - 12].mind.cluster.replaceAndMutate(this.lives[3].mind.cluster, 0);
-            this.lives[this.lives.length - 13].mind.cluster.replaceAndMutate(this.lives[4].mind.cluster, 0);
-            this.lives[this.lives.length - 14].mind.cluster.replaceAndMutate(this.lives[4].mind.cluster, 0);
-            this.lives[this.lives.length - 15].mind.cluster.replaceAndMutate(this.lives[5].mind.cluster, 0);
+            this.lives[this.lives.length - 11].mind.cluster.asexual(this.lives[3].mind.cluster, 0);
+            this.lives[this.lives.length - 12].mind.cluster.asexual(this.lives[3].mind.cluster, 0);
+            this.lives[this.lives.length - 13].mind.cluster.asexual(this.lives[4].mind.cluster, 0);
+            this.lives[this.lives.length - 14].mind.cluster.asexual(this.lives[4].mind.cluster, 0);
+            this.lives[this.lives.length - 15].mind.cluster.asexual(this.lives[5].mind.cluster, 0);
         } if (this.lives.length > 20) {         
-            this.lives[this.lives.length - 16].mind.cluster.replaceAndMutate(this.lives[5].mind.cluster, 0);
-            this.lives[this.lives.length - 17].mind.cluster.replaceAndMutate(this.lives[6].mind.cluster, 0);
-            this.lives[this.lives.length - 18].mind.cluster.replaceAndMutate(this.lives[7].mind.cluster, 0);
-            this.lives[this.lives.length - 19].mind.cluster.replaceAndMutate(this.lives[8].mind.cluster, 0);
-            this.lives[this.lives.length - 20].mind.cluster.replaceAndMutate(this.lives[9].mind.cluster, 0);
+            this.lives[this.lives.length - 16].mind.cluster.asexual(this.lives[5].mind.cluster, 0);
+            this.lives[this.lives.length - 17].mind.cluster.asexual(this.lives[6].mind.cluster, 0);
+            this.lives[this.lives.length - 18].mind.cluster.asexual(this.lives[7].mind.cluster, 0);
+            this.lives[this.lives.length - 19].mind.cluster.asexual(this.lives[8].mind.cluster, 0);
+            this.lives[this.lives.length - 20].mind.cluster.asexual(this.lives[9].mind.cluster, 0);
         }
 
         //reset

@@ -27,12 +27,14 @@ class Life extends Phaser.Physics.Arcade.Sprite {
     update(goal) {
         let angle = Phaser.Math.Angle.BetweenPoints(this, goal);
         let dist = Phaser.Math.Distance.BetweenPoints(this, goal);
+        let xDiff = (this.x - goal.x) / 100;
+        let yDiff = (this.y - goal.y) / 100;
         
         let in1 = goal.x > this.x ? 1 : -1;
         let in2 = goal.y > this.y ? 1 : -1;
 
-        let outputs = this.mind.update(angle, in1, in2);           
-        this.setVelocity(outputs[0]*250 * Math.random(), outputs[1]*250 * Math.random());
+        let outputs = this.mind.update(angle, in1, in2, xDiff, yDiff);           
+        this.setVelocity(outputs[0]*200*outputs[2], outputs[1]*200*outputs[2]);
         //this.setAngularVelocity(outputs[3]);
     }
 
@@ -47,6 +49,6 @@ class Life extends Phaser.Physics.Arcade.Sprite {
     }
 }
 
-const squish = (x) => x * 0.01;
+//const squish = (x) => x * 0.01;
 
 // module.exports = Life;

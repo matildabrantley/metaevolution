@@ -72,16 +72,38 @@ class Cluster {
 				this.charges[layer][neuron] = 0;
 	}
 
+	//Asexual Reproduction
 	//copy over this net's weights with another net's weights, mutating in the process
-	replaceAndMutate (otherCluster, mutationRate=0) { 
+	//RM: Replace and Mutate
+	asexual (mom, mutationRate=0) { 
 		//weights overwritten
-		for (let layer in otherCluster.weights) {
-			for (let neuron in otherCluster.weights[layer]) {
-				for (let w in otherCluster.weights[layer][neuron]) {	
+		for (let layer in mom.weights) {
+			for (let neuron in mom.weights[layer]) {
+				for (let w in mom.weights[layer][neuron]) {	
 					if (mutationRate > Math.random())
 						this.weights[layer][neuron][w] = randZeroCentered();
 					else
-						this.weights[layer][neuron][w] = otherCluster.weights[layer][neuron][w];
+						this.weights[layer][neuron][w] = mom.weights[layer][neuron][w];
+				}
+			}
+		}
+	}
+	//Sexual Reproduction
+	//copy over this net's weights with another net's weights, mutating in the process
+	//RMC: Replace, Mutate and Crossover
+	sexual (mom, dad, mutationRate=0) { 
+		//weights overwritten
+		for (let layer in mom.weights) {
+			for (let neuron in mom.weights[layer]) {
+				for (let w in mom.weights[layer][neuron]) {	
+					if (mutationRate > Math.random())
+						this.weights[layer][neuron][w] = randZeroCentered();
+					else { //50% chance to be mom or dad's gene	
+						if (Math.random() > 0.5)
+							this.weights[layer][neuron][w] = mom.weights[layer][neuron][w];
+						else
+							this.weights[layer][neuron][w] = dad.weights[layer][neuron][w];
+					}
 				}
 			}
 		}
@@ -94,7 +116,7 @@ class Cluster {
 
 //Activation functions:
 //0.5-centered sigmoid (negatives cannot propagate)
-const oneHalfCenteredCurve = (x, base = 2) => 1 / (1 + Math.pow(base, -x));
+const squish = (x, base = 2) => 1 / (1 + Math.pow(base, -x));
 //0-centered sigmoid (negatives can propagate)
 const zeroCenteredCurve = (x, base = 10) => 2 / (1 + Math.pow(base, -x)) - 1;
 //ReLU for hidden layer (only positives, no max positive)
