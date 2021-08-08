@@ -69,12 +69,12 @@ class Group extends Phaser.Physics.Arcade.Group {
             this.lives[i].fitness = 0;
         }
 
-        this.lives[this.lives.length - 1].mind.cluster.replaceAndMutate(this.lives[0].mind.cluster, 0.1);
-        this.lives[this.lives.length - 2].mind.cluster.replaceAndMutate(this.lives[0].mind.cluster, 0.15);
-        this.lives[this.lives.length - 3].mind.cluster.replaceAndMutate(this.lives[0].mind.cluster, 0.2);
-        this.lives[this.lives.length - 4].mind.cluster.replaceAndMutate(this.lives[1].mind.cluster, 0.15);
-        this.lives[this.lives.length - 5].mind.cluster.replaceAndMutate(this.lives[1].mind.cluster, 0.2);
-        this.lives[this.lives.length - 6].mind.cluster.replaceAndMutate(this.lives[2].mind.cluster, 0.2);
+        //Elite Selection: Best 5 always get a spot in next generation without mutation
+        this.lives[this.lives.length - 1].mind.cluster.replaceAndMutate(this.lives[0].mind.cluster, 0);
+        this.lives[this.lives.length - 2].mind.cluster.replaceAndMutate(this.lives[1].mind.cluster, 0);
+        this.lives[this.lives.length - 3].mind.cluster.replaceAndMutate(this.lives[2].mind.cluster, 0);
+        this.lives[this.lives.length - 4].mind.cluster.replaceAndMutate(this.lives[3].mind.cluster, 0);
+        this.lives[this.lives.length - 5].mind.cluster.replaceAndMutate(this.lives[4].mind.cluster, 0);
     }
 
 }
