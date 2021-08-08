@@ -4,16 +4,17 @@
 class Group extends Phaser.Physics.Arcade.Group {
     constructor(world, scene, config, goal){
         super(world, scene, config);
+        this.lives = [];
+        this.scene = scene;
 
-
-        // this.lifeforms = new Array(bodies.length);
+        // this.lives = new Array(bodies.length);
         // //pass each body to a different creature
-        // for (let i = 0; i < this.lifeforms.length; i++){
-        //     this.lifeforms[i] = new Life(bodies[i]); 
-        //     this.lifeforms[i].startingDistFromGoal = Phaser.Math.Distance.BetweenPoints(goal, bodies[i]);
+        // for (let i = 0; i < this.lives.length; i++){
+        //     this.lives[i] = new Life(bodies[i]); 
+        //     this.lives[i].startingDistFromGoal = Phaser.Math.Distance.BetweenPoints(goal, bodies[i]);
         // }
         this.timer1 = 0;
-        this.genLength = 150;
+        this.genLength = 550;
         this.goal = goal;
 
         //for updateFast()
@@ -21,20 +22,19 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.fastGenLength = 50;
     }
 
+    //maintains array of easily accessible Life objects
+    simplify() {
+        this.lives = this.getChildren();
+    }
+
     //normal updating within Phaser's/Matter's loop
     updateWithEngine() {
         this.timer1++;
-        // for (let life of this.lifeforms) {
-        //     life.updateWithEngine(this.goal);
-        //     //Better for fitness to be managed by group for many reasons
-        //     life.fitness += Phaser.Math.Distance.BetweenPoints(this.goal, life.body) / (life.startingDistFromGoal + 1);
-        //     let a = 1;
-        // }
-
-        this.children.each(function(life) {
+        for (let life of this.lives) {
             life.update(this.goal);
-        }, this);
-     
+            //Better for fitness to be managed by group for many reasons
+            life.fitness += Phaser.Math.Distance.BetweenPoints(this.goal, life.body) / (life.startingDistFromGoal + 1);
+        }
 
         if (this.timer1 % this.genLength == 0){
            this.selection();
@@ -44,8 +44,8 @@ class Group extends Phaser.Physics.Arcade.Group {
     //simplified fast updating without a framework/renderer/engine, and very limited physics
     async updateFast() {
         this.timer2++;
-        for (let i=0; i < this.lifeforms.length; i++) 
-            this.lifeforms[i].updateFast();
+        for (let i=0; i < this.lives.length; i++) 
+            this.lives[i].updateFast();
 
         if (this.timer2 % this.fastGenLength == 0){
             this.selection();
@@ -54,23 +54,23 @@ class Group extends Phaser.Physics.Arcade.Group {
 
     //generational change in group where fitness is sorted and replacement and mutation occur
     selection() {
-        //fitness sorting function in which more fit lifeforms move to front
-        this.lifeforms.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
+        //fitness sorting function in which more fit lives move to front
+        this.lives.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
         
-        // for (let i in this.lifeforms) {
-        //     lifeforms[i].mutate((i+1) / this.lifeforms.length);
-        //     lifeforms[i].fitness = 0;
+        // for (let i in this.lives) {
+        //     lives[i].mutate((i+1) / this.lives.length);
+        //     lives[i].fitness = 0;
         // }
 
-        for (let i in this.lifeforms)
-            this.lifeforms[i].body.setPosition(250, 250);
+        for (let i in this.lives)
+            this.lives[i].setPosition(250, 250);
 
-        this.lifeforms[this.lifeforms.length - 1].mind.cluster.replaceAndMutate(this.lifeforms[0].mind.cluster, 0.1);
-        this.lifeforms[this.lifeforms.length - 2].mind.cluster.replaceAndMutate(this.lifeforms[0].mind.cluster, 0.15);
-        this.lifeforms[this.lifeforms.length - 3].mind.cluster.replaceAndMutate(this.lifeforms[0].mind.cluster, 0.2);
-        this.lifeforms[this.lifeforms.length - 4].mind.cluster.replaceAndMutate(this.lifeforms[1].mind.cluster, 0.15);
-        this.lifeforms[this.lifeforms.length - 5].mind.cluster.replaceAndMutate(this.lifeforms[1].mind.cluster, 0.2);
-        this.lifeforms[this.lifeforms.length - 6].mind.cluster.replaceAndMutate(this.lifeforms[2].mind.cluster, 0.2);
+        this.lives[this.lives.length - 1].mind.cluster.replaceAndMutate(this.lives[0].mind.cluster, 0.1);
+        this.lives[this.lives.length - 2].mind.cluster.replaceAndMutate(this.lives[0].mind.cluster, 0.15);
+        this.lives[this.lives.length - 3].mind.cluster.replaceAndMutate(this.lives[0].mind.cluster, 0.2);
+        this.lives[this.lives.length - 4].mind.cluster.replaceAndMutate(this.lives[1].mind.cluster, 0.15);
+        this.lives[this.lives.length - 5].mind.cluster.replaceAndMutate(this.lives[1].mind.cluster, 0.2);
+        this.lives[this.lives.length - 6].mind.cluster.replaceAndMutate(this.lives[2].mind.cluster, 0.2);
     }
 
 }

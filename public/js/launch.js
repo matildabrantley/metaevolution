@@ -1,7 +1,7 @@
 // const Matter = require('matter-js');
 let width = 800;
 let height = 600;
-let maxLifeforms = 6;
+let maxLifeforms = 15000;
 let maxStars = 10;
 
     let group;
@@ -40,7 +40,7 @@ let maxStars = 10;
         loneStar.setCircle(30);
 
         //circleGroup = this.add.group();
-        circleGroup = new Group(this.physics.world, this, config);
+        circleGroup = new Group(this.physics.world, this, config, loneStar);
 
         // group.add(new Life(this, 250, 250, 'circle'));
 
@@ -49,6 +49,7 @@ let maxStars = 10;
             circleBody.setCircle(30);
             circleGroup.add(circleBody);
         }
+        circleGroup.simplify();
         //starGroup = this.add.group();
         // for (let i=0; i < maxStars; i++){
         //     let starBody = this.physics.add.image((i+1)*10 + 100, (i+1)*10, 'star');

@@ -13,6 +13,7 @@ class Mind {
     update(...inputs) {
         this.inputs = inputs;
         //TODO: Normalize inputs here if needed
+        
         this.outputs = this.cluster.activate(inputs);
 
         return this.outputs;
