@@ -3,9 +3,9 @@
 // const Matter = require('matter-js');
 class Life extends Phaser.Physics.Arcade.Sprite {
 
-    constructor (scene, x, y, sprite, mind = new Mind())
+    constructor (scene, x, y, sprite, frame, mind = new Mind())
     {
-        super(scene, x, y, sprite);
+        super(scene, x, y, sprite, frame);
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
@@ -33,8 +33,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         let in1 = goal.x > this.x ? 1 : -1;
         let in2 = goal.y > this.y ? 1 : -1;
 
-        let outputs = this.mind.update(angle, xDiff, yDiff, angle, xDiff, yDiff);           
-        this.setVelocity(outputs[0]*400*outputs[2], outputs[1]*400*outputs[2]);
+        let outputs = this.mind.update(yDiff, xDiff);           
+        this.setVelocity(outputs[0]*500, outputs[1]*500);
         //this.setAngularVelocity(outputs[3]);
     }
 

@@ -1,7 +1,7 @@
 // const Matter = require('matter-js');
 let width = 800;
 let height = 600;
-let maxLifeforms = 500;
+let maxLifeforms = 1500;
 let maxStars = 10;
 
     let group;
@@ -33,6 +33,7 @@ let maxStars = 10;
     function preload () {
         this.load.image('star', 'sprites/star.png');
         this.load.image('circle', 'sprites/circle.png');
+        this.load.atlas('pulser', 'sprites/pulsing-red-dot.png', 'sprites/pulsing-red-dot.json');
     }
     
     function create () {
@@ -45,11 +46,23 @@ let maxStars = 10;
         loneStar.collideWorldBounds = true;
 
         //circleGroup = this.add.group();
-        circleGroup = new Group(this.physics.world, this, config, loneStar);;
+        circleGroup = new Group(this.physics.world, this, config, loneStar);
 
+        const animConfig = {
+            key: 'pulse',
+            frames: 'pulser',
+            frameRate: 30,
+            repeat: -1
+        };
+        this.anims.create(animConfig);
+
+
+        //let pulsing = pulse.animations.add('pulse');
         for (let i=0; i < maxLifeforms; i++){
-            let circleBody = new Life(this, 250, 250, 'circle');
-            circleBody.setCircle(30);
+            let circleBody = new Life(this, 250, 250, 'pulser', 'pulsing-red-dot0.png');
+            //console.log(getAllMethods(Life));
+            //circleBody.setCircle(16);
+            circleBody.play('pulse');
             circleGroup.add(circleBody);
         }
         circleGroup.simplify();
@@ -88,3 +101,9 @@ let maxStars = 10;
         food.destroy();
         // creature.fitness++;
     }
+
+    // ​function getAllMethods(object) {
+    //     return Object.getOwnPropertyNames(object).filter(function(property) {
+    //         return typeof object[property] == 'function';
+    //     });
+    // }

@@ -9,7 +9,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.world = world;
 
         this.timer1 = 0;
-        this.genLength = 5;
+        this.genLength = 10;
         this.selectionCutoff = 0.08;
         this.goal = goal;
         // this.goalDeltaX = 0;
@@ -111,11 +111,11 @@ class Group extends Phaser.Physics.Arcade.Group {
         }
 
         //reset
-        let newStartingX = Math.random() * 800;
-        let newStartingY = Math.random() * 600;
+        let newStartingX = 200 + Math.random() * 400;
+        let newStartingY = 150 + Math.random() * 300;
         for (let life of this.lives){
             life.setPosition(newStartingX, newStartingY);
-            this.goal.setPosition(Math.random() * 800, Math.random() * 600);
+            this.goal.setPosition(200 + Math.random() * 400, 150 + Math.random() * 300);
             life.startingDistFromGoal = Phaser.Math.Distance.BetweenPoints(life, this.goal);
             life.fitness = 0;
             
