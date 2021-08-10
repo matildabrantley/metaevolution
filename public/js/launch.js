@@ -1,7 +1,7 @@
 // const Matter = require('matter-js');
 let width = 800;
 let height = 600;
-let maxLifeforms = 500;
+let speciesPop = 250;
 let maxStars = 10;
 
     let group;
@@ -24,7 +24,7 @@ let maxStars = 10;
     };
     
     var game = new Phaser.Game(config);
-    let circleGroup;
+    let firstSpecies;
     let starGroup;
     let distTexts = [];
     let loneStar;
@@ -35,7 +35,9 @@ let maxStars = 10;
         this.load.image('bluestar', 'sprites/bluestar.png');
         this.load.image('blackstar', 'sprites/blackstar.png');
         this.load.image('circle', 'sprites/circle.png');
-        this.load.atlas('pulser', 'sprites/pulsing-red-dot.png', 'sprites/pulsing-red-dot.json');
+        this.load.atlas('redLife', 'sprites/pulsing-red-dot.png', 'sprites/pulsing-red-dot.json');
+        this.load.atlas('blueLife', 'sprites/pulsing-blue-dot.png', 'sprites/pulsing-blue-dot.json');
+        this.load.atlas('greenLife', 'sprites/pulsing-green-dot.png', 'sprites/pulsing-green-dot.json');
     }
     
     function create () {
@@ -56,34 +58,62 @@ let maxStars = 10;
         blueStar.collideWorldBounds = true;
         goalGroup.add(blueStar);
         
-        blackStar = this.physics.add.image(width/2, height/2, 'blackstar');
-        blackStar.setCircle(30);
-        blackStar.setScale(5);
-        blackStar.setBounce(5);
-        blackStar.collideWorldBounds = true;
-        goalGroup.add(blackStar);
+        // blackStar = this.physics.add.image(width/2, height/2, 'blackstar');
+        // blackStar.setCircle(30);
+        // blackStar.setScale(5);
+        // blackStar.setBounce(5);
+        // blackStar.collideWorldBounds = true;
+        // goalGroup.add(blackStar);
         
-        //circleGroup = this.add.group();
-        circleGroup = new Group(this.physics.world, this, config, goalGroup);
+        //firstSpecies = this.add.group();
+        firstSpecies = new Species(this.physics.world, this, config, goalGroup);
+        secondSpecies = new Species(this.physics.world, this, config, goalGroup);
+        thirdSpecies = new Species(this.physics.world, this, config, goalGroup);
 
-        const animConfig = {
-            key: 'pulse',
-            frames: 'pulser',
+        const redAnimConfig = {
+            key: 'redKey',
+            frames: 'redLife',
             frameRate: 30,
             repeat: -1
         };
-        this.anims.create(animConfig);
+        const blueAnimConfig = {
+            key: 'blueKey',
+            frames: 'blueLife',
+            frameRate: 30,
+            repeat: -1
+        };
+        const greenAnimConfig = {
+            key: 'greenKey',
+            frames: 'greenLife',
+            frameRate: 30,
+            repeat: -1
+        };
+        this.anims.create(redAnimConfig);
+        this.anims.create(blueAnimConfig);
+        this.anims.create(greenAnimConfig);
 
 
-        //let pulsing = pulse.animations.add('pulse');
-        for (let i=0; i < maxLifeforms; i++){
-            let circleBody = new Life(this, 250, 250, 'pulser', 'pulsing-red-dot0.png');
-            //console.log(getAllMethods(Life));
-            //circleBody.setCircle(16);
-            circleBody.play('pulse');
-            circleGroup.add(circleBody);
+        for (let i=0; i < speciesPop; i++){
+            let life = new Life(this, 300, 400, 'redLife', 'pulsing-red-dot0.png');
+            //life.setCircle(16);
+            life.play('redKey');
+            firstSpecies.add(life);
         }
-        circleGroup.setup();
+        firstSpecies.setup();
+        for (let i=0; i < speciesPop; i++){
+            let life = new Life(this, 500, 300, 'blueLife', 'pulsing-blue-dot0.png');
+            //life.setCircle(16);
+            life.play('blueKey');
+            secondSpecies.add(life);
+        }
+        secondSpecies.setup();
+        for (let i=0; i < speciesPop; i++){
+            let life = new Life(this, 500, 300, 'greenLife', 'pulsing-green-dot0.png');
+            //life.setCircle(16);
+            life.play('greenKey');
+            thirdSpecies.add(life);
+        }
+        thirdSpecies.setup();
         //starGroup = this.add.group();
         // for (let i=0; i < maxStars; i++){
         //     let starBody = this.physics.add.image((i+1)*10 + 100, (i+1)*10, 'star');
@@ -91,13 +121,13 @@ let maxStars = 10;
         //     starGroup.add(starBody);
         // }
 
-        //for (let i=0; i < circleGroup.getLength(); i++)
+        //for (let i=0; i < firstSpecies.getLength(); i++)
          //   distTexts.push(this.add.text(500, i*50 + 20, 'hello'));
     }
 
     function update () {
         let i = 0;
-        // circleGroup.children.each(function(creature) {
+        // firstSpecies.children.each(function(creature) {
         //     distTexts[i].setText(Phaser.Math.Distance.BetweenPoints(loneStar, creature));
         //     i++;
         // }, this);
@@ -107,8 +137,10 @@ let maxStars = 10;
         //     starBody.setCircle(30);
         //     starGroup.add(starBody);
         // }
-        circleGroup.updateWithEngine();
-        //this.physics.collide(circleGroup, loneStar, eat);
+        firstSpecies.updateWithEngine();
+        secondSpecies.updateWithEngine();
+        thirdSpecies.updateWithEngine();
+        //this.physics.collide(firstSpecies, loneStar, eat);
     }
 
     // function render () {
