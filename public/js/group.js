@@ -12,7 +12,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.genLength = 10;
         this.selectionCutoff = 0.08;
         this.goals = goals.getChildren();
-        this.bonusLength = 50;
+        this.bonusLength = 1;
         this.bonusGoal = 0;
 
         //for updateFast()
@@ -30,7 +30,7 @@ class Group extends Phaser.Physics.Arcade.Group {
                 life.startingDistFromGoal[g] = Phaser.Math.Distance.BetweenPoints(life, this.goals[g]);
         
             //Create minds based on number of goals
-            life.mind = new Mind(this.goals.length * 3, 2);
+            life.mind = new Mind(this.goals.length * 3, 3);
         }
     }
 
@@ -49,7 +49,14 @@ class Group extends Phaser.Physics.Arcade.Group {
             let distScores = [];
             for (let g=0; g < this.goals.length; g++){
                 let newScore = life.startingDistFromGoal[g] / (Phaser.Math.Distance.BetweenPoints(life, this.goals[g]) + 1);
-                g == this.bonusGoal ? newScore *= 3 : newScore *= -1;
+                if (g == this.bonusGoal){
+                    newScore *= 1 
+                    this.goals[g].setScale(6);
+                }
+                else {
+                    newScore *= -1;
+                    this.goals[g].setScale(4);
+                }
                     
                 distScores.push(newScore);
             }
@@ -79,8 +86,10 @@ class Group extends Phaser.Physics.Arcade.Group {
     //generational change in group where fitness is sorted and replacement and mutation occur
     selection() {
         if (this.genLength < 500)
-            this.genLength += 5;
+            this.genLength += 3;
         this.timer1 = 0;
+
+        this.bonusLength = Math.floor(this.genLength / 10);
 
         //fitness sorting function in which more fit lives move to front
         this.lives.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
