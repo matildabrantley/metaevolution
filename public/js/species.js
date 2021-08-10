@@ -56,12 +56,13 @@ class Species extends Phaser.Physics.Arcade.Group {
             for (let g=0; g < this.goals.length; g++){
                 let newScore = life.startingDistFromGoal[g] / (Phaser.Math.Distance.BetweenPoints(life, this.goals[g]) + 1);
                 if (g == this.bonusGoal){
+                    newScore += 10; 
                     newScore *= 2.5; 
-                    this.goals[g].setScale(6);
+                    //this.goals[g].setScale(6);
                 }
                 else {
-                    newScore *= 1;
-                    this.goals[g].setScale(4);
+                    newScore = -1;
+                    //this.goals[g].setScale(4);
                 }
                     
                 distScores.push(newScore);
@@ -101,7 +102,7 @@ class Species extends Phaser.Physics.Arcade.Group {
         this.lives.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
 
         //vast majority of population replaced by sexual offspring of top X% (X = selectionCutoff)
-        for (let i=this.lives.length-1; i > this.lives.length * this.selectionCutoff; i--) {
+        for (let i=this.lives.length-20; i > this.lives.length * this.selectionCutoff; i--) {
             let mom = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
             let dad = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
             this.lives[i].mind.net.sexual(this.lives[mom].mind.net, this.lives[dad].mind.net, this.mutRate);
@@ -155,12 +156,18 @@ class Species extends Phaser.Physics.Arcade.Group {
         }
     }
 
+    //Genetic flow from between population
+    //Best to call right after selection since they're already sorted
     geneFlow(otherPopulation, flowRatio = 0.1) {
-        this.lives.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
-
-        for (let i=this.lives.length-1; i > this.lives.length * flowRatio; i--) {
-
+        for (let i=0; i < this.lives.length * flowRatio; i++) {
+            //avoid replacing best % or the Elites that replaced the bottom 20
         }
     }
 
+}
+
+const randIntBetween = (lowNum, highNum) => {
+    lowNum = Math.ceil(lowNum);
+    highNum = Math.floor(highNum);
+    return Math.floor(Math.random() * (highNum - lowNum + 1)) + lowNum;
 }
