@@ -81,7 +81,7 @@ class Cluster {
 			for (let neuron in mom.weights[layer]) {
 				for (let w in mom.weights[layer][neuron]) {	
 					if (mutationRate > Math.random())
-						this.weights[layer][neuron][w] = randZeroCentered();
+						this.weights[layer][neuron][w] += randZeroCentered(0.1);
 					else
 						this.weights[layer][neuron][w] = mom.weights[layer][neuron][w];
 				}
@@ -96,14 +96,14 @@ class Cluster {
 		for (let layer in mom.weights) {
 			for (let neuron in mom.weights[layer]) {
 				for (let w in mom.weights[layer][neuron]) {	
+					//50% chance to be mom or dad's gene	
+					if (Math.random() > 0.5)
+						this.weights[layer][neuron][w] = mom.weights[layer][neuron][w];
+					else
+						this.weights[layer][neuron][w] = dad.weights[layer][neuron][w];	
+					//Mutate if mutation rate is greater than a random decimal
 					if (mutationRate > Math.random())
-						this.weights[layer][neuron][w] = randZeroCentered();
-					else { //50% chance to be mom or dad's gene	
-						if (Math.random() > 0.5)
-							this.weights[layer][neuron][w] = mom.weights[layer][neuron][w];
-						else
-							this.weights[layer][neuron][w] = dad.weights[layer][neuron][w];
-					}
+						this.weights[layer][neuron][w] += randZeroCentered(0.1);
 				}
 			}
 		}
@@ -123,7 +123,7 @@ const zeroCenteredCurve = (x, base = 10) => 2 / (1 + Math.pow(base, -x)) - 1;
 const relu = (x) => Math.max(0, x);
 
 //Random between -1 and 1
-const randZeroCentered = () => Math.random() * 2 - 1;
+const randZeroCentered = (scale=1) => ((Math.random() * 2 - 1) * scale);
 
 /*
 const testCluster = () => {

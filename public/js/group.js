@@ -12,7 +12,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.genLength = 10;
         this.selectionCutoff = 0.08;
         this.goals = goals.getChildren();
-        this.bonusLength = 20;
+        this.bonusLength = 50;
         this.bonusGoal = 0;
 
         //for updateFast()
@@ -38,23 +38,23 @@ class Group extends Phaser.Physics.Arcade.Group {
     updateWithEngine() {
         this.timer1++;
         for (let life of this.lives) {
-            if (this.timer1 % 10 == 0){
-                for (let goal of this.goals)
-                    goal.setVelocity((Math.random()-0.5) * 700, (Math.random()-0.5) * 700);
-            }
+            //if (this.timer1 % 10 == 0){
+                //for (let goal of this.goals)
+                    //goal.setVelocity((Math.random()-0.5) * 700, (Math.random()-0.5) * 700);
+            //}
 
             life.update(this.goals, this.bonusGoal);
 
-            //Better for fitness to be managed by group for many reasons
+            //Fitness to be managed by species
             let distScores = [];
             for (let g=0; g < this.goals.length; g++){
                 let newScore = life.startingDistFromGoal[g] / (Phaser.Math.Distance.BetweenPoints(life, this.goals[g]) + 1);
-                if (g == this.bonusGoal) 
-                    newScore *= 50;
+                g == this.bonusGoal ? newScore *= 3 : newScore *= -1;
+                    
                 distScores.push(newScore);
             }
             //use reducer to get total product (and divide by 1000 to keep values manageable)
-            life.fitness += distScores.reduce((a,b) => a*b, 1) / 1000;
+            life.fitness += distScores.reduce((a,b) => a+b, 1) / 1000;
         }
 
         if (this.timer1 % this.genLength == 0){

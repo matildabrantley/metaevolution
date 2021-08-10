@@ -1,7 +1,7 @@
 // const Matter = require('matter-js');
 let width = 800;
 let height = 600;
-let maxLifeforms = 1500;
+let maxLifeforms = 500;
 let maxStars = 10;
 
     let group;
