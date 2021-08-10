@@ -56,12 +56,12 @@ let maxStars = 10;
         blueStar.collideWorldBounds = true;
         goalGroup.add(blueStar);
         
-        // blackStar = this.physics.add.image(width/2, height/2, 'blackstar');
-        // blackStar.setCircle(30);
-        // blackStar.setScale(5);
-        // blackStar.setBounce(5);
-        // blackStar.collideWorldBounds = true;
-        // goalGroup.add(blackStar);
+        blackStar = this.physics.add.image(width/2, height/2, 'blackstar');
+        blackStar.setCircle(30);
+        blackStar.setScale(5);
+        blackStar.setBounce(5);
+        blackStar.collideWorldBounds = true;
+        goalGroup.add(blackStar);
         
         //circleGroup = this.add.group();
         circleGroup = new Group(this.physics.world, this, config, goalGroup);

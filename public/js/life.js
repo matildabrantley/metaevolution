@@ -1,4 +1,4 @@
-// const Cluster = require('./cluster');
+// const Net = require('./cluster');
 // const Vector = require('./vector');
 // const Matter = require('matter-js');
 class Life extends Phaser.Physics.Arcade.Sprite {

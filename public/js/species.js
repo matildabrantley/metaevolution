@@ -1,7 +1,7 @@
 // const Life = require('./life');
 // const Vector = require('./vector');
 
-class Group extends Phaser.Physics.Arcade.Group {
+class Species extends Phaser.Physics.Arcade.Group {
     constructor(world, scene, config, goals){
         super(world, scene, config);
         this.lives = [];

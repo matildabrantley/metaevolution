@@ -7,12 +7,12 @@ class Mind {
         this.outputs = new Array(numOutputs);
 
         //Feedforward Neural Network
-        this.net = new Net(numInputs, 50, 20, 6, numOutputs);
+        this.net = new Net(numInputs, 9, 6, numOutputs);
     }
 
     update(inputs) {
         this.inputs = inputs;
-        //TODO: Normalize inputs here if needed
+        //TODO: Auto-Normalize inputs here if needed
 
         this.outputs = this.net.activate(inputs);
 
