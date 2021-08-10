@@ -2,7 +2,7 @@
 // const Vector = require('./vector');
 // const Matter = require('matter-js');
 class Mind {
-    constructor(body, numInputs = 2, numOutputs = 2){
+    constructor(body, numInputs = 4, numOutputs = 2){
         this.inputs = new Array(numInputs);
         this.outputs = new Array(numOutputs);
 

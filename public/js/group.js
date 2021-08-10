@@ -2,7 +2,7 @@
 // const Vector = require('./vector');
 
 class Group extends Phaser.Physics.Arcade.Group {
-    constructor(world, scene, config, goal){
+    constructor(world, scene, config, goal, goal2){
         super(world, scene, config);
         this.lives = [];
         this.scene = scene;
@@ -12,6 +12,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.genLength = 10;
         this.selectionCutoff = 0.08;
         this.goal = goal;
+        this.goal2 = goal2;
         // this.goalDeltaX = 0;
         // this.goalDeltaY = 0;
 
@@ -24,8 +25,10 @@ class Group extends Phaser.Physics.Arcade.Group {
     simplify() {
         this.lives = this.getChildren();
 
-        for (let life of this.lives)
+        for (let life of this.lives){
             life.startingDistFromGoal = Phaser.Math.Distance.BetweenPoints(life, this.goal);
+            life.startingDistFromGoal2 = Phaser.Math.Distance.BetweenPoints(life, this.goal2);
+        }
     }
 
     //normal updating within Phaser's/Matter's loop
@@ -35,13 +38,16 @@ class Group extends Phaser.Physics.Arcade.Group {
 
             // this.goalDeltaX += (Math.random()-0.5) * 3;
             // this.goalDeltaY += (Math.random()-0.5) * 3;
-            if (this.timer1 % 10 == 0)
-                this.goal.setVelocity((Math.random()-0.5) * 300, (Math.random()-0.5) * 300);
+            if (this.timer1 % 10 == 0){
+                this.goal.setVelocity((Math.random()-0.5) * 700, (Math.random()-0.5) * 700);
+                this.goal2.setVelocity((Math.random()-0.5) * 700, (Math.random()-0.5) * 700);
+            }
 
-            life.update(this.goal);
+            life.update(this.goal, this.goal2);
 
             //Better for fitness to be managed by group for many reasons
             life.fitness += life.startingDistFromGoal / (Phaser.Math.Distance.BetweenPoints(life, this.goal) + 1);
+            life.fitness += life.startingDistFromGoal2 / (Phaser.Math.Distance.BetweenPoints(life, this.goal2) + 1);
 
 
             //This just gives fitness based on bottom-right motion, 
@@ -116,7 +122,9 @@ class Group extends Phaser.Physics.Arcade.Group {
         for (let life of this.lives){
             life.setPosition(newStartingX, newStartingY);
             this.goal.setPosition(200 + Math.random() * 400, 150 + Math.random() * 300);
+            this.goal2.setPosition(200 + Math.random() * 400, 150 + Math.random() * 300);
             life.startingDistFromGoal = Phaser.Math.Distance.BetweenPoints(life, this.goal);
+            life.startingDistFromGoal2 = Phaser.Math.Distance.BetweenPoints(life, this.goal2);
             life.fitness = 0;
             
         }

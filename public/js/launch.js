@@ -10,7 +10,7 @@ let maxStars = 10;
         type: Phaser.AUTO,
         width: width,
         height: height,
-        backgroundColor: '#1b1464',
+        backgroundColor: '#000000',
         parent: 'phaser-example',
         physics: {
             default: 'arcade',
@@ -32,6 +32,8 @@ let maxStars = 10;
     
     function preload () {
         this.load.image('star', 'sprites/star.png');
+        this.load.image('bluestar', 'sprites/bluestar.png');
+        this.load.image('blackstar', 'sprites/star.png');
         this.load.image('circle', 'sprites/circle.png');
         this.load.atlas('pulser', 'sprites/pulsing-red-dot.png', 'sprites/pulsing-red-dot.json');
     }
@@ -44,9 +46,14 @@ let maxStars = 10;
         loneStar.setScale(5);
         loneStar.setBounce(5);
         loneStar.collideWorldBounds = true;
+        blueStar = this.physics.add.image(width/2, height/2, 'bluestar');
+        blueStar.setCircle(30);
+        blueStar.setScale(5);
+        blueStar.setBounce(5);
+        blueStar.collideWorldBounds = true;
 
         //circleGroup = this.add.group();
-        circleGroup = new Group(this.physics.world, this, config, loneStar);
+        circleGroup = new Group(this.physics.world, this, config, loneStar, blueStar);
 
         const animConfig = {
             key: 'pulse',
