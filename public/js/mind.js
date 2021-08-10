@@ -7,7 +7,7 @@ class Mind {
         this.outputs = new Array(numOutputs);
 
         //Feedforward Neural Network
-        this.cluster = new Cluster(numInputs, 4, 6, 4, numOutputs);
+        this.cluster = new Cluster(numInputs, 6, 4, numOutputs);
     }
 
     update(inputs) {

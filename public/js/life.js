@@ -24,13 +24,14 @@ class Life extends Phaser.Physics.Arcade.Sprite {
     }
 
     //for updating within update loop of Phaser or Matter
-    update(goals) {
+    update(goals, bonusGoal) {
         //let angle = Phaser.Math.Angle.BetweenPoints(this, goal);
         //let dist = Phaser.Math.Distance.BetweenPoints(this, goal);
         let inputs = [];
-        for (let goal of goals){
-            inputs.push((this.x - goal.x) / 100); //x difference (not dist)
-            inputs.push((this.y - goal.y) / 100); //y difference
+        for (let g=0; g < goals.length; g++){
+            inputs.push((this.x - goals[g].x) / 100); //x difference (not dist)
+            inputs.push((this.y - goals[g].y) / 100); //y difference
+            inputs.push(g == bonusGoal ? 1 : -1)
         }
 
         let outputs = this.mind.update(inputs);           

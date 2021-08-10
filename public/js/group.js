@@ -12,6 +12,8 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.genLength = 10;
         this.selectionCutoff = 0.08;
         this.goals = goals.getChildren();
+        this.bonusLength = 20;
+        this.bonusGoal = 0;
 
         //for updateFast()
         this.timer2 = 0;
@@ -28,7 +30,7 @@ class Group extends Phaser.Physics.Arcade.Group {
                 life.startingDistFromGoal[g] = Phaser.Math.Distance.BetweenPoints(life, this.goals[g]);
         
             //Create minds based on number of goals
-            life.mind = new Mind(this.goals.length * 2, 2);
+            life.mind = new Mind(this.goals.length * 3, 2);
         }
     }
 
@@ -41,18 +43,25 @@ class Group extends Phaser.Physics.Arcade.Group {
                     goal.setVelocity((Math.random()-0.5) * 700, (Math.random()-0.5) * 700);
             }
 
-            life.update(this.goals);
+            life.update(this.goals, this.bonusGoal);
 
             //Better for fitness to be managed by group for many reasons
             let distScores = [];
-            for (let goal of this.goals)
-                distScores.push(life.startingDistFromGoal / (Phaser.Math.Distance.BetweenPoints(life, goal) + 1));
+            for (let g=0; g < this.goals.length; g++){
+                let newScore = life.startingDistFromGoal[g] / (Phaser.Math.Distance.BetweenPoints(life, this.goals[g]) + 1);
+                if (g == this.bonusGoal) 
+                    newScore *= 50;
+                distScores.push(newScore);
+            }
             //use reducer to get total product (and divide by 1000 to keep values manageable)
             life.fitness += distScores.reduce((a,b) => a*b, 1) / 1000;
         }
 
         if (this.timer1 % this.genLength == 0){
            this.selection();
+        }
+        if (this.timer1 % this.bonusLength == 0){
+           this.bonusGoal = Math.floor((Math.random() * this.goals.length));
         }
     }
 
@@ -112,8 +121,8 @@ class Group extends Phaser.Physics.Arcade.Group {
         }
 
         //reset
-        let newStartingX = 200 + Math.random() * 400;
-        let newStartingY = 150 + Math.random() * 300;
+        let newStartingX = 400;
+        let newStartingY = 300;
         for (let life of this.lives){
             life.setPosition(newStartingX, newStartingY);
             for (let goal of this.goals)
