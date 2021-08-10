@@ -72,7 +72,7 @@ let maxStars = 10;
             circleBody.play('pulse');
             circleGroup.add(circleBody);
         }
-        circleGroup.simplify();
+        circleGroup.setup();
         //starGroup = this.add.group();
         // for (let i=0; i < maxStars; i++){
         //     let starBody = this.physics.add.image((i+1)*10 + 100, (i+1)*10, 'star');
