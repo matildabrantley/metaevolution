@@ -1,6 +1,6 @@
 
 //Just a perceptron/feedforward net for now
-class Cluster {
+class Net {
 	constructor(...layerSizes)
 	{		
 		//initialize all charges to zero
@@ -126,15 +126,15 @@ const relu = (x) => Math.max(0, x);
 const randZeroCentered = (scale=1) => ((Math.random() * 2 - 1) * scale);
 
 /*
-const testCluster = () => {
-	const net = new Cluster(2, 20, 2);
+const testNet = () => {
+	const net = new Net(2, 20, 2);
 	console.log(net.activate([1,1]));
 	console.log(net.activate([-1,-1]));
 	console.log(net.activate([1,-1]));
 	console.log(net.activate([-1,1]));
 	console.log(net.activate([0,0]));
 }
-testCluster() 
+testNet() 
 */
 
-// module.exports = Cluster;
+// module.exports = Net;

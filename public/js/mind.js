@@ -1,4 +1,4 @@
-// const Cluster = require('./cluster');
+// const Net = require('./net');
 // const Vector = require('./vector');
 // const Matter = require('matter-js');
 class Mind {
@@ -7,14 +7,14 @@ class Mind {
         this.outputs = new Array(numOutputs);
 
         //Feedforward Neural Network
-        this.cluster = new Cluster(numInputs, 5, 8, 4, numOutputs);
+        this.net = new Net(numInputs, 50, 20, 6, numOutputs);
     }
 
     update(inputs) {
         this.inputs = inputs;
         //TODO: Normalize inputs here if needed
 
-        this.outputs = this.cluster.activate(inputs);
+        this.outputs = this.net.activate(inputs);
 
         return this.outputs;
     }
