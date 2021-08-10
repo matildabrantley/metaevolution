@@ -103,7 +103,7 @@ class Cluster {
 						this.weights[layer][neuron][w] = dad.weights[layer][neuron][w];	
 					//Mutate if mutation rate is greater than a random decimal
 					if (mutationRate > Math.random())
-						this.weights[layer][neuron][w] += randZeroCentered(0.1);
+						this.weights[layer][neuron][w] += randZeroCentered(Math.random() * 0.2);
 				}
 			}
 		}
