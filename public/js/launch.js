@@ -51,12 +51,12 @@ let maxStars = 10;
         loneStar.collideWorldBounds = true;
         goalGroup.add(loneStar);
         
-        blueStar = this.physics.add.image(width/2, height/2, 'bluestar');
-        blueStar.setCircle(30);
-        blueStar.setScale(4);
-        blueStar.setBounce(5);
-        blueStar.collideWorldBounds = true;
-        goalGroup.add(blueStar);
+        // blueStar = this.physics.add.image(width/2, height/2, 'bluestar');
+        // blueStar.setCircle(30);
+        // blueStar.setScale(4);
+        // blueStar.setBounce(5);
+        // blueStar.collideWorldBounds = true;
+        // goalGroup.add(blueStar);
         
         // blackStar = this.physics.add.image(width/2, height/2, 'blackstar');
         // blackStar.setCircle(30);
@@ -65,8 +65,8 @@ let maxStars = 10;
         // blackStar.collideWorldBounds = true;
         // goalGroup.add(blackStar);
         
-        //firstSpecies = this.add.group();
-        firstSpecies = new Species(this.physics.world, this, config, goalGroup);
+        //firstSpecies is key species, meaning is controls goals
+        firstSpecies = new Species(this.physics.world, this, config, goalGroup, true);
         secondSpecies = new Species(this.physics.world, this, config, goalGroup);
         thirdSpecies = new Species(this.physics.world, this, config, goalGroup);
 
@@ -99,21 +99,21 @@ let maxStars = 10;
             life.play('redKey');
             firstSpecies.add(life);
         }
-        firstSpecies.setup();
+        firstSpecies.setup(0.05);
         for (let i=0; i < speciesPop; i++){
             let life = new Life(this, 500, 300, 'blueLife', 'pulsing-blue-dot0.png');
             //life.setCircle(16);
             life.play('blueKey');
             secondSpecies.add(life);
         }
-        secondSpecies.setup();
+        secondSpecies.setup(0.1);
         for (let i=0; i < speciesPop; i++){
             let life = new Life(this, 500, 300, 'greenLife', 'pulsing-green-dot0.png');
             //life.setCircle(16);
             life.play('greenKey');
             thirdSpecies.add(life);
         }
-        thirdSpecies.setup();
+        thirdSpecies.setup(0.75);
         //starGroup = this.add.group();
         // for (let i=0; i < maxStars; i++){
         //     let starBody = this.physics.add.image((i+1)*10 + 100, (i+1)*10, 'star');

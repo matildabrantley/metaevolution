@@ -2,18 +2,17 @@
 // const Vector = require('./vector');
 
 class Species extends Phaser.Physics.Arcade.Group {
-    constructor(world, scene, config, goals){
+    constructor(world, scene, config, goals, isKey = false){
         super(world, scene, config);
         this.lives = [];
         this.scene = scene;
         this.world = world;
 
         this.timer1 = 0;
-        this.genLength = 10;
-        this.selectionCutoff = 0.08;
         this.goals = goals.getChildren();
         this.bonusLength = 1;
         this.bonusGoal = 0;
+        this.isKey = isKey;
 
         //for updateFast()
         this.timer2 = 0;
@@ -21,8 +20,15 @@ class Species extends Phaser.Physics.Arcade.Group {
     }
 
     //maintains array of Life objects, sets initial distances from goals and create Minds
-    setup() {
+    setup(mutRate = 0.05, selectionCutoff = 0.1, maxGenLength = 500, initialGenLength = 10, deltaGenLength = 5) {
         this.lives = this.getChildren();
+
+        this.mutRate = mutRate;
+        this.maxGenLength = maxGenLength;
+        this.genLength = initialGenLength;
+        this.deltaGenLength = deltaGenLength;
+        this.selectionCutoff = selectionCutoff;
+
 
         for (let life of this.lives){
             life.startingDistFromGoal = new Array(this.goals.length);
@@ -85,8 +91,8 @@ class Species extends Phaser.Physics.Arcade.Group {
 
     //generational change in group where fitness is sorted and replacement and mutation occur
     selection() {
-        if (this.genLength < 500)
-            this.genLength += 3;
+        if (this.genLength < this.maxGenLength)
+            this.genLength += this.deltaGenLength;
         this.timer1 = 0;
 
         this.bonusLength = Math.floor(this.genLength / 10);
@@ -98,7 +104,7 @@ class Species extends Phaser.Physics.Arcade.Group {
         for (let i=this.lives.length-1; i > this.lives.length * this.selectionCutoff; i--) {
             let mom = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
             let dad = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
-            this.lives[i].mind.net.sexual(this.lives[mom].mind.net, this.lives[dad].mind.net, 0.05);
+            this.lives[i].mind.net.sexual(this.lives[mom].mind.net, this.lives[dad].mind.net, this.mutRate);
         }
 
         //Elite Selection: Best 10 always get spot(s) in next generation without mutation
@@ -129,13 +135,17 @@ class Species extends Phaser.Physics.Arcade.Group {
             this.lives[this.lives.length - 20].mind.net.asexual(this.lives[9].mind.net, 0);
         }
 
+        //key species controls goals
+        if (this.isKey){
+            for (let goal of this.goals)
+                goal.setPosition(200 + Math.random() * 400, 150 + Math.random() * 300);
+        }
+
         //reset
         let newStartingX = 400;
         let newStartingY = 300;
         for (let life of this.lives){
             life.setPosition(newStartingX, newStartingY);
-            for (let goal of this.goals)
-                goal.setPosition(200 + Math.random() * 400, 150 + Math.random() * 300);
 
             for (let g=0; g < this.goals.length; g++)
                 life.startingDistFromGoal[g] = Phaser.Math.Distance.BetweenPoints(life, this.goals[g]);
