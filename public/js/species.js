@@ -56,11 +56,11 @@ class Species extends Phaser.Physics.Arcade.Group {
             for (let g=0; g < this.goals.length; g++){
                 let newScore = life.startingDistFromGoal[g] / (Phaser.Math.Distance.BetweenPoints(life, this.goals[g]) + 1);
                 if (g == this.bonusGoal){
-                    newScore *= 1.5 
+                    newScore *= 2.5; 
                     this.goals[g].setScale(6);
                 }
                 else {
-                    newScore *= -1;
+                    newScore *= 1;
                     this.goals[g].setScale(4);
                 }
                     
@@ -136,10 +136,10 @@ class Species extends Phaser.Physics.Arcade.Group {
         }
 
         //key species controls goals
-        if (this.isKey){
-            for (let goal of this.goals)
-                goal.setPosition(200 + Math.random() * 400, 150 + Math.random() * 300);
-        }
+        // if (this.isKey){
+        //     for (let goal of this.goals)
+        //         goal.setPosition(200 + Math.random() * 400, 150 + Math.random() * 300);
+        // }
 
         //reset
         let newStartingX = 400;
@@ -153,7 +153,14 @@ class Species extends Phaser.Physics.Arcade.Group {
             life.fitness = 0;
             
         }
-       
+    }
+
+    geneFlow(otherPopulation, flowRatio = 0.1) {
+        this.lives.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
+
+        for (let i=this.lives.length-1; i > this.lives.length * flowRatio; i--) {
+
+        }
     }
 
 }

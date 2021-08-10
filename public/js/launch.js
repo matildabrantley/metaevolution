@@ -1,7 +1,7 @@
 // const Matter = require('matter-js');
 let width = 800;
 let height = 600;
-let speciesPop = 250;
+let speciesPop = 150;
 let maxStars = 10;
 
     let group;
@@ -34,41 +34,51 @@ let maxStars = 10;
         this.load.image('star', 'sprites/star.png');
         this.load.image('bluestar', 'sprites/bluestar.png');
         this.load.image('blackstar', 'sprites/blackstar.png');
+        this.load.image('greenstar', 'sprites/greenstar.png');
         this.load.image('circle', 'sprites/circle.png');
         this.load.atlas('redLife', 'sprites/pulsing-red-dot.png', 'sprites/pulsing-red-dot.json');
         this.load.atlas('blueLife', 'sprites/pulsing-blue-dot.png', 'sprites/pulsing-blue-dot.json');
         this.load.atlas('greenLife', 'sprites/pulsing-green-dot.png', 'sprites/pulsing-green-dot.json');
+        this.load.atlas('brightLife', 'sprites/pulsing-white-star.png', 'sprites/pulsing-white-star.json');
     }
     
     function create () {
         this.physics.world.setBounds( 0, 0, width, height );
 
         let goalGroup = this.add.group();
-        loneStar = this.physics.add.image(width/2, height/2, 'star');
+        loneStar = this.physics.add.image(width * 0.25, height * 0.25, 'star');
         loneStar.setCircle(30);
         loneStar.setScale(4);
         loneStar.setBounce(5);
         loneStar.collideWorldBounds = true;
         goalGroup.add(loneStar);
         
-        // blueStar = this.physics.add.image(width/2, height/2, 'bluestar');
-        // blueStar.setCircle(30);
-        // blueStar.setScale(4);
-        // blueStar.setBounce(5);
-        // blueStar.collideWorldBounds = true;
-        // goalGroup.add(blueStar);
+        blueStar = this.physics.add.image(width * 0.75, height * 0.25, 'bluestar');
+        blueStar.setCircle(30);
+        blueStar.setScale(4);
+        blueStar.setBounce(5);
+        blueStar.collideWorldBounds = true;
+        goalGroup.add(blueStar);
         
-        // blackStar = this.physics.add.image(width/2, height/2, 'blackstar');
-        // blackStar.setCircle(30);
-        // blackStar.setScale(5);
-        // blackStar.setBounce(5);
-        // blackStar.collideWorldBounds = true;
-        // goalGroup.add(blackStar);
+        blackStar = this.physics.add.image(width * 0.75, height * 0.75, 'blackstar');
+        blackStar.setCircle(30);
+        blackStar.setScale(5);
+        blackStar.setBounce(5);
+        blackStar.collideWorldBounds = true;
+        goalGroup.add(blackStar);
         
+        greenStar = this.physics.add.image(width * 0.25, height * 0.75, 'greenstar');
+        greenStar.setCircle(30);
+        greenStar.setScale(5);
+        greenStar.setBounce(5);
+        greenStar.collideWorldBounds = true;
+        goalGroup.add(greenStar);
+
         //firstSpecies is key species, meaning is controls goals
         firstSpecies = new Species(this.physics.world, this, config, goalGroup, true);
         secondSpecies = new Species(this.physics.world, this, config, goalGroup);
         thirdSpecies = new Species(this.physics.world, this, config, goalGroup);
+        fourthSpecies = new Species(this.physics.world, this, config, goalGroup);
 
         const redAnimConfig = {
             key: 'redKey',
@@ -88,9 +98,16 @@ let maxStars = 10;
             frameRate: 30,
             repeat: -1
         };
+        const brightAnimConfig = {
+            key: 'brightKey',
+            frames: 'brightLife',
+            frameRate: 60,
+            repeat: -1
+        };
         this.anims.create(redAnimConfig);
         this.anims.create(blueAnimConfig);
         this.anims.create(greenAnimConfig);
+        this.anims.create(brightAnimConfig);
 
 
         for (let i=0; i < speciesPop; i++){
@@ -106,14 +123,21 @@ let maxStars = 10;
             life.play('blueKey');
             secondSpecies.add(life);
         }
-        secondSpecies.setup(0.1);
+        secondSpecies.setup(0.1, 0.2);
         for (let i=0; i < speciesPop; i++){
             let life = new Life(this, 500, 300, 'greenLife', 'pulsing-green-dot0.png');
             //life.setCircle(16);
             life.play('greenKey');
             thirdSpecies.add(life);
         }
-        thirdSpecies.setup(0.75);
+        thirdSpecies.setup(0.15);
+        for (let i=0; i < speciesPop; i++){
+            let life = new Life(this, 500, 300, 'brightLife', 'pulsing-white-star0.png');
+            //life.setCircle(16);
+            life.play('brightKey');
+            fourthSpecies.add(life);
+        }
+        fourthSpecies.setup(0.15);
         //starGroup = this.add.group();
         // for (let i=0; i < maxStars; i++){
         //     let starBody = this.physics.add.image((i+1)*10 + 100, (i+1)*10, 'star');
@@ -140,6 +164,7 @@ let maxStars = 10;
         firstSpecies.updateWithEngine();
         secondSpecies.updateWithEngine();
         thirdSpecies.updateWithEngine();
+        fourthSpecies.updateWithEngine();
         //this.physics.collide(firstSpecies, loneStar, eat);
     }
 
