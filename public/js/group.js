@@ -18,16 +18,17 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.fastGenLength = 50;
     }
 
-    //maintains array of easily accessible Life objects
+    //maintains array of Life objects, sets initial distances from goals and create Minds
     setup() {
         this.lives = this.getChildren();
 
         for (let life of this.lives){
+            life.startingDistFromGoal = new Array(this.goals.length);
             for (let g=0; g < this.goals.length; g++)
                 life.startingDistFromGoal[g] = Phaser.Math.Distance.BetweenPoints(life, this.goals[g]);
         
-        //Create minds based on number of goals
-        this.lives.mind = new Mind(this.goals.length * 2, 2);
+            //Create minds based on number of goals
+            life.mind = new Mind(this.goals.length * 2, 2);
         }
     }
 
@@ -40,7 +41,7 @@ class Group extends Phaser.Physics.Arcade.Group {
                     goal.setVelocity((Math.random()-0.5) * 700, (Math.random()-0.5) * 700);
             }
 
-            life.update(this.goal, this.goal2);
+            life.update(this.goals);
 
             //Better for fitness to be managed by group for many reasons
             let distScores = [];

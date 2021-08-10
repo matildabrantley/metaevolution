@@ -41,19 +41,23 @@ let maxStars = 10;
     function create () {
         this.physics.world.setBounds( 0, 0, width, height );
 
+        let goalGroup = this.add.group();
         loneStar = this.physics.add.image(width/2, height/2, 'star');
         loneStar.setCircle(30);
         loneStar.setScale(5);
         loneStar.setBounce(5);
         loneStar.collideWorldBounds = true;
+        goalGroup.add(loneStar);
+        
         blueStar = this.physics.add.image(width/2, height/2, 'bluestar');
         blueStar.setCircle(30);
         blueStar.setScale(5);
         blueStar.setBounce(5);
         blueStar.collideWorldBounds = true;
+        goalGroup.add(blueStar);
 
         //circleGroup = this.add.group();
-        circleGroup = new Group(this.physics.world, this, config, loneStar, blueStar);
+        circleGroup = new Group(this.physics.world, this, config, goalGroup);
 
         const animConfig = {
             key: 'pulse',

@@ -3,13 +3,13 @@
 // const Matter = require('matter-js');
 class Life extends Phaser.Physics.Arcade.Sprite {
 
-    constructor (scene, x, y, sprite, frame, mind = new Mind())
+    constructor (scene, x, y, sprite, frame)
     {
         super(scene, x, y, sprite, frame);
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
-        this.mind = mind; 
+        //this.mind = mind; 
         
         this.fitness = 0;
 
@@ -19,18 +19,18 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.setBounce(1);
 
         // only for fast updating (no rendering and only limited physics)
-        // this.x;
-        // this.y;
+        // this.x;?
+        // this.y;?
     }
 
     //for updating within update loop of Phaser or Matter
     update(goals) {
         //let angle = Phaser.Math.Angle.BetweenPoints(this, goal);
         //let dist = Phaser.Math.Distance.BetweenPoints(this, goal);
-        let diffs = [];
+        let inputs = [];
         for (let goal of goals){
-            inputs.push(this.x - goal.x / 100); //x difference (not dist)
-            inputs.push(this.y - goal.y / 100); //y difference
+            inputs.push((this.x - goal.x) / 100); //x difference (not dist)
+            inputs.push((this.y - goal.y) / 100); //y difference
         }
 
         let outputs = this.mind.update(inputs);           
