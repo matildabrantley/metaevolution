@@ -31,7 +31,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         for (let g=0; g < goals.length; g++){
             inputs.push((this.x - goals[g].x) / 100); //x difference (not dist)
             inputs.push((this.y - goals[g].y) / 100); //y difference
-            inputs.push(g == bonusGoal ? 1 : -1)
+            inputs.push(g == bonusGoal ? 3 : -3)
         }
 
         let outputs = this.mind.update(inputs);           

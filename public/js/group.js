@@ -2,7 +2,7 @@
 // const Vector = require('./vector');
 
 class Group extends Phaser.Physics.Arcade.Group {
-    constructor(world, scene, config, goals, isKey = false){
+    constructor(world, scene, config, goals){
         super(world, scene, config);
         this.lives = [];
         this.scene = scene;
@@ -12,7 +12,6 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.goals = goals.getChildren();
         this.bonusLength = 1;
         this.bonusGoal = 0;
-        this.isKey = isKey;
 
         //for updateFast()
         this.timer2 = 0;
@@ -28,6 +27,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.genLength = initialGenLength;
         this.deltaGenLength = deltaGenLength;
         this.selectionCutoff = selectionCutoff;
+        this.numElites = 20;
 
 
         for (let life of this.lives){
@@ -56,7 +56,7 @@ class Group extends Phaser.Physics.Arcade.Group {
             for (let g=0; g < this.goals.length; g++){
                 let newScore = life.startingDistFromGoal[g] / (Phaser.Math.Distance.BetweenPoints(life, this.goals[g]) + 1);
                 if (g == this.bonusGoal){
-                    newScore += 10; 
+                    //newScore += 10; 
                     newScore *= 2.5; 
                     //this.goals[g].setScale(6);
                 }
@@ -99,7 +99,7 @@ class Group extends Phaser.Physics.Arcade.Group {
             this.genLength += this.deltaGenLength;
         this.timer1 = 0;
 
-        this.bonusLength = Math.floor(this.genLength / 10);
+        this.bonusLength = Math.floor(this.genLength / 3);
 
         //fitness sorting function in which more fit lives move to front
         this.lives.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
@@ -161,21 +161,21 @@ class Group extends Phaser.Physics.Arcade.Group {
 
     //Genetic flow from between population
     //Best to call right after selection since they're already sorted
-    geneFlow(otherPopulation, flowRatio = 0.1) {
+    geneFlow(otherGroup, flowRatio = 0.1) {
         for (let i=0; i < this.lives.length * flowRatio; i++) {
-            //avoid replacing best % or the Elites that replaced the bottom 20
-            let replaced = randIntBetween(this.lives.length * this.selectionCutoff, this.lives.length - 20)
-            let mom = randIntBetween(0, this.lives.length);
-            let dad = randIntBetween(0, otherPopulation.length);
+            //avoid replacing best % or the Elites that replaced the least fit
+            let replaced = randIntBetween(this.lives.length * this.selectionCutoff, this.lives.length - 1)
+            let mom = randIntBetween(0, this.lives.length - 1);
+            let dad = randIntBetween(0, otherGroup.lives.length - 1);
             //mating between two populations
-            this.lives[replaced].mind.net.sexual(this.lives[mom].mind.net, otherPopulation.lives[dad].mind.net, 0);
+            this.lives[replaced].mind.net.sexual(this.lives[mom].mind.net, otherGroup.lives[dad].mind.net, 0);
         }
     }
 
 }
 
 const randIntBetween = (lowNum, highNum) => {
-    lowNum = Math.ceil(lowNum);
+    lowNum = Math.floor(lowNum);
     highNum = Math.floor(highNum);
     return Math.floor(Math.random() * (highNum - lowNum + 1)) + lowNum;
 }

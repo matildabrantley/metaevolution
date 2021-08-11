@@ -24,7 +24,8 @@ var config = {
 
 var game = new Phaser.Game(config);
 let starGroup;
-let distTexts = [];
+let globalTimer = 0;
+let timerText;
 let loneStar;
 let distances = [];
 
@@ -58,19 +59,19 @@ function create () {
     blueStar.collideWorldBounds = true;
     goalGroup.add(blueStar);
     
-    blackStar = this.physics.add.image(width * 0.75, height * 0.75, 'blackstar');
-    blackStar.setCircle(30);
-    blackStar.setScale(5);
-    blackStar.setBounce(5);
-    blackStar.collideWorldBounds = true;
-    goalGroup.add(blackStar);
+    // blackStar = this.physics.add.image(width * 0.75, height * 0.75, 'blackstar');
+    // blackStar.setCircle(30);
+    // blackStar.setScale(5);
+    // blackStar.setBounce(5);
+    // blackStar.collideWorldBounds = true;
+    // goalGroup.add(blackStar);
     
-    greenStar = this.physics.add.image(width * 0.25, height * 0.75, 'greenstar');
-    greenStar.setCircle(30);
-    greenStar.setScale(5);
-    greenStar.setBounce(5);
-    greenStar.collideWorldBounds = true;
-    goalGroup.add(greenStar);
+    // greenStar = this.physics.add.image(width * 0.25, height * 0.75, 'greenstar');
+    // greenStar.setCircle(30);
+    // greenStar.setScale(5);
+    // greenStar.setBounce(5);
+    // greenStar.collideWorldBounds = true;
+    // goalGroup.add(greenStar);
 
     let animConfig = {
         key: 'redKey',
@@ -115,57 +116,16 @@ function create () {
     species[0].createGroup(groupConfig, blueGroupAnim, {pop: 100});
     species[0].createGroup(groupConfig, greenGroupAnim, {pop: 100});
     species[0].createGroup(groupConfig, brightGroupAnim, {pop: 100});
+    species[0].createGroup(groupConfig, redGroupAnim, {pop: 100});
+    species[0].createGroup(groupConfig, blueGroupAnim, {pop: 100});
+    species[0].createGroup(groupConfig, greenGroupAnim, {pop: 100});
+    species[0].createGroup(groupConfig, brightGroupAnim, {pop: 100});
 
-    //Create each Group (extending Phaser's Group) that's part of a Species
-    const groups = [];
-    //firstGroup is key group, meaning is controls goals
-    // groups.push(new Group(this.physics.world, this, config, goalGroup, true));
-    // groups.push(new Group(this.physics.world, this, config, goalGroup));
-    // groups.push(new Group(this.physics.world, this, config, goalGroup));
-    // groups.push(new Group(this.physics.world, this, config, goalGroup));
-
-    // //First group has animated red pulsing dot
-    // for (let i=0; i < groupPop; i++){
-    //     let life = new Life(this, 300, 400, 'redLife', 'pulsing-red-dot0.png');
-    //     //life.setCircle(16);
-    //     life.play('redKey');
-    //     groups[0].add(life);
-    // } //Setup handles Group construction that requires all Life elements to exist
-    // groups[0].setup(0.05);
-
-    // //Second group has animated blue pulsing dot
-    // for (let i=0; i < groupPop; i++){
-    //     let life = new Life(this, 500, 300, 'blueLife', 'pulsing-blue-dot0.png');
-    //     //life.setCircle(16);
-    //     life.play('blueKey');
-    //     groups[1].add(life);
-    // } //Setup handles Group construction that requires all Life elements to exist
-    // groups[1].setup(0.1, 0.2);
-
-    // //Third group has animated green pulsing dot
-    // for (let i=0; i < groupPop; i++){
-    //     let life = new Life(this, 500, 300, 'greenLife', 'pulsing-green-dot0.png');
-    //     //life.setCircle(16);
-    //     life.play('greenKey');
-    //     groups[2].add(life);
-    // } //Setup handles Group construction that requires all Life elements to exist
-    // groups[2].setup(0.15);
-
-    // //Fourth group has animated bright pulsing star
-    // for (let i=0; i < groupPop; i++){
-    //     let life = new Life(this, 500, 300, 'brightLife', 'pulsing-white-star0.png');
-    //     //life.setCircle(16);
-    //     life.play('brightKey');
-    //     fourgroups[3]thGroup.add(life);
-    // } //Setup handles Group construction that requires all Life elements to exist
-    // groups[3].setup(0.15);
-
-    //for (let i=0; i < firstGroup.getLength(); i++)
-     //   distTexts.push(this.add.text(500, i*50 + 20, 'hello'));
+     timerText = this.add.text(10, 10, globalTimer);
 }
 
 function update () {
-    //distTexts[i].setText(Phaser.Math.Distance.BetweenPoints(loneStar, creature));
+    timerText.setText("Update " + globalTimer);
     
     //Let's pretend "specie" is the correct singular of "species" =)
     for (let specie of species)
@@ -173,6 +133,7 @@ function update () {
 
     //example of collision handling
     //this.physics.collide(groups[0], loneStar, eat);
+    globalTimer++;
 }
 
 function eat (creature, food) {
