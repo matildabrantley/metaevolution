@@ -75,7 +75,10 @@ class Group extends Phaser.Physics.Arcade.Group {
            this.selection();
         }
         if (this.timer1 % this.bonusLength == 0){
-           this.bonusGoal = Math.floor((Math.random() * this.goals.length));
+           //this.bonusGoal = Math.floor((Math.random() * this.goals.length)); //random goal rotation
+           this.bonusGoal++
+            if (this.bonusGoal >= this.goals.length)
+                this.bonusGoal = 0;
         }
     }
 

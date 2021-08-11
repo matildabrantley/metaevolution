@@ -112,6 +112,9 @@ function create () {
 
     species.push(new Species(goalGroup)); //create empty species with only default goals defined
     species[0].createGroup(groupConfig, redGroupAnim, {pop: 100});
+    species[0].createGroup(groupConfig, blueGroupAnim, {pop: 100});
+    species[0].createGroup(groupConfig, greenGroupAnim, {pop: 100});
+    species[0].createGroup(groupConfig, brightGroupAnim, {pop: 100});
 
     //Create each Group (extending Phaser's Group) that's part of a Species
     const groups = [];
