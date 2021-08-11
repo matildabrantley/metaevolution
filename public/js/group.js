@@ -20,7 +20,7 @@ class Group extends Phaser.Physics.Arcade.Group {
     }
 
     //maintains array of Life objects, sets initial distances from goals and create Minds
-    setup(mutRate = 0.05, selectionCutoff = 0.1, maxGenLength = 500, initialGenLength = 10, deltaGenLength = 5) {
+    setup(pop = 100, mutRate = 0.05, selectionCutoff = 0.1, maxGenLength = 500, initialGenLength = 10, deltaGenLength = 5) {
         this.lives = this.getChildren();
 
         this.mutRate = mutRate;

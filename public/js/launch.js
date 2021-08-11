@@ -1,10 +1,9 @@
 // const Matter = require('matter-js');
 let width = 800;
 let height = 600;
-let speciesPop = 150;
+let groupPop = 150;
 let maxStars = 10;
-let group;
-let species
+const species = [];
 
 var config = {
     type: Phaser.AUTO,
@@ -24,7 +23,6 @@ var config = {
 };
 
 var game = new Phaser.Game(config);
-let firstSpecies;
 let starGroup;
 let distTexts = [];
 let loneStar;
@@ -74,103 +72,105 @@ function create () {
     greenStar.collideWorldBounds = true;
     goalGroup.add(greenStar);
 
-    //firstSpecies is key species, meaning is controls goals
-    firstSpecies = new Species(this.physics.world, this, config, goalGroup, true);
-    secondSpecies = new Species(this.physics.world, this, config, goalGroup);
-    thirdSpecies = new Species(this.physics.world, this, config, goalGroup);
-    fourthSpecies = new Species(this.physics.world, this, config, goalGroup);
-
-    const redAnimConfig = {
+    let animConfig = {
         key: 'redKey',
         frames: 'redLife',
         frameRate: 30,
         repeat: -1
     };
-    const blueAnimConfig = {
+    this.anims.create(animConfig);
+    const redGroupAnim = {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: 'pulsing-red-dot0.png'};
+
+    animConfig = {
         key: 'blueKey',
         frames: 'blueLife',
         frameRate: 30,
         repeat: -1
     };
-    const greenAnimConfig = {
+    this.anims.create(animConfig);
+    const blueGroupAnim = {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: 'pulsing-blue-dot0.png'};
+    
+    animConfig = {
         key: 'greenKey',
         frames: 'greenLife',
         frameRate: 30,
         repeat: -1
     };
-    const brightAnimConfig = {
+    this.anims.create(animConfig);
+    const greenGroupAnim = {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: 'pulsing-green-dot0.png'};
+    
+    animConfig = {
         key: 'brightKey',
         frames: 'brightLife',
         frameRate: 60,
         repeat: -1
     };
-    this.anims.create(redAnimConfig);
-    this.anims.create(blueAnimConfig);
-    this.anims.create(greenAnimConfig);
-    this.anims.create(brightAnimConfig);
+    this.anims.create(animConfig);
+    const brightGroupAnim = {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: 'pulsing-white-star0.png'};
 
+    const groupConfig = {world: this.physics.world, scene: this, config: config, goals: goalGroup};
 
-    for (let i=0; i < speciesPop; i++){
-        let life = new Life(this, 300, 400, 'redLife', 'pulsing-red-dot0.png');
-        //life.setCircle(16);
-        life.play('redKey');
-        firstSpecies.add(life);
-    }
-    firstSpecies.setup(0.05);
-    for (let i=0; i < speciesPop; i++){
-        let life = new Life(this, 500, 300, 'blueLife', 'pulsing-blue-dot0.png');
-        //life.setCircle(16);
-        life.play('blueKey');
-        secondSpecies.add(life);
-    }
-    secondSpecies.setup(0.1, 0.2);
-    for (let i=0; i < speciesPop; i++){
-        let life = new Life(this, 500, 300, 'greenLife', 'pulsing-green-dot0.png');
-        //life.setCircle(16);
-        life.play('greenKey');
-        thirdSpecies.add(life);
-    }
-    thirdSpecies.setup(0.15);
-    for (let i=0; i < speciesPop; i++){
-        let life = new Life(this, 500, 300, 'brightLife', 'pulsing-white-star0.png');
-        //life.setCircle(16);
-        life.play('brightKey');
-        fourthSpecies.add(life);
-    }
-    fourthSpecies.setup(0.15);
-    //starGroup = this.add.group();
-    // for (let i=0; i < maxStars; i++){
-    //     let starBody = this.physics.add.image((i+1)*10 + 100, (i+1)*10, 'star');
-    //     starBody.setCircle(30);
-    //     starGroup.add(starBody);
-    // }
+    species.push(new Species(goalGroup)); //create empty species with only default goals defined
+    species[0].createGroup(groupConfig, redGroupAnim, {pop: 100});
 
-    //for (let i=0; i < firstSpecies.getLength(); i++)
+    //Create each Group (extending Phaser's Group) that's part of a Species
+    const groups = [];
+    //firstGroup is key group, meaning is controls goals
+    // groups.push(new Group(this.physics.world, this, config, goalGroup, true));
+    // groups.push(new Group(this.physics.world, this, config, goalGroup));
+    // groups.push(new Group(this.physics.world, this, config, goalGroup));
+    // groups.push(new Group(this.physics.world, this, config, goalGroup));
+
+    // //First group has animated red pulsing dot
+    // for (let i=0; i < groupPop; i++){
+    //     let life = new Life(this, 300, 400, 'redLife', 'pulsing-red-dot0.png');
+    //     //life.setCircle(16);
+    //     life.play('redKey');
+    //     groups[0].add(life);
+    // } //Setup handles Group construction that requires all Life elements to exist
+    // groups[0].setup(0.05);
+
+    // //Second group has animated blue pulsing dot
+    // for (let i=0; i < groupPop; i++){
+    //     let life = new Life(this, 500, 300, 'blueLife', 'pulsing-blue-dot0.png');
+    //     //life.setCircle(16);
+    //     life.play('blueKey');
+    //     groups[1].add(life);
+    // } //Setup handles Group construction that requires all Life elements to exist
+    // groups[1].setup(0.1, 0.2);
+
+    // //Third group has animated green pulsing dot
+    // for (let i=0; i < groupPop; i++){
+    //     let life = new Life(this, 500, 300, 'greenLife', 'pulsing-green-dot0.png');
+    //     //life.setCircle(16);
+    //     life.play('greenKey');
+    //     groups[2].add(life);
+    // } //Setup handles Group construction that requires all Life elements to exist
+    // groups[2].setup(0.15);
+
+    // //Fourth group has animated bright pulsing star
+    // for (let i=0; i < groupPop; i++){
+    //     let life = new Life(this, 500, 300, 'brightLife', 'pulsing-white-star0.png');
+    //     //life.setCircle(16);
+    //     life.play('brightKey');
+    //     fourgroups[3]thGroup.add(life);
+    // } //Setup handles Group construction that requires all Life elements to exist
+    // groups[3].setup(0.15);
+
+    //for (let i=0; i < firstGroup.getLength(); i++)
      //   distTexts.push(this.add.text(500, i*50 + 20, 'hello'));
 }
 
 function update () {
-    let i = 0;
-    // firstSpecies.children.each(function(creature) {
-    //     distTexts[i].setText(Phaser.Math.Distance.BetweenPoints(loneStar, creature));
-    //     i++;
-    // }, this);
+    //distTexts[i].setText(Phaser.Math.Distance.BetweenPoints(loneStar, creature));
+    
+    //Let's pretend "specie" is the correct singular of "species" =)
+    for (let specie of species)
+        specie.update();
 
-    // if (starGroup.getLength() < maxStars) {
-    //     let starBody = this.physics.add.image(Math.random() * width, Math.random() * height, 'star');
-    //     starBody.setCircle(30);
-    //     starGroup.add(starBody);
-    // }
-    firstSpecies.updateWithEngine();
-    secondSpecies.updateWithEngine();
-    thirdSpecies.updateWithEngine();
-    fourthSpecies.updateWithEngine();
-    //this.physics.collide(firstSpecies, loneStar, eat);
+    //example of collision handling
+    //this.physics.collide(groups[0], loneStar, eat);
 }
-
-// function render () {
-//     this.game.debug.text( "This is debug text", 100, 380 );
-// }
 
 function eat (creature, food) {
     food.destroy();
