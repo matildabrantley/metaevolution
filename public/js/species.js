@@ -161,6 +161,11 @@ class Species extends Phaser.Physics.Arcade.Group {
     geneFlow(otherPopulation, flowRatio = 0.1) {
         for (let i=0; i < this.lives.length * flowRatio; i++) {
             //avoid replacing best % or the Elites that replaced the bottom 20
+            let replaced = randIntBetween(this.lives.length * this.selectionCutoff, this.lives.length - 20)
+            let mom = randIntBetween(0, this.lives.length);
+            let dad = randIntBetween(0, otherPopulation.length);
+            //mating between two populations
+            this.lives[replaced].mind.net.sexual(this.lives[mom].mind.net, otherPopulation.lives[dad].mind.net, 0);
         }
     }
 
