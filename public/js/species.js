@@ -1,19 +1,20 @@
 class Species {
-    constructor({goals, goalsAreMoving = false, bonusIsRandom = false} = {}, groups = []){
+    constructor({goals, goalsAreMoving = false, bonusIsRandom = false, groupSelectionFreq = 50} = {}, groups = []){
         this.goals = goals.getChildren(); //groups will use these if specific goals aren't defined
         this.groups = groups; //groups can be predefined, but it's better to use createGroup()
         this.bonusLength = 1;
         this.bonusGoal = 0;
         this.timer = 0;
-        this.mingleFreq = 30;
+        this.mingleFreq = 50;
         this.goalsAreMoving = goalsAreMoving;
         this.bonusIsRandom = bonusIsRandom;
+        this.groupSelectionFreq = groupSelectionFreq;
     }
 
     //Preferred (and simpler) method to create new groups
     createGroup({world, scene, config, goals = this.goals} = {}, //general config for group
         {spritesheet, key, firstFrame, scale = 1} = {}, //animation config for all sprites in group
-        {pop = 100, mutRate = 0.05, selectionCutoff = 0.1, maxGenLength = 250, initialGenLength = 10, deltaGenLength = 5} = {} //genetic config
+        {pop = 100, mutRate = 0.05, selectionCutoff = 0.1, maxGenLength = 150, initialGenLength = 10, deltaGenLength = 5} = {} //genetic config
         ){
 
         //Create Group object with general configuration
@@ -50,7 +51,7 @@ class Species {
             for (let g=0; g < this.goals.length; g++)
                 g == this.bonusGoal ? this.goals[g].setScale(6) : this.goals[g].setScale(4);
             
-            this.bonusLength = Math.floor(this.groups[0].genLength / 3);
+            this.bonusLength = Math.floor(this.groups[0].genLength / 2);
         }
         //Move goals around randomly if flag is set true
         if (this.movingGoals)
@@ -58,10 +59,36 @@ class Species {
                 goal.setPosition(200 + Math.random() * 400, 150 + Math.random() * 300);
 
 
+        if (this.timer % this.mingleFreq == 0){
+            this.mingleAllGroups(0.15);
+            if (this.mingleFreq < 500)
+                this.mingleFreq+=10;
+        }
 
-        if (this.timer % this.mingleFreq == 0)
-            this.mingleAllGroups(0.05);
+        if (this.timer % this.groupSelectionFreq == 0)
+            this.groupSelection();
+        
     }
+
+    groupSelection(){
+        this.groups.sort((b, a) => (a.groupFitness > b.groupFitness) ? 1 : -1);
+
+        //migrate genes from more fit groups to less fit groups
+        for (let g=0; g < this.groups.length-1; g++){
+            this.migrateGroup(g, g+1);
+            this.groups[g].mutRate = g/50;
+        }
+
+        //the lower the fitness, the higher the mutation rate
+        for (let g=0; g < this.groups.length; g++){
+            this.groups[g].mutRate = g/25;
+            this.groups[g].groupFitness = 0;
+        }
+
+    }
+
+
+
 
     //unidirectional (one-way) gene flow from one group to another
     migrateGroup(migrantGroupIndex, receivingGroupIndex, flowRate = 0.1){

@@ -3,6 +3,12 @@
 class Net {
 	constructor(isRecurrent, ...layerSizes)
 	{		
+		if (isRecurrent){
+			//Inputs receive outputs of previous activation
+			layerSizes[0] += layerSizes[layerSizes.length - 1];
+			this.memory = new Array(layerSizes[layerSizes.length - 1])
+		}
+
 		//initialize all charges to zero
 		this.charges = new Array(layerSizes.length);
 		for (let layer = 0; layer < layerSizes.length; layer++)
@@ -31,13 +37,14 @@ class Net {
 		this.clearCharges();
 		//set first layer to input array
 		this.charges[0] = input;
-		this.charges[0].concat
+		if (this.isRecurrent)
+			this.charges[0].concat(this.memory);
 		
 		//index of output layer
 		let outputLayer = this.charges.length - 1;
 
 
-		//set a standard net-wide threshold for both positive and negitive charges
+		//set a standard net-wide threshold for both positive and negative charges
 		let threshold = 0.0;
 
 		//Propagate charges forward
@@ -61,6 +68,8 @@ class Net {
 		for (let neuron = 0; neuron < this.charges[outputLayer].length; neuron++)
 			this.charges[outputLayer][neuron] = zeroCenteredCurve(this.charges[outputLayer][neuron]);
 
+		if (this.isRecurrent)
+			this.memory = this.charges[outputLayer];
 
 		//return output layer
 		return this.charges[outputLayer];

@@ -1,7 +1,7 @@
 // const Matter = require('matter-js');
 let width = 800;
 let height = 600;
-let groupPop = 1250;
+let groupPop = 100;
 let maxStars = 10;
 const species = [];
 
@@ -44,29 +44,31 @@ function preload () {
 function create () {
     this.physics.world.setBounds( 0, 0, width, height );
 
+    let goalDivergence = 0.15;
+
     let goalGroup = this.add.group();
-    loneStar = this.physics.add.image(width * 0.35, height * 0.35, 'star');
+    loneStar = this.physics.add.image(width * (0.5 - goalDivergence), height * (0.5 - goalDivergence), 'star');
     loneStar.setCircle(30);
     loneStar.setScale(4);
     loneStar.setBounce(5);
     loneStar.collideWorldBounds = true;
     goalGroup.add(loneStar);
     
-    // blueStar = this.physics.add.image(width * 0.65, height * 0.35, 'bluestar');
-    // blueStar.setCircle(30);
-    // blueStar.setScale(4);
-    // blueStar.setBounce(5);
-    // blueStar.collideWorldBounds = true;
-    // goalGroup.add(blueStar);
+    blueStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 - goalDivergence), 'bluestar');
+    blueStar.setCircle(30);
+    blueStar.setScale(4);
+    blueStar.setBounce(5);
+    blueStar.collideWorldBounds = true;
+    goalGroup.add(blueStar);
     
-    blackStar = this.physics.add.image(width * 0.65, height * 0.65, 'blackstar');
+    blackStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 + goalDivergence), 'blackstar');
     blackStar.setCircle(30);
     blackStar.setScale(5);
     blackStar.setBounce(5);
     blackStar.collideWorldBounds = true;
     goalGroup.add(blackStar);
     
-    // greenStar = this.physics.add.image(width * 0.35, height * 0.65, 'greenstar');
+    // greenStar = this.physics.add.image(width * (0.5 - goalDivergence), height * (0.5 + goalDivergence), 'greenstar');
     // greenStar.setCircle(30);
     // greenStar.setScale(5);
     // greenStar.setBounce(5);
@@ -120,6 +122,7 @@ function create () {
     // species[0].createGroup(groupConfig, blueGroupAnim, {pop: 100});
     // species[0].createGroup(groupConfig, greenGroupAnim, {pop: 100});
     // species[0].createGroup(groupConfig, brightGroupAnim, {pop: 100});
+
 
      timerText = this.add.text(10, 10, globalTimer);
 }

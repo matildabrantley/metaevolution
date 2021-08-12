@@ -29,7 +29,6 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.selectionCutoff = selectionCutoff;
         this.numElites = 20;
 
-
         for (let life of this.lives){
             life.startingDistFromGoal = new Array(this.goals.length);
             for (let g=0; g < this.goals.length; g++)
@@ -43,6 +42,7 @@ class Group extends Phaser.Physics.Arcade.Group {
     //normal updating within Phaser's/Matter's loop
     updateWithEngine() {
         this.timer1++;
+        let allFitness = []; //used to calculate average fitness
         for (let life of this.lives) {
             //if (this.timer1 % 10 == 0){
                 //for (let goal of this.goals)
@@ -67,7 +67,10 @@ class Group extends Phaser.Physics.Arcade.Group {
             }
             //use reducer to get total product (and divide by 1000 to keep values manageable)
             life.fitness += distScores.reduce((a,b) => a+b, 1) / 1000;
+            allFitness.push(life.fitness);
         }
+
+        this.groupFitness += average(allFitness);
 
         if (this.timer1 % this.genLength == 0){
            this.selection();
@@ -138,6 +141,7 @@ class Group extends Phaser.Physics.Arcade.Group {
             for (let g=0; g < this.goals.length; g++)
                 life.startingDistFromGoal[g] = Phaser.Math.Distance.BetweenPoints(life, this.goals[g]);
 
+            
             life.fitness = 0;
             
         }
@@ -164,5 +168,7 @@ const randIntBetween = (lowNum, highNum) => {
     highNum = Math.floor(highNum);
     return Math.floor(Math.random() * (highNum - lowNum + 1)) + lowNum;
 }
-const total = (nums) => nums.reduce((a, b) => (a + b));
+const total = (nums) => {
+    nums.reduce((a, b) => (a + b));
+}
 const average = (nums) => total(nums) / nums.length;
