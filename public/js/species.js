@@ -1,5 +1,5 @@
 class Species {
-    constructor({goals, goalsAreMoving = false, bonusIsRandom = false, groupSelectionFreq = 50} = {}, groups = []){
+    constructor({goals, goalsAreMoving = false, bonusIsRandom = false, groupSelectionFreq = 300} = {}, groups = []){
         this.goals = goals.getChildren(); //groups will use these if specific goals aren't defined
         this.groups = groups; //groups can be predefined, but it's better to use createGroup()
         this.bonusLength = 1;
@@ -74,10 +74,10 @@ class Species {
         this.groups.sort((b, a) => (a.groupFitness > b.groupFitness) ? 1 : -1);
 
         //migrate genes from more fit groups to less fit groups
-        for (let g=0; g < this.groups.length-1; g++){
-            this.migrateGroup(g, g+1);
-            this.groups[g].mutRate = g/50;
-        }
+        // for (let g=0; g < this.groups.length-1; g++){
+        //     this.migrateGroup(g, g+1);
+        //     this.groups[g].mutRate = g/50;
+        // }
 
         //the lower the fitness, the higher the mutation rate
         for (let g=0; g < this.groups.length; g++){
@@ -91,7 +91,7 @@ class Species {
 
 
     //unidirectional (one-way) gene flow from one group to another
-    migrateGroup(migrantGroupIndex, receivingGroupIndex, flowRate = 0.1){
+    migrateGroup(migrantGroupIndex, receivingGroupIndex, flowRate = 0.75){
         this.groups[receivingGroupIndex].geneFlow(this.groups[migrantGroupIndex], flowRate);
     }
 

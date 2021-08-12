@@ -1,15 +1,23 @@
 
 //Just a perceptron/feedforward net for now
 class Net {
-	constructor(isRecurrent, ...layerSizes)
-	{		
+	constructor({isRecurrent = false, isLongTerm = false} = {}, ...layerSizes)
+	{	
+		//First build the memory systems
+		let numOutputs = layerSizes[layerSizes.length - 1];	
+		//Recurrent/Short-term Memory
 		if (isRecurrent){
 			//Inputs receive outputs of previous activation
-			layerSizes[0] += layerSizes[layerSizes.length - 1];
-			this.memory = new Array(layerSizes[layerSizes.length - 1])
+			layerSizes[0] += numOutputs;
+			this.shortMemory = new Array(numOutputs);
+		}
+		//Long-term Memory
+		if (isLongTerm){
+			layerSizes[0] += numOutputs;
+			this.longMemory = new Array(numOutputs);
 		}
 
-		//initialize all charges to zero
+		//Initialize all charges to zero
 		this.charges = new Array(layerSizes.length);
 		for (let layer = 0; layer < layerSizes.length; layer++)
 		{
@@ -18,7 +26,7 @@ class Net {
 				this.charges[layer][neuron] = 0;
 		}
 		
-		//fully interconnected random weights 
+		//Fully interconnected random weights 
 		this.weights = new Array(layerSizes.length - 1);
 		for (let layer = 0; layer < this.weights.length; layer++)
 		{
@@ -37,8 +45,12 @@ class Net {
 		this.clearCharges();
 		//set first layer to input array
 		this.charges[0] = input;
-		if (this.isRecurrent)
-			this.charges[0].concat(this.memory);
+
+		//Remember...
+		if (this.shortMemory)
+			this.charges[0].concat(this.shortMemory);
+		if (this.longMemory)
+			this.charges[0].concat(this.longMemory);
 		
 		//index of output layer
 		let outputLayer = this.charges.length - 1;
@@ -68,8 +80,14 @@ class Net {
 		for (let neuron = 0; neuron < this.charges[outputLayer].length; neuron++)
 			this.charges[outputLayer][neuron] = zeroCenteredCurve(this.charges[outputLayer][neuron]);
 
-		if (this.isRecurrent)
-			this.memory = this.charges[outputLayer];
+		if (this.shortMemory)
+			this.shortMemory = this.charges[outputLayer];
+		if (this.longMemory){
+			for (let i in this.longMemory){
+				this.longMemory[i] += this.charges[outputLayer][i];
+				this.longMemory[i] = zeroCenteredCurve(this.longMemory[i]);
+			}
+		}
 
 		//return output layer
 		return this.charges[outputLayer];
