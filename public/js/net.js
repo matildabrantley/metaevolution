@@ -1,7 +1,7 @@
 
 //Just a perceptron/feedforward net for now
 class Net {
-	constructor(...layerSizes)
+	constructor(isRecurrent, ...layerSizes)
 	{		
 		//initialize all charges to zero
 		this.charges = new Array(layerSizes.length);
@@ -31,6 +31,7 @@ class Net {
 		this.clearCharges();
 		//set first layer to input array
 		this.charges[0] = input;
+		this.charges[0].concat
 		
 		//index of output layer
 		let outputLayer = this.charges.length - 1;

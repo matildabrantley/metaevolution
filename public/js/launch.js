@@ -1,7 +1,7 @@
 // const Matter = require('matter-js');
 let width = 800;
 let height = 600;
-let groupPop = 150;
+let groupPop = 1250;
 let maxStars = 10;
 const species = [];
 
@@ -45,28 +45,28 @@ function create () {
     this.physics.world.setBounds( 0, 0, width, height );
 
     let goalGroup = this.add.group();
-    loneStar = this.physics.add.image(width * 0.25, height * 0.25, 'star');
+    loneStar = this.physics.add.image(width * 0.35, height * 0.35, 'star');
     loneStar.setCircle(30);
     loneStar.setScale(4);
     loneStar.setBounce(5);
     loneStar.collideWorldBounds = true;
     goalGroup.add(loneStar);
     
-    blueStar = this.physics.add.image(width * 0.75, height * 0.25, 'bluestar');
-    blueStar.setCircle(30);
-    blueStar.setScale(4);
-    blueStar.setBounce(5);
-    blueStar.collideWorldBounds = true;
-    goalGroup.add(blueStar);
+    // blueStar = this.physics.add.image(width * 0.65, height * 0.35, 'bluestar');
+    // blueStar.setCircle(30);
+    // blueStar.setScale(4);
+    // blueStar.setBounce(5);
+    // blueStar.collideWorldBounds = true;
+    // goalGroup.add(blueStar);
     
-    // blackStar = this.physics.add.image(width * 0.75, height * 0.75, 'blackstar');
-    // blackStar.setCircle(30);
-    // blackStar.setScale(5);
-    // blackStar.setBounce(5);
-    // blackStar.collideWorldBounds = true;
-    // goalGroup.add(blackStar);
+    blackStar = this.physics.add.image(width * 0.65, height * 0.65, 'blackstar');
+    blackStar.setCircle(30);
+    blackStar.setScale(5);
+    blackStar.setBounce(5);
+    blackStar.collideWorldBounds = true;
+    goalGroup.add(blackStar);
     
-    // greenStar = this.physics.add.image(width * 0.25, height * 0.75, 'greenstar');
+    // greenStar = this.physics.add.image(width * 0.35, height * 0.65, 'greenstar');
     // greenStar.setCircle(30);
     // greenStar.setScale(5);
     // greenStar.setBounce(5);
@@ -111,15 +111,15 @@ function create () {
 
     const groupConfig = {world: this.physics.world, scene: this, config: config, goals: goalGroup};
 
-    species.push(new Species(goalGroup)); //create empty species with only default goals defined
-    species[0].createGroup(groupConfig, redGroupAnim, {pop: 100});
-    species[0].createGroup(groupConfig, blueGroupAnim, {pop: 100});
-    species[0].createGroup(groupConfig, greenGroupAnim, {pop: 100});
-    species[0].createGroup(groupConfig, brightGroupAnim, {pop: 100});
-    species[0].createGroup(groupConfig, redGroupAnim, {pop: 100});
-    species[0].createGroup(groupConfig, blueGroupAnim, {pop: 100});
-    species[0].createGroup(groupConfig, greenGroupAnim, {pop: 100});
-    species[0].createGroup(groupConfig, brightGroupAnim, {pop: 100});
+    species.push(new Species({goals: goalGroup, goalsAreMoving: true})); //create empty species with only goals defined
+    species[0].createGroup(groupConfig, redGroupAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, blueGroupAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, greenGroupAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, brightGroupAnim, {pop: groupPop});
+    // species[0].createGroup(groupConfig, redGroupAnim, {pop: 100});
+    // species[0].createGroup(groupConfig, blueGroupAnim, {pop: 100});
+    // species[0].createGroup(groupConfig, greenGroupAnim, {pop: 100});
+    // species[0].createGroup(groupConfig, brightGroupAnim, {pop: 100});
 
      timerText = this.add.text(10, 10, globalTimer);
 }

@@ -7,7 +7,7 @@ class Mind {
         this.outputs = new Array(numOutputs);
 
         //Feedforward Neural Network
-        this.net = new Net(numInputs, 9, 12, 6, numOutputs);
+        this.net = new Net(true, numInputs, 9, 6, numOutputs);
     }
 
     update(inputs) {

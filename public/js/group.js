@@ -2,16 +2,16 @@
 // const Vector = require('./vector');
 
 class Group extends Phaser.Physics.Arcade.Group {
-    constructor(world, scene, config, goals){
+    constructor(world, scene, config, species){
         super(world, scene, config);
         this.lives = [];
         this.scene = scene;
         this.world = world;
+        this.species = species;
 
         this.timer1 = 0;
-        this.goals = goals.getChildren();
-        this.bonusLength = 1;
-        this.bonusGoal = 0;
+        this.goals = species.goals;
+        this.groupFitness = 0;
 
         //for updateFast()
         this.timer2 = 0;
@@ -49,20 +49,18 @@ class Group extends Phaser.Physics.Arcade.Group {
                     //goal.setVelocity((Math.random()-0.5) * 700, (Math.random()-0.5) * 700);
             //}
 
-            life.update(this.goals, this.bonusGoal);
+            life.update(this.goals, this.species.bonusGoal);
 
             //Fitness to be managed by group
             let distScores = [];
             for (let g=0; g < this.goals.length; g++){
                 let newScore = life.startingDistFromGoal[g] / (Phaser.Math.Distance.BetweenPoints(life, this.goals[g]) + 1);
-                if (g == this.bonusGoal){
+                if (g == this.species.bonusGoal){
                     //newScore += 10; 
                     newScore *= 2.5; 
-                    //this.goals[g].setScale(6);
                 }
                 else {
-                    newScore = -1;
-                    //this.goals[g].setScale(4);
+                    newScore *= 1;
                 }
                     
                 distScores.push(newScore);
@@ -73,12 +71,6 @@ class Group extends Phaser.Physics.Arcade.Group {
 
         if (this.timer1 % this.genLength == 0){
            this.selection();
-        }
-        if (this.timer1 % this.bonusLength == 0){
-           //this.bonusGoal = Math.floor((Math.random() * this.goals.length)); //random goal rotation
-           this.bonusGoal++
-            if (this.bonusGoal >= this.goals.length)
-                this.bonusGoal = 0;
         }
     }
 
@@ -98,8 +90,6 @@ class Group extends Phaser.Physics.Arcade.Group {
         if (this.genLength < this.maxGenLength)
             this.genLength += this.deltaGenLength;
         this.timer1 = 0;
-
-        this.bonusLength = Math.floor(this.genLength / 3);
 
         //fitness sorting function in which more fit lives move to front
         this.lives.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
@@ -139,12 +129,6 @@ class Group extends Phaser.Physics.Arcade.Group {
             this.lives[this.lives.length - 20].mind.net.asexual(this.lives[9].mind.net, 0);
         }
 
-        //key group controls goals
-        // if (this.isKey){
-        //     for (let goal of this.goals)
-        //         goal.setPosition(200 + Math.random() * 400, 150 + Math.random() * 300);
-        // }
-
         //reset
         let newStartingX = 400;
         let newStartingY = 300;
@@ -174,8 +158,11 @@ class Group extends Phaser.Physics.Arcade.Group {
 
 }
 
+//Helpers
 const randIntBetween = (lowNum, highNum) => {
     lowNum = Math.floor(lowNum);
     highNum = Math.floor(highNum);
     return Math.floor(Math.random() * (highNum - lowNum + 1)) + lowNum;
 }
+const total = (nums) => nums.reduce((a, b) => (a + b));
+const average = (nums) => total(nums) / nums.length;
