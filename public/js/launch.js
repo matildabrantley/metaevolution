@@ -26,7 +26,10 @@ var game = new Phaser.Game(config);
 let starGroup;
 let globalTimer = 0;
 let timerText;
-let loneStar;
+let loneStar, blueStar, greenStar, brightStar;
+// let chosenPoint;
+let tiles, tileset, tileLayer;
+let g1, g2, g3, g4;
 let distances = [];
 
 function preload () {
@@ -39,10 +42,21 @@ function preload () {
     this.load.atlas('blueLife', 'sprites/pulsing-blue-dot.png', 'sprites/pulsing-blue-dot.json');
     this.load.atlas('greenLife', 'sprites/pulsing-green-dot.png', 'sprites/pulsing-green-dot.json');
     this.load.atlas('brightLife', 'sprites/pulsing-white-star.png', 'sprites/pulsing-white-star.json');
+
+    this.load.image('tiles', 'sprites/all-tiles.png');
+    this.load.tilemapTiledJSON('tilemap', 'sprites/tilemap-data.json');
 }
 
 function create () {
     this.physics.world.setBounds( 0, 0, width, height );
+
+    
+
+    tiles= this.make.tilemap({ key: 'tilemap', tileWidth: 32, tileHeight: 32 });
+    tileset = tiles.addTilesetImage('tiles');
+    tileLayer = tiles.createLayer('training-grounds', tileset);
+
+    tiles.setCollision([ 29, 48, 70 ]);
 
     let goalDivergence = 0.15;
 
@@ -113,18 +127,25 @@ function create () {
 
     const groupConfig = {world: this.physics.world, scene: this, config: config, goals: goalGroup};
 
-    species.push(new Species({goals: goalGroup, goalsAreMoving: true})); //create empty species with only goals defined
-    species[0].createGroup(groupConfig, redGroupAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, blueGroupAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, greenGroupAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, brightGroupAnim, {pop: groupPop});
+    //Create empty species with only goals defined
+    species.push(new Species({goals: goalGroup, goalsAreMoving: false})); 
+    //Create groups
+    g1 = species[0].createGroup(groupConfig, redGroupAnim, {pop: groupPop});
+    g2 = species[0].createGroup(groupConfig, blueGroupAnim, {pop: groupPop});
+    g3 = species[0].createGroup(groupConfig, greenGroupAnim, {pop: groupPop});
+    g4 = species[0].createGroup(groupConfig, brightGroupAnim, {pop: groupPop});
     // species[0].createGroup(groupConfig, redGroupAnim, {pop: 100});
     // species[0].createGroup(groupConfig, blueGroupAnim, {pop: 100});
     // species[0].createGroup(groupConfig, greenGroupAnim, {pop: 100});
     // species[0].createGroup(groupConfig, brightGroupAnim, {pop: 100});
+    
+    this.physics.add.collider(g1, tileLayer);
+    this.physics.add.collider(g2, tileLayer);
+    this.physics.add.collider(g3, tileLayer);
+    this.physics.add.collider(g4, tileLayer);
 
 
-     timerText = this.add.text(10, 10, globalTimer);
+    timerText = this.add.text(10, 10, globalTimer);
 }
 
 function update () {

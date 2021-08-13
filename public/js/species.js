@@ -5,7 +5,7 @@ class Species {
         this.bonusLength = 1;
         this.bonusGoal = 0;
         this.timer = 0;
-        this.mingleFreq = 50;
+        this.mingleFreq = 5000;
         this.goalsAreMoving = goalsAreMoving;
         this.bonusIsRandom = bonusIsRandom;
         this.groupSelectionFreq = groupSelectionFreq;
@@ -29,6 +29,8 @@ class Species {
         newGroup.setup(pop, mutRate, selectionCutoff, maxGenLength, initialGenLength, deltaGenLength);
         //Add group to this species
         this.groups.push(newGroup);
+
+        return newGroup;
     }
     addGroup(newGroup){
         groups.push(newGroup);
@@ -54,7 +56,7 @@ class Species {
             this.bonusLength = Math.floor(this.groups[0].genLength / 2);
         }
         //Move goals around randomly if flag is set true
-        if (this.movingGoals)
+        if (this.goalsAreMoving)
             for (let goal of this.goals)
                 goal.setPosition(200 + Math.random() * 400, 150 + Math.random() * 300);
 
@@ -74,10 +76,10 @@ class Species {
         this.groups.sort((b, a) => (a.groupFitness > b.groupFitness) ? 1 : -1);
 
         //migrate genes from more fit groups to less fit groups
-        // for (let g=0; g < this.groups.length-1; g++){
-        //     this.migrateGroup(g, g+1);
-        //     this.groups[g].mutRate = g/50;
-        // }
+        for (let g=0; g < this.groups.length-1; g++){
+            this.oneWayMingle(g, g+1);
+            this.groups[g].mutRate = g/50;
+        }
 
         //the lower the fitness, the higher the mutation rate
         for (let g=0; g < this.groups.length; g++){
@@ -87,27 +89,30 @@ class Species {
 
     }
 
-
-
-
-    //unidirectional (one-way) gene flow from one group to another
-    migrateGroup(migrantGroupIndex, receivingGroupIndex, flowRate = 0.75){
-        this.groups[receivingGroupIndex].geneFlow(this.groups[migrantGroupIndex], flowRate);
+    //unidirectional migration (no immediate mating) of fittest lifeforms
+    migrate(migrantGroupIndex, receivingGroupIndex, flowRate = 0.75){
+        this.groups[receivingGroupIndex].lives
     }
 
-    //bidirectional (two-way) gene flow between group pair
-    mingleGroups(groupOneIndex, groupTwoIndex, flowRate = 0.1){
-        this.migrateGroup(groupOneIndex, groupTwoIndex, flowRate);
-        this.migrateGroup(groupTwoIndex, groupOneIndex, flowRate);
+
+    //unidirectional (one-way) gene flow via mating from one group to another
+    oneWayMingle(otherGroupIndex, receivingGroupIndex, flowRate = 0.75){
+        this.groups[receivingGroupIndex].geneFlow(this.groups[otherGroupIndex], flowRate);
     }
 
-    //two way gene flow between all groups in the species
+    //bidirectional (two-way) gene flow via mating between group pair
+    twoWayMingle(groupOneIndex, groupTwoIndex, flowRate = 0.1){
+        this.oneWayMingle(groupOneIndex, groupTwoIndex, flowRate);
+        this.oneWayMingle(groupTwoIndex, groupOneIndex, flowRate);
+    }
+
+    //two way gene flow via mating between all groups in the species
     mingleAllGroups(flowRate = 0.02)
     {
         //g2 starts at g1+1 each inner loop, avoiding checks for self-mingling
         for (let g1=0; g1 < this.groups.length; g1++)
             for (let g2=g1+1; g2 < this.groups.length; g2++)
-                this.mingleGroups(g1, g2, flowRate);
+                this.twoWayMingle(g1, g2, flowRate);
     }
 
 

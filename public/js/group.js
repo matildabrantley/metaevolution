@@ -35,7 +35,7 @@ class Group extends Phaser.Physics.Arcade.Group {
                 life.startingDistFromGoal[g] = Phaser.Math.Distance.BetweenPoints(life, this.goals[g]);
         
             //Create minds based on number of goals
-            life.mind = new Mind(this.goals.length * 3, 3);
+            life.mind = new Mind(this.goals.length * 3, 20);
         }
     }
 

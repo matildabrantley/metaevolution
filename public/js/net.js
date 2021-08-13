@@ -9,12 +9,12 @@ class Net {
 		if (isRecurrent){
 			//Inputs receive outputs of previous activation
 			layerSizes[0] += numOutputs;
-			this.shortMemory = new Array(numOutputs);
+			this.shortMemory = new Array(numOutputs).fill(0);
 		}
 		//Long-term Memory
 		if (isLongTerm){
 			layerSizes[0] += numOutputs;
-			this.longMemory = new Array(numOutputs);
+			this.longMemory = new Array(numOutputs).fill(0);
 		}
 
 		//Initialize all charges to zero
@@ -48,9 +48,9 @@ class Net {
 
 		//Remember...
 		if (this.shortMemory)
-			this.charges[0].concat(this.shortMemory);
+			this.charges[0] = this.charges[0].concat(this.shortMemory);
 		if (this.longMemory)
-			this.charges[0].concat(this.longMemory);
+			this.charges[0] = this.charges[0].concat(this.longMemory);
 		
 		//index of output layer
 		let outputLayer = this.charges.length - 1;
@@ -81,7 +81,7 @@ class Net {
 			this.charges[outputLayer][neuron] = zeroCenteredCurve(this.charges[outputLayer][neuron]);
 
 		if (this.shortMemory)
-			this.shortMemory = this.charges[outputLayer];
+			this.shortMemory = [...this.charges[outputLayer]];
 		if (this.longMemory){
 			for (let i in this.longMemory){
 				this.longMemory[i] += this.charges[outputLayer][i];
