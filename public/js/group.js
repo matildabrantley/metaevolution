@@ -2,11 +2,12 @@
 // const Vector = require('./vector');
 
 class Group extends Phaser.Physics.Arcade.Group {
-    constructor(world, scene, config, species){
+    constructor(world, scene, config, tiles, species){
         super(world, scene, config);
         this.lives = [];
         this.scene = scene;
         this.world = world;
+        this.tiles = tiles;
         this.species = species;
 
         this.timer1 = 0;
@@ -35,7 +36,7 @@ class Group extends Phaser.Physics.Arcade.Group {
                 life.startingDistFromGoal[g] = Phaser.Math.Distance.BetweenPoints(life, this.goals[g]);
         
             //Create minds based on number of goals
-            life.mind = new Mind(this.goals.length * 3, 20);
+            life.mind = new Mind(this.goals.length * 3 + 8, 5);
         }
     }
 

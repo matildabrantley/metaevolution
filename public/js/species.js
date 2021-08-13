@@ -12,16 +12,16 @@ class Species {
     }
 
     //Preferred (and simpler) method to create new groups
-    createGroup({world, scene, config, goals = this.goals} = {}, //general config for group
+    createGroup({world, scene, config, tiles, goals = this.goals} = {}, //general config for group
         {spritesheet, key, firstFrame, scale = 1} = {}, //animation config for all sprites in group
         {pop = 100, mutRate = 0.05, selectionCutoff = 0.1, maxGenLength = 150, initialGenLength = 10, deltaGenLength = 5} = {} //genetic config
         ){
 
         //Create Group object with general configuration
-        const newGroup = new Group(world, scene, config, this);
+        const newGroup = new Group(world, scene, config, tiles, this);
         //Add the population
         for (let i=0; i < pop; i++){
-            let life = new Life(scene, 300, 400, spritesheet, firstFrame);
+            let life = new Life(scene, 300, 400, spritesheet, firstFrame, tiles);
             life.play(key);
             newGroup.add(life);
         } 
@@ -57,8 +57,9 @@ class Species {
         }
         //Move goals around randomly if flag is set true
         if (this.goalsAreMoving)
-            for (let goal of this.goals)
-                goal.setPosition(200 + Math.random() * 400, 150 + Math.random() * 300);
+            if (this.timer % 30 == 0)
+                for (let goal of this.goals)
+                    goal.setVelocity((Math.random()-0.5) * 200, (Math.random()-0.5) * 200);
 
 
         if (this.timer % this.mingleFreq == 0){
@@ -73,6 +74,9 @@ class Species {
     }
 
     groupSelection(){
+        for (let goal of this.goals)
+            goal.setPosition(200 + Math.random() * 400, 150 + Math.random() * 300);
+
         this.groups.sort((b, a) => (a.groupFitness > b.groupFitness) ? 1 : -1);
 
         //migrate genes from more fit groups to less fit groups

@@ -52,13 +52,13 @@ function create () {
 
     
 
-    tiles= this.make.tilemap({ key: 'tilemap', tileWidth: 32, tileHeight: 32 });
+    tiles = this.make.tilemap({ key: 'tilemap', tileWidth: 32, tileHeight: 32 });
     tileset = tiles.addTilesetImage('tiles');
     tileLayer = tiles.createLayer('training-grounds', tileset);
 
     tiles.setCollision([ 29, 48, 70 ]);
 
-    let goalDivergence = 0.15;
+    let goalDivergence = 0;
 
     let goalGroup = this.add.group();
     loneStar = this.physics.add.image(width * (0.5 - goalDivergence), height * (0.5 - goalDivergence), 'star');
@@ -68,19 +68,19 @@ function create () {
     loneStar.collideWorldBounds = true;
     goalGroup.add(loneStar);
     
-    blueStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 - goalDivergence), 'bluestar');
-    blueStar.setCircle(30);
-    blueStar.setScale(4);
-    blueStar.setBounce(5);
-    blueStar.collideWorldBounds = true;
-    goalGroup.add(blueStar);
+    // blueStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 - goalDivergence), 'bluestar');
+    // blueStar.setCircle(30);
+    // blueStar.setScale(4);
+    // blueStar.setBounce(5);
+    // blueStar.collideWorldBounds = true;
+    // goalGroup.add(blueStar);
     
-    blackStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 + goalDivergence), 'blackstar');
-    blackStar.setCircle(30);
-    blackStar.setScale(5);
-    blackStar.setBounce(5);
-    blackStar.collideWorldBounds = true;
-    goalGroup.add(blackStar);
+    // blackStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 + goalDivergence), 'blackstar');
+    // blackStar.setCircle(30);
+    // blackStar.setScale(5);
+    // blackStar.setBounce(5);
+    // blackStar.collideWorldBounds = true;
+    // goalGroup.add(blackStar);
     
     // greenStar = this.physics.add.image(width * (0.5 - goalDivergence), height * (0.5 + goalDivergence), 'greenstar');
     // greenStar.setCircle(30);
@@ -125,10 +125,10 @@ function create () {
     this.anims.create(animConfig);
     const brightGroupAnim = {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: 'pulsing-white-star0.png'};
 
-    const groupConfig = {world: this.physics.world, scene: this, config: config, goals: goalGroup};
+    const groupConfig = {world: this.physics.world, scene: this, config: config, tiles: tileLayer, goals: goalGroup};
 
     //Create empty species with only goals defined
-    species.push(new Species({goals: goalGroup, goalsAreMoving: false})); 
+    species.push(new Species({goals: goalGroup, goalsAreMoving: true})); 
     //Create groups
     g1 = species[0].createGroup(groupConfig, redGroupAnim, {pop: groupPop});
     g2 = species[0].createGroup(groupConfig, blueGroupAnim, {pop: groupPop});
