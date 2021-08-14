@@ -1,7 +1,7 @@
 // const Matter = require('matter-js');
 let width = 800;
 let height = 600;
-let groupPop = 300;
+let groupPop = 100;
 let maxStars = 10;
 const species = [];
 
@@ -42,6 +42,15 @@ function preload () {
     this.load.atlas('blueLife', 'sprites/pulsing-blue-dot.png', 'sprites/pulsing-blue-dot.json');
     this.load.atlas('greenLife', 'sprites/pulsing-green-dot.png', 'sprites/pulsing-green-dot.json');
     this.load.atlas('brightLife', 'sprites/pulsing-white-star.png', 'sprites/pulsing-white-star.json');
+    
+    this.load.atlas('fireSpiral', 'sprites/fire-spiral.png', 'sprites/firal-spiral.json');
+    this.load.atlas('waterSpiral', 'sprites/water-spiral.png', 'sprites/water-spiral.json');
+    this.load.atlas('natureSpiral', 'sprites/nature-spiral.png', 'sprites/nature-spiral.json');
+    this.load.atlas('windSpiral', 'sprites/wind-spiral.png', 'sprites/wind-spiral.json');
+    this.load.atlas('sparkSpiral', 'sprites/spark-spiral.png', 'sprites/spark-spiral.json');
+    this.load.atlas('groundSpiral', 'sprites/ground-spiral.png', 'sprites/ground-spiral.json');
+    this.load.atlas('lightSpiral', 'sprites/light-spiral.png', 'sprites/light-spiral.json');
+    this.load.atlas('voidSpiral', 'sprites/void-spiral.png', 'sprites/void-spiral.json');
 
     this.load.image('tiles', 'sprites/all-tiles.png');
     this.load.tilemapTiledJSON('tilemap', 'sprites/tilemap-data.json');
@@ -89,14 +98,17 @@ function create () {
     // greenStar.collideWorldBounds = true;
     // goalGroup.add(greenStar);
 
-    let animConfig = {
-        key: 'redKey',
-        frames: 'redLife',
-        frameRate: 30,
-        repeat: -1
-    };
-    this.anims.create(animConfig);
-    const redGroupAnim = {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: 'pulsing-red-dot0.png'};
+    let fps = 30;
+    const redGroupAnim = createAnimConfig (this, 'redKey', 'redLife', fps, 'pulsing-red-dot0.png') 
+
+    // let animConfig = {
+    //     key: 'redKey',
+    //     frames: 'redLife',
+    //     frameRate: 30,
+    //     repeat: -1
+    // };
+    // this.anims.create(animConfig);
+    // const redGroupAnim = {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: 'pulsing-red-dot0.png'};
 
     animConfig = {
         key: 'blueKey',
@@ -164,4 +176,15 @@ function update () {
 function eat (creature, food) {
     food.destroy();
     // creature.fitness++;
+}
+
+const createAnimConfig = (scene, keyName, spritesheet, fps, firstFrame) => {
+    let animConfig = {
+        key: keyName,
+        frames: spritesheet,
+        frameRate: fps,
+        repeat: -1
+    };
+    scene.anims.create(animConfig);
+    return {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: firstFrame};
 }
