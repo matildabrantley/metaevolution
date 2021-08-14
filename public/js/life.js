@@ -45,11 +45,21 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
 
         let outputs = this.mind.update(inputs);           
-        this.setVelocity((outputs[0] + outputs[2]) * 500, (outputs[1] + outputs[3]) * 500);
+        this.setAcceleration((outputs[0] + outputs[2]) * 500, (outputs[1] + outputs[3]) * 500);
+        if (outputs[4] > 0.2)
+           this.tryToJump();
         //this.setAngularVelocity(outputs[3]);
+        if (!this.body.touching.down)
+            this.setVelocityY(100);
     }
 
-    //
+    tryToJump(force=1) {
+        if (this.body.touching.down)
+            this.setAccelerationY(3000 * force);
+        else 
+            this.setVelocityY(0);
+    }
+
     updateFast() {
         let outputs = this.mind.update(1, 1);     
         

@@ -23,6 +23,8 @@ class Species {
         for (let i=0; i < pop; i++){
             let life = new Life(scene, 300, 400, spritesheet, firstFrame, tiles);
             life.setScale(scale);
+            life.alpha = 0.75;
+            life.body.setGravityY(1000000);
             life.play(key);
             newGroup.add(life);
         } 
