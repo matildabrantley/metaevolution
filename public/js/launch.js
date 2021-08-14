@@ -43,7 +43,7 @@ function preload () {
     this.load.atlas('greenLife', 'sprites/pulsing-green-dot.png', 'sprites/pulsing-green-dot.json');
     this.load.atlas('brightLife', 'sprites/pulsing-white-star.png', 'sprites/pulsing-white-star.json');
     
-    this.load.atlas('fireSpiral', 'sprites/fire-spiral.png', 'sprites/firal-spiral.json');
+    this.load.atlas('fireSpiral', 'sprites/fire-spiral.png', 'sprites/fire-spiral.json');
     this.load.atlas('waterSpiral', 'sprites/water-spiral.png', 'sprites/water-spiral.json');
     this.load.atlas('natureSpiral', 'sprites/nature-spiral.png', 'sprites/nature-spiral.json');
     this.load.atlas('windSpiral', 'sprites/wind-spiral.png', 'sprites/wind-spiral.json');
@@ -100,42 +100,12 @@ function create () {
 
     let fps = 30;
     const redGroupAnim = createAnimConfig (this, 'redKey', 'redLife', fps, 'pulsing-red-dot0.png') 
-
-    // let animConfig = {
-    //     key: 'redKey',
-    //     frames: 'redLife',
-    //     frameRate: 30,
-    //     repeat: -1
-    // };
-    // this.anims.create(animConfig);
-    // const redGroupAnim = {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: 'pulsing-red-dot0.png'};
-
-    animConfig = {
-        key: 'blueKey',
-        frames: 'blueLife',
-        frameRate: 30,
-        repeat: -1
-    };
-    this.anims.create(animConfig);
-    const blueGroupAnim = {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: 'pulsing-blue-dot0.png'};
+    const blueGroupAnim = createAnimConfig (this, 'blueKey', 'blueLife', fps, 'pulsing-blue-dot0.png') 
+    const greenGroupAnim = createAnimConfig (this, 'greenKey', 'greenLife', fps, 'pulsing-green-dot0.png') 
+    const brightGroupAnim = createAnimConfig (this, 'brightKey', 'brightLife', fps, 'pulsing-white-star0.png') 
     
-    animConfig = {
-        key: 'greenKey',
-        frames: 'greenLife',
-        frameRate: 30,
-        repeat: -1
-    };
-    this.anims.create(animConfig);
-    const greenGroupAnim = {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: 'pulsing-green-dot0.png'};
-    
-    animConfig = {
-        key: 'brightKey',
-        frames: 'brightLife',
-        frameRate: 60,
-        repeat: -1
-    };
-    this.anims.create(animConfig);
-    const brightGroupAnim = {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: 'pulsing-white-star0.png'};
+    const fireSpiralAnim = createAnimConfig (this, 'fireSpiralKey', 'fireSpiral', fps, 'fire-spiral0.png', 0.5); 
+
 
     const groupConfig = {world: this.physics.world, scene: this, config: config, tiles: tileLayer, goals: goalGroup};
 
@@ -146,6 +116,7 @@ function create () {
     g2 = species[0].createGroup(groupConfig, blueGroupAnim, {pop: groupPop});
     g3 = species[0].createGroup(groupConfig, greenGroupAnim, {pop: groupPop});
     g4 = species[0].createGroup(groupConfig, brightGroupAnim, {pop: groupPop});
+    g5 = species[0].createGroup(groupConfig, fireSpiralAnim, {pop: groupPop});
     // species[0].createGroup(groupConfig, redGroupAnim, {pop: 100});
     // species[0].createGroup(groupConfig, blueGroupAnim, {pop: 100});
     // species[0].createGroup(groupConfig, greenGroupAnim, {pop: 100});
@@ -155,6 +126,7 @@ function create () {
     this.physics.add.collider(g2, tileLayer);
     this.physics.add.collider(g3, tileLayer);
     this.physics.add.collider(g4, tileLayer);
+    this.physics.add.collider(g5, tileLayer);
     // this.physics.add.collider(loneStar, tileLayer);
 
 
@@ -178,7 +150,7 @@ function eat (creature, food) {
     // creature.fitness++;
 }
 
-const createAnimConfig = (scene, keyName, spritesheet, fps, firstFrame) => {
+const createAnimConfig = (scene, keyName, spritesheet, fps, firstFrame, animScale = 1) => {
     let animConfig = {
         key: keyName,
         frames: spritesheet,
@@ -186,5 +158,5 @@ const createAnimConfig = (scene, keyName, spritesheet, fps, firstFrame) => {
         repeat: -1
     };
     scene.anims.create(animConfig);
-    return {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: firstFrame};
+    return {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: firstFrame, scale: animScale};
 }

@@ -22,6 +22,7 @@ class Species {
         //Add the population
         for (let i=0; i < pop; i++){
             let life = new Life(scene, 300, 400, spritesheet, firstFrame, tiles);
+            life.setScale(scale);
             life.play(key);
             newGroup.add(life);
         } 
