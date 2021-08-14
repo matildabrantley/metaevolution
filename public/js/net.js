@@ -108,7 +108,7 @@ class Net {
 		for (let layer in mom.weights) {
 			for (let neuron in mom.weights[layer]) {
 				for (let w in mom.weights[layer][neuron]) {	
-					if (mutationRate > Math.random())
+					if (mutationRate != 0 && mutationRate > Math.random())
 						this.weights[layer][neuron][w] += randZeroCentered(0.1);
 					else
 						this.weights[layer][neuron][w] = mom.weights[layer][neuron][w];
@@ -130,7 +130,7 @@ class Net {
 					else
 						this.weights[layer][neuron][w] = dad.weights[layer][neuron][w];	
 					//Mutate if mutation rate is greater than a random decimal
-					if (mutationRate > Math.random())
+					if (mutationRate != 0 && mutationRate > Math.random())
 						this.weights[layer][neuron][w] += randZeroCentered(Math.random() * 0.2);
 				}
 			}

@@ -56,10 +56,14 @@ class Species {
             this.bonusLength = Math.floor(this.groups[0].genLength / 2);
         }
         //Move goals around randomly if flag is set true
-        if (this.goalsAreMoving)
+        if (this.goalsAreMoving){
             if (this.timer % 30 == 0)
                 for (let goal of this.goals)
                     goal.setVelocity((Math.random()-0.5) * 200, (Math.random()-0.5) * 200);
+            if (this.timer % 90 == 0)
+                for (let goal of this.goals)
+                    goal.setPosition(200 + Math.random() * 400, 150 + Math.random() * 300);
+        }
 
 
         if (this.timer % this.mingleFreq == 0){
@@ -74,30 +78,36 @@ class Species {
     }
 
     groupSelection(){
-        for (let goal of this.goals)
-            goal.setPosition(200 + Math.random() * 400, 150 + Math.random() * 300);
 
         this.groups.sort((b, a) => (a.groupFitness > b.groupFitness) ? 1 : -1);
 
         //migrate genes from more fit groups to less fit groups
-        for (let g=0; g < this.groups.length-1; g++){
-            this.oneWayMingle(g, g+1);
-            this.groups[g].mutRate = g/50;
-        }
+        // for (let g=0; g < this.groups.length-1; g++){
+        //     this.oneWayMingle(g, g+1);
+        //     this.groups[g].mutRate = g/50;
+        // }
+
+        //replace worst group with best group
+        this.cloneGroup(this.groups[0], this.groups[this.groups.length-1]);
 
         //the lower the fitness, the higher the mutation rate
-        for (let g=0; g < this.groups.length; g++){
-            this.groups[g].mutRate = g/25;
-            this.groups[g].groupFitness = 0;
-        }
+        // for (let g=0; g < this.groups.length; g++){
+        //     this.groups[g].mutRate = g/25;
+        //     this.groups[g].groupFitness = 0;
+        // }
 
+    }
+
+    cloneGroup(replacedGroup, clonedGroup){
+        for (let i in replacedGroup.lives){
+            replacedGroup.lives[i].clone(clonedGroup.lives[i]);
+        }
     }
 
     //unidirectional migration (no immediate mating) of fittest lifeforms
-    migrate(migrantGroupIndex, receivingGroupIndex, flowRate = 0.75){
-        this.groups[receivingGroupIndex].lives
-    }
-
+    // migrate(migrantGroupIndex, receivingGroupIndex, flowRate = 0.75){
+    //     this.groups[receivingGroupIndex].lives
+    // }
 
     //unidirectional (one-way) gene flow via mating from one group to another
     oneWayMingle(otherGroupIndex, receivingGroupIndex, flowRate = 0.75){

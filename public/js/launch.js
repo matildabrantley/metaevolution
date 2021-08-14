@@ -1,7 +1,7 @@
 // const Matter = require('matter-js');
 let width = 800;
 let height = 600;
-let groupPop = 100;
+let groupPop = 300;
 let maxStars = 10;
 const species = [];
 
@@ -58,7 +58,7 @@ function create () {
 
     tiles.setCollision([ 29, 48, 70 ]);
 
-    let goalDivergence = 0;
+    let goalDivergence = 0.2;
 
     let goalGroup = this.add.group();
     loneStar = this.physics.add.image(width * (0.5 - goalDivergence), height * (0.5 - goalDivergence), 'star');
@@ -143,6 +143,7 @@ function create () {
     this.physics.add.collider(g2, tileLayer);
     this.physics.add.collider(g3, tileLayer);
     this.physics.add.collider(g4, tileLayer);
+    // this.physics.add.collider(loneStar, tileLayer);
 
 
     timerText = this.add.text(10, 10, globalTimer);
