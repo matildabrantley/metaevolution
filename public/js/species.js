@@ -5,7 +5,7 @@ class Species {
         this.bonusLength = 1;
         this.bonusGoal = 0;
         this.timer = 0;
-        this.mingleFreq = 5000;
+        this.mingleFreq = 50000000;
         this.goalsAreMoving = goalsAreMoving;
         this.bonusIsRandom = bonusIsRandom;
         this.groupSelectionFreq = groupSelectionFreq;
@@ -24,13 +24,15 @@ class Species {
             let life = new Life(scene, 300, 400, spritesheet, firstFrame, tiles);
             life.setScale(scale);
             life.alpha = 0.75;
-            life.body.setAllowGravity(true);
-            life.body.setGravityY(1000);
+            // life.body.setAllowGravity(true);
+            // life.body.setGravityY(1000);
             life.play(key);
             newGroup.add(life);
         } 
         //Setup handles Group construction aspects that prefer the entire population exist first
         newGroup.setup(pop, mutRate, selectionCutoff, maxGenLength, initialGenLength, deltaGenLength);
+        //Establish Collision
+        scene.physics.add.collider(newGroup, tiles);
         //Add group to this species
         this.groups.push(newGroup);
 

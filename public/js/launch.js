@@ -48,14 +48,14 @@ function preload () {
     this.load.atlas('purpleLife', 'sprites/pulsing-purple-star.png', 'sprites/pulsing-purple-star.json');
     this.load.atlas('yellowLife', 'sprites/pulsing-yellow-star.png', 'sprites/pulsing-yellow-star.json');
     
-    // this.load.atlas('fireSpiral', 'sprites/fire-spiral.png', 'sprites/fire-spiral.json');
-    // this.load.atlas('waterSpiral', 'sprites/water-spiral.png', 'sprites/water-spiral.json');
-    // this.load.atlas('natureSpiral', 'sprites/nature-spiral.png', 'sprites/nature-spiral.json');
-    // this.load.atlas('windSpiral', 'sprites/wind-spiralE.png', 'sprites/wind-spiralE.json');
-    // this.load.atlas('sparkSpiral', 'sprites/spark-spiral.png', 'sprites/spark-spiral.json');
-    // this.load.atlas('groundSpiral', 'sprites/ground-spiral.png', 'sprites/ground-spiral.json');
-    // this.load.atlas('lightSpiral', 'sprites/light-spiral.png', 'sprites/light-spiral.json');
-    // this.load.atlas('voidSpiral', 'sprites/void-spiral.png', 'sprites/void-spiral.json');
+    this.load.atlas('fireSpiral', 'sprites/fire-spiral.png', 'sprites/fire-spiral.json');
+    this.load.atlas('waterSpiral', 'sprites/water-spiral.png', 'sprites/water-spiral.json');
+    this.load.atlas('natureSpiral', 'sprites/nature-spiral.png', 'sprites/nature-spiral.json');
+    this.load.atlas('windSpiral', 'sprites/wind-spiralE.png', 'sprites/wind-spiralE.json');
+    this.load.atlas('sparkSpiral', 'sprites/spark-spiral.png', 'sprites/spark-spiral.json');
+    this.load.atlas('groundSpiral', 'sprites/ground-spiral.png', 'sprites/ground-spiral.json');
+    this.load.atlas('lightSpiral', 'sprites/light-spiral.png', 'sprites/light-spiral.json');
+    this.load.atlas('voidSpiral', 'sprites/void-spiral.png', 'sprites/void-spiral.json');
 
     this.load.image('tiles', 'sprites/all-tiles.png');
     this.load.tilemapTiledJSON('tilemap', 'sprites/tilemap-data.json');
@@ -114,14 +114,14 @@ function create () {
     const purpleGroupAnim = createAnimConfig (this, 'purpleKey', 'purpleLife', fps+2, 'pulsing-purple-star0.png'); 
     const yellowGroupAnim = createAnimConfig (this, 'yellowKey', 'yellowLife', fps+2, 'pulsing-yellow-star0.png'); 
     
-    //const fireSpiralAnim = createAnimConfig (this, 'fireSpiralKey', 'fireSpiral', fps, 'fire-spiral0.png'); 
-    // const waterSpiralAnim = createAnimConfig (this, 'waterSpiralKey', 'waterSpiral', fps, 'water-spiral0.png', 0.75); 
-    // const natureSpiralAnim = createAnimConfig (this, 'natureSpiralKey', 'natureSpiral', fps, 'nature-spiral0.png', 0.75); 
-    //const windSpiralAnim = createAnimConfig (this, 'windSpiralKey', 'windSpiral', fps, 'wind-spiralE0.png'); 
-    // const sparkSpiralAnim = createAnimConfig (this, 'sparkSpiralKey', 'sparkSpiral', fps, 'spark-spiral0.png', 0.75); 
-    // const groundSpiralAnim = createAnimConfig (this, 'groundSpiralKey', 'groundSpiral', fps, 'ground-spiral0.png', 0.75); 
-    // const lightSpiralAnim = createAnimConfig (this, 'lightSpiralKey', 'lightSpiral', fps, 'light-spiral0.png', 0.75); 
-    // const voidSpiralAnim = createAnimConfig (this, 'voidSpiralKey', 'voidSpiral', fps, 'void-spiral0.png', 0.75); 
+    const fireSpiralAnim = createAnimConfig (this, 'fireSpiralKey', 'fireSpiral', fps, 'fire-spiral0.png', 0.5); 
+    const waterSpiralAnim = createAnimConfig (this, 'waterSpiralKey', 'waterSpiral', fps, 'water-spiral0.png', 0.5); 
+    const natureSpiralAnim = createAnimConfig (this, 'natureSpiralKey', 'natureSpiral', fps, 'nature-spiral0.png', 0.5); 
+    const windSpiralAnim = createAnimConfig (this, 'windSpiralKey', 'windSpiral', fps, 'wind-spiralE0.png', 0.5); 
+    const sparkSpiralAnim = createAnimConfig (this, 'sparkSpiralKey', 'sparkSpiral', fps, 'spark-spiral0.png', 0.5); 
+    const groundSpiralAnim = createAnimConfig (this, 'groundSpiralKey', 'groundSpiral', fps, 'ground-spiral0.png', 0.5); 
+    const lightSpiralAnim = createAnimConfig (this, 'lightSpiralKey', 'lightSpiral', fps, 'light-spiral0.png', 0.5); 
+    const voidSpiralAnim = createAnimConfig (this, 'voidSpiralKey', 'voidSpiral', fps, 'void-spiral0.png', 0.5); 
 
 
     const groupConfig = {world: this.physics.world, scene: this, config: config, tiles: tileLayer, goals: goalGroup};
@@ -129,35 +129,26 @@ function create () {
     //Create empty species with only goals defined
     species.push(new Species({goals: goalGroup, goalsAreMoving: true})); 
     //Create groups
-    g1 = species[0].createGroup(groupConfig, redGroupAnim, {pop: groupPop});
-    g2 = species[0].createGroup(groupConfig, blueGroupAnim, {pop: groupPop});
-    g3 = species[0].createGroup(groupConfig, greenGroupAnim, {pop: groupPop});
-    g4 = species[0].createGroup(groupConfig, brightGroupAnim, {pop: groupPop});
-    g5 = species[0].createGroup(groupConfig, brownGroupAnim, {pop: groupPop});
-    g6 = species[0].createGroup(groupConfig, crimsonGroupAnim, {pop: groupPop});
-    g7 = species[0].createGroup(groupConfig, grayGroupAnim, {pop: groupPop});
-    //g8 = species[0].createGroup(groupConfig, purpleGroupAnim, {pop: groupPop});
-    //g9 = species[0].createGroup(groupConfig, yellowGroupAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, redGroupAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, blueGroupAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, greenGroupAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, brightGroupAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, brownGroupAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, crimsonGroupAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, grayGroupAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, purpleGroupAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, yellowGroupAnim, {pop: groupPop});
 
-    //g5 = species[0].createGroup(groupConfig, fireSpiralAnim, {pop: groupPop});
-    //g6 = species[0].createGroup(groupConfig, waterSpiralAnim, {pop: groupPop});
-    //g7 = species[0].createGroup(groupConfig, natureSpiralAnim, {pop: groupPop});
-    //g8 = species[0].createGroup(groupConfig, windSpiralAnim, {pop: groupPop});
-    
-    //g9 = species[0].createGroup(groupConfig, sparkSpiralAnim, {pop: groupPop});
-    //g10 = species[0].createGroup(groupConfig, groundSpiralAnim, {pop: groupPop});
-    //g11 = species[0].createGroup(groupConfig, lightSpiralAnim, {pop: groupPop});
-    //g12 = species[0].createGroup(groupConfig, voidSpiralAnim, {pop: groupPop});
-    
-    this.physics.add.collider(g1, tileLayer);
-    this.physics.add.collider(g2, tileLayer);
-    this.physics.add.collider(g3, tileLayer);
-    this.physics.add.collider(g4, tileLayer);
-    this.physics.add.collider(g5, tileLayer);
-    this.physics.add.collider(g6, tileLayer);
-    this.physics.add.collider(g7, tileLayer);
-    //this.physics.add.collider(g8, tileLayer);
-    // this.physics.add.collider(g5, tileLayer);
+    species[0].createGroup(groupConfig, fireSpiralAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, waterSpiralAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, natureSpiralAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, windSpiralAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, sparkSpiralAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, groundSpiralAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, lightSpiralAnim, {pop: groupPop});
+    species[0].createGroup(groupConfig, voidSpiralAnim, {pop: groupPop});
+
+
     // this.physics.add.collider(loneStar, tileLayer);
 
 
