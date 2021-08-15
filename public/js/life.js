@@ -43,8 +43,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
         let outputs = this.mind.update(inputs);           
         // this.setAcceleration((outputs[0] + outputs[2]) * 500, (outputs[1] + outputs[3]) * 500);
-        this.body.acceleration.x += outputs[0];
-        this.body.acceleration.y += outputs[1];
+        this.body.velocity.x = outputs[0] * 500;
+        this.body.velocity.y = outputs[1] * 500;
 
         // if (outputs[4] > 0.2)
         //    this.tryToJump();
@@ -67,18 +67,17 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
     getTileInputs(){
         const tileSize = this.tileSize;
-        const nearbyTiles = [];
-        let currentTile = tiles.getTileAtWorldXY(this.x, this.y, true).index;
-        //nearbyTiles.push(tiles.getTileAtWorldXY(this.x, this.y, true)); //don't need to know tile we're on for now
+        const tileInputs = [];
+
         //Go around clock-wise
-        nearbyTiles.push(this.lookAtTile(this.x, this.y - tileSize)); //12:00, Up, North
-        nearbyTiles.push(this.lookAtTile(this.x + tileSize, this.y - tileSize)); //1:30, Upper Right, Northeast
-        nearbyTiles.push(this.lookAtTile(this.x + tileSize, this.y, true)); //3:00, Right, East
-        nearbyTiles.push(this.lookAtTile(this.x + tileSize, this.y + tileSize)); //4:30, Bottom Right, Southeast
-        nearbyTiles.push(this.lookAtTile(this.x, this.y + tileSize)); //6:00, Bottom, South
-        nearbyTiles.push(this.lookAtTile(this.x - tileSize, this.y + tileSize)); //7:30, Bottom Left, Southwest
-        nearbyTiles.push(this.lookAtTile(this.x - tileSize, this.y)); //9:00, Left, West
-        nearbyTiles.push(this.lookAtTile(this.x - tileSize, this.y - tileSize)); //10:30, Upper Left, Northwest
+        tileInputs.push(this.lookAtTile(this.x, this.y - tileSize)); //12:00, Up, North
+        tileInputs.push(this.lookAtTile(this.x + tileSize, this.y - tileSize)); //1:30, Upper Right, Northeast
+        tileInputs.push(this.lookAtTile(this.x + tileSize, this.y, true)); //3:00, Right, East
+        tileInputs.push(this.lookAtTile(this.x + tileSize, this.y + tileSize)); //4:30, Bottom Right, Southeast
+        tileInputs.push(this.lookAtTile(this.x, this.y + tileSize)); //6:00, Bottom, South
+        tileInputs.push(this.lookAtTile(this.x - tileSize, this.y + tileSize)); //7:30, Bottom Left, Southwest
+        tileInputs.push(this.lookAtTile(this.x - tileSize, this.y)); //9:00, Left, West
+        tileInputs.push(this.lookAtTile(this.x - tileSize, this.y - tileSize)); //10:30, Upper Left, Northwest
         // nearbyTiles.push(tiles.getTileAtWorldXY(this.x, this.y - tileSize, true).index); 
         // nearbyTiles.push(tiles.getTileAtWorldXY(this.x + tileSize, this.y - tileSize, true).index); 
         // nearbyTiles.push(tiles.getTileAtWorldXY(this.x + tileSize, this.y, true).index);  
@@ -89,20 +88,21 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         // nearbyTiles.push(tiles.getTileAtWorldXY(this.x - tileSize, this.y - tileSize, true).index); 
 
         //Generate array of inputs based on if the tiles collide or not
-        //TODO: get these magic tile numbers from elsewhere
-        return nearbyTiles.map((a) => (a === 70 || a === 48 || a === 29)  ? -3 : 0); 
+        //return nearbyTiles.map((a) => (a === 70 || a === 48 || a === 29)  ? -3 : 0); 
+        return tileInputs;
     }
 
     lookAtTile(x, y){
-        let tileinSight;
+        let tileInput;
         try {
-            tileinSight = tiles.getTileAtWorldXY(x, y, true).index;
+            let tile = tiles.getTileAtWorldXY(x, y, true).index;
+            //TODO: get these magic tile numbers from elsewhere
+            tileInput = (tile === 70 || tile === 48 || tile === 29) ? -2 : 0;
         }
-        catch { //out of bounds tile
-            //for now just return current tile if looking out of bounds
-            tileinSight = tiles.getTileAtWorldXY(this.x, this.y, true).index;
+        catch { //treat out of bounds the same as blocking tile for neural input
+            tileInput = -2;
         }
-        return tileinSight;
+        return tileInput;
     }
 
     //This is replaced with a clone
