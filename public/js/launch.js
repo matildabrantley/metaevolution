@@ -138,7 +138,7 @@ function create () {
     genera[0].addSpecies(newSpecies);
 
     newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
-    newSpecies.createGroup(groupConfig, brownGroupAnim, {pop: groupPop});
+    // newSpecies.createGroup(groupConfig, brownGroupAnim, {pop: groupPop});
     newSpecies.createGroup(groupConfig, crimsonGroupAnim, {pop: groupPop});
     newSpecies.createGroup(groupConfig, grayGroupAnim, {pop: groupPop});
     newSpecies.createGroup(groupConfig, purpleGroupAnim, {pop: groupPop});
@@ -169,6 +169,10 @@ function create () {
 function update () {
     timerText.setText("Update " + globalTimer);
     
+
+    if (globalTimer == 38);
+        let breakhere = 'break';
+
     //Update each genus
     for (let genus of genera)
         genus.update();

@@ -1,5 +1,7 @@
 class Species {
-    constructor({goals, goalsAreMoving = false, bonusIsRandom = false, groupSelectionFreq = 300} = {}, groups = []){
+    constructor({goals, goalsAreMoving = false, bonusIsRandom = false, groupSelectionFreq = 40, 
+         maxGroupSelectionFreq = 300, deltaSelectionFreq = 20} = {},
+         groups = []){
         this.goals = goals.getChildren(); //groups will use these if specific goals aren't defined
         this.groups = groups; //groups can be predefined, but it's better to use createGroup()
         this.bonusLength = 1;
@@ -9,6 +11,7 @@ class Species {
         this.goalsAreMoving = goalsAreMoving;
         this.bonusIsRandom = bonusIsRandom;
         this.groupSelectionFreq = groupSelectionFreq;
+        this.maxGroupSelectionFreq = maxGroupSelectionFreq;
         this.speciesFitness = 0;
     }
 
@@ -50,7 +53,7 @@ class Species {
 
         for (let group of this.groups) {
             group.updateWithEngine();
-            allGroupsFitness.push(group.fitness);
+            allGroupsFitness.push(group.groupFitness);
         }
         this.speciesFitness = average(allGroupsFitness);
         
@@ -90,7 +93,6 @@ class Species {
     }
 
     groupSelection(){
-
         this.groups.sort((b, a) => (a.groupFitness > b.groupFitness) ? 1 : -1);
 
         //migrate genes from more fit groups to less fit groups
@@ -100,21 +102,25 @@ class Species {
         // }
 
         //replace worst group with best group
-        this.cloneGroup(this.groups[0], this.groups[this.groups.length-1]);
+        this.groups[this.groups.length-1].cloneGroup(this.groups[0]);
 
         //the lower the fitness, the higher the mutation rate
-        // for (let g=0; g < this.groups.length; g++){
-        //     this.groups[g].mutRate = g/25;
-        //     this.groups[g].groupFitness = 0;
-        // }
+        for (let g=0; g < this.groups.length - 1; g++){
+            this.groups[g].mutRate = g/25;
+            this.groups[g].groupFitness = 0;
+        }
+        //reset fitness
+        for (let group of this.groups)
+            group.groupFitness = 0;
 
-        
-
+        if (this.groupSelectionFreq + this.deltaSelectionFreq <= this.maxGroupSelectionFreq)
+            this.groupSelectionFreq += this.deltaSelectionFreq;
     }
 
-    cloneGroup(replacedGroup, clonedGroup){
-        for (let i in replacedGroup.lives){
-            replacedGroup.lives[i].clone(clonedGroup.lives[i]);
+    cloneSpecies(clonedSpecies){
+        //Replace each group in a species with another species' groups
+        for (let g in this.groups){
+            this.groups[g].cloneGroup(clonedSpecies.groups[g]);
         }
     }
 

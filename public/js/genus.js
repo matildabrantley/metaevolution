@@ -1,9 +1,10 @@
 //Genus-Species mirrors Species-Group relationship at a higher level
 class Genus {
-    constructor(species = []){
+    constructor({speciesSelectionFreq = 100, maxSpeciesSelectionFreq = 600, deltaSelectionFreq = 50} = {}, species = []){
         this.species = species;
         this.timer = 0;
-        this.speciesSelectionFreq = 600;
+        this.speciesSelectionFreq = speciesSelectionFreq;
+        this.maxSpeciesSelectionFreq = maxSpeciesSelectionFreq;
     }
 
     //Let's pretend "specie" is the correct singular of "species" =)
@@ -24,16 +25,23 @@ class Genus {
             this.speciesSelection();
     }
 
-    cloneSpecies(replacedSpecies, clonedSpecies){
-        //Replace each group in a species with another species' groups
-        for (let g in replacedSpecies.groups){
-            replacedSpecies.cloneGroup(replacedSpecies.groups[g], clonedSpecies.groups[g]);
-        }
-    }
+    // cloneGenus(clonedGenus){
+    //     //Replace each species in a genus with another genus' species
+    //     for (let s in this.species){
+    //         this.cloneSpecies(clonedGenus.species[s]);
+    //     }
+    // }
 
     speciesSelection() {
         this.species.sort((b, a) => (a.speciesFitness > b.speciesFitness) ? 1 : -1);
 
-        this.cloneSpecies(this.species[0], this.species[this.species.length-1]);
+        this.species[this.species.length-1].cloneSpecies(this.species[0]);
+
+        //reset fitness
+        for (let specie of this.species)
+            specie.groupFitness = 0;
+        
+        if (this.speciesSelectionFreq + this.deltaSelectionFreq <= this.maxSpeciesSelectionFreq)
+            this.speciesSelectionFreq += this.deltaSelectionFreq;
     }
 }

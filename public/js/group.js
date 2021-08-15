@@ -148,6 +148,13 @@ class Group extends Phaser.Physics.Arcade.Group {
         }
     }
 
+    //replace this group with a copy of another group
+    cloneGroup(clonedGroup){
+        for (let i in this.lives){
+            this.lives[i].clone(clonedGroup.lives[i]);
+        }
+    }
+
     //Genetic flow from between population
     //Best to call right after selection since they're already sorted
     geneFlow(otherGroup, flowRatio = 0.1) {
@@ -169,7 +176,5 @@ const randIntBetween = (lowNum, highNum) => {
     highNum = Math.floor(highNum);
     return Math.floor(Math.random() * (highNum - lowNum + 1)) + lowNum;
 }
-const total = (nums) => {
-    nums.reduce((a, b) => (a + b));
-}
+const total = (nums) => nums.reduce((a, b) => (a + b));
 const average = (nums) => total(nums) / nums.length;
