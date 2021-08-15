@@ -9,6 +9,7 @@ class Species {
         this.goalsAreMoving = goalsAreMoving;
         this.bonusIsRandom = bonusIsRandom;
         this.groupSelectionFreq = groupSelectionFreq;
+        this.speciesFitness = 0;
     }
 
     //Preferred (and simpler) method to create new groups
@@ -23,7 +24,7 @@ class Species {
         for (let i=0; i < pop; i++){
             let life = new Life(scene, 300, 400, spritesheet, firstFrame, tiles);
             life.setScale(scale);
-            life.alpha = 0.75;
+            life.alpha = 0.5;
             // life.body.setAllowGravity(true);
             // life.body.setGravityY(1000);
             life.play(key);
@@ -44,8 +45,14 @@ class Species {
 
     update(){
         this.timer++;
-        for (let group of this.groups)
+
+        let allGroupsFitness = []; //used to calculate average group fitness
+
+        for (let group of this.groups) {
             group.updateWithEngine();
+            allGroupsFitness.push(group.fitness);
+        }
+        this.speciesFitness = average(allGroupsFitness);
         
         if (this.timer % this.bonusLength == 0){
             if (this.bonusIsRandom) {
@@ -70,7 +77,6 @@ class Species {
                 for (let goal of this.goals)
                     goal.setPosition(200 + Math.random() * 400, 150 + Math.random() * 300);
         }
-
 
         if (this.timer % this.mingleFreq == 0){
             this.mingleAllGroups(0.15);
@@ -101,6 +107,8 @@ class Species {
         //     this.groups[g].mutRate = g/25;
         //     this.groups[g].groupFitness = 0;
         // }
+
+        
 
     }
 

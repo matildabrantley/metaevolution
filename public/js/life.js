@@ -78,14 +78,6 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         tileInputs.push(this.lookAtTile(this.x - tileSize, this.y + tileSize)); //7:30, Bottom Left, Southwest
         tileInputs.push(this.lookAtTile(this.x - tileSize, this.y)); //9:00, Left, West
         tileInputs.push(this.lookAtTile(this.x - tileSize, this.y - tileSize)); //10:30, Upper Left, Northwest
-        // nearbyTiles.push(tiles.getTileAtWorldXY(this.x, this.y - tileSize, true).index); 
-        // nearbyTiles.push(tiles.getTileAtWorldXY(this.x + tileSize, this.y - tileSize, true).index); 
-        // nearbyTiles.push(tiles.getTileAtWorldXY(this.x + tileSize, this.y, true).index);  
-        // nearbyTiles.push(tiles.getTileAtWorldXY(this.x + tileSize, this.y + tileSize, true).index); 
-        // nearbyTiles.push(tiles.getTileAtWorldXY(this.x, this.y + tileSize, true).index); 
-        // nearbyTiles.push(tiles.getTileAtWorldXY(this.x - tileSize, this.y + tileSize, true).index); 
-        // nearbyTiles.push(tiles.getTileAtWorldXY(this.x - tileSize, this.y, true).index); 
-        // nearbyTiles.push(tiles.getTileAtWorldXY(this.x - tileSize, this.y - tileSize, true).index); 
 
         //Generate array of inputs based on if the tiles collide or not
         //return nearbyTiles.map((a) => (a === 70 || a === 48 || a === 29)  ? -3 : 0); 

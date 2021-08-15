@@ -1,9 +1,9 @@
 // const Matter = require('matter-js');
 let width = 800;
 let height = 600;
-let groupPop = 100;
+let groupPop = 50;
 let maxStars = 10;
-const species = [];
+let genera = [];
 
 var config = {
     type: Phaser.AUTO,
@@ -114,39 +114,50 @@ function create () {
     const purpleGroupAnim = createAnimConfig (this, 'purpleKey', 'purpleLife', fps+2, 'pulsing-purple-star0.png'); 
     const yellowGroupAnim = createAnimConfig (this, 'yellowKey', 'yellowLife', fps+2, 'pulsing-yellow-star0.png'); 
     
-    const fireSpiralAnim = createAnimConfig (this, 'fireSpiralKey', 'fireSpiral', fps, 'fire-spiral0.png', 0.5); 
-    const waterSpiralAnim = createAnimConfig (this, 'waterSpiralKey', 'waterSpiral', fps, 'water-spiral0.png', 0.5); 
-    const natureSpiralAnim = createAnimConfig (this, 'natureSpiralKey', 'natureSpiral', fps, 'nature-spiral0.png', 0.5); 
-    const windSpiralAnim = createAnimConfig (this, 'windSpiralKey', 'windSpiral', fps, 'wind-spiralE0.png', 0.5); 
-    const sparkSpiralAnim = createAnimConfig (this, 'sparkSpiralKey', 'sparkSpiral', fps, 'spark-spiral0.png', 0.5); 
-    const groundSpiralAnim = createAnimConfig (this, 'groundSpiralKey', 'groundSpiral', fps, 'ground-spiral0.png', 0.5); 
-    const lightSpiralAnim = createAnimConfig (this, 'lightSpiralKey', 'lightSpiral', fps, 'light-spiral0.png', 0.5); 
-    const voidSpiralAnim = createAnimConfig (this, 'voidSpiralKey', 'voidSpiral', fps, 'void-spiral0.png', 0.5); 
-
+    const fireSpiralAnim = createAnimConfig (this, 'fireSpiralKey', 'fireSpiral', fps, 'fire-spiral0.png', 0.4); 
+    const waterSpiralAnim = createAnimConfig (this, 'waterSpiralKey', 'waterSpiral', fps, 'water-spiral0.png', 0.4); 
+    const natureSpiralAnim = createAnimConfig (this, 'natureSpiralKey', 'natureSpiral', fps, 'nature-spiral0.png', 0.4); 
+    const windSpiralAnim = createAnimConfig (this, 'windSpiralKey', 'windSpiral', fps, 'wind-spiralE0.png', 0.4); 
+    const sparkSpiralAnim = createAnimConfig (this, 'sparkSpiralKey', 'sparkSpiral', fps, 'spark-spiral0.png', 0.4); 
+    const groundSpiralAnim = createAnimConfig (this, 'groundSpiralKey', 'groundSpiral', fps, 'ground-spiral0.png', 0.4); 
+    const lightSpiralAnim = createAnimConfig (this, 'lightSpiralKey', 'lightSpiral', fps, 'light-spiral0.png', 0.4); 
+    const voidSpiralAnim = createAnimConfig (this, 'voidSpiralKey', 'voidSpiral', fps, 'void-spiral0.png', 0.4); 
 
     const groupConfig = {world: this.physics.world, scene: this, config: config, tiles: tileLayer, goals: goalGroup};
 
-    //Create empty species with only goals defined
-    species.push(new Species({goals: goalGroup, goalsAreMoving: true})); 
-    //Create groups
-    species[0].createGroup(groupConfig, redGroupAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, blueGroupAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, greenGroupAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, brightGroupAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, brownGroupAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, crimsonGroupAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, grayGroupAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, purpleGroupAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, yellowGroupAnim, {pop: groupPop});
+    //Create one Genus
+    genera.push(new Genus());
 
-    species[0].createGroup(groupConfig, fireSpiralAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, waterSpiralAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, natureSpiralAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, windSpiralAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, sparkSpiralAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, groundSpiralAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, lightSpiralAnim, {pop: groupPop});
-    species[0].createGroup(groupConfig, voidSpiralAnim, {pop: groupPop});
+     //4 Groups per Species, 4 Species (16 groups total) each with different animations
+     //Create empty Species with only goals defined
+    let newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
+    newSpecies.createGroup(groupConfig, redGroupAnim, {pop: groupPop});
+    newSpecies.createGroup(groupConfig, blueGroupAnim, {pop: groupPop});
+    newSpecies.createGroup(groupConfig, greenGroupAnim, {pop: groupPop});
+    newSpecies.createGroup(groupConfig, brightGroupAnim, {pop: groupPop});
+    genera[0].addSpecies(newSpecies);
+
+    newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
+    newSpecies.createGroup(groupConfig, brownGroupAnim, {pop: groupPop});
+    newSpecies.createGroup(groupConfig, crimsonGroupAnim, {pop: groupPop});
+    newSpecies.createGroup(groupConfig, grayGroupAnim, {pop: groupPop});
+    newSpecies.createGroup(groupConfig, purpleGroupAnim, {pop: groupPop});
+    newSpecies.createGroup(groupConfig, yellowGroupAnim, {pop: groupPop});
+    genera[0].addSpecies(newSpecies);
+
+    newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
+    newSpecies.createGroup(groupConfig, fireSpiralAnim, {pop: groupPop});
+    newSpecies.createGroup(groupConfig, waterSpiralAnim, {pop: groupPop});
+    newSpecies.createGroup(groupConfig, natureSpiralAnim, {pop: groupPop});
+    newSpecies.createGroup(groupConfig, windSpiralAnim, {pop: groupPop});
+    genera[0].addSpecies(newSpecies);
+
+    newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
+    newSpecies.createGroup(groupConfig, sparkSpiralAnim, {pop: groupPop});
+    newSpecies.createGroup(groupConfig, groundSpiralAnim, {pop: groupPop});
+    newSpecies.createGroup(groupConfig, lightSpiralAnim, {pop: groupPop});
+    newSpecies.createGroup(groupConfig, voidSpiralAnim, {pop: groupPop});
+    genera[0].addSpecies(newSpecies);
 
 
     // this.physics.add.collider(loneStar, tileLayer);
@@ -158,9 +169,9 @@ function create () {
 function update () {
     timerText.setText("Update " + globalTimer);
     
-    //Let's pretend "specie" is the correct singular of "species" =)
-    for (let specie of species)
-        specie.update();
+    //Update each genus
+    for (let genus of genera)
+        genus.update();
 
     //example of collision handling
     //this.physics.collide(groups[0], loneStar, eat);
