@@ -43,14 +43,16 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
         let outputs = this.mind.update(inputs);           
         // this.setAcceleration((outputs[0] + outputs[2]) * 500, (outputs[1] + outputs[3]) * 500);
-        this.body.velocity.x = (outputs[0] + outputs[2]) * 500;
-        this.body.velocity.y = (outputs[1] + outputs[3]) * 500;
+        this.body.velocity.x = (outputs[0] * outputs[2] * 500);
+        this.body.velocity.y = (outputs[1] * outputs[3] * 500);
 
         // if (outputs[4] > 0.2)
         //    this.tryToJump();
         //this.setAngularVelocity(outputs[3]);
         // if (!this.body.touching.down)
         //     this.setVelocityY(100);
+
+        this.feed();
     }
 
     tryToJump(force=1) {
@@ -69,7 +71,11 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         const tileSize = this.tileSize;
         const tileInputs = [];
 
-        //Go around clock-wise
+        //current tile, tripled input
+        tileInputs.push(this.lookAtTile(this.x, this.y)); 
+        tileInputs.push(this.lookAtTile(this.x, this.y)); 
+        tileInputs.push(this.lookAtTile(this.x, this.y)); 
+        //Go around clock-wise for nearest 8
         tileInputs.push(this.lookAtTile(this.x, this.y - tileSize)); //12:00, Up, North
         tileInputs.push(this.lookAtTile(this.x + tileSize, this.y - tileSize)); //1:30, Upper Right, Northeast
         tileInputs.push(this.lookAtTile(this.x + tileSize, this.y, true)); //3:00, Right, East
@@ -78,6 +84,16 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         tileInputs.push(this.lookAtTile(this.x - tileSize, this.y + tileSize)); //7:30, Bottom Left, Southwest
         tileInputs.push(this.lookAtTile(this.x - tileSize, this.y)); //9:00, Left, West
         tileInputs.push(this.lookAtTile(this.x - tileSize, this.y - tileSize)); //10:30, Upper Left, Northwest
+        
+        // tileInputs.push(this.lookAtTile(this.x, this.y - tileSize * 2)); //12:00, Up, North
+        // tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y - tileSize  * 2)); //1:30, Upper Right, Northeast
+        // tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y, true)); //3:00, Right, East
+        // tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y + tileSize  * 2)); //4:30, Bottom Right, Southeast
+        // tileInputs.push(this.lookAtTile(this.x, this.y + tileSize  * 2)); //6:00, Bottom, South
+        // tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y + tileSize  * 2)); //7:30, Bottom Left, Southwest
+        // tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y)); //9:00, Left, West
+        // tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y - tileSize  * 2)); //10:30, Upper Left, Northwest
+
 
         //Generate array of inputs based on if the tiles collide or not
         //return nearbyTiles.map((a) => (a === 70 || a === 48 || a === 29)  ? -3 : 0); 
@@ -89,12 +105,33 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         try {
             let tile = tiles.getTileAtWorldXY(x, y, true).index;
             //TODO: get these magic tile numbers from elsewhere
-            tileInput = (tile === 70 || tile === 48 || tile === 29) ? -2 : 0;
+            if (tile === 70 || tile === 48 || tile === 29){
+                tileInput = 0;
+                //this.fitness-=20;
+            }
+            else if (tile === 35) {
+                tileInput = 2;
+            }
+            else {
+                tileInput = 0;
+            }
+``
         }
         catch { //treat out of bounds the same as blocking tile for neural input
             tileInput = -2;
         }
         return tileInput;
+    }
+
+    feed(food=35){
+        try{
+            let tile = tiles.getTileAtWorldXY(this.x, this.y, true).index;
+            if (tile == food)
+                this.fitness+=2;
+            //else
+                //this.fitness--;
+        }
+        catch {}
     }
 
     //This inidividual's Nets replaced with a clone's

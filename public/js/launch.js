@@ -51,14 +51,15 @@ function preload () {
     this.load.atlas('fireSpiral', 'sprites/fire-spiral.png', 'sprites/fire-spiral.json');
     this.load.atlas('waterSpiral', 'sprites/water-spiral.png', 'sprites/water-spiral.json');
     this.load.atlas('natureSpiral', 'sprites/nature-spiral.png', 'sprites/nature-spiral.json');
-    this.load.atlas('windSpiral', 'sprites/wind-spiralE.png', 'sprites/wind-spiralE.json');
+    this.load.atlas('windSpiral', 'sprites/wind-spiral.png', 'sprites/wind-spiral.json');
     this.load.atlas('sparkSpiral', 'sprites/spark-spiral.png', 'sprites/spark-spiral.json');
     this.load.atlas('groundSpiral', 'sprites/ground-spiral.png', 'sprites/ground-spiral.json');
     this.load.atlas('lightSpiral', 'sprites/light-spiral.png', 'sprites/light-spiral.json');
     this.load.atlas('voidSpiral', 'sprites/void-spiral.png', 'sprites/void-spiral.json');
 
     this.load.image('tiles', 'sprites/all-tiles.png');
-    this.load.tilemapTiledJSON('tilemap', 'sprites/tilemap-data.json');
+    // this.load.tilemapTiledJSON('tilemap', 'sprites/tilemap-data.json');
+    this.load.tilemapTiledJSON('tilemap', 'sprites/tilemap-resource-data.json');
 }
 
 function create () {
@@ -117,7 +118,7 @@ function create () {
     const fireSpiralAnim = createAnimConfig (this, 'fireSpiralKey', 'fireSpiral', fps, 'fire-spiral0.png', 0.4); 
     const waterSpiralAnim = createAnimConfig (this, 'waterSpiralKey', 'waterSpiral', fps, 'water-spiral0.png', 0.4); 
     const natureSpiralAnim = createAnimConfig (this, 'natureSpiralKey', 'natureSpiral', fps, 'nature-spiral0.png', 0.4); 
-    const windSpiralAnim = createAnimConfig (this, 'windSpiralKey', 'windSpiral', fps, 'wind-spiralE0.png', 0.4); 
+    const windSpiralAnim = createAnimConfig (this, 'windSpiralKey', 'windSpiral', fps, 'wind-spiral0.png', 0.4); 
     const sparkSpiralAnim = createAnimConfig (this, 'sparkSpiralKey', 'sparkSpiral', fps, 'spark-spiral0.png', 0.4); 
     const groundSpiralAnim = createAnimConfig (this, 'groundSpiralKey', 'groundSpiral', fps, 'ground-spiral0.png', 0.4); 
     const lightSpiralAnim = createAnimConfig (this, 'lightSpiralKey', 'lightSpiral', fps, 'light-spiral0.png', 0.4); 

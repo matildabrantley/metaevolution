@@ -36,7 +36,7 @@ class Group extends Phaser.Physics.Arcade.Group {
                 life.startingDistFromGoal[g] = Phaser.Math.Distance.BetweenPoints(life, this.goals[g]);
         
             //Create minds based on number of goals
-            life.mind = new Mind(this.goals.length * 7 + 8, 5);
+            life.mind = new Mind(this.goals.length * 7 + 3 + 8, 5);
         }
     }
 
@@ -58,7 +58,7 @@ class Group extends Phaser.Physics.Arcade.Group {
                 let newScore = life.startingDistFromGoal[g] / (Phaser.Math.Distance.BetweenPoints(life, this.goals[g]) + 1);
                 if (g == this.species.bonusGoal){
                     //newScore += 10; 
-                    newScore *= 2.5; 
+                    newScore *= 22.5; 
                 }
                 else {
                     newScore *= -1;
@@ -66,8 +66,8 @@ class Group extends Phaser.Physics.Arcade.Group {
                     
                 distScores.push(newScore);
             }
-            //use reducer to get total product (and divide by 1000 to keep values manageable)
-            life.fitness += distScores.reduce((a,b) => a+b, 1) / 1000;
+            //use reducer to get total product //(and divide by 1000 to keep values manageable)
+            life.fitness += distScores.reduce((a,b) => a+b, 1);
             allFitness.push(life.fitness);
         }
 
