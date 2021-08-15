@@ -24,7 +24,8 @@ class Species {
             let life = new Life(scene, 300, 400, spritesheet, firstFrame, tiles);
             life.setScale(scale);
             life.alpha = 0.75;
-            life.body.setGravityY(1000000);
+            life.body.setAllowGravity(true);
+            life.body.setGravityY(1000);
             life.play(key);
             newGroup.add(life);
         } 

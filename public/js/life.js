@@ -1,5 +1,6 @@
 // const Net = require('./cluster');
 // const Vector = require('./vector');
+
 // const Matter = require('matter-js');
 class Life extends Phaser.Physics.Arcade.Sprite {
 
@@ -10,15 +11,11 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
         this.tiles;
         this.tileSize = 32;
-
-        //this.mind = mind; 
         
         this.fitness = 0;
 
         //for updateWithEngine
-        this.setVelocity(10, 10);
-        this.setAngularVelocity(6.5);
-        this.setBounce(1);
+        this.setBounce(10000);
 
         // only for fast updating (no rendering and only limited physics)
         // this.x;?
@@ -45,12 +42,15 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
 
         let outputs = this.mind.update(inputs);           
-        this.setAcceleration((outputs[0] + outputs[2]) * 500, (outputs[1] + outputs[3]) * 500);
-        if (outputs[4] > 0.2)
-           this.tryToJump();
+        // this.setAcceleration((outputs[0] + outputs[2]) * 500, (outputs[1] + outputs[3]) * 500);
+        this.body.acceleration.x += outputs[0];
+        this.body.acceleration.y += outputs[1];
+
+        // if (outputs[4] > 0.2)
+        //    this.tryToJump();
         //this.setAngularVelocity(outputs[3]);
-        if (!this.body.touching.down)
-            this.setVelocityY(100);
+        // if (!this.body.touching.down)
+        //     this.setVelocityY(100);
     }
 
     tryToJump(force=1) {
@@ -68,20 +68,41 @@ class Life extends Phaser.Physics.Arcade.Sprite {
     getTileInputs(){
         const tileSize = this.tileSize;
         const nearbyTiles = [];
+        let currentTile = tiles.getTileAtWorldXY(this.x, this.y, true).index;
         //nearbyTiles.push(tiles.getTileAtWorldXY(this.x, this.y, true)); //don't need to know tile we're on for now
         //Go around clock-wise
-        nearbyTiles.push(tiles.getTileAtWorldXY(this.x, this.y - tileSize, true).index); //12:00, Up, North
-        nearbyTiles.push(tiles.getTileAtWorldXY(this.x + tileSize, this.y - tileSize, true).index); //1:30, Upper Right, Northeast
-        nearbyTiles.push(tiles.getTileAtWorldXY(this.x + tileSize, this.y, true).index); //3:00, Right, East 
-        nearbyTiles.push(tiles.getTileAtWorldXY(this.x + tileSize, this.y + tileSize, true).index); //4:30, Bottom Right, Southeast
-        nearbyTiles.push(tiles.getTileAtWorldXY(this.x, this.y + tileSize, true).index); //6:00, Bottom, South
-        nearbyTiles.push(tiles.getTileAtWorldXY(this.x - tileSize, this.y + tileSize, true).index); //7:30, Bottom Left, Southwest
-        nearbyTiles.push(tiles.getTileAtWorldXY(this.x - tileSize, this.y, true).index); //9:00, Left, West
-        nearbyTiles.push(tiles.getTileAtWorldXY(this.x - tileSize, this.y - tileSize, true).index); //10:30, Upper Left, Northwest
+        nearbyTiles.push(this.lookAtTile(this.x, this.y - tileSize)); //12:00, Up, North
+        nearbyTiles.push(this.lookAtTile(this.x + tileSize, this.y - tileSize)); //1:30, Upper Right, Northeast
+        nearbyTiles.push(this.lookAtTile(this.x + tileSize, this.y, true)); //3:00, Right, East
+        nearbyTiles.push(this.lookAtTile(this.x + tileSize, this.y + tileSize)); //4:30, Bottom Right, Southeast
+        nearbyTiles.push(this.lookAtTile(this.x, this.y + tileSize)); //6:00, Bottom, South
+        nearbyTiles.push(this.lookAtTile(this.x - tileSize, this.y + tileSize)); //7:30, Bottom Left, Southwest
+        nearbyTiles.push(this.lookAtTile(this.x - tileSize, this.y)); //9:00, Left, West
+        nearbyTiles.push(this.lookAtTile(this.x - tileSize, this.y - tileSize)); //10:30, Upper Left, Northwest
+        // nearbyTiles.push(tiles.getTileAtWorldXY(this.x, this.y - tileSize, true).index); 
+        // nearbyTiles.push(tiles.getTileAtWorldXY(this.x + tileSize, this.y - tileSize, true).index); 
+        // nearbyTiles.push(tiles.getTileAtWorldXY(this.x + tileSize, this.y, true).index);  
+        // nearbyTiles.push(tiles.getTileAtWorldXY(this.x + tileSize, this.y + tileSize, true).index); 
+        // nearbyTiles.push(tiles.getTileAtWorldXY(this.x, this.y + tileSize, true).index); 
+        // nearbyTiles.push(tiles.getTileAtWorldXY(this.x - tileSize, this.y + tileSize, true).index); 
+        // nearbyTiles.push(tiles.getTileAtWorldXY(this.x - tileSize, this.y, true).index); 
+        // nearbyTiles.push(tiles.getTileAtWorldXY(this.x - tileSize, this.y - tileSize, true).index); 
 
         //Generate array of inputs based on if the tiles collide or not
         //TODO: get these magic tile numbers from elsewhere
         return nearbyTiles.map((a) => (a === 70 || a === 48 || a === 29)  ? -3 : 0); 
+    }
+
+    lookAtTile(x, y){
+        let tileinSight;
+        try {
+            tileinSight = tiles.getTileAtWorldXY(x, y, true).index;
+        }
+        catch { //out of bounds tile
+            //for now just return current tile if looking out of bounds
+            tileinSight = tiles.getTileAtWorldXY(this.x, this.y, true).index;
+        }
+        return tileinSight;
     }
 
     //This is replaced with a clone
