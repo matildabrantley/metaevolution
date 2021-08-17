@@ -1,4 +1,4 @@
-# Meta-Evolution
+# Meta-Evolution Lab
 Online Lab for Open-ended AI through Hierarchical Evolution
 
 ## Description
