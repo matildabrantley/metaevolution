@@ -1,7 +1,7 @@
 // const Matter = require('matter-js');
 let width = 800;
 let height = 600;
-let groupPop = 50;
+let groupPop = 150;
 let maxStars = 10;
 let genera = [];
 
@@ -133,32 +133,32 @@ function create () {
      //Create empty Species with only goals defined
     let newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
     newSpecies.createGroup(groupConfig, redGroupAnim, {pop: groupPop});
-    newSpecies.createGroup(groupConfig, blueGroupAnim, {pop: groupPop});
-    newSpecies.createGroup(groupConfig, greenGroupAnim, {pop: groupPop});
-    newSpecies.createGroup(groupConfig, brightGroupAnim, {pop: groupPop});
+    //newSpecies.createGroup(groupConfig, blueGroupAnim, {pop: groupPop});
+    // newSpecies.createGroup(groupConfig, greenGroupAnim, {pop: groupPop});
+    // newSpecies.createGroup(groupConfig, brightGroupAnim, {pop: groupPop});
     genera[0].addSpecies(newSpecies);
 
-    newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
-    // newSpecies.createGroup(groupConfig, brownGroupAnim, {pop: groupPop});
-    newSpecies.createGroup(groupConfig, crimsonGroupAnim, {pop: groupPop});
-    newSpecies.createGroup(groupConfig, grayGroupAnim, {pop: groupPop});
-    newSpecies.createGroup(groupConfig, purpleGroupAnim, {pop: groupPop});
-    newSpecies.createGroup(groupConfig, yellowGroupAnim, {pop: groupPop});
-    genera[0].addSpecies(newSpecies);
+     //newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
+    // // newSpecies.createGroup(groupConfig, brownGroupAnim, {pop: groupPop});
+    // newSpecies.createGroup(groupConfig, crimsonGroupAnim, {pop: groupPop});
+    // newSpecies.createGroup(groupConfig, grayGroupAnim, {pop: groupPop});
+    // newSpecies.createGroup(groupConfig, purpleGroupAnim, {pop: groupPop});
+    // newSpecies.createGroup(groupConfig, yellowGroupAnim, {pop: groupPop});
+    // genera[0].addSpecies(newSpecies);
 
-    newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
-    newSpecies.createGroup(groupConfig, fireSpiralAnim, {pop: groupPop});
-    newSpecies.createGroup(groupConfig, waterSpiralAnim, {pop: groupPop});
-    newSpecies.createGroup(groupConfig, natureSpiralAnim, {pop: groupPop});
-    newSpecies.createGroup(groupConfig, windSpiralAnim, {pop: groupPop});
-    genera[0].addSpecies(newSpecies);
+    // newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
+    // newSpecies.createGroup(groupConfig, fireSpiralAnim, {pop: groupPop});
+    // newSpecies.createGroup(groupConfig, waterSpiralAnim, {pop: groupPop});
+    // newSpecies.createGroup(groupConfig, natureSpiralAnim, {pop: groupPop});
+    // newSpecies.createGroup(groupConfig, windSpiralAnim, {pop: groupPop});
+    // genera[0].addSpecies(newSpecies);
 
-    newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
-    newSpecies.createGroup(groupConfig, sparkSpiralAnim, {pop: groupPop});
-    newSpecies.createGroup(groupConfig, groundSpiralAnim, {pop: groupPop});
-    newSpecies.createGroup(groupConfig, lightSpiralAnim, {pop: groupPop});
-    newSpecies.createGroup(groupConfig, voidSpiralAnim, {pop: groupPop});
-    genera[0].addSpecies(newSpecies);
+    //  newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
+    // // newSpecies.createGroup(groupConfig, sparkSpiralAnim, {pop: groupPop});
+    // // newSpecies.createGroup(groupConfig, groundSpiralAnim, {pop: groupPop});
+    //  newSpecies.createGroup(groupConfig, lightSpiralAnim, {pop: groupPop});
+    //  newSpecies.createGroup(groupConfig, voidSpiralAnim, {pop: groupPop});
+    //  genera[0].addSpecies(newSpecies);
 
 
     // this.physics.add.collider(loneStar, tileLayer);

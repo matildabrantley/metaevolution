@@ -34,17 +34,15 @@ class Life extends Phaser.Physics.Arcade.Sprite {
             inputs.push((this.y - goals[g].y) / 100); //y difference
             inputs.push((this.x - goals[g].x) / 100); //x difference (not dist)
             inputs.push((this.y - goals[g].y) / 100); //y difference
-            inputs.push((this.x - goals[g].x) / 100); //x difference (not dist)
-            inputs.push((this.y - goals[g].y) / 100); //y difference
             inputs.push(g == bonusGoal ? 3 : -3) //bonus goal
         }
-        inputs = inputs.concat(this.getTileInputs());
+        //inputs = inputs.concat(this.getTileInputs());
 
 
         let outputs = this.mind.update(inputs);           
         // this.setAcceleration((outputs[0] + outputs[2]) * 500, (outputs[1] + outputs[3]) * 500);
-        this.body.velocity.x = (outputs[0] * outputs[2] * 500);
-        this.body.velocity.y = (outputs[1] * outputs[3] * 500);
+        this.body.setVelocityX(outputs[0] + outputs[2] * 500);
+        this.body.setVelocityY(outputs[1] + outputs[3] * 500);
 
         // if (outputs[4] > 0.2)
         //    this.tryToJump();
@@ -52,7 +50,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         // if (!this.body.touching.down)
         //     this.setVelocityY(100);
 
-        this.feed();
+        //this.feed();
     }
 
     tryToJump(force=1) {

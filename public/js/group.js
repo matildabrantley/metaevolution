@@ -35,8 +35,8 @@ class Group extends Phaser.Physics.Arcade.Group {
             for (let g=0; g < this.goals.length; g++)
                 life.startingDistFromGoal[g] = Phaser.Math.Distance.BetweenPoints(life, this.goals[g]);
         
-            //Create minds based on number of goals
-            life.mind = new Mind(this.goals.length * 7 + 3 + 8, 5);
+            //Create minds based on number of goals= 3
+            life.mind = new Mind(this.goals.length * 5 + 8 + 3, 5);
         }
     }
 
@@ -58,16 +58,16 @@ class Group extends Phaser.Physics.Arcade.Group {
                 let newScore = life.startingDistFromGoal[g] / (Phaser.Math.Distance.BetweenPoints(life, this.goals[g]) + 1);
                 if (g == this.species.bonusGoal){
                     //newScore += 10; 
-                    newScore *= 22.5; 
+                    newScore *= 2.5; 
                 }
                 else {
-                    newScore *= -1;
+                    newScore *= 1;
                 }
                     
                 distScores.push(newScore);
             }
             //use reducer to get total product //(and divide by 1000 to keep values manageable)
-            life.fitness += distScores.reduce((a,b) => a+b, 1);
+            life.fitness += distScores.reduce((a,b) => a+b, 1)/1000;
             allFitness.push(life.fitness);
         }
 
@@ -93,7 +93,6 @@ class Group extends Phaser.Physics.Arcade.Group {
     selection() {
         if (this.genLength < this.maxGenLength)
             this.genLength += this.deltaGenLength;
-        this.timer1 = 0;
 
         //fitness sorting function in which more fit lives move to front
         this.lives.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
@@ -137,7 +136,8 @@ class Group extends Phaser.Physics.Arcade.Group {
         let newStartingX = 400;
         let newStartingY = 300;
         for (let life of this.lives){
-            //life.setPosition(newStartingX, newStartingY);
+            if (this.timer1 % 1000 == 0)
+                life.setPosition(newStartingX, newStartingY);
 
             for (let g=0; g < this.goals.length; g++)
                 life.startingDistFromGoal[g] = Phaser.Math.Distance.BetweenPoints(life, this.goals[g]);
