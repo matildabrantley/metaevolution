@@ -1,3 +1,6 @@
+const Group = require('./group');
+const Life = require('./life');
+
 class Species extends Phaser.Physics.Arcade.Group {
     constructor({world, scene, config, tiles} = {}, //general config for species and its sub-groups
                 {goals, goalsAreMoving = false, bonusIsRandom = false, groupSelectionFreq = 40, 
@@ -164,6 +167,9 @@ class Species extends Phaser.Physics.Arcade.Group {
         for (let group of this.groups) 
             group.predatorGroups.push(predator);
     }
-
-
 }
+
+const total = (nums) => nums.reduce((a, b) => (a + b));
+const average = (nums) => total(nums) / nums.length;
+
+module.exports = Species;

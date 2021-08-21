@@ -33,7 +33,7 @@ let g1, g2, g3, g4;
 let distances = [];
 
 function preload () {
-    this.load.image('star', 'sprites/star.png');
+    this.load.image('star', './sprites/star.png');
     this.load.image('bluestar', 'sprites/bluestar.png');
     this.load.image('blackstar', 'sprites/blackstar.png');
     this.load.image('greenstar', 'sprites/greenstar.png');

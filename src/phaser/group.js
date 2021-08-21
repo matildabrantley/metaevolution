@@ -1,4 +1,4 @@
-// const Life = require('./life');
+const Life = require('./life');
 // const Vector = require('./vector');
 
 class Group extends Phaser.Physics.Arcade.Group {
@@ -86,17 +86,6 @@ class Group extends Phaser.Physics.Arcade.Group {
         }
         this.groupFitness += average(allFitness);
 
-    }
-
-    //simplified fast updating without a framework/renderer/engine, and very limited physics
-    async updateFast() {
-        this.timer2++;
-        for (let i=0; i < this.lives.length; i++) 
-            this.lives[i].updateFast();
-
-        if (this.timer2 % this.fastGenLength == 0){
-            this.selection();
-        }
     }
 
     //generational change in group where fitness is sorted and replacement and mutation occur
@@ -188,3 +177,5 @@ const randIntBetween = (lowNum, highNum) => {
 }
 const total = (nums) => nums.reduce((a, b) => (a + b));
 const average = (nums) => total(nums) / nums.length;
+
+module.exports = Group;

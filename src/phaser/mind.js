@@ -1,6 +1,5 @@
-// const Net = require('./net');
-// const Vector = require('./vector');
-// const Matter = require('matter-js');
+const Net = require('./net');
+
 class Mind {
     constructor(numInputs = 4, numOutputs = 3){
         this.inputs = new Array(numInputs);
@@ -37,4 +36,4 @@ class Mind {
     }
 }
 
-// module.exports = Mind;
+module.exports = Mind;

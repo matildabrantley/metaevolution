@@ -1,7 +1,6 @@
-// const Net = require('./cluster');
+const Net = require('./Net');
 // const Vector = require('./vector');
 
-// const Matter = require('matter-js');
 class Life extends Phaser.Physics.Arcade.Sprite {
 
     constructor (scene, x, y, sprite, frame, tiles)
@@ -150,4 +149,4 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
 //const squish = (x) => x * 0.01;
 
-// module.exports = Life;
+module.exports = Life;
