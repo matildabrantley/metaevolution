@@ -8,6 +8,19 @@ class Mind {
 
         //Feedforward Neural Network
         this.net = new Net({isRecurrent :true, isLongTerm: true}, numInputs, 12, numOutputs);
+
+        this.nets = [];
+    }
+
+    buildNets(){
+        let magicNum = 5;
+        this.charges = new Array(layerSizes.length);
+		for (let layer = 0; layer < layerSizes.length; layer++)
+		{
+			this.charges[layer] = new Array(layerSizes[layer]);
+			for (let neuron = 0; neuron < layerSizes[layer]; neuron++)
+				this.charges[layer][neuron] = 0;
+		}
     }
 
     update(inputs) {

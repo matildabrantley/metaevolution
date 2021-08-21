@@ -16,9 +16,10 @@ class Species {
     }
 
     //Preferred (and simpler) method to create new groups
-    createGroup({world, scene, config, tiles, goals = this.goals} = {}, //general config for group
+    createGroup({world, scene, config, tiles} = {}, //general config for group
         {spritesheet, key, firstFrame, scale = 1} = {}, //animation config for all sprites in group
-        {pop = 100, mutRate = 0.05, selectionCutoff = 0.1, maxGenLength = 150, initialGenLength = 10, deltaGenLength = 5} = {} //genetic config
+        {pop = 100, mutRate = 0.05, selectionCutoff = 0.1, maxGenLength = 150, initialGenLength = 10, deltaGenLength = 5} = {}, //genetic config
+        {goals = this.goals, preyGroups, predatorGroups} = {} //fitness config
         ){
 
         //Create Group object with general configuration
@@ -149,7 +150,14 @@ class Species {
                 this.twoWayMingle(g1, g2, flowRate);
     }
 
-
+    addPreySpecies(prey){
+        for (let group of this.groups) 
+            group.preyGroups.push(prey);
+    }
+    addPredatorSpecies(predator){
+        for (let group of this.groups) 
+            group.predatorGroups.push(predator);
+    }
 
 
 }

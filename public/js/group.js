@@ -30,6 +30,9 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.selectionCutoff = selectionCutoff;
         this.numElites = 20;
 
+        this.preySpecies = [];
+        this.predatorSpecies = [];
+
         for (let life of this.lives){
             life.startingDistFromGoal = new Array(this.goals.length);
             for (let g=0; g < this.goals.length; g++)
@@ -43,22 +46,33 @@ class Group extends Phaser.Physics.Arcade.Group {
     //normal updating within Phaser's/Matter's loop
     updateWithEngine() {
         this.timer1++;
-        let allFitness = []; //used to calculate average fitness
         for (let life of this.lives) {
             //if (this.timer1 % 10 == 0){
                 //for (let goal of this.goals)
                     //goal.setVelocity((Math.random()-0.5) * 700, (Math.random()-0.5) * 700);
             //}
 
+            this.fitness();
+
             life.update(this.goals, this.species.bonusGoal);
 
+        }
+
+        if (this.timer1 % this.genLength == 0){
+           this.selection();
+        }
+    }
+
+    fitness(){
+        let allFitness = []; //used to calculate average fitness
+        for (let life of this.lives){
             //Fitness to be managed by group
             let distScores = [];
             for (let g=0; g < this.goals.length; g++){
                 let newScore = life.startingDistFromGoal[g] / (Phaser.Math.Distance.BetweenPoints(life, this.goals[g]) + 1);
                 if (g == this.species.bonusGoal){
                     //newScore += 10; 
-                    newScore *= 2.5; 
+                    newScore *= 12.5; 
                 }
                 else {
                     newScore *= 1;
@@ -70,12 +84,8 @@ class Group extends Phaser.Physics.Arcade.Group {
             life.fitness += distScores.reduce((a,b) => a+b, 1)/1000;
             allFitness.push(life.fitness);
         }
-
         this.groupFitness += average(allFitness);
 
-        if (this.timer1 % this.genLength == 0){
-           this.selection();
-        }
     }
 
     //simplified fast updating without a framework/renderer/engine, and very limited physics

@@ -124,7 +124,8 @@ function create () {
     const lightSpiralAnim = createAnimConfig (this, 'lightSpiralKey', 'lightSpiral', fps, 'light-spiral0.png', 0.4); 
     const voidSpiralAnim = createAnimConfig (this, 'voidSpiralKey', 'voidSpiral', fps, 'void-spiral0.png', 0.4); 
 
-    const groupConfig = {world: this.physics.world, scene: this, config: config, tiles: tileLayer, goals: goalGroup};
+    const groupConfig = {world: this.physics.world, scene: this, config: config, tiles: tileLayer};
+    let fitnessConfig = {goals: goalGroup};
 
     //Create one Genus
     genera.push(new Genus());
@@ -132,8 +133,8 @@ function create () {
      //4 Groups per Species, 4 Species (16 groups total) each with different animations
      //Create empty Species with only goals defined
     let newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
-    newSpecies.createGroup(groupConfig, redGroupAnim, {pop: groupPop});
-    //newSpecies.createGroup(groupConfig, blueGroupAnim, {pop: groupPop});
+    newSpecies.createGroup(groupConfig, redGroupAnim, {pop: groupPop}, fitnessConfig);
+    newSpecies.createGroup(groupConfig, blueGroupAnim, {pop: groupPop});
     // newSpecies.createGroup(groupConfig, greenGroupAnim, {pop: groupPop});
     // newSpecies.createGroup(groupConfig, brightGroupAnim, {pop: groupPop});
     genera[0].addSpecies(newSpecies);
@@ -146,12 +147,12 @@ function create () {
     // newSpecies.createGroup(groupConfig, yellowGroupAnim, {pop: groupPop});
     // genera[0].addSpecies(newSpecies);
 
-    // newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
+    let newSpecies3 = new Species({goals: goalGroup, goalsAreMoving: true});
     // newSpecies.createGroup(groupConfig, fireSpiralAnim, {pop: groupPop});
     // newSpecies.createGroup(groupConfig, waterSpiralAnim, {pop: groupPop});
-    // newSpecies.createGroup(groupConfig, natureSpiralAnim, {pop: groupPop});
-    // newSpecies.createGroup(groupConfig, windSpiralAnim, {pop: groupPop});
-    // genera[0].addSpecies(newSpecies);
+     newSpecies3.createGroup(groupConfig, natureSpiralAnim, {pop: groupPop});
+    newSpecies3.createGroup(groupConfig, windSpiralAnim, {pop: groupPop}, fitnessConfig);
+    genera[0].addSpecies(newSpecies3);
 
     //  newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
     // // newSpecies.createGroup(groupConfig, sparkSpiralAnim, {pop: groupPop});
@@ -160,6 +161,9 @@ function create () {
     //  newSpecies.createGroup(groupConfig, voidSpiralAnim, {pop: groupPop});
     //  genera[0].addSpecies(newSpecies);
 
+    
+    // newSpecies.addPreySpecies(newSpecies3);
+    // newSpecies3.addPredatorSpecies(newSpecies);
 
     // this.physics.add.collider(loneStar, tileLayer);
 
@@ -179,13 +183,14 @@ function update () {
         genus.update();
 
     //example of collision handling
-    //this.physics.collide(groups[0], loneStar, eat);
+    //this.physics.collide(redGroup, blueGroup, eat);
     globalTimer++;
 }
 
-function eat (creature, food) {
-    food.destroy();
-    // creature.fitness++;
+function eat (predator, prey) {
+    //food.destroy();
+    predator.fitness++;
+    prey.fitness--;
 }
 
 const createAnimConfig = (scene, keyName, spritesheet, fps, firstFrame, animScale = 1) => {
