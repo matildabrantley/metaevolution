@@ -124,7 +124,7 @@ function create () {
     const lightSpiralAnim = createAnimConfig (this, 'lightSpiralKey', 'lightSpiral', fps, 'light-spiral0.png', 0.4); 
     const voidSpiralAnim = createAnimConfig (this, 'voidSpiralKey', 'voidSpiral', fps, 'void-spiral0.png', 0.4); 
 
-    const groupConfig = {world: this.physics.world, scene: this, config: config, tiles: tileLayer};
+    const speciesConfig = {world: this.physics.world, scene: this, config: config, tiles: tileLayer};
     let fitnessConfig = {goals: goalGroup};
 
     //Create one Genus
@@ -132,34 +132,34 @@ function create () {
 
      //4 Groups per Species, 4 Species (16 groups total) each with different animations
      //Create empty Species with only goals defined
-    let newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
-    newSpecies.createGroup(groupConfig, redGroupAnim, {pop: groupPop}, fitnessConfig);
-    newSpecies.createGroup(groupConfig, blueGroupAnim, {pop: groupPop});
-    // newSpecies.createGroup(groupConfig, greenGroupAnim, {pop: groupPop});
-    // newSpecies.createGroup(groupConfig, brightGroupAnim, {pop: groupPop});
+    let newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: true});
+    newSpecies.createGroup(redGroupAnim, {pop: groupPop}, fitnessConfig);
+    newSpecies.createGroup(blueGroupAnim, {pop: groupPop});
+    newSpecies.createGroup(greenGroupAnim, {pop: groupPop});
+    newSpecies.createGroup(brightGroupAnim, {pop: groupPop});
     genera[0].addSpecies(newSpecies);
 
-     //newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
-    // // newSpecies.createGroup(groupConfig, brownGroupAnim, {pop: groupPop});
-    // newSpecies.createGroup(groupConfig, crimsonGroupAnim, {pop: groupPop});
-    // newSpecies.createGroup(groupConfig, grayGroupAnim, {pop: groupPop});
-    // newSpecies.createGroup(groupConfig, purpleGroupAnim, {pop: groupPop});
-    // newSpecies.createGroup(groupConfig, yellowGroupAnim, {pop: groupPop});
-    // genera[0].addSpecies(newSpecies);
+    newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: true});
+    //newSpecies.createGroup(brownGroupAnim, {pop: groupPop});
+    newSpecies.createGroup(crimsonGroupAnim, {pop: groupPop});
+    newSpecies.createGroup(grayGroupAnim, {pop: groupPop});
+    newSpecies.createGroup(purpleGroupAnim, {pop: groupPop});
+    newSpecies.createGroup(yellowGroupAnim, {pop: groupPop});
+    genera[0].addSpecies(newSpecies);
 
-    let newSpecies3 = new Species({goals: goalGroup, goalsAreMoving: true});
-    // newSpecies.createGroup(groupConfig, fireSpiralAnim, {pop: groupPop});
-    // newSpecies.createGroup(groupConfig, waterSpiralAnim, {pop: groupPop});
-     newSpecies3.createGroup(groupConfig, natureSpiralAnim, {pop: groupPop});
-    newSpecies3.createGroup(groupConfig, windSpiralAnim, {pop: groupPop}, fitnessConfig);
-    genera[0].addSpecies(newSpecies3);
+    newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: true});
+    newSpecies.createGroup(fireSpiralAnim, {pop: groupPop});
+    newSpecies.createGroup(waterSpiralAnim, {pop: groupPop});
+    newSpecies.createGroup(natureSpiralAnim, {pop: groupPop});
+    newSpecies.createGroup(windSpiralAnim, {pop: groupPop}, fitnessConfig);
+    genera[0].addSpecies(newSpecies);
 
-    //  newSpecies = new Species({goals: goalGroup, goalsAreMoving: true});
-    // // newSpecies.createGroup(groupConfig, sparkSpiralAnim, {pop: groupPop});
-    // // newSpecies.createGroup(groupConfig, groundSpiralAnim, {pop: groupPop});
-    //  newSpecies.createGroup(groupConfig, lightSpiralAnim, {pop: groupPop});
-    //  newSpecies.createGroup(groupConfig, voidSpiralAnim, {pop: groupPop});
-    //  genera[0].addSpecies(newSpecies);
+     newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: true});
+    newSpecies.createGroup(sparkSpiralAnim, {pop: groupPop});
+    newSpecies.createGroup(groundSpiralAnim, {pop: groupPop});
+     newSpecies.createGroup(lightSpiralAnim, {pop: groupPop});
+     newSpecies.createGroup(voidSpiralAnim, {pop: groupPop});
+     genera[0].addSpecies(newSpecies);
 
     
     // newSpecies.addPreySpecies(newSpecies3);

@@ -1,7 +1,13 @@
-class Species {
-    constructor({goals, goalsAreMoving = false, bonusIsRandom = false, groupSelectionFreq = 40, 
-         maxGroupSelectionFreq = 300, deltaSelectionFreq = 20} = {},
-         groups = []){
+class Species extends Phaser.Physics.Arcade.Group {
+    constructor({world, scene, config, tiles} = {}, //general config for species and its sub-groups
+                {goals, goalsAreMoving = false, bonusIsRandom = false, groupSelectionFreq = 40, 
+                maxGroupSelectionFreq = 300, deltaSelectionFreq = 20} = {}, groups = []) {
+        
+        super(world, scene, config);
+        this.world = world;
+        this.scene = scene;
+        this.config = config;
+
         this.goals = goals.getChildren(); //groups will use these if specific goals aren't defined
         this.groups = groups; //groups can be predefined, but it's better to use createGroup()
         this.bonusLength = 1;
@@ -16,17 +22,16 @@ class Species {
     }
 
     //Preferred (and simpler) method to create new groups
-    createGroup({world, scene, config, tiles} = {}, //general config for group
-        {spritesheet, key, firstFrame, scale = 1} = {}, //animation config for all sprites in group
-        {pop = 100, mutRate = 0.05, selectionCutoff = 0.1, maxGenLength = 150, initialGenLength = 10, deltaGenLength = 5} = {}, //genetic config
-        {goals = this.goals, preyGroups, predatorGroups} = {} //fitness config
+    createGroup({spritesheet, key, firstFrame, scale = 1} = {}, //animation config for all sprites in group
+                {pop = 100, mutRate = 0.05, selectionCutoff = 0.1, maxGenLength = 150, initialGenLength = 10, deltaGenLength = 5} = {}, //genetic config
+                {goals = this.goals, preyGroups, predatorGroups} = {} //fitness config
         ){
 
         //Create Group object with general configuration
-        const newGroup = new Group(world, scene, config, tiles, this);
+        const newGroup = new Group(this.world, this.scene, this.config, this.tiles, this);
         //Add the population
         for (let i=0; i < pop; i++){
-            let life = new Life(scene, 300, 400, spritesheet, firstFrame, tiles);
+            let life = new Life(this.scene, 300, 400, spritesheet, firstFrame, this.tiles);
             life.setScale(scale);
             life.alpha = 0.5;
             // life.body.setAllowGravity(true);
@@ -37,9 +42,10 @@ class Species {
         //Setup handles Group construction aspects that prefer the entire population exist first
         newGroup.setup(pop, mutRate, selectionCutoff, maxGenLength, initialGenLength, deltaGenLength);
         //Establish Collision
-        scene.physics.add.collider(newGroup, tiles);
+        this.scene.physics.add.collider(newGroup, this.tiles);
         //Add group to this species
-        this.groups.push(newGroup);
+        this.groups.push(newGroup); //append to this.groups array
+        this.add(newGroup); //add to Phaser's Group class
 
         return newGroup;
     }

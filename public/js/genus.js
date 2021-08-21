@@ -35,7 +35,7 @@ class Genus {
     speciesSelection() {
         this.species.sort((b, a) => (a.speciesFitness > b.speciesFitness) ? 1 : -1);
 
-        this.species[this.species.length-1].cloneSpecies(this.species[0]);
+          this.species[this.species.length-1].cloneSpecies(this.species[0]);
 
         //reset fitness
         for (let specie of this.species)
