@@ -11,20 +11,20 @@ class Mind {
         this.nets = [];
     }
 
-    buildNets(){
-        let magicNum = 5;
-        this.charges = new Array(layerSizes.length);
-		for (let layer = 0; layer < layerSizes.length; layer++)
-		{
-			this.charges[layer] = new Array(layerSizes[layer]);
-			for (let neuron = 0; neuron < layerSizes[layer]; neuron++)
-				this.charges[layer][neuron] = 0;
-		}
-    }
+    // buildNets(){
+    //     let magicNum = 5;
+    //     this.charges = new Array(layerSizes.length);
+	// 	for (let layer = 0; layer < layerSizes.length; layer++)
+	// 	{
+	// 		this.charges[layer] = new Array(layerSizes[layer]);
+	// 		for (let neuron = 0; neuron < layerSizes[layer]; neuron++)
+	// 			this.charges[layer][neuron] = 0;
+	// 	}
+    // }
 
-    buildNetTier(){
+    // buildNetTier(){
         
-    }
+    // }
 
     update(inputs) {
         this.inputs = inputs;

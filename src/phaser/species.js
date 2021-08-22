@@ -1,5 +1,6 @@
 const Group = require('./group');
 const Life = require('./life');
+const Phaser = require('phaser');
 
 class Species extends Phaser.Physics.Arcade.Group {
     constructor({world, scene, config, tiles} = {}, //general config for species and its sub-groups
@@ -53,7 +54,7 @@ class Species extends Phaser.Physics.Arcade.Group {
         return newGroup;
     }
     addGroup(newGroup){
-        groups.push(newGroup);
+        this.groups.push(newGroup);
     }
 
     update(){

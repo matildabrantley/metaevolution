@@ -4,6 +4,12 @@ const Species = require('./species');
 const Genus = require('./genus');
 const Group = require('./group');
 
+let width = 800;
+let height = 600;
+let groupPop = 150;
+let maxStars = 10;
+let genera = [];
+
 var config = {
   type: Phaser.AUTO,
   width: width,
@@ -15,12 +21,6 @@ var config = {
   }
 };
 
-
-let width = 800;
-let height = 600;
-let groupPop = 150;
-let maxStars = 10;
-let genera = [];
 let starGroup;
 let globalTimer = 0;
 let timerText;

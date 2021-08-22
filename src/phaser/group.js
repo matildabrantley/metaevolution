@@ -1,4 +1,6 @@
 const Life = require('./life');
+const Mind = require('./mind');
+const Phaser = require('phaser');
 // const Vector = require('./vector');
 
 class Group extends Phaser.Physics.Arcade.Group {

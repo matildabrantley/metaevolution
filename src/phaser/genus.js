@@ -1,4 +1,7 @@
 //Genus-Species mirrors Species-Group relationship at a higher level
+const Species = require('./species');
+
+
 class Genus {
     constructor({speciesSelectionFreq = 100, maxSpeciesSelectionFreq = 600, deltaSelectionFreq = 50} = {}, species = []){
         this.species = species;
@@ -45,3 +48,6 @@ class Genus {
             this.speciesSelectionFreq += this.deltaSelectionFreq;
     }
 }
+
+const total = (nums) => nums.reduce((a, b) => (a + b));
+const average = (nums) => total(nums) / nums.length;

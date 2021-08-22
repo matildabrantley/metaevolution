@@ -1,4 +1,5 @@
-const Net = require('./Net');
+const Net = require('./net');
+const Phaser = require('phaser');
 // const Vector = require('./vector');
 
 class Life extends Phaser.Physics.Arcade.Sprite {
@@ -8,7 +9,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, sprite, frame);
         scene.add.existing(this);
         scene.physics.add.existing(this);
-        this.tiles;
+        this.tiles = tiles;
         this.tileSize = 32;
         
         this.fitness = 0;
@@ -100,7 +101,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
     lookAtTile(x, y){
         let tileInput;
         try {
-            let tile = tiles.getTileAtWorldXY(x, y, true).index;
+            let tile = this.tiles.getTileAtWorldXY(x, y, true).index;
             //TODO: get these magic tile numbers from elsewhere
             if (tile === 70 || tile === 48 || tile === 29){
                 tileInput = 0;
@@ -112,7 +113,6 @@ class Life extends Phaser.Physics.Arcade.Sprite {
             else {
                 tileInput = 0;
             }
-``
         }
         catch { //treat out of bounds the same as blocking tile for neural input
             tileInput = -2;
@@ -122,7 +122,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
     feed(food=35){
         try{
-            let tile = tiles.getTileAtWorldXY(this.x, this.y, true).index;
+            let tile = this.tiles.getTileAtWorldXY(this.x, this.y, true).index;
             if (tile == food)
                 this.fitness+=2;
             //else
