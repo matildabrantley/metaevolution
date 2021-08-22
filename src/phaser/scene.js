@@ -1,5 +1,14 @@
 import Phaser from "phaser";
 import logoImg from "../assets/logo.png";
+
+//import assets that are exported from assets/index.js
+import {star, bluestar, blackstar, greenstar, circle,
+   redDot, blueDot, greenDot, brightDot, brownDot, crimsonDot,  
+   grayDot, purpleDot, yellowDot, 
+   fireSpiral, waterSpiral, natureSpiral, windSpiral, 
+   sparkSpiral, groundSpiral, lightSpiral, voidSpiral
+} from './assets';
+
 const Species = require('./species');
 const Genus = require('./genus');
 const Group = require('./group');

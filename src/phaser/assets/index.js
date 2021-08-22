@@ -1,0 +1,24 @@
+//Export sprites for static images
+export const star = require('./sprites/star.png');
+export const bluestar = require('./sprites/bluestar.png');
+export const blackstar = require('./sprites/blackstar.png');
+export const greenstar = require('./sprites/greenstar.png');
+export const circle = require('./sprites/circle.png');
+//Export spritesheets for animations
+export const redLife = require('./sprites/pulsing-red-dot.png');
+export const blueLife = require('./sprites/pulsing-blue-dot.png');
+export const greenLife = require('./sprites/pulsing-green-dot.png');
+export const brightLife = require('./sprites/pulsing-white-star.png');
+export const brownLife = require('./sprites/pulsing-brown-star.png');
+export const crimsonLife = require('./sprites/pulsing-crimson-star.png');
+export const grayLife = require('./sprites/pulsing-gray-star.png');
+export const purpleLife = require('./sprites/pulsing-purple-star.png');
+export const yellowLife = require('./sprites/pulsing-yellow-star.png');
+export const fireSpiral = require('./sprites/fire-spiral.png');
+export const waterSpiral = require('./sprites/water-spiral.png');
+export const natureSpiral = require('./sprites/nature-spiral.png');
+export const windSpiral = require('./sprites/wind-spiral.png');
+export const sparkSpiral = require('./sprites/spark-spiral.png');
+export const groundSpiral = require('./sprites/ground-spiral.png');
+export const lightSpiral = require('./sprites/light-spiral.png');
+export const voidSpiral = require('./sprites/void-spiral.png');
