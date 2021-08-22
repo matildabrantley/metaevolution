@@ -49,5 +49,7 @@ class Genus {
     }
 }
 
+module.exports = Genus;
+
 const total = (nums) => nums.reduce((a, b) => (a + b));
 const average = (nums) => total(nums) / nums.length;
