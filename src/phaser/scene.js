@@ -1,12 +1,18 @@
 import Phaser from "phaser";
 import logoImg from "../assets/logo.png";
 
-//import assets that are exported from assets/index.js
-import {star, bluestar, blackstar, greenstar, circle,
-   redDot, blueDot, greenDot, brightDot, brownDot, crimsonDot,  
-   grayDot, purpleDot, yellowDot, 
-   fireSpiral, waterSpiral, natureSpiral, windSpiral, 
-   sparkSpiral, groundSpiral, lightSpiral, voidSpiral
+//import assets from assets/index.js
+import {
+   //sprites
+   star, bluestar, blackstar, greenstar, circle,
+   //spritesheets
+   redPulse, bluePulse, greenPulse, brightPulse, brownPulse, crimsonPulse, grayPulse, purplePulse, yellowPulse, 
+   fireSpiral, waterSpiral, natureSpiral, windSpiral, sparkSpiral, groundSpiral, lightSpiral, voidSpiral,
+   //json frame data
+   redPulseFrames, bluePulseFrames, greenPulseFrames, brightPulseFrames, brownPulseFrames, 
+   crimsonPulseFrames, grayPulseFrames, purplePulseFrames, yellowPulseFrames, 
+   fireSpiralFrames, waterSpiralFrames, natureSpiralFrames, windSpiralFrames, 
+   sparkSpiralFrames, groundSpiralFrames, lightSpiralFrames, voidSpiralFrames
 } from './assets';
 
 const Species = require('./species');
@@ -45,29 +51,28 @@ class Launch extends Phaser.Scene {
   }
 
   preload () {
-    this.load.image('star', 'sprites/star.png');
-    this.load.image('bluestar', 'sprites/bluestar.png');
-    this.load.image('blackstar', 'sprites/blackstar.png');
-    this.load.image('greenstar', 'sprites/greenstar.png');
-    this.load.image('circle', 'sprites/circle.png');
-    this.load.atlas('redLife', 'sprites/pulsing-red-dot.png', 'sprites/pulsing-red-dot.json');
-    this.load.atlas('blueLife', 'sprites/pulsing-blue-dot.png', 'sprites/pulsing-blue-dot.json');
-    this.load.atlas('greenLife', 'sprites/pulsing-green-dot.png', 'sprites/pulsing-green-dot.json');
-    this.load.atlas('brightLife', 'sprites/pulsing-white-star.png', 'sprites/pulsing-white-star.json');
-    this.load.atlas('brownLife', 'sprites/pulsing-brown-star.png', 'sprites/pulsing-brown-star.json');
-    this.load.atlas('crimsonLife', 'sprites/pulsing-crimson-star.png', 'sprites/pulsing-crimson-star.json');
-    this.load.atlas('grayLife', 'sprites/pulsing-gray-star.png', 'sprites/pulsing-gray-star.json');
-    this.load.atlas('purpleLife', 'sprites/pulsing-purple-star.png', 'sprites/pulsing-purple-star.json');
-    this.load.atlas('yellowLife', 'sprites/pulsing-yellow-star.png', 'sprites/pulsing-yellow-star.json');
-    
-    this.load.atlas('fireSpiral', 'sprites/fire-spiral.png', 'sprites/fire-spiral.json');
-    this.load.atlas('waterSpiral', 'sprites/water-spiral.png', 'sprites/water-spiral.json');
-    this.load.atlas('natureSpiral', 'sprites/nature-spiral.png', 'sprites/nature-spiral.json');
-    this.load.atlas('windSpiral', 'sprites/wind-spiral.png', 'sprites/wind-spiral.json');
-    this.load.atlas('sparkSpiral', 'sprites/spark-spiral.png', 'sprites/spark-spiral.json');
-    this.load.atlas('groundSpiral', 'sprites/ground-spiral.png', 'sprites/ground-spiral.json');
-    this.load.atlas('lightSpiral', 'sprites/light-spiral.png', 'sprites/light-spiral.json');
-    this.load.atlas('voidSpiral', 'sprites/void-spiral.png', 'sprites/void-spiral.json');
+    this.load.image('star', star);
+    this.load.image('bluestar', bluestar);
+    this.load.image('blackstar', blackstar);
+    this.load.image('greenstar', greenstar);
+    this.load.image('circle', circle);
+    this.load.atlas('redLife', redPulse, redPulseFrames');
+    this.load.atlas('blueLife', bluePulse, bluePulseFrames');
+    this.load.atlas('greenLife', greenPulse, greenPulseFrames');
+    this.load.atlas('brightLife', whitePulse, whitePulseFrames');
+    this.load.atlas('brownLife', brownPulse, brownPulseFrames');
+    this.load.atlas('crimsonLife', crimsonPulse, crimsonPulseFrames');
+    this.load.atlas('grayLife', grayPulse, grayPulseFrames');
+    this.load.atlas('purpleLife', purplePulse, purplePulseFrames');
+    this.load.atlas('yellowLife', yellowPulse, pulsing-yellowPulseFrames');
+    this.load.atlas('fireSpiral', fireSpiral, fireSpiralFrames');
+    this.load.atlas('waterSpiral', waterSpiral, waterSpiralFrames');
+    this.load.atlas('natureSpiral', natureSpiral, natureSpiralFrames');
+    this.load.atlas('windSpiral', windSpiral, windSpiralFrames');
+    this.load.atlas('sparkSpiral', sparkSpiral, sparkSpiralFrames');
+    this.load.atlas('groundSpiral', groundSpiral, groundSpiralFrames');
+    this.load.atlas('lightSpiral', lightSpiral, lightSpiralFrames');
+    this.load.atlas('voidSpiral', voidSpiral, voidSpiralFrames');
 
     this.load.image('tiles', 'sprites/all-tiles.png');
     // this.load.tilemapTiledJSON('tilemap', 'sprites/tilemap-data.json');
