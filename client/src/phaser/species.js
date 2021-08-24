@@ -5,7 +5,7 @@ const Phaser = require('phaser');
 class Species extends Phaser.Physics.Arcade.Group {
     constructor({world, scene, config, tiles} = {}, //general config for species and its sub-groups
                 {goals, goalsAreMoving = false, bonusIsRandom = false, groupSelectionFreq = 40, 
-                maxGroupSelectionFreq = 300, deltaSelectionFreq = 20} = {}, groups = []) {
+                maxGroupSelectionFreq = 500, deltaSelectionFreq = 20} = {}, groups = []) {
         
         super(world, scene, config);
         this.world = world;
@@ -27,7 +27,7 @@ class Species extends Phaser.Physics.Arcade.Group {
 
     //Preferred (and simpler) method to create new groups
     createGroup({spritesheet, key, firstFrame, scale = 1} = {}, //animation config for all sprites in group
-                {pop = 100, mutRate = 0.05, selectionCutoff = 0.1, maxGenLength = 150, initialGenLength = 10, deltaGenLength = 5} = {}, //genetic config
+                {pop = 100, mutRate = 0.05, selectionCutoff = 0.1, maxGenLength = 250, initialGenLength = 10, deltaGenLength = 5} = {}, //genetic config
                 {goals = this.goals, preyGroups, predatorGroups} = {} //fitness config
         ){
 

@@ -34,6 +34,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
             inputs.push((this.y - goals[g].y) / 100); //y difference
             inputs.push((this.x - goals[g].x) / 100); //x difference (not dist)
             inputs.push((this.y - goals[g].y) / 100); //y difference
+            inputs.push((this.x - goals[g].x) / 100); //x difference (not dist)
+            inputs.push((this.y - goals[g].y) / 100); //y difference
             inputs.push(g == bonusGoal ? 3 : -3) //bonus goal
         }
         //inputs = inputs.concat(this.getTileInputs());

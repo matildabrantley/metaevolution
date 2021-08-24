@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import logoImg from "../assets/logo.png";
 
 //import assets from assets/index.js
 // import {
@@ -43,7 +42,7 @@ import lightSpiral from './assets/sprites/light-spiral.png';
 import voidSpiral from './assets/sprites/void-spiral.png';
 
 // Export json frame data for animations
-import redPulseFrames from './assets/frameData/pulsing-red-dot';
+import redPulseFrames from './assets/frameData/pulsing-red-dot.json';
 import bluePulseFrames from './assets/frameData/pulsing-blue-dot.json';
 import greenPulseFrames from './assets/frameData/pulsing-green-dot.json';
 import brightPulseFrames from './assets/frameData/pulsing-white-star.json';
@@ -71,7 +70,7 @@ const Group = require('./group');
 
 let width = 800;
 let height = 600;
-let groupPop = 70;
+let groupPop = 90;
 let maxStars = 10;
 let genera = [];
 
@@ -89,7 +88,7 @@ var config = {
 let starGroup;
 let globalTimer = 0;
 let timerText;
-let loneStar, blueStar, greenStar, brightStar;
+let loneStar, blueStar, greenStar, blackStar;
 // let chosenPoint;
 let tiles, tileset, tileLayer;
 let g1, g2, g3, g4;
@@ -152,26 +151,26 @@ create () {
   loneStar.collideWorldBounds = true;
   goalGroup.add(loneStar);
   
-  // blueStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 - goalDivergence), 'bluestar');
-  // blueStar.setCircle(30);
-  // blueStar.setScale(4);
-  // blueStar.setBounce(5);
-  // blueStar.collideWorldBounds = true;
-  // goalGroup.add(blueStar);
+  blueStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 - goalDivergence), 'bluestar');
+  blueStar.setCircle(30);
+  blueStar.setScale(4);
+  blueStar.setBounce(5);
+  blueStar.collideWorldBounds = true;
+  goalGroup.add(blueStar);
   
-  // blackStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 + goalDivergence), 'blackstar');
-  // blackStar.setCircle(30);
-  // blackStar.setScale(5);
-  // blackStar.setBounce(5);
-  // blackStar.collideWorldBounds = true;
-  // goalGroup.add(blackStar);
+  blackStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 + goalDivergence), 'blackstar');
+  blackStar.setCircle(30);
+  blackStar.setScale(5);
+  blackStar.setBounce(5);
+  blackStar.collideWorldBounds = true;
+  goalGroup.add(blackStar);
   
-  // greenStar = this.physics.add.image(width * (0.5 - goalDivergence), height * (0.5 + goalDivergence), 'greenstar');
-  // greenStar.setCircle(30);
-  // greenStar.setScale(5);
-  // greenStar.setBounce(5);
-  // greenStar.collideWorldBounds = true;
-  // goalGroup.add(greenStar);
+  greenStar = this.physics.add.image(width * (0.5 - goalDivergence), height * (0.5 + goalDivergence), 'greenstar');
+  greenStar.setCircle(30);
+  greenStar.setScale(5);
+  greenStar.setBounce(5);
+  greenStar.collideWorldBounds = true;
+  goalGroup.add(greenStar);
 
   let fps = 30;
   const redGroupAnim = createAnimConfig (this, 'redKey', 'redLife', fps, 'pulsing-red-dot0.png');
@@ -201,14 +200,14 @@ create () {
 
    //4 Groups per Species, 4 Species (16 groups total) each with different animations
    //Create empty Species with only goals defined
-  let newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: true});
+  let newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
   newSpecies.createGroup(redGroupAnim, {pop: groupPop}, fitnessConfig);
   newSpecies.createGroup(blueGroupAnim, {pop: groupPop});
   newSpecies.createGroup(greenGroupAnim, {pop: groupPop});
   newSpecies.createGroup(brightGroupAnim, {pop: groupPop});
   genera[0].addSpecies(newSpecies);
 
-  newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: true});
+  newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
   //newSpecies.createGroup(brownGroupAnim, {pop: groupPop});
   newSpecies.createGroup(crimsonGroupAnim, {pop: groupPop});
   newSpecies.createGroup(grayGroupAnim, {pop: groupPop});
@@ -216,14 +215,14 @@ create () {
   newSpecies.createGroup(yellowGroupAnim, {pop: groupPop});
   genera[0].addSpecies(newSpecies);
 
-  newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: true});
+  newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
   newSpecies.createGroup(fireSpiralAnim, {pop: groupPop});
   newSpecies.createGroup(waterSpiralAnim, {pop: groupPop});
   newSpecies.createGroup(natureSpiralAnim, {pop: groupPop});
   newSpecies.createGroup(windSpiralAnim, {pop: groupPop}, fitnessConfig);
   genera[0].addSpecies(newSpecies);
 
-   newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: true});
+   newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
   newSpecies.createGroup(sparkSpiralAnim, {pop: groupPop});
   newSpecies.createGroup(groundSpiralAnim, {pop: groupPop});
    newSpecies.createGroup(lightSpiralAnim, {pop: groupPop});
