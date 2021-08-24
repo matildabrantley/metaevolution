@@ -94,7 +94,7 @@ let tiles, tileset, tileLayer;
 let g1, g2, g3, g4;
 let distances = [];
 
-class Launch extends Phaser.Scene {
+class World extends Phaser.Scene {
   constructor() {
     super("Launch");
   }

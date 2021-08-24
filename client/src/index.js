@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App.js";
-import Launch from "./phaser/scene";
+import World from "./phaser/world";
 
 //console.log(App);
 
@@ -14,7 +14,7 @@ export const config = {
   physics: {
     default: 'arcade',
   },
-  scene: Launch
+  scene: World
 };
 
 const game = new Phaser.Game(config);
