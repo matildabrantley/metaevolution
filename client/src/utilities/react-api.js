@@ -27,4 +27,4 @@ const getThisUser = (token) => {
         });
 }
 
-module.exports = { register, login, getThisUser}
+module.exports = { register, login, getThisUser }

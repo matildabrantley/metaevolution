@@ -74,17 +74,6 @@ let groupPop = 90;
 let maxStars = 10;
 let genera = [];
 
-var config = {
-  type: Phaser.AUTO,
-  width: width,
-  height: height,
-  backgroundColor: '#000F00',
-  parent: 'phaser-example',
-  physics: {
-      default: 'arcade',
-  }
-};
-
 let starGroup;
 let globalTimer = 0;
 let timerText;
@@ -97,6 +86,16 @@ let distances = [];
 class World extends Phaser.Scene {
   constructor() {
     super("Launch");
+    this.config = {
+      type: Phaser.AUTO,
+      parent: "simulation",
+      width: 800,
+      height: 600,
+      physics: {
+        default: 'arcade',
+      },
+      scene: this
+    };
   }
 
   preload () {
@@ -192,7 +191,7 @@ create () {
   const lightSpiralAnim = createAnimConfig (this, 'lightSpiralKey', 'lightSpiral', fps, 'light-spiral0.png', 0.4); 
   const voidSpiralAnim = createAnimConfig (this, 'voidSpiralKey', 'voidSpiral', fps, 'void-spiral0.png', 0.4); 
 
-  const speciesConfig = {world: this.physics.world, scene: this, config: config, tiles: tileLayer};
+  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, tiles: tileLayer};
   let fitnessConfig = {goals: goalGroup};
 
   //Create one Genus

@@ -3,6 +3,13 @@ class UserAuthentication {
     localStorage.setItem('userIDtoken', userIDtoken);
     window.location.assign('/');
   }
+  loggedIn() {
+    const token = this.getToken();
+    if (!!token && !this.isTokenExpired(token))
+      return true;
+    else
+      return false;
+  }
   getToken() {
     return localStorage.getItem('userIDtoken');
   }

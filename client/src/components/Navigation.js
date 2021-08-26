@@ -35,7 +35,7 @@ function Navigation() {
                     Register
                 </Button>
 
-                <Modal showLogin={showLogin} onHide={handleCloseLogin}>
+                <Modal show={showLogin} onHide={handleCloseLogin}>
                     <Modal.Header closeButton>
                     <Modal.Title>Login</Modal.Title>
                     </Modal.Header>
@@ -46,13 +46,10 @@ function Navigation() {
                     <Button variant="secondary" onClick={handleCloseLogin}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleCloseLogin}>
-                        Filler Button
-                    </Button>
                     </Modal.Footer>
                 </Modal>
 
-                <Modal showRegister={showRegister} onHide={handleCloseRegister}>
+                <Modal show={showRegister} onHide={handleCloseRegister}>
                     <Modal.Header closeButton>
                     <Modal.Title>Register</Modal.Title>
                     </Modal.Header>
@@ -62,9 +59,6 @@ function Navigation() {
                     <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseRegister}>
                         Close
-                    </Button>
-                    <Button variant="primary" onClick={handleCloseRegister}>
-                        Filler Button
                     </Button>
                     </Modal.Footer>
                 </Modal>
