@@ -1,6 +1,9 @@
 import React from "react";
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import RegisterForm from './RegisterForm';
+
+
 
 function Navigation() {
     return(
@@ -19,6 +22,28 @@ function Navigation() {
                     </NavDropdown>
                 </Nav>
                 </Navbar.Collapse>
+                <>
+                <Button variant="primary" onClick={handleShow}>
+                    Register
+                </Button>
+
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Register</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <RegisterForm handleModalClose={() => setShowModal(false)} />
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                        Filler Button
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
+                </>
             </Container>
             </Navbar>
     )
