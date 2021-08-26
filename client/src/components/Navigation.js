@@ -16,6 +16,8 @@ function Navigation() {
                     <NavDropdown.Item href="https://matildabrantley.github.io/learning-rooms/">Learing Rooms</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="#action/3.4">Link 2</NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.4">Link 3</NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.4">Link 4</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
                 </Navbar.Collapse>
