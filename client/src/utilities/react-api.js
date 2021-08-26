@@ -5,7 +5,7 @@ const register = (user) => {
         '/api/users', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(userData),
+            body: JSON.stringify(user),
         });
 }
 
@@ -15,11 +15,11 @@ const login = (user) => {
         '/api/users/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(userData),
+            body: JSON.stringify(user),
         });
 }
 
-const getThisUser = () => {
+const getThisUser = (token) => {
     //fetch
     return fetch(
             '/api/users/thisUser', {

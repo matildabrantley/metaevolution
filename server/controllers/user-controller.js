@@ -1,4 +1,4 @@
-const { signToken } = require('../utils/auth');
+const { signToken } = require('../utilities/auth');
 const { User } = require('../models');
 
 //user registration route
