@@ -6,9 +6,12 @@ import RegisterForm from './RegisterForm';
 
 
 function Navigation() {
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [showLogin, setShowLogin] = useState(false);
+    const [showRegister, setShowRegister] = useState(false);
+    const handleCloseLogin = () => setShowLogin(false);
+    const handleShowLogin = () => setShowLogin(true);
+    const handleCloseRegister = () => setShowRegister(false);
+    const handleShowRegister = () => setShowRegister(true);
     return(
             <Navbar bg="light" expand="lg" className="navig">
             <Container>
@@ -16,8 +19,7 @@ function Navigation() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link eventKey='register'>Register</Nav.Link>
-                    <NavDropdown title="Other Links" id="basic-nav-dropdown">
+                    <NavDropdown title="Links" id="basic-nav-dropdown">
                     <NavDropdown.Item href="https://matildabrantley.github.io/learning-rooms/">Learing Rooms</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="https://github.com/matildabrantley">My GitHub</NavDropdown.Item>
@@ -26,22 +28,42 @@ function Navigation() {
                 </Nav>
                 </Navbar.Collapse>
                 <>
-                <Button variant="primary" onClick={handleShow}>
+                <Button variant="dark" onClick={handleShowLogin}>
+                    Login
+                </Button>
+                <Button variant="danger" onClick={handleShowRegister}>
                     Register
                 </Button>
 
-                <Modal show={show} onHide={handleClose}>
+                <Modal showLogin={showLogin} onHide={handleCloseLogin}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Login</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <RegisterForm handleModalClose={() => setShowLogin(false)} />
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseLogin}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleCloseLogin}>
+                        Filler Button
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
+
+                <Modal showRegister={showRegister} onHide={handleCloseRegister}>
                     <Modal.Header closeButton>
                     <Modal.Title>Register</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <RegisterForm handleModalClose={() => setShow(false)} />
+                        <RegisterForm handleModalClose={() => setShowRegister(false)} />
                     </Modal.Body>
                     <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" onClick={handleCloseRegister}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={handleCloseRegister}>
                         Filler Button
                     </Button>
                     </Modal.Footer>
