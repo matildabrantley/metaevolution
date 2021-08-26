@@ -5,5 +5,5 @@ const { authenticateRoute } = require('../../utils/auth');
 //routes
 router.route('/').post(register).put(authenticateRoute);
 router.route('/login').post(login);
-router.route('/me').get(authenticateRoute, getUser);
+router.route('/thisUser').get(authenticateRoute, getUser);
 module.exports = router;
