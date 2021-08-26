@@ -267,4 +267,4 @@ const createAnimConfig = (scene, keyName, spritesheet, fps, firstFrame, animScal
   return {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: firstFrame, scale: animScale};
 }
 
-export default Launch;
+export default World;

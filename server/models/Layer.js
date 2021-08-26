@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const layerSchema = new Schema({
   layerWidth: {
-    type: Int,
+    type: Number,
     required: true,
   },
   neurons: [Neuron],

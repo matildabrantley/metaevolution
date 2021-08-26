@@ -2,10 +2,10 @@ const { Schema, model } = require('mongoose');
 
 const netSchema = new Schema({
   numLayers: {
-    type: Int,
+    type: Number,
     required: true,
   },
-  layers: [Layer],
+  //layers: [Layer],
 });
 
 const Net = model('Net', netSchema);
