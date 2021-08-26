@@ -39,6 +39,7 @@ const RegisterForm = () => {
 
   return (
     <>
+    <h3>Register to save and share your evolved agents</h3>
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         <Alert dismissible onClose={() => setIsDisplayingMessage(false)} show={isDisplayingMessage} variant='danger'>
           Issue occurred during registration
@@ -93,4 +94,4 @@ const RegisterForm = () => {
   );
 };
 
-export default SignupForm;
+export default RegisterForm;

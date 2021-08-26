@@ -8,8 +8,11 @@ class UserAuthentication {
   }
   isTokenExpired(token) {
     try {
-      const decoded = require('jwt-decode').(token);
-      decoded.exp < Date.now() / 1000 ? true : false;
+      const decoded = require('jwt-decode')(token);
+      if (decoded.exp < Date.now() / 1000) 
+        return true;
+      else 
+        return false;
     } 
     catch (err) { return false; }
   }

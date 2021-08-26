@@ -1,11 +1,14 @@
-import React from "react";
-import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import React, { useState } from "react";
+import { Navbar, Nav, NavDropdown, Container, Modal, Tab, Button } from 'react-bootstrap';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import RegisterForm from './RegisterForm';
 
 
 
 function Navigation() {
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     return(
             <Navbar bg="light" expand="lg" className="navig">
             <Container>
@@ -32,7 +35,7 @@ function Navigation() {
                     <Modal.Title>Register</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <RegisterForm handleModalClose={() => setShowModal(false)} />
+                        <RegisterForm handleModalClose={() => setShow(false)} />
                     </Modal.Body>
                     <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
