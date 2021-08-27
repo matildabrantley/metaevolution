@@ -84,15 +84,16 @@ let g1, g2, g3, g4;
 let distances = [];
 
 class Ecosystem extends Phaser.Scene {
-  constructor() {
+  constructor({parent, width = 800, height = 600, physicsType = 'arcade'} = {}) {
     super("Launch");
+    //Create a config object for scene
     this.config = {
       type: Phaser.AUTO,
-      parent: "simulation",
-      width: 200,
-      height: 150,
+      parent: parent,
+      width: width,
+      height: height,
       physics: {
-        default: 'arcade',
+        default: physicsType,
       },
       scene: this
     };
@@ -150,12 +151,12 @@ create () {
   loneStar.collideWorldBounds = true;
   goalGroup.add(loneStar);
   
-  // blueStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 - goalDivergence), 'bluestar');
-  // blueStar.setCircle(30);
-  // blueStar.setScale(4);
-  // blueStar.setBounce(5);
-  // blueStar.collideWorldBounds = true;
-  // goalGroup.add(blueStar);
+  blueStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 - goalDivergence), 'bluestar');
+  blueStar.setCircle(30);
+  blueStar.setScale(4);
+  blueStar.setBounce(5);
+  blueStar.collideWorldBounds = true;
+  goalGroup.add(blueStar);
   
   // blackStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 + goalDivergence), 'blackstar');
   // blackStar.setCircle(30);

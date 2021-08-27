@@ -7,17 +7,3 @@ body {
 canvas {
   border: solid black 10px;
 }
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'Yomogi', sans-serif;
-}
-
-.small {
-  font-weight: 300;
-  font-style: italic;
-}

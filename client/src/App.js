@@ -9,7 +9,11 @@ function App() {
     <Router>
       <>
         <Navigation />
-        < PhaserWorld />
+        < PhaserWorld width={200} height={150} worldType="Colorfun"/>
+        < PhaserWorld width={300} height={200} worldType="Colorfun"/>
+        < PhaserWorld width={800} height={600} worldType="Ecosystem"/>
+        < PhaserWorld width={900} height={600} worldType="Shaderfun"/>
+        {/* < PhaserWorld /> */}
         <Switch>
           {/* { <Route exact path='/'>< PhaserWorld /> </Route> } */}
           {/* <Route exact path='/fillerPage' component={} /> */}
