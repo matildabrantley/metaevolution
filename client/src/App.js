@@ -8,10 +8,10 @@ function App() {
   return (
     <Router>
       <>
-        <PhaserWorld />
         <Navigation />
+        < PhaserWorld />
         <Switch>
-          {/* <Route exact path='/' component={} /> */}
+          {/* { <Route exact path='/'>< PhaserWorld /> </Route> } */}
           {/* <Route exact path='/fillerPage' component={} /> */}
           <Route render={() => <h1>Not a page!</h1>} />
         </Switch>

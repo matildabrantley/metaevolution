@@ -83,14 +83,14 @@ let tiles, tileset, tileLayer;
 let g1, g2, g3, g4;
 let distances = [];
 
-class World extends Phaser.Scene {
+class Ecosystem extends Phaser.Scene {
   constructor() {
     super("Launch");
     this.config = {
       type: Phaser.AUTO,
       parent: "simulation",
-      width: 800,
-      height: 600,
+      width: 200,
+      height: 150,
       physics: {
         default: 'arcade',
       },
@@ -150,26 +150,26 @@ create () {
   loneStar.collideWorldBounds = true;
   goalGroup.add(loneStar);
   
-  blueStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 - goalDivergence), 'bluestar');
-  blueStar.setCircle(30);
-  blueStar.setScale(4);
-  blueStar.setBounce(5);
-  blueStar.collideWorldBounds = true;
-  goalGroup.add(blueStar);
+  // blueStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 - goalDivergence), 'bluestar');
+  // blueStar.setCircle(30);
+  // blueStar.setScale(4);
+  // blueStar.setBounce(5);
+  // blueStar.collideWorldBounds = true;
+  // goalGroup.add(blueStar);
   
-  blackStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 + goalDivergence), 'blackstar');
-  blackStar.setCircle(30);
-  blackStar.setScale(5);
-  blackStar.setBounce(5);
-  blackStar.collideWorldBounds = true;
-  goalGroup.add(blackStar);
+  // blackStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 + goalDivergence), 'blackstar');
+  // blackStar.setCircle(30);
+  // blackStar.setScale(5);
+  // blackStar.setBounce(5);
+  // blackStar.collideWorldBounds = true;
+  // goalGroup.add(blackStar);
   
-  greenStar = this.physics.add.image(width * (0.5 - goalDivergence), height * (0.5 + goalDivergence), 'greenstar');
-  greenStar.setCircle(30);
-  greenStar.setScale(5);
-  greenStar.setBounce(5);
-  greenStar.collideWorldBounds = true;
-  goalGroup.add(greenStar);
+  // greenStar = this.physics.add.image(width * (0.5 - goalDivergence), height * (0.5 + goalDivergence), 'greenstar');
+  // greenStar.setCircle(30);
+  // greenStar.setScale(5);
+  // greenStar.setBounce(5);
+  // greenStar.collideWorldBounds = true;
+  // goalGroup.add(greenStar);
 
   let fps = 30;
   const redGroupAnim = createAnimConfig (this, 'redKey', 'redLife', fps, 'pulsing-red-dot0.png');
@@ -266,4 +266,4 @@ const createAnimConfig = (scene, keyName, spritesheet, fps, firstFrame, animScal
   return {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: firstFrame, scale: animScale};
 }
 
-export default World;
+export default Ecosystem;

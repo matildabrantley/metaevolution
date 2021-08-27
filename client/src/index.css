@@ -4,6 +4,10 @@ body {
   font-family: 'Yomogi', sans-serif;
 }
 
+canvas {
+  border: solid black 10px;
+}
+
 h1,
 h2,
 h3,

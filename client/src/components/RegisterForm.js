@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import UserAuth from '../utilities/userAuthentication';
 import { register } from '../utilities/react-api';
+import PhaserWorld from './PhaserWorld';
+
 
 const RegisterForm = () => {
   const [userData, setUserData] = useState({ username: '', email: '', password: '' });
@@ -39,6 +41,7 @@ const RegisterForm = () => {
 
   return (
     <>
+    < PhaserWorld />
     <h3>Register to save and share your evolved agents</h3>
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         <Alert dismissible onClose={() => setIsDisplayingMessage(false)} show={isDisplayingMessage} variant='danger'>
