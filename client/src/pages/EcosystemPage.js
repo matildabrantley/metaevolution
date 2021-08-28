@@ -13,7 +13,7 @@ const EcosystemPage = () => {
 
     return (
         <div>
-            <button type="button" onClick={goBack}>
+            <button class="clickable" onClick={goBack}>
                 Go back
             </button>
             <h1>Ecosystem</h1>

@@ -3,9 +3,11 @@ import raster from './assets/sprites/raster-bw-64.png';
 
 class Shaderfun extends Phaser.Scene
 {
-    constructor()
+    constructor(width, height)
     {
         super();
+        this.width = width;
+        this.height = height;
     }
 
 preload ()
@@ -26,8 +28,8 @@ create ()
 
     group.children.iterate(function (child) {
 
-        child.x = 100;
-        child.y = 300;
+        child.x = 50;
+        child.y = _this.height;
         child.depth = 9 - ci;
 
         child.tint = colors[ci];
@@ -36,7 +38,7 @@ create ()
 
         _this.tweens.add({
             targets: child,
-            x: 700,
+            x: _this.width - 50,
             yoyo: true,
             repeat: -1,
             ease: 'Sine.easeInOut',

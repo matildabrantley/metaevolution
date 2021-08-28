@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Navbar, Nav, NavDropdown, Container, Modal, Tab, Button } from 'react-bootstrap';
 // import 'bootstrap/dist/css/bootstrap.min.css';
-import RegisterForm from './RegisterForm';
+import RegisterForm from './RegisterForms';
 import { Link } from 'react-router-dom';
 
 
@@ -19,12 +19,8 @@ const Navigation = () => {
                 <Navbar.Brand href="#home">Meta-Evolution Lab</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                <Nav.Link as={Link} to='/lab'>
-                Lab
-                </Nav.Link>
-                <Nav.Link as={Link} to='/ecosystem'>
-                Ecosystem
-                </Nav.Link>
+                <Nav.Link as={Link} to='/lab'>Lab</Nav.Link>
+                <Nav.Link as={Link} to='/ecosystem'>Ecosystem</Nav.Link>
                 <Nav className="me-auto">
                     <NavDropdown title="Links" id="basic-nav-dropdown">
                     <NavDropdown.Item href="https://matildabrantley.github.io/learning-rooms/">Learing Rooms</NavDropdown.Item>
@@ -35,12 +31,12 @@ const Navigation = () => {
                 </Nav>
                 </Navbar.Collapse>
                 <>
-                <Button variant="dark" onClick={handleShowLogin}>
+                <div className="clickable" onClick={handleShowLogin}>
                     Login
-                </Button>
-                <Button variant="danger" onClick={handleShowRegister}>
+                </div>
+                <div className="clickable" onClick={handleShowRegister}>
                     Register
-                </Button>
+                </div>
 
                 <Modal show={showLogin} onHide={handleCloseLogin}>
                     <Modal.Header closeButton>

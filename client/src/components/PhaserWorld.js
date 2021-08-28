@@ -14,13 +14,13 @@ class PhaserWorld extends Component {
       let scene;
       switch (this.props.worldType) {
         case "Ecosystem":
-          scene = new Ecosystem(this.id, 800, 600, 'arcade');
+          scene = new Ecosystem(this.id, this.props.width, this.props.height, 'arcade');
           break;
         case "Colorfun":
           scene = new Colorfun();
           break;
         case "Shaderfun":
-          scene = new Shaderfun();
+          scene = new Shaderfun(this.props.width, this.props.height);
           break;
       
         default:
