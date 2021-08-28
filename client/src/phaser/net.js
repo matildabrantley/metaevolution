@@ -103,7 +103,7 @@ class Net {
 	//Asexual Reproduction
 	//copy over this net's weights with another net's weights, mutating in the process
 	//RM: Replace and Mutate
-	asexual (mom, mutationRate=0) { 
+	cloneNet (mom, mutationRate=0) { 
 		//weights overwritten
 		for (let layer in mom.weights) {
 			for (let neuron in mom.weights[layer]) {
@@ -119,7 +119,7 @@ class Net {
 	//Sexual Reproduction
 	//copy over this net's weights with another net's weights, mutating in the process
 	//RMC: Replace, Mutate and Crossover
-	sexual (mom, dad, mutationRate=0) { 
+	mateNets (mom, dad, mutationRate=0) { 
 		//weights overwritten
 		for (let layer in mom.weights) {
 			for (let neuron in mom.weights[layer]) {

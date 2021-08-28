@@ -71,7 +71,27 @@ class Mind {
         return this.outputs;
     }
 
-    m
+    //For exact same architectures
+    cloneMind(cloned, mutRate) {
+        this.mind.net.cloneNet(cloned.mind.net);
+
+        for (let region in this.nets) {
+            for (let net in this.nets[region]) {
+                this.nets[region][net].cloneNet(cloned.nets[region][net], mutRate) 
+            }
+        }
+    }
+    //This is replaced with offspring of mating
+    mateMind(mom, dad, mutRate) {
+        //TODO: For each tier of Nets
+        this.mind.net.mateNet(mom.mind.net, dad.mind.net, mutRate);
+
+        for (let region in this.nets) {
+            for (let net in this.nets[region]) {
+                this.nets[region][net].mateNets(cloned.nets[region][net], mutRate) 
+            }
+        }
+    }
 }
 
 module.exports = Mind;
