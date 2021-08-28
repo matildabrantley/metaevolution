@@ -53,7 +53,7 @@ class Net {
 			this.charges[0] = this.charges[0].concat(this.longMemory);
 		
 		//index of output layer
-		let outputLayer = this.charges.length - 1;
+		const outputLayer = this.charges.length - 1;
 
 
 		//set a standard net-wide threshold for both positive and negative charges
