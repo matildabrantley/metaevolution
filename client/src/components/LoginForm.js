@@ -39,6 +39,7 @@ const LoginForm = () => {
 
   return (
     <>
+    < PhaserWorld width={300} height={800} worldType="Colorfun"/>
     <h3>Login to access your saved agentsshare your </h3>
     <h3>evolved agents and share your evolved agents</h3>
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
