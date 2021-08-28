@@ -22,6 +22,9 @@ const Navigation = () => {
                 <Nav.Link as={Link} to='/lab'>
                 Lab
                 </Nav.Link>
+                <Nav.Link as={Link} to='/ecosystem'>
+                Ecosystem
+                </Nav.Link>
                 <Nav className="me-auto">
                     <NavDropdown title="Links" id="basic-nav-dropdown">
                     <NavDropdown.Item href="https://matildabrantley.github.io/learning-rooms/">Learing Rooms</NavDropdown.Item>
