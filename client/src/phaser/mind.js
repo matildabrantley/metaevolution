@@ -62,11 +62,11 @@ class Mind {
         //TODO: Auto-Normalize inputs here if needed
 
         //Perception with inputNet
-        this.senseNet.activate(inputs);
+        //this.senseNet.activate(inputs);
         //Activate all inner brain regions
-        this.activateRegions();
+        //this.activateRegions();
 
-        this.outputs = this.net.activate(inputs);
+        this.outputs = this.senseNet.activate(inputs);
 
         return this.outputs;
     }
