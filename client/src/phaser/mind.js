@@ -12,12 +12,12 @@ class Mind {
         this.senseNet = new Net({isRecurrent :true, isLongTerm: false}, numInputs, 12, numOutputs);
         this.behaviorNet = new Net({isRecurrent :true, isLongTerm: false}, numInputs, 12, numOutputs);
 
-        this.buildRegions;
+        this.buildRegions();
     }
 
-    buildRegions(){
+    buildRegions() {
         let magicNum = 5;
-        const this.nets = new Array(magicNum);
+        this.nets = new Array(magicNum);
         for (let region=0; region < this.nets.length; region++) {
             this.nets[region] = new Array(magicNum);
             for (let net=0; net < this.nets[region].length; net++) {
@@ -31,12 +31,10 @@ class Mind {
         const firstRegion = this.nets[0];
         const senses = this.senseNet.charges[this.senseNet.charges.length - 1]
 
-        for (let net=0; net < firstRegion.length; net++) {
-            const currentNet = firstRegion[0][net];
-            currentNet.charges[0] = senses.map((charge) => charge);
-        }
+        for (const net of firstRegion)
+            net.charges[0] = senses.map((charge) => charge);
         
-        const outputRegion = this.charges.length - 1;
+        const outputRegion = this.nets.length - 1;
 
         for (let region=0, nextRegion=1; region < this.nets.length; region++, nextRegion++) {
             for (let net=0; net < this.nets[region].length; net++) {
@@ -53,6 +51,7 @@ class Mind {
         }
 
         //Concatenate all the charges of the final region's output layers into the behaviorNet
+        const finalRegion = this.nets[outputRegion];
         for (const net of finalRegion) {
             this.behaviorNet = this.behaviorNet.concat(net.charges[net.charges.length - 1]);
         }
