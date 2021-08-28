@@ -1,34 +1,35 @@
 const Net = require('./net');
 
 class Mind {
-    constructor(numInputs = 4, numOutputs = 3){
-        this.inputs = new Array(numInputs);
-        this.outputs = new Array(numOutputs);
+    constructor(numSenses = 4, numBehaviors = 3){
+        this.inputs = new Array(numSenses);
+        this.outputs = new Array(numBehaviors);
 
-        this.numInputsPerNet = numInputs;
-        this.numHiddensPerHiddenNet = 2;
-        this.numOutputsPerHiddenNet = 2;
+        this.numSensesPerNet = numSenses;
 
         //Feedforward Neural Network
-        this.senseNet = new Net({isRecurrent: false, isLongTerm: false}, numInputs, 12, numOutputs);
-        this.behaviorNet = new Net({isRecurrent: false, isLongTerm: false}, numInputs, 12, numOutputs);
 
-        this.buildRegions();
+        this.buildRegions(numSenses, numBehaviors, {regionHiddens:2}, 3, 5, 3);
     }
 
-    buildRegions() {
-        let magicNum = 3;
+    buildRegions(numSenses, numBehaviors, {regionHiddens=3, regionOutputs=3}={}, ...regionSizes) {
+        //Sensory Net takes in input from world
+        this.senseNet = new Net({isRecurrent: false, isLongTerm: false}, numSenses, numSenses, numSenses);
+
         let numRegionInputs = this.senseNet.charges[this.senseNet.charges.length - 1].length;
-        this.nets = new Array(magicNum);
+        this.nets = new Array(regionSizes);
         for (let region=0; region < this.nets.length; region++) {
-            this.nets[region] = new Array(magicNum);
+            this.nets[region] = new Array(regionSizes[region]);
             let numNextRegionInputs = 0;
             for (let net=0; net < this.nets[region].length; net++) {
-                this.nets[region][net] = new Net({isRecurrent: false, isLongTerm: false}, numRegionInputs, this.numHiddensPerHiddenNet, this.numOutputsPerHiddenNet);
+                this.nets[region][net] = new Net({isRecurrent: false, isLongTerm: false}, numRegionInputs, regionHiddens, regionOutputs);
                 numNextRegionInputs += numRegionInputs;
             }
             numRegionInputs = numNextRegionInputs;
         }
+
+        //Behavior Net outputs actions
+        this.behaviorNet = new Net({isRecurrent: false, isLongTerm: false}, numRegionInputs, numBehaviors, numBehaviors);
     }
 
     activateRegions() {
