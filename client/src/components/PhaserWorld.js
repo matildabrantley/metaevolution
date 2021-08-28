@@ -9,7 +9,6 @@ const lodash = require('lodash');
 
 
 class PhaserWorld extends Component {
-
    componentWillMount() {
       this.id = lodash.uniqueId("simulation-");
       let scene;
@@ -27,8 +26,7 @@ class PhaserWorld extends Component {
         default:
           break;
       }
-
-
+    //create the Phaser config object
     const config = {
       type: Phaser.AUTO,
       parent: this.id,
@@ -39,6 +37,7 @@ class PhaserWorld extends Component {
       },
       scene: scene
     };
+    //create the Phaser world
     this.game = new Phaser.Game(config);
 
   }

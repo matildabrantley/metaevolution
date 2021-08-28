@@ -41,7 +41,7 @@ const RegisterForm = () => {
 
   return (
     <>
-    < PhaserWorld />
+    < PhaserWorld width={200} height={450} worldType="Shaderfun"/>
     <h3>Register to save and share your evolved agents</h3>
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         <Alert dismissible onClose={() => setIsDisplayingMessage(false)} show={isDisplayingMessage} variant='danger'>

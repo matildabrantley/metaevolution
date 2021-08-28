@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Navbar, Nav, NavDropdown, Container, Modal, Tab, Button } from 'react-bootstrap';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import RegisterForm from './RegisterForm';
+import { Link } from 'react-router-dom';
 
 
 
-function Navigation() {
+const Navigation = () => {
     const [showLogin, setShowLogin] = useState(false);
     const [showRegister, setShowRegister] = useState(false);
     const handleCloseLogin = () => setShowLogin(false);
@@ -18,6 +19,9 @@ function Navigation() {
                 <Navbar.Brand href="#home">Meta-Evolution Lab</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
+                <Nav.Link as={Link} to='/lab'>
+                Lab
+                </Nav.Link>
                 <Nav className="me-auto">
                     <NavDropdown title="Links" id="basic-nav-dropdown">
                     <NavDropdown.Item href="https://matildabrantley.github.io/learning-rooms/">Learing Rooms</NavDropdown.Item>

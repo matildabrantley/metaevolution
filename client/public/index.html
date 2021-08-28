@@ -62,12 +62,12 @@
       const bg3 = document.getElementById('background3');
       if (bgOpacity > maxOpacity)
           bgOpacityDirection = -1;
-      else if (bgOpacity < -0.1)
+      else if (bgOpacity < -1 * (maxOpacity))
           bgOpacityDirection = 1;
           
       if (bgOpacity3 > maxOpacity)
               bgOpacityDirection3 = -1;
-      else if (bgOpacity3 < -0.1)
+      else if (bgOpacity3 < -1 * (maxOpacity))
               bgOpacityDirection3 = 1;
 
       bgOpacity += 0.004 * bgOpacityDirection;
