@@ -31,7 +31,7 @@
       -o-background-size: cover;
   }
   #background3 {
-      background: url("./pretty-net.jpg")  no-repeat center center fixed;
+      background: url("./neurons-quartic.jpg")  no-repeat center center fixed;
           -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
@@ -60,24 +60,24 @@
       const bg1 = document.getElementById('background1');
       const bg2 = document.getElementById('background2');
       const bg3 = document.getElementById('background3');
-      if (bgOpacity > maxOpacity)
+      if (bgOpacity >= maxOpacity)
           bgOpacityDirection = -1;
-      else if (bgOpacity < -1 * (maxOpacity))
+      else if (bgOpacity <= 0)
           bgOpacityDirection = 1;
           
-      if (bgOpacity3 > maxOpacity-0.1)
+      if (bgOpacity3 >= maxOpacity)
               bgOpacityDirection3 = -1;
-      else if (bgOpacity3 < -1 * (maxOpacity-0.1))
+      else if (bgOpacity3 <= -1 * (maxOpacity))
               bgOpacityDirection3 = 1;
 
       bgOpacity += 0.004 * bgOpacityDirection;
       bgOpacity2 += 0.004 * bgOpacityDirection * -1;
-      bgOpacity3 += 0.0015 * bgOpacityDirection3;
+      bgOpacity3 += 0.004 * bgOpacityDirection3;
 
       bg1.style.opacity = bgOpacity;
       bg2.style.opacity = bgOpacity2;
       bg3.style.opacity = bgOpacity3;
-  }, 40);
+  }, 50);
 
   </script>
 

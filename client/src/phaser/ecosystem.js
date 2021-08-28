@@ -243,8 +243,8 @@ update () {
   timerText.setText("Update " + globalTimer);
   
 
-  if (globalTimer == 38);
-      let breakhere = 'break';
+  // if (globalTimer === 38);
+  //     let breakhere = 'break';
 
   //Update each genus
   for (let genus of genera)

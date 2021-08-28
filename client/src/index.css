@@ -17,7 +17,7 @@ canvas {
   border-bottom-right-radius: 7px;
 }
 
-.clickable {
+h1, .clickable {
   background-color: black;
   color: white;
   margin: 5px;
@@ -30,9 +30,10 @@ canvas {
 .clickable:hover {
   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
 }
-
-/* .something {
+/* 
+h1 {
   min-width: 250px;
+  max-width: 10%;
   display: flex;
   flex-direction: column;
   padding: 10px;
@@ -43,6 +44,6 @@ canvas {
   transition: box-shadow 0.75s;
 }
 
-.something:hover {
+h1:hover {
   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
-} */
+}  */

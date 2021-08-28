@@ -68,7 +68,7 @@ class Species extends Phaser.Physics.Arcade.Group {
         }
         this.speciesFitness = average(allGroupsFitness);
         
-        if (this.timer % this.bonusLength == 0){
+        if (this.timer % this.bonusLength === 0){
             if (this.bonusIsRandom) {
                 this.bonusGoal = Math.floor((Math.random() * this.goals.length)); //random goal rotation
             } else {
@@ -78,27 +78,27 @@ class Species extends Phaser.Physics.Arcade.Group {
             }
             //Scale bonus sprite bigger and all others smallers
             for (let g=0; g < this.goals.length; g++)
-                g == this.bonusGoal ? this.goals[g].setScale(6) : this.goals[g].setScale(4);
+                g === this.bonusGoal ? this.goals[g].setScale(6) : this.goals[g].setScale(4);
             
             this.bonusLength = Math.floor(this.groups[0].genLength / 2);
         }
         //Move goals around randomly if flag is set true
         if (this.goalsAreMoving){
-            if (this.timer % 30 == 0)
+            if (this.timer % 30 === 0)
                 for (let goal of this.goals)
                     goal.setVelocity((Math.random()-0.5) * 200, (Math.random()-0.5) * 200);
-            if (this.timer % 90 == 0)
+            if (this.timer % 90 === 0)
                 for (let goal of this.goals)
                     goal.setPosition(200 + Math.random() * 400, 150 + Math.random() * 300);
         }
 
-        if (this.timer % this.mingleFreq == 0){
+        if (this.timer % this.mingleFreq === 0){
             this.mingleAllGroups(0.15);
             if (this.mingleFreq < 500)
                 this.mingleFreq+=10;
         }
 
-        if (this.timer % this.groupSelectionFreq == 0)
+        if (this.timer % this.groupSelectionFreq === 0)
             this.groupSelection();
         
     }
