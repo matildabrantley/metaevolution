@@ -2,17 +2,11 @@ const Net = require('./net');
 
 class Mind {
     constructor(numSenses = 4, numBehaviors = 3){
-        this.inputs = new Array(numSenses);
-        this.outputs = new Array(numBehaviors);
-
-        this.numSensesPerNet = numSenses;
-
-        //Feedforward Neural Network
-
-        this.buildRegions(numSenses, numBehaviors, {regionHiddens:2}, 3, 5, 3);
+        //Keeping this here for now so I can control Mind building inside class better
+        this.buildMind(numSenses, numBehaviors, {regionHiddens:4}, 3, 5, 3);
     }
 
-    buildRegions(numSenses, numBehaviors, {regionHiddens=3, regionOutputs=3}={}, ...regionSizes) {
+    buildMind(numSenses, numBehaviors, {regionHiddens=3, regionOutputs=3}={}, ...regionSizes) {
         //Sensory Net takes in input from world
         this.senseNet = new Net({isRecurrent: false, isLongTerm: false}, numSenses, numSenses, numSenses);
 
@@ -22,7 +16,7 @@ class Mind {
             this.nets[region] = new Array(regionSizes[region]);
             let numNextRegionInputs = 0;
             for (let net=0; net < this.nets[region].length; net++) {
-                this.nets[region][net] = new Net({isRecurrent: false, isLongTerm: false}, numRegionInputs, regionHiddens, regionOutputs);
+                this.nets[region][net] = new Net({isRecurrent: true, isLongTerm: false}, numRegionInputs, regionHiddens, regionOutputs);
                 numNextRegionInputs += numRegionInputs;
             }
             numRegionInputs = numNextRegionInputs;
@@ -52,12 +46,10 @@ class Mind {
             }
             regionInputs = regionOutputs;
         }
-
-        //Concatenate all the charges of the final region's output layers into the behaviorNet
         const finalRegion = this.nets[outputRegion];
-        for (const net of finalRegion) {
-            this.behaviorNet = this.behaviorNet.concat(net.charges[net.charges.length - 1]);
-        }
+
+        //Pass the accumulated outputs of final regions into behaviorNet and return output
+        return this.behaviorNet.activate(regionInputs);
 
     }
 
@@ -67,11 +59,9 @@ class Mind {
         //Perception with inputNet
         this.senseNet.activate(inputs);
         //Activate all inner brain regions
-        this.activateRegions();
+        return this.activateRegions();
 
         // this.outputs = this.net.activate(inputs);
-
-        return this.behaviorNet.outputs;
     }
 
     //For exact same architectures

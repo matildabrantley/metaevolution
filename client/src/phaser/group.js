@@ -74,7 +74,7 @@ class Group extends Phaser.Physics.Arcade.Group {
                 let newScore = life.startingDistFromGoal[g] / (Phaser.Math.Distance.BetweenPoints(life, this.goals[g]) + 1);
                 if (g == this.species.bonusGoal){
                     //newScore += 10; 
-                    newScore *= 12.5; 
+                    newScore *= 2.5; 
                 }
                 else {
                     newScore *= 1;
