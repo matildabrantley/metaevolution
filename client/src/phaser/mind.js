@@ -9,7 +9,7 @@ class Mind {
         this.numOutputsPerNet = numOutputs;
 
         //Feedforward Neural Network
-        this.senseNet = new Net({isRecurrent :true, isLongTerm: false}, numInputs, 12, numOutputs);
+        this.net = new Net({isRecurrent :true, isLongTerm: false}, numInputs, 12, numOutputs);
         this.behaviorNet = new Net({isRecurrent :true, isLongTerm: false}, numInputs, 12, numOutputs);
 
         this.buildRegions();
@@ -66,10 +66,12 @@ class Mind {
         //Activate all inner brain regions
         //this.activateRegions();
 
-        this.outputs = this.senseNet.activate(inputs);
+        this.outputs = this.net.activate(inputs);
 
         return this.outputs;
     }
+
+    m
 }
 
 module.exports = Mind;

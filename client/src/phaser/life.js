@@ -136,12 +136,12 @@ class Life extends Phaser.Physics.Arcade.Sprite {
     //This inidividual's Nets replaced with a clone's
     clone(cloned) {
         //TODO: For each tier of Nets
-        this.mind.senseNet.asexual(cloned.mind.senseNet);
+        this.mind.net.asexual(cloned.mind.net);
     }
     //This is replaced with offspring of mating
-    mate(mom, dad) {
+    mate(mom, dad, mutRate) {
         //TODO: For each tier of Nets
-        this.mind.senseNet.asexual(mom.mind.senseNet, dad.mind.senseNet);
+        this.mind.net.sexual(mom.mind.net, dad.mind.net, mutRate);
     }
     
     mutate() {

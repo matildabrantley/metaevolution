@@ -102,35 +102,35 @@ class Group extends Phaser.Physics.Arcade.Group {
         for (let i=this.lives.length-20; i > this.lives.length * this.selectionCutoff; i--) {
             let mom = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
             let dad = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
-            this.lives[i].mind.senseNet.sexual(this.lives[mom].mind.senseNet, this.lives[dad].mind.senseNet, this.mutRate);
+            this.lives[i].mate(this.lives[mom], this.lives[dad], this.mutRate);
         }
 
         //Elite Selection: Best 10 always get spot(s) in next generation without mutation
         if (this.lives.length > 3) { //two clones of 1st and one clone of 2nd
-            this.lives[this.lives.length - 1].mind.senseNet.asexual(this.lives[0].mind.senseNet, 0);
-            this.lives[this.lives.length - 2].mind.senseNet.asexual(this.lives[0].mind.senseNet, 0);
-            this.lives[this.lives.length - 3].mind.senseNet.asexual(this.lives[1].mind.senseNet, 0);
+            this.lives[this.lives.length - 1].clone(this.lives[0], 0);
+            this.lives[this.lives.length - 2].clone(this.lives[0], 0);
+            this.lives[this.lives.length - 3].clone(this.lives[1], 0);
         } if (this.lives.length > 6) { //three children of mating 1st/2nd
-            this.lives[this.lives.length - 4].mind.senseNet.sexual(this.lives[0].mind.senseNet, this.lives[1].mind.senseNet, 0);
-            this.lives[this.lives.length - 5].mind.senseNet.sexual(this.lives[0].mind.senseNet, this.lives[1].mind.senseNet, 0);
-            this.lives[this.lives.length - 6].mind.senseNet.sexual(this.lives[0].mind.senseNet, this.lives[1].mind.senseNet, 0);
+            this.lives[this.lives.length - 4].mate(this.lives[0], this.lives[1], 0);
+            this.lives[this.lives.length - 5].mate(this.lives[0], this.lives[1], 0);
+            this.lives[this.lives.length - 6].mate(this.lives[0], this.lives[1], 0);
         } if (this.lives.length > 10) {   //mating between 1st/3rd and 2nd/3rd, and clones of 3rd and 4th      
-            this.lives[this.lives.length - 7].mind.senseNet.sexual(this.lives[0].mind.senseNet, this.lives[2].mind.senseNet, 0);
-            this.lives[this.lives.length - 7].mind.senseNet.sexual(this.lives[1].mind.senseNet, this.lives[2].mind.senseNet, 0);
-            this.lives[this.lives.length - 9].mind.senseNet.asexual(this.lives[2].mind.senseNet, 0);
-            this.lives[this.lives.length - 10].mind.senseNet.asexual(this.lives[3].mind.senseNet, 0);
+            this.lives[this.lives.length - 7].mate(this.lives[0], this.lives[2], 0);
+            this.lives[this.lives.length - 7].mate(this.lives[1], this.lives[2], 0);
+            this.lives[this.lives.length - 9].clone(this.lives[2], 0);
+            this.lives[this.lives.length - 10].clone(this.lives[3], 0);
         } if (this.lives.length > 15) {         
-            this.lives[this.lives.length - 11].mind.senseNet.asexual(this.lives[3].mind.senseNet, 0);
-            this.lives[this.lives.length - 12].mind.senseNet.asexual(this.lives[3].mind.senseNet, 0);
-            this.lives[this.lives.length - 13].mind.senseNet.asexual(this.lives[4].mind.senseNet, 0);
-            this.lives[this.lives.length - 14].mind.senseNet.asexual(this.lives[4].mind.senseNet, 0);
-            this.lives[this.lives.length - 15].mind.senseNet.asexual(this.lives[5].mind.senseNet, 0);
+            this.lives[this.lives.length - 11].clone(this.lives[3], 0);
+            this.lives[this.lives.length - 12].clone(this.lives[3], 0);
+            this.lives[this.lives.length - 13].clone(this.lives[4], 0);
+            this.lives[this.lives.length - 14].clone(this.lives[4], 0);
+            this.lives[this.lives.length - 15].clone(this.lives[5], 0);
         } if (this.lives.length > 20) {         
-            this.lives[this.lives.length - 16].mind.senseNet.asexual(this.lives[5].mind.senseNet, 0);
-            this.lives[this.lives.length - 17].mind.senseNet.asexual(this.lives[6].mind.senseNet, 0);
-            this.lives[this.lives.length - 18].mind.senseNet.asexual(this.lives[7].mind.senseNet, 0);
-            this.lives[this.lives.length - 19].mind.senseNet.asexual(this.lives[8].mind.senseNet, 0);
-            this.lives[this.lives.length - 20].mind.senseNet.asexual(this.lives[9].mind.senseNet, 0);
+            this.lives[this.lives.length - 16].clone(this.lives[5], 0);
+            this.lives[this.lives.length - 17].clone(this.lives[6], 0);
+            this.lives[this.lives.length - 18].clone(this.lives[7], 0);
+            this.lives[this.lives.length - 19].clone(this.lives[8], 0);
+            this.lives[this.lives.length - 20].clone(this.lives[9], 0);
         }
 
         //reset
@@ -165,7 +165,7 @@ class Group extends Phaser.Physics.Arcade.Group {
             let mom = randIntBetween(0, this.lives.length - 1);
             let dad = randIntBetween(0, otherGroup.lives.length - 1);
             //mating between two populations
-            this.lives[replaced].mind.net.sexual(this.lives[mom].mind.senseNet, otherGroup.lives[dad].mind.senseNet, 0);
+            this.lives[replaced].mate(this.lives[mom], otherGroup.lives[dad], 0.1);
         }
     }
 
