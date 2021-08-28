@@ -17,8 +17,8 @@ const LabPage = () => {
                 Go back
             </button>
             <h1>Lab</h1>
+            < PhaserWorld width={600} height={600} worldType="Camerafun"/>
             < PhaserWorld width={200} height={150} worldType="Colorfun"/>
-            < PhaserWorld width={300} height={200} worldType="Colorfun"/>
             < PhaserWorld width={400} height={275} worldType="Shaderfun"/>
         </div>
     )

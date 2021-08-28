@@ -70,7 +70,7 @@ const Group = require('./group');
 
 let width = 800;
 let height = 600;
-let groupPop = 90;
+let groupPop = 40;
 let maxStars = 10;
 let genera = [];
 

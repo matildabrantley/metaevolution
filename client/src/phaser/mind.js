@@ -3,10 +3,10 @@ const Net = require('./net');
 class Mind {
     constructor(numSenses = 4, numBehaviors = 3){
         //Keeping this here for now so I can control Mind building inside class better
-        this.buildMind(numSenses, numBehaviors, {regionHiddens:4}, 3, 5, 3);
+        this.buildMind(numSenses, numBehaviors, {regionHiddens:4}, 3, 3);
     }
 
-    buildMind(numSenses, numBehaviors, {regionHiddens=3, regionOutputs=3}={}, ...regionSizes) {
+    buildMind(numSenses, numBehaviors, {regionHiddens=4, regionOutputs=4}={}, ...regionSizes) {
         //Sensory Net takes in input from world
         this.senseNet = new Net({isRecurrent: false, isLongTerm: false}, numSenses, numSenses, numSenses);
 

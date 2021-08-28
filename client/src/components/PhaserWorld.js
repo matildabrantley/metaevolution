@@ -3,6 +3,7 @@ import Phaser from "phaser";
 import Ecosystem from "../phaser/ecosystem";
 import Colorfun from "../phaser/colorfun";
 import Shaderfun from "../phaser/shaderfun";
+import Camerafun from "../phaser/camerafun";
 // import World from "../phaser/world";
 const lodash = require('lodash');
 
@@ -22,6 +23,9 @@ class PhaserWorld extends Component {
         case "Shaderfun":
           scene = new Shaderfun(this.props.width, this.props.height);
           break;
+        case "Camerafun":
+          scene = new Camerafun(this.props.width, this.props.height);
+          break;
       
         default:
           break;
@@ -32,6 +36,10 @@ class PhaserWorld extends Component {
       parent: this.id,
       width: this.props.width,
       height: this.props.height,
+      scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
+    },
       physics: {
         default: 'arcade',
       },
