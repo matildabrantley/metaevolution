@@ -9,8 +9,8 @@ class Mind {
         this.numOutputsPerNet = numOutputs;
 
         //Feedforward Neural Network
-        this.inputNet = new Net({isRecurrent :true, isLongTerm: false}, numInputs, 12, numOutputs);
-        this.outputNet = new Net({isRecurrent :true, isLongTerm: false}, numInputs, 12, numOutputs);
+        this.senseNet = new Net({isRecurrent :true, isLongTerm: false}, numInputs, 12, numOutputs);
+        this.behaviorNet = new Net({isRecurrent :true, isLongTerm: false}, numInputs, 12, numOutputs);
 
         this.buildRegions;
     }
@@ -27,6 +27,15 @@ class Mind {
     }
 
     activateRegions() {
+        //Feed senseNet's output into every net of the first region.
+        const firstRegion = this.nets[0];
+        const senses = this.senseNet.charges[this.senseNet.charges.length - 1]
+
+        for (let net=0; net < firstRegion.length; net++) {
+            const currentNet = firstRegion[0][net];
+            currentNet.charges[0] = senses.map((charge) => charge);
+        }
+        
         const outputRegion = this.charges.length - 1;
 
         for (let region=0, nextRegion=1; region < this.nets.length; region++, nextRegion++) {
@@ -38,19 +47,26 @@ class Mind {
                 //Concatenate the outputs of current net to the inputs of each net in next region
                 for (let nextNet=0; nextNet < this.nets[nextRegion].length; nextNet++) {                   
                     const nextNet = this.nets[nextRegion][nextNet];
-                    let nextInputs = nextNet.charges[0];
-                    nextInputs = nextInputs.concat(currentOutputs);
+                    nextNet.charges[0] = nextNet.charges[0].concat(currentOutputs);
                 }
             }
         }
+
+        //Concatenate all the charges of the final region's output layers into the behaviorNet
+        for (const net of finalRegion) {
+            this.behaviorNet = this.behaviorNet.concat(net.charges[net.charges.length - 1]);
+        }
+
     }
 
     update(inputs) {
-        this.inputs = inputs;
         //TODO: Auto-Normalize inputs here if needed
 
+        //Perception with inputNet
+        this.senseNet.activate(inputs);
+        //Activate all inner brain regions
         this.activateRegions();
-        
+
         this.outputs = this.net.activate(inputs);
 
         return this.outputs;
