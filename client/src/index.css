@@ -26,6 +26,9 @@ canvas {
 .ecoLink {
   color: yellow;
 }
+.gameLink {
+  color: lightblue;
+}
 
 h1, .clickable {
   display: inline-block;

@@ -23,7 +23,7 @@ const Navigation = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav.Link as={Link} to='/ecosystem'><h4 className="ecoLink">Ecosystem</h4></Nav.Link>
                 <Nav.Link as={Link} to='/lab'><h4 className="labLink">Lab</h4></Nav.Link>
-                <Nav.Link as={Link} to='/game'><h4 className="labLink">Game</h4></Nav.Link>
+                <Nav.Link as={Link} to='/game'><h4 className="gameLink">Game</h4></Nav.Link>
                 <Nav className="me-auto">
                     <NavDropdown title="Links" id="basic-nav-dropdown">
                     <NavDropdown.Item href="https://matildabrantley.github.io/learning-rooms/">Learing Rooms</NavDropdown.Item>

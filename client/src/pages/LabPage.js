@@ -1,7 +1,7 @@
 
-import React, { useState, useEffect } from 'react'
+import React, { Suspense } from 'react'
+const PhaserWorld = React.lazy(() => import('./PhaserWorld'));
 import { useHistory } from "react-router-dom";
-import PhaserWorld from '../components/PhaserWorld';
 import { Figure, Image, Caption } from 'react-bootstrap';
 import image from '../assets/banner3.jpg';
 import Popout from '../components/Popout';
@@ -35,9 +35,11 @@ const LabPage = () => {
                     Lab
                 </Figure.Caption>
                 </Figure>
-            < PhaserWorld width={600} height={600} worldType="Camerafun"/>
-            < PhaserWorld width={200} height={150} worldType="Colorfun"/>
-            < PhaserWorld width={400} height={275} worldType="Shaderfun"/>
+            <Suspense fallback={<div>Loading...</div>}>
+                < PhaserWorld width={600} height={600} worldType="Camerafun"/>
+                < PhaserWorld width={200} height={150} worldType="Colorfun"/>
+                < PhaserWorld width={400} height={275} worldType="Shaderfun"/>
+            </Suspense>
         </div>
     )
 };

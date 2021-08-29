@@ -1,8 +1,8 @@
-
-import React, { useState, useEffect } from 'react'
+import React, { Suspense } from 'react'
 import { useHistory } from "react-router-dom";
 import PhaserWorld from '../components/PhaserWorld';
 import Popout from '../components/Popout';
+const PhaserWorld = React.lazy(() => import('./PhaserWorld'));
 
 
 const GamePage = () => {
@@ -16,7 +16,9 @@ const GamePage = () => {
             <button class="clickable" onClick={previous}>Back</button>
             </Popout>
             <h1>Game</h1>
-            < PhaserWorld width={800} height={600} worldType="Game"/>
+            <Suspense fallback={<div>Loading...</div>}>
+                < PhaserWorld width={800} height={600} worldType="Game"/>
+            </Suspense>
         </div>
     )
 };
