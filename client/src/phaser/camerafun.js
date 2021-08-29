@@ -15,20 +15,26 @@ class Camerafun extends Phaser.Scene
 
     create () 
     {
-        this.cameras.main.setBounds(0, 0, 1024 * 2, 1024 * 2);
+        this.cameras.main.setBounds(0, 0, 1440, 1440);
 
 
 
         const backgrounds = [];
         backgrounds.push(this.add.image(0, 0, 'background').setOrigin(0));
-        backgrounds.push(this.add.image(1024, 0, 'background').setOrigin(0));
-        backgrounds.push(this.add.image(0, 1024, 'background').setOrigin(0));
-        backgrounds.push(this.add.image(1024, 1024, 'background').setOrigin(0));
-
+        backgrounds.push(this.add.image(720, 0, 'background').setOrigin(0));
         backgrounds[1].flipX=true;
+        backgrounds.push(this.add.image(0, 720, 'background').setOrigin(0));
+        backgrounds[2].flipY=true;
+        backgrounds.push(this.add.image(720, 720, 'background').setOrigin(0));
+        backgrounds[3].flipX=true;
+        backgrounds[3].flipY=true;
+
+        // backgrounds[1].flipX=true;
 
         for (const background of backgrounds) {
-            background.opacity = 0.4;
+            background.setDisplaySize(2048, 2048);
+            background.setScale(0.5);
+            background.alpha = 1;
         }
 
 
@@ -37,7 +43,7 @@ class Camerafun extends Phaser.Scene
         this.keys = this.input.keyboard.addKeys('W,A,S,D');
     
         // this.cameras.main.originX = 1;
-        this.cameras.main.centerToBounds();
+        this.cameras.main.centerToSize();
     }
 
     update () 
