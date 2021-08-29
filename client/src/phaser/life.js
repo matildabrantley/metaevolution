@@ -77,13 +77,13 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         // tileInputs.push(this.lookAtTile(this.x, this.y)); 
         //Go around clock-wise for nearest 8
         tileInputs.push(this.lookAtTile(this.x, this.y - tileSize)); //12:00, Up, North
-        tileInputs.push(this.lookAtTile(this.x + tileSize, this.y - tileSize)); //1:30, Upper Right, Northeast
+        //tileInputs.push(this.lookAtTile(this.x + tileSize, this.y - tileSize)); //1:30, Upper Right, Northeast
         tileInputs.push(this.lookAtTile(this.x + tileSize, this.y, true)); //3:00, Right, East
-        tileInputs.push(this.lookAtTile(this.x + tileSize, this.y + tileSize)); //4:30, Bottom Right, Southeast
+        //tileInputs.push(this.lookAtTile(this.x + tileSize, this.y + tileSize)); //4:30, Bottom Right, Southeast
         tileInputs.push(this.lookAtTile(this.x, this.y + tileSize)); //6:00, Bottom, South
-        tileInputs.push(this.lookAtTile(this.x - tileSize, this.y + tileSize)); //7:30, Bottom Left, Southwest
+        //tileInputs.push(this.lookAtTile(this.x - tileSize, this.y + tileSize)); //7:30, Bottom Left, Southwest
         tileInputs.push(this.lookAtTile(this.x - tileSize, this.y)); //9:00, Left, West
-        tileInputs.push(this.lookAtTile(this.x - tileSize, this.y - tileSize)); //10:30, Upper Left, Northwest
+        //tileInputs.push(this.lookAtTile(this.x - tileSize, this.y - tileSize)); //10:30, Upper Left, Northwest
         
         // tileInputs.push(this.lookAtTile(this.x, this.y - tileSize * 2)); //12:00, Up, North
         // tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y - tileSize  * 2)); //1:30, Upper Right, Northeast

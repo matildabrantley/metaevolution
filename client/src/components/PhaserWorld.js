@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Phaser from "phaser";
 import Ecosystem from "../phaser/ecosystem";
+import Lab from "../phaser/ecosystem";
 import Colorfun from "../phaser/colorfun";
 import Shaderfun from "../phaser/shaderfun";
 import Camerafun from "../phaser/camerafun";
@@ -16,6 +17,9 @@ class PhaserWorld extends Component {
       switch (this.props.worldType) {
         case "Ecosystem":
           scene = new Ecosystem(this.id, this.props.width, this.props.height, 'arcade');
+          break;
+        case "Lab":
+          scene = new Lab(this.id, this.props.width, this.props.height, 'arcade');
           break;
         case "Colorfun":
           scene = new Colorfun();

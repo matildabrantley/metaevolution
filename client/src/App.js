@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
-import PhaserWorld from './components/PhaserWorld';
 import LabPage from './pages/LabPage';
 import EcosystemPage from './pages/EcosystemPage';
 import GamePage from './pages/GamePage';
+import image from './assets/banner3.jpg';
 
 
 function App() {

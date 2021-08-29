@@ -40,9 +40,9 @@ const Navigation = () => {
                     </Button>
                 </Popout>
                 <Popout>
-                <div className="clickable" onClick={handleShowRegister}>
+                <Button variant="danger" className="clickable" onClick={handleShowRegister}>
                     Register
-                </div>
+                </Button>
                 </Popout>
 
                 <Modal show={showLogin} onHide={handleCloseLogin}>
