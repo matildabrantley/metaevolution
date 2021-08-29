@@ -57,11 +57,6 @@ const Species = require('./species');
 const Genus = require('./genus');
 const Group = require('./group');
 
-let maxStars = 10;
-
-let starGroup;
-let globalTimer = 0;
-let timerText;
 let loneStar, blueStar, greenStar, blackStar;
 // let chosenPoint;
 let tiles, tileset, tileLayer;
@@ -81,8 +76,10 @@ class Ecosystem extends Phaser.Scene {
       scene: this
     };
 
-    this.groupPop = 10;
+    this.groupPop = 100;
     this.genera = [];
+    this.globalTimer = 0;
+
   }
 
   preload () {
@@ -129,6 +126,7 @@ create () {
   cam.centerOn(200,180);
   cam.setBackgroundColor(0xffffff);
 
+  //Background images copied into four quadrants
   let numStyles = 2;
   this.bgs = [];
   for (let i=0; i < numStyles; i++)  {
@@ -150,6 +148,7 @@ create () {
       }
       this.bgs.push(bg);
   } 
+  //Background image opacity management
   this.maxOpacity = 0.7;
   this.bgOpacity = new Array(numStyles);
   this.bgOpacity[0] = this.maxOpacity;
@@ -225,30 +224,30 @@ create () {
   let newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
   newSpecies.createGroup(redGroupAnim, {pop: this.groupPop}, fitnessConfig);
   newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(brightGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(brightGroupAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
   newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
   //newSpecies.createGroup(brownGroupAnim, {pop: this.groupPop});
   newSpecies.createGroup(crimsonGroupAnim, {pop: this.groupPop});
   newSpecies.createGroup(grayGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(purpleGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(yellowGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(purpleGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(yellowGroupAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
   newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
   newSpecies.createGroup(fireSpiralAnim, {pop: this.groupPop});
   newSpecies.createGroup(waterSpiralAnim, {pop: this.groupPop});
-  newSpecies.createGroup(natureSpiralAnim, {pop: this.groupPop});
-  newSpecies.createGroup(windSpiralAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(natureSpiralAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(windSpiralAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
    newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
   newSpecies.createGroup(sparkSpiralAnim, {pop: this.groupPop});
   newSpecies.createGroup(groundSpiralAnim, {pop: this.groupPop});
-   newSpecies.createGroup(lightSpiralAnim, {pop: this.groupPop});
-   newSpecies.createGroup(voidSpiralAnim, {pop: this.groupPop});
+  //  newSpecies.createGroup(lightSpiralAnim, {pop: this.groupPop});
+  //  newSpecies.createGroup(voidSpiralAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
   
@@ -258,12 +257,13 @@ create () {
   // this.physics.add.collider(loneStar, tileLayer);
 
 
-  timerText = this.add.text(10, 10, globalTimer);
+  this.timerText = this.add.text(10, 10, this.globalTime);
 }
 
 update () {
-  timerText.setText("Update " + globalTimer); 
+  this.timerText.setText("Update " + this.globalTime); 
   
+   //Background styles imperceptibly alternate
   if (this.bgOpacity[0] >= this.maxOpacity)
             this.bgOpacityDirection = -1;
         else if (this.bgOpacity[0] <= 0)
@@ -310,13 +310,13 @@ update () {
     for (let genus of this.genera)
       genus.update();
 
-    // if (globalTimer === 200) {
+    // if (this.globalTime === 200) {
     //     this.genera[0].species[0].createGroup(blueGroupAnim, {pop: this.groupPop});
     // }
 
     //example of collision handling
     //this.physics.collide(redGroup, blueGroup, eat);
-    globalTimer++;
+    this.globalTime++;
   }
 
 }

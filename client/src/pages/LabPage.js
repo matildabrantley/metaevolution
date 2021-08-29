@@ -2,9 +2,11 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 import PhaserWorld from '../components/PhaserWorld';
-import { Figure, Image, Caption, Jumbotron } from 'react-bootstrap';
+import { Figure, Image, Caption } from 'react-bootstrap';
 import image from '../assets/banner3.jpg';
 import Popout from '../components/Popout';
+import SideNav from '../components/Controls';
+
 
 
 
@@ -16,16 +18,17 @@ const LabPage = () => {
         history.goBack()
     }
 
+    const controls = () => {
+        
+    }
+
     return (
         <div>
             <button class="clickable" onClick={goBack}>
                 Go back
             </button>
-            <Jumbotron>
-				<h2>Lab</h2>
-			</Jumbotron>
+            <SideNav />
                 <Figure>
-                    <Popout>
                 <Figure.Image
                     width={171}
                     height={180}
@@ -33,7 +36,6 @@ const LabPage = () => {
                     src={image}
                     roundedCircle
                 />
-            </Popout>
                 <Figure.Caption>
                     Lab
                 </Figure.Caption>

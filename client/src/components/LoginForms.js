@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import UserAuth from '../utilities/userAuthentication';
 import { login } from '../utilities/react-api';
+import Popout from '../components/Popout';
+
 
 const LoginForm = () => {
   const [userData, setUserData] = useState({ username: '', email: '', password: '' });
@@ -85,12 +87,14 @@ const LoginForm = () => {
           />
           <Form.Control.Feedback type='invalid'>Password needed</Form.Control.Feedback>
         </Form.Group>
+        <Popout>
         <Button
           disabled={!(userData.username && userData.email && userData.password)}
           type='submit'
           variant='success'>
           Login
         </Button>
+        </Popout>
       </Form>
     </>
   );

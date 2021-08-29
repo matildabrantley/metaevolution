@@ -3,6 +3,8 @@ import { Navbar, Nav, NavDropdown, Container, Modal, Tab, Button } from 'react-b
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import RegisterForm from './RegisterForms';
 import { Link } from 'react-router-dom';
+import Popout from '../components/Popout';
+
 
 
 
@@ -31,12 +33,16 @@ const Navigation = () => {
                 </Nav>
                 </Navbar.Collapse>
                 <>
-                <div className="clickable" onClick={handleShowLogin}>
-                    Login
-                </div>
+                <Popout>
+                    <div className="clickable" onClick={handleShowLogin}>
+                        Login
+                    </div>
+                </Popout>
+                <Popout>
                 <div className="clickable" onClick={handleShowRegister}>
                     Register
                 </div>
+                </Popout>
 
                 <Modal show={showLogin} onHide={handleCloseLogin}>
                     <Modal.Header closeButton>

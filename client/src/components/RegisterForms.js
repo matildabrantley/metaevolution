@@ -3,6 +3,8 @@ import { Form, Button, Alert } from 'react-bootstrap';
 import UserAuth from '../utilities/userAuthentication';
 import { register } from '../utilities/react-api';
 import PhaserWorld from './PhaserWorld';
+import Popout from '../components/Popout';
+
 
 
 const RegisterForm = () => {
@@ -86,12 +88,14 @@ const RegisterForm = () => {
           />
           <Form.Control.Feedback type='invalid'>Password needed</Form.Control.Feedback>
         </Form.Group>
+        <Popout>
         <Button
           disabled={!(userData.username && userData.email && userData.password)}
           type='submit'
           variant='success'>
           Signup
         </Button>
+        </Popout>
       </Form>
     </>
   );

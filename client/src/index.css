@@ -6,6 +6,7 @@ body {
 
 canvas {
   border: solid black 10px;
+  border-radius: 10px;
   margin: 3%;
 }
 
@@ -27,17 +28,19 @@ canvas {
 }
 
 h1, .clickable {
+  display: inline-block;
   background-color: black;
   color: white;
   margin: 5px;
   padding: 5px;
   border: solid 3px rgba(200, 0, 50, 0.7);
   border-radius: 7px;
-  transition: box-shadow 0.75s;
+  transition: box-shadow 0.75s filter 0.75s;
 }
 
 .clickable:hover {
   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
+  filter: brightness(2.4);
 }
 /* 
 h1 {
