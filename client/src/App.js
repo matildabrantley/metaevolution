@@ -4,6 +4,7 @@ import Navigation from './components/Navigation';
 import PhaserWorld from './components/PhaserWorld';
 import LabPage from './pages/LabPage';
 import EcosystemPage from './pages/EcosystemPage';
+import GamePage from './pages/GamePage';
 
 
 function App() {
@@ -11,13 +12,11 @@ function App() {
     <Router>
       <>
         <Navigation />
-        {/* < PhaserWorld width={800} height={600} worldType="Ecosystem"/> */}
-        {/* < PhaserWorld width={900} height={600} worldType="Shaderfun"/> */}
-        {/* < PhaserWorld /> */}
         <Switch>
           <Route exact path='/'> <h1>Welcome</h1> </Route>
-          <Route exact path='/lab' component={LabPage} />
           <Route exact path='/ecosystem' component={EcosystemPage} />
+          <Route exact path='/lab' component={LabPage} />
+          <Route exact path='/game' component={GamePage} />
         </Switch>
       </>
     </Router>
