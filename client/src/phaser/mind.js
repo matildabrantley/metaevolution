@@ -1,14 +1,17 @@
 const Net = require('./net');
 
 class Mind {
-    constructor(numSenses = 4, numBehaviors = 3){
+    constructor(numSenses = 4, numBehaviors = 3, simple = true){
+        this.simple = simple;
+        //Sensory Net takes in input from world
+        this.senseNet = new Net({isRecurrent: true, isLongTerm: false}, numSenses, numSenses+3, numBehaviors);
+
         //Keeping this here for now so I can control Mind building inside class better
-        this.buildMind(numSenses, numBehaviors, {regionHiddens:4}, 3, 3);
+        if (!simple)
+            this.buildRegions(numSenses, numBehaviors, {regionHiddens:4}, 3, 3);
     }
 
-    buildMind(numSenses, numBehaviors, {regionHiddens=4, regionOutputs=4}={}, ...regionSizes) {
-        //Sensory Net takes in input from world
-        this.senseNet = new Net({isRecurrent: false, isLongTerm: false}, numSenses, numSenses, numSenses);
+    buildRegions(numSenses, numBehaviors, {regionHiddens=4, regionOutputs=2}={}, ...regionSizes) {
 
         let numRegionInputs = this.senseNet.charges[this.senseNet.charges.length - 1].length;
         this.nets = new Array(regionSizes);
@@ -16,7 +19,7 @@ class Mind {
             this.nets[region] = new Array(regionSizes[region]);
             let numNextRegionInputs = 0;
             for (let net=0; net < this.nets[region].length; net++) {
-                this.nets[region][net] = new Net({isRecurrent: true, isLongTerm: false}, numRegionInputs, regionHiddens, regionOutputs);
+                this.nets[region][net] = new Net({isRecurrent: true, isLongTerm: false}, numRegionInputs, regionHiddens, regionHiddens,  regionOutputs);
                 numNextRegionInputs += numRegionInputs;
             }
             numRegionInputs = numNextRegionInputs;
@@ -57,9 +60,11 @@ class Mind {
         //TODO: Auto-Normalize inputs here if needed
 
         //Perception with inputNet
-        this.senseNet.activate(inputs);
-        //Activate all inner brain regions
-        return this.activateRegions();
+        const processed = this.senseNet.activate(inputs);
+        if (this.simple) //Return basic processed senses if simple net
+            return processed;
+        else //Activate all inner brain regions
+            return this.activateRegions();
 
         // this.outputs = this.net.activate(inputs);
     }
@@ -68,11 +73,12 @@ class Mind {
     cloneMind(cloned, mutRate) {
         //this.net.cloneNet(cloned.net);
         this.senseNet.cloneNet(cloned.senseNet);
-        this.behaviorNet.cloneNet(cloned.behaviorNet);
-
-        for (let region in this.nets) {
-            for (let net in this.nets[region]) {
-                this.nets[region][net].cloneNet(cloned.nets[region][net], mutRate) 
+        if (!this.simple){
+            this.behaviorNet.cloneNet(cloned.behaviorNet);
+            for (let region in this.nets) {
+                for (let net in this.nets[region]) {
+                    this.nets[region][net].cloneNet(cloned.nets[region][net], mutRate) 
+                }
             }
         }
     }
@@ -80,11 +86,12 @@ class Mind {
     mateMind(mom, dad, mutRate) {
         //this.net.mateNets(mom.net, dad.net, mutRate);
         this.senseNet.mateNets(mom.senseNet, dad.senseNet, mutRate);
-        this.behaviorNet.mateNets(mom.behaviorNet, dad.behaviorNet, mutRate);
-
-        for (let region in this.nets) {
-            for (let net in this.nets[region]) {
-                this.nets[region][net].mateNets(mom.nets[region][net], dad.nets[region][net], mutRate) 
+        if (!this.simple){
+            this.behaviorNet.mateNets(mom.behaviorNet, dad.behaviorNet, mutRate);
+            for (let region in this.nets) {
+                for (let net in this.nets[region]) {
+                    this.nets[region][net].mateNets(mom.nets[region][net], dad.nets[region][net], mutRate) 
+                }
             }
         }
     }

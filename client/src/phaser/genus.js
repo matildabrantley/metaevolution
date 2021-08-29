@@ -1,5 +1,7 @@
 //Genus-Species mirrors Species-Group relationship at a higher level
 const Species = require('./species');
+const Phaser = require('phaser');
+
 
 
 class Genus {
@@ -13,6 +15,12 @@ class Genus {
     //Let's pretend "specie" is the correct singular of "species" =)
     addSpecies(specie){
         this.species.push(specie);
+    }
+
+    setupSpecies(){
+        for (const specie of this.species) {
+            specie.scene.physics.add.collider(specie, specie.tiles); ;
+        }
     }
 
     update() {

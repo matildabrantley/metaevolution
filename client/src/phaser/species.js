@@ -11,6 +11,8 @@ class Species extends Phaser.Physics.Arcade.Group {
         this.world = world;
         this.scene = scene;
         this.config = config;
+        this.tiles = tiles;
+        this.scene.physics.add.collider(this, tiles);
 
         this.goals = goals.getChildren(); //groups will use these if specific goals aren't defined
         this.groups = groups; //groups can be predefined, but it's better to use createGroup()
@@ -42,6 +44,7 @@ class Species extends Phaser.Physics.Arcade.Group {
             // life.body.setGravityY(1000);
             life.play(key);
             newGroup.add(life);
+            this.add(life); //add to species as well
         } 
         //Setup handles Group construction aspects that prefer the entire population exist first
         newGroup.setup(pop, mutRate, selectionCutoff, maxGenLength, initialGenLength, deltaGenLength);
@@ -49,7 +52,6 @@ class Species extends Phaser.Physics.Arcade.Group {
         this.scene.physics.add.collider(newGroup, this.tiles);
         //Add group to this species
         this.groups.push(newGroup); //append to this.groups array
-        this.add(newGroup); //add to Phaser's Group class
 
         return newGroup;
     }
@@ -117,7 +119,7 @@ class Species extends Phaser.Physics.Arcade.Group {
 
         //the lower the fitness, the higher the mutation rate
         for (let g=0; g < this.groups.length - 1; g++){
-            this.groups[g].mutRate = g/25;
+            this.groups[g].mutRate = g/(this.groups.length*2) + 0.02; 
             this.groups[g].groupFitness = 0;
         }
         //reset fitness

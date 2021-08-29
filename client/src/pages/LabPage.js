@@ -1,11 +1,10 @@
-
 import React, { Suspense } from 'react'
-const PhaserWorld = React.lazy(() => import('./PhaserWorld'));
 import { useHistory } from "react-router-dom";
 import { Figure, Image, Caption } from 'react-bootstrap';
 import image from '../assets/banner3.jpg';
 import Popout from '../components/Popout';
 import SideNav from '../components/Controls';
+const PhaserWorld = React.lazy(() => import('../components/PhaserWorld'));
 
 
 

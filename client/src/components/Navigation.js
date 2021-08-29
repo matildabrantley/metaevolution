@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Navbar, Nav, NavDropdown, Container, Modal, Tab, Button } from 'react-bootstrap';
 // import 'bootstrap/dist/css/bootstrap.min.css';
-import RegisterForm from './RegisterForms';
+import Register from './Register';
 import { Link } from 'react-router-dom';
 import Popout from '../components/Popout';
 
@@ -50,7 +50,7 @@ const Navigation = () => {
                     <Modal.Title>Login</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <RegisterForm handleModalClose={() => setShowLogin(false)} />
+                        <Register handleModalClose={() => setShowLogin(false)} />
                     </Modal.Body>
                     <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseLogin}>
@@ -64,7 +64,7 @@ const Navigation = () => {
                     <Modal.Title>Register</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <RegisterForm handleModalClose={() => setShowRegister(false)} />
+                        <Register handleModalClose={() => setShowRegister(false)} />
                     </Modal.Body>
                     <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseRegister}>

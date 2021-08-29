@@ -1,8 +1,7 @@
 import React, { Suspense } from 'react'
 import { useHistory } from "react-router-dom";
-import PhaserWorld from '../components/PhaserWorld';
 import Popout from '../components/Popout';
-const PhaserWorld = React.lazy(() => import('./PhaserWorld'));
+const PhaserWorld = React.lazy(() => import('../components/PhaserWorld'));
 
 
 const GamePage = () => {

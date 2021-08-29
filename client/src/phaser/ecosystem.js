@@ -57,9 +57,7 @@ const Species = require('./species');
 const Genus = require('./genus');
 const Group = require('./group');
 
-let loneStar, blueStar, greenStar, blackStar;
 // let chosenPoint;
-let tiles, tileset, tileLayer;
 
 class Ecosystem extends Phaser.Scene {
   constructor({parent, width = 800, height = 600, physicsType = 'arcade'} = {}) {
@@ -156,23 +154,24 @@ create () {
   this.bgOpacityDirection = 1;
   
 
-  tiles = this.make.tilemap({ key: 'tilemap', tileWidth: 32, tileHeight: 32 });
-  tileset = tiles.addTilesetImage('tiles');
-  tileLayer = tiles.createLayer('training-grounds', tileset);
+  //Tiles
+  this.map = this.make.tilemap({ key: 'tilemap', tileWidth: 32, tileHeight: 32 });
+  const tileset = this.map.addTilesetImage('tiles');
+  this.tileLayer = this.map.createLayer('training-grounds', tileset);
 
-  tiles.setCollision([ 29, 48, 70 ]);
+  this.map.setCollision([ 29, 6]);
 
+  let loneStar, blueStar, greenStar, blackStar;
   let goalDivergence = 0.2;
-
   let goalGroup = this.add.group();
-  loneStar = this.physics.add.image(this.config.width * (0.5 - goalDivergence), this.config.height * (0.5 - goalDivergence), 'star');
+  loneStar = this.physics.add.image(this.config.width * (0.54 - goalDivergence), this.config.height * (0.55 - goalDivergence), 'star');
   loneStar.setCircle(30);
   loneStar.setScale(4);
   loneStar.setBounce(5);
   loneStar.collideWorldBounds = true;
   goalGroup.add(loneStar);
   
-  blueStar = this.physics.add.image(this.config.width * (0.5 + goalDivergence), this.config.height * (0.5 - goalDivergence), 'bluestar');
+  blueStar = this.physics.add.image(this.config.width * (0.54 + goalDivergence), this.config.height * (0.55 - goalDivergence), 'bluestar');
   blueStar.setCircle(30);
   blueStar.setScale(4);
   blueStar.setBounce(5);
@@ -213,7 +212,7 @@ create () {
   const lightSpiralAnim = createAnimConfig (this, 'lightSpiralKey', 'lightSpiral', fps, 'light-spiral0.png', 0.4); 
   const voidSpiralAnim = createAnimConfig (this, 'voidSpiralKey', 'voidSpiral', fps, 'void-spiral0.png', 0.4); 
 
-  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, tiles: tileLayer};
+  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer};
   let fitnessConfig = {goals: goalGroup};
 
   //Create one Genus
@@ -224,31 +223,33 @@ create () {
   let newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
   newSpecies.createGroup(redGroupAnim, {pop: this.groupPop}, fitnessConfig);
   newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
-  // newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
-  // newSpecies.createGroup(brightGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(brightGroupAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
   newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
   //newSpecies.createGroup(brownGroupAnim, {pop: this.groupPop});
   newSpecies.createGroup(crimsonGroupAnim, {pop: this.groupPop});
   newSpecies.createGroup(grayGroupAnim, {pop: this.groupPop});
-  // newSpecies.createGroup(purpleGroupAnim, {pop: this.groupPop});
-  // newSpecies.createGroup(yellowGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(purpleGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(yellowGroupAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
   newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
   newSpecies.createGroup(fireSpiralAnim, {pop: this.groupPop});
   newSpecies.createGroup(waterSpiralAnim, {pop: this.groupPop});
-  // newSpecies.createGroup(natureSpiralAnim, {pop: this.groupPop});
-  // newSpecies.createGroup(windSpiralAnim, {pop: this.groupPop});
+  newSpecies.createGroup(natureSpiralAnim, {pop: this.groupPop});
+  newSpecies.createGroup(windSpiralAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
    newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
   newSpecies.createGroup(sparkSpiralAnim, {pop: this.groupPop});
   newSpecies.createGroup(groundSpiralAnim, {pop: this.groupPop});
-  //  newSpecies.createGroup(lightSpiralAnim, {pop: this.groupPop});
-  //  newSpecies.createGroup(voidSpiralAnim, {pop: this.groupPop});
+   newSpecies.createGroup(lightSpiralAnim, {pop: this.groupPop});
+   newSpecies.createGroup(voidSpiralAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
+
+  this.genera[0].setupSpecies();
 
   
   // newSpecies.addPreySpecies(newSpecies3);

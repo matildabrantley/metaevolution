@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import UserAuth from '../utilities/userAuthentication';
-import { register } from '../utilities/react-api';
-import PhaserWorld from './PhaserWorld';
-import Popout from '../components/Popout';
+import { login } from '../utilities/react-api';
+import Popout from './Popout';
 
 
-
-const RegisterForm = () => {
+const Login = () => {
   const [userData, setUserData] = useState({ username: '', email: '', password: '' });
   const [isDisplayingMessage, setIsDisplayingMessage] = useState(false);
   const [validated] = useState(false);
@@ -19,17 +17,17 @@ const RegisterForm = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const registerForm = e.currentTarget;
+    const loginForm = e.currentTarget;
 
-    if (registerForm.checkValidity() === false) {
+    if (loginForm.checkValidity() === false) {
       e.preventDefault();
       e.stopPropagation();
     }
 
     try {
-      const res = await register(userData);
+      const res = await login(userData);
       if (!res.ok) {
-        throw new Error('Uh oh, registration issue occurred');
+        throw new Error('Uh oh, login issue occurred');
       }
       const { token, user } = await res.json();
       console.log(user);
@@ -43,11 +41,12 @@ const RegisterForm = () => {
 
   return (
     <>
-    < PhaserWorld width={1000} height={450} worldType="Shaderfun"/>
-    <h3>Register to save and share your evolved agents</h3>
+    < PhaserWorld width={1000} height={800} worldType="Colorfun" />
+    <h3>Login to access your saved agentsshare your </h3>
+    <h3>evolved agents and share your evolved agents</h3>
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         <Alert dismissible onClose={() => setIsDisplayingMessage(false)} show={isDisplayingMessage} variant='danger'>
-          Issue occurred during registration
+          Issue occurred during login
         </Alert>
 
         <Form.Group>
@@ -93,7 +92,7 @@ const RegisterForm = () => {
           disabled={!(userData.username && userData.email && userData.password)}
           type='submit'
           variant='success'>
-          Signup
+          Login
         </Button>
         </Popout>
       </Form>
@@ -101,4 +100,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default Login;

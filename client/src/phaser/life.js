@@ -38,7 +38,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
             inputs.push((this.y - goals[g].y) / 100); //y difference
             inputs.push(g == bonusGoal ? 3 : -3) //bonus goal
         }
-        //inputs = inputs.concat(this.getTileInputs());
+        inputs = inputs.concat(this.getTileInputs());
 
 
         let outputs = this.mind.update(inputs);           
@@ -72,9 +72,9 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         const tileInputs = [];
 
         //current tile, tripled input
-        tileInputs.push(this.lookAtTile(this.x, this.y)); 
-        tileInputs.push(this.lookAtTile(this.x, this.y)); 
-        tileInputs.push(this.lookAtTile(this.x, this.y)); 
+        // tileInputs.push(this.lookAtTile(this.x, this.y)); 
+        // tileInputs.push(this.lookAtTile(this.x, this.y)); 
+        // tileInputs.push(this.lookAtTile(this.x, this.y)); 
         //Go around clock-wise for nearest 8
         tileInputs.push(this.lookAtTile(this.x, this.y - tileSize)); //12:00, Up, North
         tileInputs.push(this.lookAtTile(this.x + tileSize, this.y - tileSize)); //1:30, Upper Right, Northeast
@@ -105,11 +105,11 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         try {
             let tile = this.tiles.getTileAtWorldXY(x, y, true).index;
             //TODO: get these magic tile numbers from elsewhere
-            if (tile === 70 || tile === 48 || tile === 29){
+            if (tile === 6 || tile === 48 || tile === 29){
                 tileInput = 0;
                 //this.fitness-=20;
             }
-            else if (tile === 35) {
+            else if (tile === 1) {
                 tileInput = 2;
             }
             else {
