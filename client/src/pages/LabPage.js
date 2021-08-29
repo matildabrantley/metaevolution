@@ -13,10 +13,7 @@ import SideNav from '../components/Controls';
 const LabPage = () => {
 
     const history = useHistory()
-
-    const goBack = () => {
-        history.goBack()
-    }
+    const previous = () => { history.goBack() }
 
     const controls = () => {
         
@@ -24,9 +21,7 @@ const LabPage = () => {
 
     return (
         <div>
-            <button class="clickable" onClick={goBack}>
-                Go back
-            </button>
+            <button class="clickable" onClick={previous}>Back</button>
             <SideNav />
                 <Figure>
                 <Figure.Image

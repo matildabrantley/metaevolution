@@ -34,9 +34,9 @@ const Navigation = () => {
                 </Navbar.Collapse>
                 <>
                 <Popout>
-                    <div className="clickable" onClick={handleShowLogin}>
+                    <Button variant="danger" className="clickable" onClick={handleShowLogin}>
                         Login
-                    </div>
+                    </Button>
                 </Popout>
                 <Popout>
                 <div className="clickable" onClick={handleShowRegister}>

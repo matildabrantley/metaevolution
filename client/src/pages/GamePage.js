@@ -5,22 +5,20 @@ import PhaserWorld from '../components/PhaserWorld';
 import Popout from '../components/Popout';
 
 
-const EcosystemPage = () => {
+const GamePage = () => {
 
-    const history = useHistory()
+    const history = useHistory();
     const previous = () => { history.goBack() }
 
     return (
         <div>
             <Popout>
-            <button class="clickable" onClick={previous}>
-                Go back
-            </button>
+            <button class="clickable" onClick={previous}>Back</button>
             </Popout>
-            <h1>Ecosystem</h1>
-            < PhaserWorld width={800} height={600} worldType="Ecosystem"/>
+            <h1>Game</h1>
+            < PhaserWorld width={800} height={600} worldType="Game"/>
         </div>
     )
 };
 
-export default EcosystemPage;
+export default GamePage;
