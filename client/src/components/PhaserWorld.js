@@ -37,7 +37,6 @@ class PhaserWorld extends Component {
       width: this.props.width,
       height: this.props.height,
       scale: {
-        mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
     },
       physics: {

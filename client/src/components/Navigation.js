@@ -14,13 +14,13 @@ const Navigation = () => {
     const handleCloseRegister = () => setShowRegister(false);
     const handleShowRegister = () => setShowRegister(true);
     return(
-            <Navbar bg="light" expand="lg" className="navig">
+            <Navbar variant="dark" bg="dark" expand="lg" className="navig" back>
             <Container>
-                <Navbar.Brand href="#home">Meta-Evolution Lab</Navbar.Brand>
+                <Navbar.Brand href="#home"><h1 className="pageLink">EvoLab</h1></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                <Nav.Link as={Link} to='/lab'>Lab</Nav.Link>
-                <Nav.Link as={Link} to='/ecosystem'>Ecosystem</Nav.Link>
+                <Nav.Link as={Link} to='/ecosystem'><h4 className="ecoLink">Ecosystem</h4></Nav.Link>
+                <Nav.Link as={Link} to='/lab'><h4 className="labLink">Lab</h4></Nav.Link>
                 <Nav className="me-auto">
                     <NavDropdown title="Links" id="basic-nav-dropdown">
                     <NavDropdown.Item href="https://matildabrantley.github.io/learning-rooms/">Learing Rooms</NavDropdown.Item>

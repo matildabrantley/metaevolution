@@ -57,9 +57,6 @@ const Species = require('./species');
 const Genus = require('./genus');
 const Group = require('./group');
 
-let width = 800;
-let height = 600;
-let groupPop = 40;
 let maxStars = 10;
 
 let starGroup;
@@ -84,6 +81,7 @@ class Ecosystem extends Phaser.Scene {
       scene: this
     };
 
+    this.groupPop = 10;
     this.genera = [];
   }
 
@@ -128,6 +126,7 @@ create () {
   this.cursors = this.input.keyboard.createCursorKeys();
   this.keys = this.input.keyboard.addKeys('W,A,S,D');
   this.cameras.main.centerToSize();
+  cam.centerOn(200,180);
   cam.setBackgroundColor(0xffffff);
 
   let numStyles = 2;
@@ -151,7 +150,7 @@ create () {
       }
       this.bgs.push(bg);
   } 
-  this.maxOpacity = 0.5;
+  this.maxOpacity = 0.7;
   this.bgOpacity = new Array(numStyles);
   this.bgOpacity[0] = this.maxOpacity;
   this.bgOpacity[1] = 0;
@@ -167,28 +166,28 @@ create () {
   let goalDivergence = 0.2;
 
   let goalGroup = this.add.group();
-  loneStar = this.physics.add.image(width * (0.5 - goalDivergence), height * (0.5 - goalDivergence), 'star');
+  loneStar = this.physics.add.image(this.config.width * (0.5 - goalDivergence), this.config.height * (0.5 - goalDivergence), 'star');
   loneStar.setCircle(30);
   loneStar.setScale(4);
   loneStar.setBounce(5);
   loneStar.collideWorldBounds = true;
   goalGroup.add(loneStar);
   
-  blueStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 - goalDivergence), 'bluestar');
+  blueStar = this.physics.add.image(this.config.width * (0.5 + goalDivergence), this.config.height * (0.5 - goalDivergence), 'bluestar');
   blueStar.setCircle(30);
   blueStar.setScale(4);
   blueStar.setBounce(5);
   blueStar.collideWorldBounds = true;
   goalGroup.add(blueStar);
   
-  // blackStar = this.physics.add.image(width * (0.5 + goalDivergence), height * (0.5 + goalDivergence), 'blackstar');
+  // blackStar = this.physics.add.image(this.config.width * (0.5 + goalDivergence), this.config.height * (0.5 + goalDivergence), 'blackstar');
   // blackStar.setCircle(30);
   // blackStar.setScale(5);
   // blackStar.setBounce(5);
   // blackStar.collideWorldBounds = true;
   // goalGroup.add(blackStar);
   
-  // greenStar = this.physics.add.image(width * (0.5 - goalDivergence), height * (0.5 + goalDivergence), 'greenstar');
+  // greenStar = this.physics.add.image(this.config.width * (0.5 - goalDivergence), this.config.height * (0.5 + goalDivergence), 'greenstar');
   // greenStar.setCircle(30);
   // greenStar.setScale(5);
   // greenStar.setBounce(5);
@@ -224,32 +223,32 @@ create () {
    //4 Groups per Species, 4 Species (16 groups total) each with different animations
    //Create empty Species with only goals defined
   let newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-  newSpecies.createGroup(redGroupAnim, {pop: groupPop}, fitnessConfig);
-  newSpecies.createGroup(blueGroupAnim, {pop: groupPop});
-  newSpecies.createGroup(greenGroupAnim, {pop: groupPop});
-  newSpecies.createGroup(brightGroupAnim, {pop: groupPop});
+  newSpecies.createGroup(redGroupAnim, {pop: this.groupPop}, fitnessConfig);
+  newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(brightGroupAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
   newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-  //newSpecies.createGroup(brownGroupAnim, {pop: groupPop});
-  newSpecies.createGroup(crimsonGroupAnim, {pop: groupPop});
-  newSpecies.createGroup(grayGroupAnim, {pop: groupPop});
-  newSpecies.createGroup(purpleGroupAnim, {pop: groupPop});
-  newSpecies.createGroup(yellowGroupAnim, {pop: groupPop});
+  //newSpecies.createGroup(brownGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(crimsonGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(grayGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(purpleGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(yellowGroupAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
   newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-  newSpecies.createGroup(fireSpiralAnim, {pop: groupPop});
-  newSpecies.createGroup(waterSpiralAnim, {pop: groupPop});
-  newSpecies.createGroup(natureSpiralAnim, {pop: groupPop});
-  newSpecies.createGroup(windSpiralAnim, {pop: groupPop}, fitnessConfig);
+  newSpecies.createGroup(fireSpiralAnim, {pop: this.groupPop});
+  newSpecies.createGroup(waterSpiralAnim, {pop: this.groupPop});
+  newSpecies.createGroup(natureSpiralAnim, {pop: this.groupPop});
+  newSpecies.createGroup(windSpiralAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
    newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-  newSpecies.createGroup(sparkSpiralAnim, {pop: groupPop});
-  newSpecies.createGroup(groundSpiralAnim, {pop: groupPop});
-   newSpecies.createGroup(lightSpiralAnim, {pop: groupPop});
-   newSpecies.createGroup(voidSpiralAnim, {pop: groupPop});
+  newSpecies.createGroup(sparkSpiralAnim, {pop: this.groupPop});
+  newSpecies.createGroup(groundSpiralAnim, {pop: this.groupPop});
+   newSpecies.createGroup(lightSpiralAnim, {pop: this.groupPop});
+   newSpecies.createGroup(voidSpiralAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
   
@@ -263,7 +262,7 @@ create () {
 }
 
 update () {
-  timerText.setText("Update " + globalTimer);
+  timerText.setText("Update " + globalTimer); 
   
   if (this.bgOpacity[0] >= this.maxOpacity)
             this.bgOpacityDirection = -1;
@@ -307,14 +306,19 @@ update () {
         }
     
 
-  //Update each genus
-  for (let genus of this.genera)
-     genus.update();
+    //Update each genus
+    for (let genus of this.genera)
+      genus.update();
 
-  //example of collision handling
-  //this.physics.collide(redGroup, blueGroup, eat);
-  globalTimer++;
-}
+    // if (globalTimer === 200) {
+    //     this.genera[0].species[0].createGroup(blueGroupAnim, {pop: this.groupPop});
+    // }
+
+    //example of collision handling
+    //this.physics.collide(redGroup, blueGroup, eat);
+    globalTimer++;
+  }
+
 }
 
 const createAnimConfig = (scene, keyName, spritesheet, fps, firstFrame, animScale = 1) => {
