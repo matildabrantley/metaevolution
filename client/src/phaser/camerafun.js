@@ -19,6 +19,10 @@ class Camerafun extends Phaser.Scene
     create () 
     {
         const cam = this.cameras.main.setBounds(0, 0, 1440, 1440);
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.keys = this.input.keyboard.addKeys('W,A,S,D');
+        this.cameras.main.centerToSize();
+        cam.setBackgroundColor(0xffffff);
 
         let numStyles = 2;
         this.bgs = [];
@@ -40,44 +44,12 @@ class Camerafun extends Phaser.Scene
                 quadrant.alpha = 0.4;
             }
             this.bgs.push(bg);
-        }
-
-        // for (const background of this.bgs) {
-        //     background.setDisplaySize(2048, 2048);
-        //     background.setScale(0.5);
-        //     background.alpha = 0.4;
-        // }
-
-        // this.bgs2 = [];
-        // this.bgs2.push(this.add.image(0, 0, 'background2').setOrigin(0));
-        // this.bgs2.push(this.add.image(720, 0, 'background2').setOrigin(0));
-        // this.bgs2[1].flipX=true;
-        // this.bgs2.push(this.add.image(0, 720, 'background2').setOrigin(0));
-        // this.bgs2[2].flipY=true;
-        // this.bgs2.push(this.add.image(720, 720, 'background2').setOrigin(0));
-        // this.bgs2[3].flipX=true;
-        // this.bgs2[3].flipY=true;
-
-        // for (const background of this.bgs2) {
-        //     background.setDisplaySize(2048, 2048);
-        //     background.setScale(0.5);
-        //     background.alpha = 0.2;
-        // }
-        
+        } 
         this.maxOpacity = 0.5;
         this.bgOpacity = new Array(numStyles);
         this.bgOpacity[0] = this.maxOpacity;
         this.bgOpacity[1] = 0;
         this.bgOpacityDirection = 1;
-
-
-    
-        this.cursors = this.input.keyboard.createCursorKeys();
-        this.keys = this.input.keyboard.addKeys('W,A,S,D');
-    
-        // this.cameras.main.originX = 1;
-        this.cameras.main.centerToSize();
-        cam.setBackgroundColor(0xffffff);
     }
 
     update () 
