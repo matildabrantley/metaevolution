@@ -22,7 +22,7 @@ const Navigation = () => {
     const handleCloseSettings = () => setShowSettings(false);
     const handleShowSettings = () => setShowSettings(true);
     return(
-            <Navbar variant="dark" bg="dark" expand="lg" className="navig" back>
+            <Navbar variant="dark" bg="dark" expand="lg" className="navig">
             <Container>
                 <J><Navbar.Brand href="#home"><h1 className="coolTitle"><J>E</J><J>v</J><J>o</J><J>L</J><J>a</J><J>b</J></h1></Navbar.Brand>
                 </J>

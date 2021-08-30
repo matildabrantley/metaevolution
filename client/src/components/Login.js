@@ -8,14 +8,14 @@ import Popout from './Popout';
 const Login = () => {
   const [userData, setUserData] = useState({ username: '', email: '', password: '' });
   const [isDisplayingMessage, setIsDisplayingMessage] = useState(false);
-  const [validated] = useState(false);
+  const [isValidated, setIsValidated] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
   };
 
-  const handleFormSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const loginForm = e.currentTarget;
 
@@ -43,7 +43,7 @@ const Login = () => {
     <>
     <h3>Login to access your saved agentsshare your </h3>
     <h3>evolved agents and share your evolved agents</h3>
-      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+      <Form noValidate validated={isValidated} onSubmit={handleLogin}>
         <Alert dismissible onClose={() => setIsDisplayingMessage(false)} show={isDisplayingMessage} variant='danger'>
           Issue occurred during login
         </Alert>

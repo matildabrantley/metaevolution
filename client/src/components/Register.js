@@ -10,14 +10,14 @@ import Popout from './Popout';
 const Register = () => {
   const [userData, setUserData] = useState({ username: '', email: '', password: '' });
   const [isDisplayingMessage, setIsDisplayingMessage] = useState(false);
-  const [validated] = useState(false);
+  const [isValidated, setIsValidated] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
   };
 
-  const handleFormSubmit = async (e) => {
+  const handleRegistration = async (e) => {
     e.preventDefault();
     const registerForm = e.currentTarget;
 
@@ -45,7 +45,7 @@ const Register = () => {
     <>
     < PhaserWorld width={1000} height={450} worldType="Shaderfun"/>
     <h3>Register to save and share your evolved agents</h3>
-      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+      <Form noValidate validated={isValidated} onSubmit={handleRegistration}>
         <Alert dismissible onClose={() => setIsDisplayingMessage(false)} show={isDisplayingMessage} variant='danger'>
           Issue occurred during registration
         </Alert>

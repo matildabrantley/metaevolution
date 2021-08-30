@@ -61,7 +61,7 @@ const HomePage = () => {
                         Ecosystem
                     </Figure.Caption>
                 </Figure>
-                <Figure class="pageCard">
+                <Figure className="pageCard">
                     <Popout>
                         <Link as={Link} to='/lab'>
                             <Figure.Image
@@ -77,7 +77,7 @@ const HomePage = () => {
                         Lab
                     </Figure.Caption>
                 </Figure>
-                <Figure class="pageCard">
+                <Figure className="pageCard">
                     <Popout>
                         <Link as={Link} to='/game'>
                             <Figure.Image
