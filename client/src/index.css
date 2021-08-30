@@ -32,7 +32,21 @@ canvas {
 .coolTitle:hover {
   background-color: rgba(0, 0, 0, 0.7);
   box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 1);
-  
+}
+
+.homeTitle {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: rgb(0, 0, 0);
+  padding: 20px;
+  /* padding-left: 10px; 
+  padding-right: 10px;  */
+  border-radius: 30px;
+  transition: background-color 1.25s, box-shadow 1.5s, border-radius;
+}
+
+.homeTitle:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0px 0px 10px 10px rgba(255, 255, 255, 1);
 }
 .navig {
   /* border-left: solid 4px rgba(200, 0, 50, 0.7);

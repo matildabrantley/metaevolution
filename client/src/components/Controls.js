@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Popout from './Popout';
-import { Button, Offcanvas } from 'react-bootstrap';
+// import { Button } from 'react-bootstrap';
+import { Button } from '@material-ui/core';
 
 
 const Controls = () => {
@@ -11,17 +12,9 @@ const Controls = () => {
     
     return (
         <div>
-            <Button variant="dark" onClick={handleShow}>
+            <Button onClick={handleShow}>
                 Controls
             </Button>
-            <Offcanvas show={show} onHide={handleHide}>
-                <Offcanvas.Header closeButton>
-                <Offcanvas.Title>Offcanvas</Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body>
-                    Hey there, I'm over here on the side!
-                </Offcanvas.Body>
-            </Offcanvas>
         </div>
     )
 };
