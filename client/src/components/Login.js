@@ -41,8 +41,7 @@ const Login = () => {
 
   return (
     <>
-    <h3>Login to access your saved agentsshare your </h3>
-    <h3>evolved agents and share your evolved agents</h3>
+    <h3>Login to access your saved agents</h3>
       <Form noValidate validated={isValidated} onSubmit={handleLogin}>
         <Alert dismissible onClose={() => setIsDisplayingMessage(false)} show={isDisplayingMessage} variant='danger'>
           Issue occurred during login

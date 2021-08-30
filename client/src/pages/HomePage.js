@@ -31,7 +31,7 @@ const HomePage = () => {
                     <>Welcome</><> to</><> EvoLab. </>
                 </Glide>
                 <Glide>
-                    <>Build</><> neural</><> networks. </>
+                    <>Build</><> neural</><> networks</><> and</> <> worlds.</>
                     </Glide>
                     <Glide>
                     <>Watch</><> intelligent</><> beings</><> evolve. </>
