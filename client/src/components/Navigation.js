@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Navbar, Nav, NavDropdown, Container, Modal, Tab, Button } from 'react-bootstrap';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import Register from './Register';
+import Login from './Login';
+import Settings from './Settings';
 import { Link } from 'react-router-dom';
 import Popout from '../components/Popout';
 import J from '../components/Jumpout';
@@ -12,10 +14,13 @@ import J from '../components/Jumpout';
 const Navigation = () => {
     const [showLogin, setShowLogin] = useState(false);
     const [showRegister, setShowRegister] = useState(false);
+    const [showSettings, setShowSettings] = useState(false);
     const handleCloseLogin = () => setShowLogin(false);
     const handleShowLogin = () => setShowLogin(true);
     const handleCloseRegister = () => setShowRegister(false);
     const handleShowRegister = () => setShowRegister(true);
+    const handleCloseSettings = () => setShowSettings(false);
+    const handleShowSettings = () => setShowSettings(true);
     return(
             <Navbar variant="dark" bg="dark" expand="lg" className="navig" back>
             <Container>
@@ -45,13 +50,32 @@ const Navigation = () => {
                     Register
                 </Button>
                 </Popout>
+                <Popout>
+                <Button variant="danger" className="clickable" onClick={handleShowSettings}>
+                    Setting
+                </Button>
+                </Popout>
+
+                <Modal show={showSettings} onHide={handleCloseSettings}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Settings</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Settings handleModalClose={() => setShowSettings(false)} />
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseSettings}>
+                        Close
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
 
                 <Modal show={showLogin} onHide={handleCloseLogin}>
                     <Modal.Header closeButton>
                     <Modal.Title>Login</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Register handleModalClose={() => setShowLogin(false)} />
+                        <Login handleModalClose={() => setShowLogin(false)} />
                     </Modal.Body>
                     <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseLogin}>

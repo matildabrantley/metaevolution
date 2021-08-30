@@ -21,13 +21,14 @@ canvas {
   padding: 20px;
   /* padding-left: 10px; 
   padding-right: 10px;  */
-  border-radius: 30px;;
-  transition: background-color 1.25s, box-shadow 1.5s;
+  border-radius: 30px;
+  transition: background-color 1.25s, box-shadow 1.5s, border-radius;
 }
 
 .coolTitle:hover {
   background-color: rgba(0, 0, 0, 0.7);
   box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 1);
+  
 }
 .navig {
   /* border-left: solid 4px rgba(200, 0, 50, 0.7);
@@ -55,7 +56,7 @@ canvas {
   color: white;
   margin: 5px;
   padding: 5px;
-  border: solid 3px rgba(200, 0, 50, 0.7);
+  border: solid 1px rgba(200, 0, 50, 0.7);
   border-radius: 7px;
   filter: opacity(0.8);
   transition: box-shadow 0.75s filter 0.75s;
@@ -63,7 +64,7 @@ canvas {
 
 .clickable:hover {
   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
-  border: solid black;
+  border: solid 2px black;
   filter: opacity(1);
 }
 
