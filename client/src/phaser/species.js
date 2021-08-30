@@ -81,7 +81,7 @@ class Species extends Phaser.Physics.Arcade.Group {
             }
             //Scale bonus sprite bigger and all others smallers
             for (let g=0; g < this.goals.length; g++)
-                g === this.bonusGoal ? this.goals[g].setScale(4) : this.goals[g].setScale(2);
+                g === this.bonusGoal ? this.goals[g].setScale(1) : this.goals[g].setScale(0.5);
             
             this.bonusLength = Math.floor(this.groups[0].genLength / 2);
         }
