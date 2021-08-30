@@ -4,6 +4,7 @@ import { Navbar, Nav, NavDropdown, Container, Modal, Tab, Button } from 'react-b
 import Register from './Register';
 import { Link } from 'react-router-dom';
 import Popout from '../components/Popout';
+import J from '../components/Jumpout';
 
 
 
@@ -18,7 +19,7 @@ const Navigation = () => {
     return(
             <Navbar variant="dark" bg="dark" expand="lg" className="navig" back>
             <Container>
-                <Navbar.Brand href="#home"><h1 className="pageLink">EvoLab</h1></Navbar.Brand>
+                <Navbar.Brand href="#home"><h1 className="coolTitle"><J>E</J><J>v</J><J>o</J><J>L</J><J>a</J><J>b</J></h1></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav.Link as={Link} to='/ecosystem'><h4 className="ecoLink">Ecosystem</h4></Nav.Link>

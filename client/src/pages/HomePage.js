@@ -23,7 +23,7 @@ const HomePage = () => {
     return (
         <div>
             <Button variant="danger" class="clickable" onClick={previous}>Back</Button>
-            <h1>Welcome</h1>
+            <h1 className="coolTitle">Wel<span className="weird">come</span></h1>
             <Card
                 bg="dark"
                 text="light"
@@ -35,9 +35,10 @@ const HomePage = () => {
                 <Popout>
                         <Link as={Link} to='/ecosystem'>
                             <Figure.Image
+                                className="pageImage"
                                 width={171}
                                 height={380}
-                                alt="171x180"
+                                alt="Ecosystem"
                                 src={ecoImage}
                                 roundedCircle
                                 />

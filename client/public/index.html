@@ -49,7 +49,7 @@
   </div>
 
   <script>
-    let maxOpacity = 0.6;
+    let maxOpacity = 0.8;
     let bgOpacity = maxOpacity;
     let bgOpacity2 = 0;
     let bgOpacity3 = 0;
@@ -70,9 +70,9 @@
       else if (bgOpacity3 <= -1 * (maxOpacity))
               bgOpacityDirection3 = 1;
 
-      bgOpacity += 0.004 * bgOpacityDirection;
-      bgOpacity2 += 0.004 * bgOpacityDirection * -1;
-      bgOpacity3 += 0.004 * bgOpacityDirection3;
+      bgOpacity += 0.008 * bgOpacityDirection;
+      bgOpacity2 += 0.008 * bgOpacityDirection * -1;
+      bgOpacity3 += 0.008 * bgOpacityDirection3;
 
       bg1.style.opacity = bgOpacity;
       bg2.style.opacity = bgOpacity2;
