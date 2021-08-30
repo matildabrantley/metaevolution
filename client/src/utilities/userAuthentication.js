@@ -1,6 +1,16 @@
 class UserAuthentication {
   login(userIDtoken) {
+    //store token 
     localStorage.setItem('userIDtoken', userIDtoken);
+
+    //start over, now logged in
+    window.location.assign('/');
+  }
+  logout() {
+    //delete personal data
+    localStorage.removeItem('userIDtoken');
+
+    //start over, logged out
     window.location.assign('/');
   }
   loggedIn() {

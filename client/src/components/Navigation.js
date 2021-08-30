@@ -7,6 +7,7 @@ import Settings from './Settings';
 import { Link } from 'react-router-dom';
 import Popout from '../components/Popout';
 import J from '../components/Jumpout';
+import UserAuth from '../utilities/userAuthentication';
 
 
 
@@ -41,11 +42,29 @@ const Navigation = () => {
                 </Nav>
                 </Navbar.Collapse>
                 <>
+
+                {UserAuth.loggedIn() ? (
+                    <div>
+                    <Nav.Link to='/lab' as={Link}>View Your Nets</Nav.Link>
+                    <Popout>
+                    <Button variant="danger" className="clickable" onClick={UserAuth.logout}>Logout</Button>
+                    </Popout>
+                    </div>
+                ) : (
+                    <Popout>
+                        <Button variant="danger" className="clickable" onClick={handleShowLogin}>Login</Button>
+                    </Popout>
+                )}
+
+
+
+
+{/* 
                 <Popout>
                     <Button variant="danger" className="clickable" onClick={handleShowLogin}>
                         Login
                     </Button>
-                </Popout>
+                </Popout> */}
                 <Popout>
                 <Button variant="danger" className="clickable" onClick={handleShowRegister}>
                     Register
