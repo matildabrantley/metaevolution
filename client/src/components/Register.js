@@ -52,8 +52,7 @@ const Register = () => {
 
         <Form.Group>
           <Form.Label htmlFor='username'>Username</Form.Label>
-          <Form.Control
-            type='text'
+          <Form.Control type='text'
             placeholder='Your username'
             name='username'
             onChange={handleInputChange}
@@ -65,8 +64,7 @@ const Register = () => {
 
         <Form.Group>
           <Form.Label htmlFor='email'>Your Email</Form.Label>
-          <Form.Control
-            type='email'
+          <Form.Control type='email'
             placeholder='email@address.com'
             name='email'
             onChange={handleInputChange}
@@ -78,8 +76,7 @@ const Register = () => {
 
         <Form.Group>
           <Form.Label htmlFor='password'>Your Password</Form.Label>
-          <Form.Control
-            type='password'
+          <Form.Control type='password'
             placeholder='abcdefgh'
             name='password'
             onChange={handleInputChange}
@@ -88,14 +85,11 @@ const Register = () => {
           />
           <Form.Control.Feedback type='invalid'>Password needed</Form.Control.Feedback>
         </Form.Group>
-        <Popout>
-        <Button
-          disabled={!(userData.username && userData.email && userData.password)}
+        <Button disabled={!(userData.username && userData.email && userData.password)}
           type='submit'
           variant='success'>
           Signup
         </Button>
-        </Popout>
       </Form>
     </>
   );
