@@ -5,8 +5,9 @@ import Register from './Register';
 import Login from './Login';
 import Settings from './Settings';
 import { Link } from 'react-router-dom';
-import Popout from '../components/Popout';
-import J from '../components/Jumpout';
+import Popout from './Popout';
+import Flipout from './/Flipout';
+import J from './Jumpout';
 // import Glide from './Glide';
 
 import UserAuth from '../utilities/userAuthentication';
@@ -27,12 +28,15 @@ const Navigation = () => {
     return(
             <Navbar variant="dark" bg="dark" expand="lg" className="navig">
             <Container>
+                <Flipout>
                 <Navbar.Brand href="#home"><h1 className="coolTitle"><J>E</J><J>v</J><J>o</J><J>L</J><J>a</J><J>b</J></h1></Navbar.Brand>
+                </Flipout>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                <Popout><Nav.Link as={Link} to='/ecosystem'><h4 className="ecoLink">Ecosystem</h4></Nav.Link></Popout>
                 <Popout><Nav.Link as={Link} to='/lab'><h4 className="labLink">Lab</h4></Nav.Link></Popout>
+                <Popout><Nav.Link as={Link} to='/ecosystem'><h4 className="ecoLink">Ecosystem</h4></Nav.Link></Popout>
                 <Popout><Nav.Link as={Link} to='/game'><h4 className="gameLink">Game</h4></Nav.Link></Popout>
+                <Flipout>
                 <Nav className="me-auto">
                     <NavDropdown title="Links" id="basic-nav-dropdown">
                     <NavDropdown.Item href="https://matildabrantley.github.io/learning-rooms/">Learing Rooms</NavDropdown.Item>
@@ -41,6 +45,7 @@ const Navigation = () => {
                     <NavDropdown.Item href="https://matildabrantley.github.io/portfolio/">Portfolio</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
+                </Flipout>
                 </Navbar.Collapse>
                 <>
 

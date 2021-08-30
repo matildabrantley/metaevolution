@@ -4,6 +4,7 @@ import { Card, Figure, Image, Caption } from 'react-bootstrap';
 import Popout from '../components/Popout';
 import { Button } from 'react-bootstrap';
 import SideNav from '../components/Controls';
+import labImage from '../assets/labpage.png';
 import ecoImage from '../assets/ecopage.png';
 import image from '../assets/ecopage.png';
 import Glide from '../components/Glide';
@@ -39,6 +40,34 @@ const HomePage = () => {
                 style={{ width: '15rem' }}
                 className="mb-2 pageCard"
             >
+                <Card.Header>Lab</Card.Header>
+                <Card.Body>
+                <Popout>
+                        <Link as={Link} to='/lab'>
+                            <Figure.Image
+                                className="pageImage"
+                                width={171}
+                                height={380}
+                                alt="Lab"
+                                src={labImage}
+                                roundedCircle
+                                />
+                        </Link>
+                    </Popout>
+                <Card.Text>
+                    Some quick example text to build on the card title and make up the bulk
+                    of the card's content.
+                </Card.Text>
+                </Card.Body>
+            </Card>
+
+
+             <Card
+                bg="dark"
+                text="light"
+                style={{ width: '15rem' }}
+                className="mb-2 pageCard"
+            >
                 <Card.Header>Ecosystem</Card.Header>
                 <Card.Body>
                 <Popout>
@@ -60,53 +89,33 @@ const HomePage = () => {
                 </Card.Body>
             </Card>
 
-                <Figure className="pageCard">
-                    <Popout>
-                        <Link as={Link} to='/ecosystem'>
-                            <Figure.Image
-                                style={{ width: '18rem' }}
-                                alt="171x180"
-                                src={ecoImage}
-                                roundedCircle
-                                />
-                        </Link>
-                    </Popout>
-                    <Figure.Caption>
-                        Ecosystem
-                    </Figure.Caption>
-                </Figure>
-                <Figure className="pageCard">
-                    <Popout>
-                        <Link as={Link} to='/lab'>
-                            <Figure.Image
-                                width={171}
-                                height={380}
-                                alt="171x180"
-                                src={image}
-                                roundedCircle
-                                />
-                        </Link>
-                    </Popout>
-                    <Figure.Caption variant="light">
-                        Lab
-                    </Figure.Caption>
-                </Figure>
-                <Figure className="pageCard">
-                    <Popout>
+
+             <Card
+                bg="dark"
+                text="light"
+                style={{ width: '15rem' }}
+                className="mb-2 pageCard"
+            >
+                <Card.Header>Game</Card.Header>
+                <Card.Body>
+                <Popout>
                         <Link as={Link} to='/game'>
                             <Figure.Image
+                                className="pageImage"
                                 width={171}
                                 height={380}
-                                alt="171x180"
+                                alt="Ecosystem"
                                 src={image}
                                 roundedCircle
                                 />
                         </Link>
                     </Popout>
-                    <Figure.Caption>
-                        Game
-                    </Figure.Caption>
-                </Figure>
+                <Card.Text>
+                    Some quick example text to build on the card title and make up the bulk
+                    of the card's content.
+                </Card.Text>
+                </Card.Body>
+            </Card>
         </Grid>
         </div>
 
