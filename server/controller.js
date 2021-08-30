@@ -1,5 +1,5 @@
-const { signToken } = require('../utilities/auth');
-const { User } = require('../models');
+const { signToken } = require('./authentication');
+const { User } = require('./models');
 
 //user registration route
 async function register({ body }, res) {

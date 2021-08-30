@@ -224,34 +224,34 @@ create () {
 update () {
   this.timerText.setText("Update " + this.globalTime); 
 
-  const cam = this.cameras.main;
+  // const cam = this.cameras.main;
     
-  if (this.keys.A.isDown)
-  {
-      cam.scrollX -= 4;
-  }
-  else if (this.keys.D.isDown)
-  {
-      cam.scrollX += 4;
-  }
+  // if (this.keys.A.isDown)
+  // {
+  //     cam.scrollX -= 4;
+  // }
+  // else if (this.keys.D.isDown)
+  // {
+  //     cam.scrollX += 4;
+  // }
 
-  if (this.keys.W.isDown)
-  {
-      cam.scrollY -= 4;
-  }
-  else if (this.keys.S.isDown)
-  {
-      cam.scrollY += 4;
-  }
+  // if (this.keys.W.isDown)
+  // {
+  //     cam.scrollY -= 4;
+  // }
+  // else if (this.keys.S.isDown)
+  // {
+  //     cam.scrollY += 4;
+  // }
 
-  if (this.cursors.left.isDown)
-  {
-      cam.rotation -= 0.005;
-  }
-  else if (this.cursors.right.isDown)
-  {
-      cam.rotation += 0.005;
-  }
+  // if (this.cursors.left.isDown)
+  // {
+  //     cam.rotation -= 0.005;
+  // }
+  // else if (this.cursors.right.isDown)
+  // {
+  //     cam.rotation += 0.005;
+  // }
     
 
     //Update each genus

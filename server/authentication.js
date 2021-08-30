@@ -16,8 +16,7 @@ function authenticateRoute (req, res, next) {
     const { data } = JWT.verify(token, secret, { maxAge: expiration });
     req.user = data;
   } catch {
-    console.log('Invalid token');
-    return res.status(400).json({ message: 'Invalid token' });
+    return res.status(400).json({ message: 'Bad token' });
   }
   next();
 }

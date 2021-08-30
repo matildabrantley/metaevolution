@@ -45,31 +45,21 @@ const Navigation = () => {
 
                 {UserAuth.loggedIn() ? (
                     <div>
-                    <Nav.Link to='/lab' as={Link}>View Your Nets</Nav.Link>
                     <Popout>
                     <Button variant="danger" className="clickable" onClick={UserAuth.logout}>Logout</Button>
                     </Popout>
                     </div>
                 ) : (
+                    <>
                     <Popout>
                         <Button variant="danger" className="clickable" onClick={handleShowLogin}>Login</Button>
                     </Popout>
+                    <Popout>
+                        <Button variant="danger" className="clickable" onClick={handleShowRegister}>Register</Button>
+                    </Popout>
+                    </>
                 )}
-
-
-
-
-{/* 
-                <Popout>
-                    <Button variant="danger" className="clickable" onClick={handleShowLogin}>
-                        Login
-                    </Button>
-                </Popout> */}
-                <Popout>
-                <Button variant="danger" className="clickable" onClick={handleShowRegister}>
-                    Register
-                </Button>
-                </Popout>
+                
                 <Popout>
                 <Button variant="danger" className="clickable" onClick={handleShowSettings}>
                     Setting

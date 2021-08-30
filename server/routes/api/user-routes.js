@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const { register, login, getUser } = require('../../controllers/user-controller');
-const { authenticateRoute } = require('../../utilities/auth');
+const { register, login, getUser } = require('../../controller');
+const { authenticateRoute } = require('../../authentication');
 
 //routes
 router.route('/').post(register).put(authenticateRoute);

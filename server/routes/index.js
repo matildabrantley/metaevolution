@@ -1,10 +1,10 @@
 const router = require('express').Router();
+const routes = require('./api');
 const path = require('path');
-const apiRoutes = require('./api');
 
-router.use('/api', apiRoutes);
+router.use('/api', routes);
 
-// React content in client for production
+// React content over in client
 router.use((req, res) => {
   res.sendFile(path.join(__dirname, '../../client/build/index.html'));
 });
