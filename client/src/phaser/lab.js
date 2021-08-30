@@ -1,9 +1,5 @@
 import Phaser from "phaser";
 
-//Import backgrounds
-import floral from './assets/sprites/floral-stunning.jpg';
-import floral2 from './assets/sprites/floral-colorful.jpg';
-
 //Import static sprites
 import star from './assets/sprites/star.png';
 import bluestar from './assets/sprites/bluestar.png';
@@ -50,16 +46,14 @@ import voidSpiralFrames from './assets/frameData/void-spiral.json';
 
 //import tilesheet, tilemapping
 import tilesheet1 from './assets/tiles/all-tiles.png';
-import tilemap1 from './assets/tiles/tilemap-resource-data';
+import tilemap1 from './assets/tiles/tilemap-lab-data';
 
 
 const Species = require('./species');
 const Genus = require('./genus');
 const Group = require('./group');
 
-// let chosenPoint;
-
-class Ecosystem extends Phaser.Scene {
+class Lab extends Phaser.Scene {
   constructor({parent, width = 800, height = 600, physicsType = 'arcade'} = {}) {
     super("Launch");
     //Create a config object for scene
@@ -333,4 +327,4 @@ const createAnimConfig = (scene, keyName, spritesheet, fps, firstFrame, animScal
   return {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: firstFrame, scale: animScale};
 }
 
-export default Ecosystem; 
+export default Lab; 

@@ -50,7 +50,7 @@ import voidSpiralFrames from './assets/frameData/void-spiral.json';
 
 //import tilesheet, tilemapping
 import tilesheet1 from './assets/tiles/all-tiles.png';
-import tilemap1 from './assets/tiles/tilemap-resource-data';
+import tilemap1 from './assets/tiles/tilemap-eco-data';
 
 
 const Species = require('./species');
@@ -74,6 +74,7 @@ class Ecosystem extends Phaser.Scene {
       scene: this
     };
 
+    this.worldSize = 1440; //size of whole world, not scene (which is canvas)
     this.groupPop = 100;
     this.genera = [];
     this.globalTimer = 0;
@@ -159,7 +160,7 @@ create () {
   const tileset = this.map.addTilesetImage('tiles');
   this.tileLayer = this.map.createLayer('training-grounds', tileset);
 
-  this.map.setCollision([ 29, 6]);
+  this.map.setCollision([ 1 ]);
 
   let loneStar, blueStar, greenStar, blackStar;
   let goalDivergence = 0.2;
@@ -212,7 +213,7 @@ create () {
   const lightSpiralAnim = createAnimConfig (this, 'lightSpiralKey', 'lightSpiral', fps, 'light-spiral0.png', 0.4); 
   const voidSpiralAnim = createAnimConfig (this, 'voidSpiralKey', 'voidSpiral', fps, 'void-spiral0.png', 0.4); 
 
-  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer};
+  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: false};
   let fitnessConfig = {goals: goalGroup};
 
   //Create one Genus
@@ -269,41 +270,40 @@ update () {
             this.bgOpacityDirection = -1;
         else if (this.bgOpacity[0] <= 0)
             this.bgOpacityDirection = 1;
-  
         this.bgOpacity[0] += 0.001 * this.bgOpacityDirection;
         this.bgOpacity[1] += 0.001 * this.bgOpacityDirection * -1;
-        
         for (let i in this.bgs) {
             this.bgs[i].forEach(quadrant => { quadrant.alpha = this.bgOpacity[i] }) ;
         }
 
+        //Camera controls
         const cam = this.cameras.main;
     
         if (this.keys.A.isDown)
         {
-            cam.scrollX -= 4;
+            cam.scrollX -= 11;
         }
         else if (this.keys.D.isDown)
         {
-            cam.scrollX += 4;
+            cam.scrollX += 11;
         }
     
         if (this.keys.W.isDown)
         {
-            cam.scrollY -= 4;
+            cam.scrollY -= 11;
         }
         else if (this.keys.S.isDown)
         {
-            cam.scrollY += 4;
+            cam.scrollY += 11;
         }
     
         if (this.cursors.left.isDown)
         {
-            cam.rotation -= 0.005;
+            cam.rotation -= 0.015;
         }
         else if (this.cursors.right.isDown)
         {
-            cam.rotation += 0.005;
+            cam.rotation += 0.015;
         }
     
 

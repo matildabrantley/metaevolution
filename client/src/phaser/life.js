@@ -4,13 +4,14 @@ const Phaser = require('phaser');
 
 class Life extends Phaser.Physics.Arcade.Sprite {
 
-    constructor (scene, x, y, sprite, frame, tiles)
+    constructor (scene, x, y, sprite, frame, tiles, seesTiles = true)
     {
         super(scene, x, y, sprite, frame);
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.tiles = tiles;
         this.tileSize = 32;
+        this.seesTiles = seesTiles;
         
         this.fitness = 0;
 
@@ -38,7 +39,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
             inputs.push((this.y - goals[g].y) / 100); //y difference
             inputs.push(g == bonusGoal ? 3 : -3) //bonus goal
         }
-        inputs = inputs.concat(this.getTileInputs());
+        if (this.seesTiles)
+            inputs = inputs.concat(this.getTileInputs());
 
 
         let outputs = this.mind.update(inputs);           

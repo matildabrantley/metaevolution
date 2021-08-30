@@ -3,7 +3,7 @@ const Life = require('./life');
 const Phaser = require('phaser');
 
 class Species extends Phaser.Physics.Arcade.Group {
-    constructor({world, scene, config, tiles} = {}, //general config for species and its sub-groups
+    constructor({world, scene, config, tiles, seesTiles = true} = {}, //general config for species and its sub-groups
                 {goals, goalsAreMoving = false, bonusIsRandom = false, groupSelectionFreq = 40, 
                 maxGroupSelectionFreq = 500, deltaSelectionFreq = 20} = {}, groups = []) {
         
@@ -12,6 +12,7 @@ class Species extends Phaser.Physics.Arcade.Group {
         this.scene = scene;
         this.config = config;
         this.tiles = tiles;
+        this.seesTiles = seesTiles;
         this.scene.physics.add.collider(this, tiles);
 
         this.goals = goals.getChildren(); //groups will use these if specific goals aren't defined
@@ -37,7 +38,7 @@ class Species extends Phaser.Physics.Arcade.Group {
         const newGroup = new Group(this.world, this.scene, this.config, this.tiles, this);
         //Add the population
         for (let i=0; i < pop; i++){
-            let life = new Life(this.scene, 300, 400, spritesheet, firstFrame, this.tiles);
+            let life = new Life(this.scene, 300, 400, spritesheet, firstFrame, this.tiles, this.seesTiles);
             life.setScale(scale);
             life.alpha = 0.5;
             // life.body.setAllowGravity(true);

@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import { useHistory } from "react-router-dom";
 import { Figure, Image, Caption } from 'react-bootstrap';
 import Popout from '../components/Popout';
+import { Button } from 'react-bootstrap';
 import SideNav from '../components/Controls';
 
 
@@ -18,7 +19,7 @@ const LabPage = () => {
 
     return (
         <div>
-            <button class="clickable" onClick={previous}>Back</button>
+            <Button variant="danger" class="clickable" onClick={previous}>Back</Button>
             <SideNav />
                 <Figure>
                 <Figure.Image

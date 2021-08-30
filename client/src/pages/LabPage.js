@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import { useHistory } from "react-router-dom";
-import { Figure, Image, Caption } from 'react-bootstrap';
+import {  Button } from 'react-bootstrap';
 import Popout from '../components/Popout';
 import SideNav from '../components/Controls';
 const PhaserWorld = React.lazy(() => import('../components/PhaserWorld'));
@@ -19,7 +19,7 @@ const LabPage = () => {
 
     return (
         <div>
-            <button class="clickable" onClick={previous}>Back</button>
+            <Button variant="danger" class="clickable" onClick={previous}>Back</Button>
             <SideNav />
                 
             <Suspense fallback={<div>Loading...</div>}>
