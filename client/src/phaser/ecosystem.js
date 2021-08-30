@@ -90,7 +90,6 @@ class Ecosystem extends Phaser.Scene {
     this.load.image('bluestar', bluestar);
     this.load.image('blackstar', blackstar);
     this.load.image('greenstar', greenstar);
-    this.load.image('circle', circle);
     //spritesheets and json frame data
     this.load.atlas('redLife', redPulse, redPulseFrames);
     this.load.atlas('blueLife', bluePulse, bluePulseFrames);
