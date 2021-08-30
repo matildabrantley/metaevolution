@@ -37,7 +37,7 @@ const LabPage = () => {
 
     return (
         <div>
-            <Button variant="danger" class="clickable" onClick={previous}>Back</Button>
+            <Button variant="danger" className="clickable" onClick={previous}>Back</Button>
             
 
             <div className={classes.root}>

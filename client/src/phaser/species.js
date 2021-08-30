@@ -40,15 +40,16 @@ class Species extends Phaser.Physics.Arcade.Group {
         //Add the population
         for (let i=0; i < pop; i++){
             let life;
-            if (spritesheet)
+            if (spritesheet) {
                 life = new Life(this.scene, 300, 400, {sprite: spritesheet, frame: firstFrame, tiles: this.tiles}, this.seesTiles);
-            else
+                life.play(key);
+            } else
                 life = new Life(this.scene, 300, 400, {sprite: sprite, frame: firstFrame, tiles: this.tiles}, this.seesTiles);
             life.setScale(scale);
             life.alpha = 0.5;
             // life.body.setAllowGravity(true);
             // life.body.setGravityY(1000);
-            life.play(key);
+            
             newGroup.add(life);
             this.add(life); //add to species as well
         } 
