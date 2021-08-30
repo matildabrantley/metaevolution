@@ -8,7 +8,7 @@ function Popout({ children }) {
         return {
             coords: [1, 1, 1],
             // react-spring physics
-            config: { mass: 5, tension: 150, friction: 30, precision: 0.00002 }
+            config: { mass: 5, tension: 150, friction: 20, precision: 0.00002 }
         };
     });
     
@@ -34,7 +34,7 @@ function Popout({ children }) {
   
           const coords = [-1 * (yCoord - ref.current.clientHeight / 2) / 80, 
             (xCoord - ref.current.clientWidth / 2) / 80,
-            1.3 //Scaling factor for hovered element
+            1.4 //Scaling factor for hovered element
           ];
           setAnimatedProps({ coords: coords });
         }}

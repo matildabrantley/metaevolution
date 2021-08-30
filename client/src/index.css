@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Yomogi:wght@700');
 @import url('https://fonts.googleapis.com/css?family=Architects+Daughter');
+@import url('https://fonts.googleapis.com/css?family=Rampart+One');
 
 body {
-  font-family: 'Architects Daughter', sans-serif;
+  font-family:'Rampart One', Times, serif, sans-serif;
 }
 
 canvas {
@@ -96,7 +97,7 @@ canvas {
   display: flex;
   flex-direction: column;
   padding: 10px;
-  margin: 5%;
+  margin: 3%;
   background-color: rgba(0, 0, 0, 0.2);
   border: solid 4px rgba(200, 0, 200, 0.3);
   border-radius: 25px;

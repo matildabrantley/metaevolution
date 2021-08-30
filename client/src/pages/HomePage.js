@@ -22,10 +22,25 @@ const HomePage = () => {
 
     return (
             // <div>
-            // <h2 className="homeTitle welcome" style={{display:'inline-Block', paddingRight:'40px', margin:'10px'}}><Glide><>Welcome</><>to</><>EvoLab</></Glide></h2>
             // </div>
-
+            
             <div>
+            <h1 className="homeTitle welcome" style={{paddingRight:'40px', margin:'10px', textEmphasis: 'bold'}}>
+                <Glide>
+                <Glide>
+                    <>Welcome</><> to</><> EvoLab. </>
+                </Glide>
+                <Glide>
+                    <>Build</><> neural</><> networks. </>
+                    </Glide>
+                    <Glide>
+                    <>Watch</><> intelligent</><> beings</><> evolve. </>
+                    </Glide>
+                    <Glide>
+                    <>Or</><> just</><> have</><> fun!</>
+                </Glide>
+                </Glide>
+            </h1>
             
             <Grid
             container
@@ -54,7 +69,7 @@ const HomePage = () => {
                                 />
                         </Link>
                     </Popout>
-                <Card.Text>
+                <Card.Text style={{fontFamily:'Architects Daughter'}}>
                     Some quick example text to build on the card title and make up the bulk
                     of the card's content.
                 </Card.Text>
@@ -82,7 +97,7 @@ const HomePage = () => {
                                 />
                         </Link>
                     </Popout>
-                <Card.Text>
+                <Card.Text style={{fontFamily:'Architects Daughter'}} >
                     Some quick example text to build on the card title and make up the bulk
                     of the card's content.
                 </Card.Text>
@@ -110,7 +125,7 @@ const HomePage = () => {
                                 />
                         </Link>
                     </Popout>
-                <Card.Text>
+                <Card.Text style={{fontFamily:'Architects Daughter'}}>
                     Some quick example text to build on the card title and make up the bulk
                     of the card's content.
                 </Card.Text>

@@ -1,13 +1,13 @@
 import React, { useState, useRef } from "react";
 import { useTrail, animated } from "react-spring";
 
-const config = { mass: 6, tension: 1800, friction: 500 };
+const config = { mass: 90, tension: 1800, friction: 500 };
 
 function Glide({ children }) {
   const [clicked, setState] = useState(true);
   const trail = useTrail(children.length, {
     config,
-    from: { opacity: 0, x: 100 },
+    from: { opacity: 0, x: 200 },
     to: { opacity: clicked ? 1 : 0, x: clicked ? 20 : 10 }
   });
   return (
@@ -17,7 +17,9 @@ function Glide({ children }) {
           key={ children[i] }
           style={{
             ...otherProps,
-            transform: x.to(x => `translate3d(${x}px, 0, 0)`)
+            transform: x.to(x => `translate3d(${x}px, 0, 0)`),
+            display: 'inline-block',
+            whiteSpace: 'pre'
           }}
         >
           <animated.div>{ children[i] }</animated.div>
