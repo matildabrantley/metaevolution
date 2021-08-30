@@ -4,9 +4,12 @@ const Phaser = require('phaser');
 
 class Life extends Phaser.Physics.Arcade.Sprite {
 
-    constructor (scene, x, y, sprite, frame, tiles, seesTiles = true)
+    constructor (scene, x, y, {sprite, frame, tiles}={}, seesTiles = true)
     {
-        super(scene, x, y, sprite, frame);
+        if (frame)
+            super(scene, x, y, sprite, frame);
+        else
+            super(scene, x, y, sprite);
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.tiles = tiles;

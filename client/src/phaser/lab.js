@@ -37,6 +37,10 @@ class Lab extends Phaser.Scene {
   }
 
   preload () {
+    this.load.image('star', star);
+    this.load.image('bluestar', bluestar);
+    this.load.image('blackstar', blackstar);
+    this.load.image('greenstar', greenstar);
     //tiles
     this.load.image('tiles', tilesheet1);
     this.load.tilemapTiledJSON('tilemap', tilemap1);
@@ -44,8 +48,6 @@ class Lab extends Phaser.Scene {
 }
 
 create () {
-  this.graphics = this.add.graphics();
-
   //this.physics.world.setBounds( 0, 0, width, height );
   const cam = this.cameras.main.setBounds(0, 0, 1440, 1440);
   this.cursors = this.input.keyboard.createCursorKeys();
@@ -61,33 +63,51 @@ create () {
 
   this.map.setCollision([ 29, 6]);
 
+  let graphics = this.add.graphics();
+  let color = 0xfffff0;
+  let border = 0x000000;
+  let thickness = 2;
+  let alpha = 0.7;
+
+  graphics.fillStyle(color, alpha);
+  graphics.lineStyle(thickness, border, 1);
+  graphics.fillCircle(10, 10, 8);
+  graphics.strokeCircle(10, 10, 8);
+
+  graphics.generateTexture("life");
+  graphics.destroy();
+
+  let sprite = this.add.sprite(400, 300, "life");
+
+
+
   let loneStar, blueStar, greenStar, blackStar;
-  let goalDivergence = 0.2;
+  let goalDivergence = 0;
   let goalGroup = this.add.group();
-  loneStar = this.physics.add.image(this.config.width * (0.54 - goalDivergence), this.config.height * (0.55 - goalDivergence), 'star');
-  loneStar.setCircle(30);
-  loneStar.setScale(4);
-  loneStar.setBounce(5);
-  loneStar.collideWorldBounds = true;
-  goalGroup.add(loneStar);
+  // loneStar = this.physics.add.image(this.config.width * (0.54 - goalDivergence), this.config.height * (0.55 - goalDivergence), 'star');
+  // loneStar.setCircle(30);
+  // loneStar.setScale(0.5);
+  // loneStar.setBounce(5);
+  // loneStar.collideWorldBounds = true;
+  // goalGroup.add(loneStar);
   
-  blueStar = this.physics.add.image(this.config.width * (0.54 + goalDivergence), this.config.height * (0.55 - goalDivergence), 'bluestar');
+  blueStar = this.physics.add.image(this.config.width * (0.45 + goalDivergence), this.config.height * (0.45 - goalDivergence), 'bluestar');
   blueStar.setCircle(30);
-  blueStar.setScale(4);
+  blueStar.setScale(0.5);
   blueStar.setBounce(5);
   blueStar.collideWorldBounds = true;
   goalGroup.add(blueStar);
   
   // blackStar = this.physics.add.image(this.config.width * (0.5 + goalDivergence), this.config.height * (0.5 + goalDivergence), 'blackstar');
   // blackStar.setCircle(30);
-  // blackStar.setScale(5);
+  // blackStar.setScale(0.5);
   // blackStar.setBounce(5);
   // blackStar.collideWorldBounds = true;
   // goalGroup.add(blackStar);
   
   // greenStar = this.physics.add.image(this.config.width * (0.5 - goalDivergence), this.config.height * (0.5 + goalDivergence), 'greenstar');
   // greenStar.setCircle(30);
-  // greenStar.setScale(5);
+  // greenStar.setScale(0.5);
   // greenStar.setBounce(5);
   // greenStar.collideWorldBounds = true;
   // goalGroup.add(greenStar);
@@ -96,40 +116,40 @@ create () {
   let fitnessConfig = {goals: goalGroup};
 
   //Create one Genus
-  this.genera.push(new Genus());
+  // this.genera.push(new Genus());
 
-   //4 Groups per Species, 4 Species (16 groups total) each with different animations
-   //Create empty Species with only goals defined
-  let newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-  newSpecies.createGroup(redGroupAnim, {pop: this.groupPop}, fitnessConfig);
-  newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(brightGroupAnim, {pop: this.groupPop});
-  this.genera[0].addSpecies(newSpecies);
+  //  //4 Groups per Species, 4 Species (16 groups total) each with different animations
+  //  //Create empty Species with only goals defined
+  // let newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
+  // newSpecies.createGroup(redGroupAnim, {pop: this.groupPop}, fitnessConfig);
+  // newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(brightGroupAnim, {pop: this.groupPop});
+  // this.genera[0].addSpecies(newSpecies);
 
-  newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-  //newSpecies.createGroup(brownGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(crimsonGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(grayGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(purpleGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(yellowGroupAnim, {pop: this.groupPop});
-  this.genera[0].addSpecies(newSpecies);
+  // newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
+  // //newSpecies.createGroup(brownGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(crimsonGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(grayGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(purpleGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(yellowGroupAnim, {pop: this.groupPop});
+  // this.genera[0].addSpecies(newSpecies);
 
-  newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-  newSpecies.createGroup(fireSpiralAnim, {pop: this.groupPop});
-  newSpecies.createGroup(waterSpiralAnim, {pop: this.groupPop});
-  newSpecies.createGroup(natureSpiralAnim, {pop: this.groupPop});
-  newSpecies.createGroup(windSpiralAnim, {pop: this.groupPop});
-  this.genera[0].addSpecies(newSpecies);
+  // newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
+  // newSpecies.createGroup(fireSpiralAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(waterSpiralAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(natureSpiralAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(windSpiralAnim, {pop: this.groupPop});
+  // this.genera[0].addSpecies(newSpecies);
 
-   newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-  newSpecies.createGroup(sparkSpiralAnim, {pop: this.groupPop});
-  newSpecies.createGroup(groundSpiralAnim, {pop: this.groupPop});
-   newSpecies.createGroup(lightSpiralAnim, {pop: this.groupPop});
-   newSpecies.createGroup(voidSpiralAnim, {pop: this.groupPop});
-  this.genera[0].addSpecies(newSpecies);
+  //  newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
+  // newSpecies.createGroup(sparkSpiralAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(groundSpiralAnim, {pop: this.groupPop});
+  //  newSpecies.createGroup(lightSpiralAnim, {pop: this.groupPop});
+  //  newSpecies.createGroup(voidSpiralAnim, {pop: this.groupPop});
+  // this.genera[0].addSpecies(newSpecies);
 
-  this.genera[0].setupSpecies();
+  // this.genera[0].setupSpecies();
 
   
   // newSpecies.addPreySpecies(newSpecies3);
@@ -186,5 +206,7 @@ update () {
     //this.physics.collide(redGroup, blueGroup, eat);
     this.globalTime++;
   }
+
+}
 
 export default Lab; 

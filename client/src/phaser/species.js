@@ -30,7 +30,7 @@ class Species extends Phaser.Physics.Arcade.Group {
     }
 
     //Preferred (and simpler) method to create new groups
-    createGroup({spritesheet, key, firstFrame, scale = 1} = {}, //animation config for all sprites in group
+    createGroup({sprite, spritesheet, key, firstFrame, scale = 1} = {}, //animation config for all sprites in group
                 {pop = 100, mutRate = 0.05, selectionCutoff = 0.1, maxGenLength = 250, initialGenLength = 10, deltaGenLength = 5} = {}, //genetic config
                 {goals = this.goals, preyGroups, predatorGroups} = {} //fitness config
         ){
@@ -39,7 +39,11 @@ class Species extends Phaser.Physics.Arcade.Group {
         const newGroup = new Group(this.world, this.scene, this.config, this.tiles, this);
         //Add the population
         for (let i=0; i < pop; i++){
-            let life = new Life(this.scene, 300, 400, spritesheet, firstFrame, this.tiles, this.seesTiles);
+            let life;
+            if (spritesheet)
+                life = new Life(this.scene, 300, 400, {sprite: spritesheet, frame: firstFrame, tiles: this.tiles}, this.seesTiles);
+            else
+                life = new Life(this.scene, 300, 400, {sprite: sprite, frame: firstFrame, tiles: this.tiles}, this.seesTiles);
             life.setScale(scale);
             life.alpha = 0.5;
             // life.body.setAllowGravity(true);
