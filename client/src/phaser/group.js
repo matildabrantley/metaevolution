@@ -1,5 +1,5 @@
-const Life = require('./life');
-const Mind = require('./mind');
+import Life from './life';
+import Mind from './mind';
 const Phaser = require('phaser');
 // const Vector = require('./vector');
 
@@ -181,4 +181,4 @@ const randIntBetween = (lowNum, highNum) => {
 const total = (nums) => nums.reduce((a, b) => (a + b));
 const average = (nums) => total(nums) / nums.length;
 
-module.exports = Group;
+export default Group;

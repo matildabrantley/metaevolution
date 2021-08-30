@@ -1,5 +1,5 @@
-const Group = require('./group');
-const Life = require('./life');
+import Life from './life';
+import Group from './group';
 const Phaser = require('phaser');
 
 class Species extends Phaser.Physics.Arcade.Group {
@@ -177,4 +177,4 @@ class Species extends Phaser.Physics.Arcade.Group {
 const total = (nums) => nums.reduce((a, b) => (a + b));
 const average = (nums) => total(nums) / nums.length;
 
-module.exports = Species;
+export default Species;

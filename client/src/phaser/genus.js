@@ -1,5 +1,5 @@
 //Genus-Species mirrors Species-Group relationship at a higher level
-const Species = require('./species');
+import Species from './species';
 const Phaser = require('phaser');
 
 
@@ -59,7 +59,7 @@ class Genus {
     }
 }
 
-module.exports = Genus;
+export default Genus;
 
 const total = (nums) => nums.reduce((a, b) => (a + b));
 const average = (nums) => total(nums) / nums.length;
