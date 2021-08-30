@@ -34,7 +34,7 @@ function Popout({ children }) {
   
           const coords = [-1 * (yCoord - ref.current.clientHeight / 2) / 80, 
             (xCoord - ref.current.clientWidth / 2) / 80,
-            1.5 //Scaling factor for hovered element
+            1.3 //Scaling factor for hovered element
           ];
           setAnimatedProps({ coords: coords });
         }}

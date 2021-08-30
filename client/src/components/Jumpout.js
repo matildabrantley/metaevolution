@@ -41,7 +41,7 @@ function Jumpout({ children }) {
           const yCoord = clientY - (ref.current.offsetTop - (window.scrollY || window.pageYOffset || document.body.scrollTop));
   
           const coords = [-1 * (yCoord - ref.current.clientHeight / 2) / 80 + 300, 
-            (xCoord - ref.current.clientWidth / 2) / 80 + 5,
+            (xCoord - ref.current.clientWidth / 2) / 80 + 30,
             1.5 //Scaling factor for hovered element
           ];
           setAnimatedProps({ coords: coords });

@@ -50,6 +50,10 @@ canvas {
   color: lightblue;
 }
 
+.weird {
+  text-align: center;
+}
+
 .clickable {
   display: inline-block;
   background-color: black;

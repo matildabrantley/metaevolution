@@ -1,13 +1,12 @@
 const { Schema, model } = require('mongoose');
+const neuronSchema = require('./Neuron');
 
 const layerSchema = new Schema({
   layerWidth: {
     type: Number,
     required: true,
   },
-  neurons: [Neuron],
+  neurons: [neuronSchema],
 });
 
-const Layer = model('Layer', layerSchema);
-
-module.exports = Layer;
+module.exports = layerSchema;

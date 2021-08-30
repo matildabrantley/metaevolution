@@ -12,18 +12,13 @@ import image from '../assets/ecopage.png';
 
 
 const HomePage = () => {
-
-    const history = useHistory()
-    const previous = () => { history.goBack() }
-
     const controls = () => {
         
     }
 
     return (
         <div>
-            <Button variant="danger" class="clickable" onClick={previous}>Back</Button>
-            <h1 className="coolTitle">Wel<span className="weird">come</span></h1>
+            <h2 className="coolTitle" style={{textAlign:'text-center'}}>Welcome</h2>
             <Card
                 bg="dark"
                 text="light"
@@ -51,7 +46,7 @@ const HomePage = () => {
                 </Card.Body>
             </Card>
 
-                <Figure class="pageCard">
+                <Figure className="pageCard">
                     <Popout>
                         <Link as={Link} to='/ecosystem'>
                             <Figure.Image
