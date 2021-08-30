@@ -165,4 +165,4 @@ const testNet = () => {
 testNet() 
 */
 
-module.exports = Net;
+export default Net;

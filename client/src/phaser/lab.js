@@ -49,9 +49,9 @@ import tilesheet1 from './assets/tiles/all-tiles.png';
 import tilemap1 from './assets/tiles/tilemap-lab-data';
 
 
-const Species = require('./species');
-const Genus = require('./genus');
-const Group = require('./group');
+import Genus from './genus';
+import Species from './species';
+import Group from './group';
 
 class Lab extends Phaser.Scene {
   constructor({parent, width = 800, height = 600, physicsType = 'arcade'} = {}) {

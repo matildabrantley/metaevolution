@@ -1,4 +1,4 @@
-const Net = require('./net');
+import Net from './net';
 
 class Mind {
     constructor(numSenses = 4, numBehaviors = 3, simple = true){
@@ -97,4 +97,4 @@ class Mind {
     }
 }
 
-module.exports = Mind;
+export default Mind;

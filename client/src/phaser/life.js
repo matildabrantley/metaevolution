@@ -1,4 +1,4 @@
-const Net = require('./net');
+import Net from './net';
 const Phaser = require('phaser');
 // const Vector = require('./vector');
 
@@ -151,4 +151,4 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
 //const squish = (x) => x * 0.01;
 
-module.exports = Life;
+export default Life;
