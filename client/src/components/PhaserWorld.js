@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Phaser from "phaser";
 import Ecosystem from "../phaser/ecosystem";
-import Lab from "../phaser/ecosystem";
+import Lab from "../phaser/lab";
 import Colorfun from "../phaser/colorfun";
 import Shaderfun from "../phaser/shaderfun";
 import Camerafun from "../phaser/camerafun";
@@ -40,9 +40,9 @@ class PhaserWorld extends Component {
       parent: this.id,
       width: this.props.width,
       height: this.props.height,
-      scale: {
-        autoCenter: Phaser.Scale.CENTER_BOTH
-    },
+    //   scale: {
+    //     autoCenter: Phaser.Scale.CENTER_BOTH
+    // },
       physics: {
         default: 'arcade',
       },

@@ -23,10 +23,9 @@ const LabPage = () => {
             <SideNav />
                 
             <Suspense fallback={<div>Loading...</div>}>
-                < PhaserWorld width={600} height={600} worldType="Camerafun"/>
+                < PhaserWorld width={800} height={600} worldType="Lab"/>
                 < PhaserWorld width={200} height={150} worldType="Colorfun"/>
                 < PhaserWorld width={400} height={275} worldType="Shaderfun"/>
-                < PhaserWorld width={400} height={275} worldType="Lab"/>
             </Suspense>
         </div>
     )
