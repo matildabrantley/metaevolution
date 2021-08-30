@@ -52,14 +52,15 @@ h1, .clickable:hover {
 }
 
 .pageCard {
-  min-width: 250px;
-  max-width: 10%;
+  min-width: 150px;
+  max-width: 20%;
   display: flex;
   flex-direction: column;
   padding: 10px;
-  background-color: #fff;
-  border: solid 4px rgba(200, 0, 200, 0.1);
-  border-radius: 7px;
+  margin: 5%;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: solid 4px rgba(200, 0, 200, 0.3);
+  border-radius: 25px;
   will-change: transform;
   transition: box-shadow 0.75s;
 }
@@ -67,3 +68,8 @@ h1, .clickable:hover {
 .pageCard {
   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
 }  
+
+.pageImage {
+  border: solid 4px rgba(200, 0, 200, 0.3)
+}
+
