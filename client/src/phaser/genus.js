@@ -48,9 +48,11 @@ class Genus {
 
           this.species[this.species.length-1].cloneSpecies(this.species[0]);
 
-        //reset fitness
-        for (let specie of this.species)
-            specie.groupFitness = 0;
+        //set mutation of mutation rate and reset fitness
+        for (let s=0; s < this.species.length - 1; s++){
+            this.species[s].mutMutRate = s/(this.species.length*15) + 0.02; 
+            this.species[s].speciesFitness = 0;
+        }
         
         if (this.speciesSelectionFreq + this.deltaSelectionFreq <= this.maxSpeciesSelectionFreq)
             this.speciesSelectionFreq += this.deltaSelectionFreq;

@@ -5,7 +5,7 @@ const Phaser = require('phaser');
 class Species extends Phaser.Physics.Arcade.Group {
     constructor({world, scene, config, tiles, seesTiles = true} = {}, //general config for species and its sub-groups
                 {goals, goalsAreMoving = false, bonusIsRandom = false, groupSelectionFreq = 40, 
-                maxGroupSelectionFreq = 500, deltaSelectionFreq = 20} = {}, groups = []) {
+                maxGroupSelectionFreq = 500, deltaSelectionFreq = 20, mutMutRate = 0.05} = {}, groups = []) {
         
         super(world, scene, config);
         this.world = world;
@@ -25,6 +25,7 @@ class Species extends Phaser.Physics.Arcade.Group {
         this.bonusIsRandom = bonusIsRandom;
         this.groupSelectionFreq = groupSelectionFreq;
         this.maxGroupSelectionFreq = maxGroupSelectionFreq;
+        this.mutMutRate = mutMutRate;
         this.speciesFitness = 0;
     }
 
@@ -120,7 +121,7 @@ class Species extends Phaser.Physics.Arcade.Group {
 
         //the lower the fitness, the higher the mutation rate
         for (let g=0; g < this.groups.length - 1; g++){
-            this.groups[g].mutRate = g/(this.groups.length*2) + 0.02; 
+            this.groups[g].mutRate = g/(this.groups.length*10) + this.mutMutRate; 
             this.groups[g].groupFitness = 0;
         }
         //reset fitness
