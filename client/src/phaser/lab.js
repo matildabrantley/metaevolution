@@ -109,7 +109,7 @@ create () {
   //this.physics.world.setBounds( 0, 0, width, height );
   const cam = this.cameras.main.setBounds(0, 0, 1440, 1440);
   this.cursors = this.input.keyboard.createCursorKeys();
-  this.keys = this.input.keyboard.addKeys('W,A,S,D');
+  this.keys = this.input.keyboard.addKeys('R,A,S,D');
   this.cameras.main.centerToSize();
   cam.centerOn(200,180);
   cam.setBackgroundColor(0xffffff);
@@ -226,10 +226,10 @@ update () {
 
   // const cam = this.cameras.main;
     
-  // if (this.keys.A.isDown)
-  // {
-  //     cam.scrollX -= 4;
-  // }
+  if (this.keys.R.isDown)
+  {
+    this.restart();
+  }
   // else if (this.keys.D.isDown)
   // {
   //     cam.scrollX += 4;

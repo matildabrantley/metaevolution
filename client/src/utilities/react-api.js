@@ -1,4 +1,22 @@
 
+// const postNet = (net) => {
+//         //fetch...
+//         return fetch(
+//             '/api/users/postNet', {
+//                 method: 'POST',
+//                 headers: { 'Content-Type': 'application/json' },
+//                 body: JSON.stringify(net),
+//             });
+// }
+// const getAllNets = () => {
+//         //fetch...
+//         return fetch(
+//             '/api/users/getNet', {
+//                 method: 'GET',
+//                 headers: { 'Content-Type': 'application/json' },
+//                 body: JSON.stringify(net),
+//             });
+// }
 const register = (user) => {
     //fetch...
     return fetch(
@@ -22,9 +40,9 @@ const login = (user) => {
 const getThisUser = (token) => {
     //fetch
     return fetch(
-            '/api/users/thisUser', {
+        '/api/users/thisUser', {
             headers: { 'Content-Type': 'application/json', authorization: `Bearer ${token}` },
         });
-}
-
-module.exports = { register, login, getThisUser }
+    }
+    
+    module.exports = { register, login, getThisUser }

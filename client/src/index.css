@@ -7,7 +7,6 @@ body {
 }
 
 canvas {
-  border: solid black 10px;
   border-radius: 10px;
   margin: 3%;
 }

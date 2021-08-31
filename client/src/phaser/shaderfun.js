@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import raster from './assets/sprites/raster-bw-64.png';
+import raster from './assets/sprites/flamebar.png';
 
 class Shaderfun extends Phaser.Scene
 {

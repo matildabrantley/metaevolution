@@ -12,10 +12,13 @@ const GamePage = () => {
 
     return (
         <div>
-            <Button variant="danger" class="clickable" onClick={previous}>Back</Button>
-            <h1>Game</h1>
+            <Button variant="danger" className="clickable" onClick={previous}>Back</Button>
+            <h1 className="clickable">Game</h1>
             <Suspense fallback={<div>Loading...</div>}>
-                < PhaserWorld width={800} height={600} worldType="Game"/>
+                {/* < PhaserWorld width={800} height={600} worldType="Game"/> */}
+                < PhaserWorld width={800} height={500} worldType="Shaderfun"/>
+                < PhaserWorld width={800} height={600} worldType="Helix"/>
+                < PhaserWorld width={200} height={150} worldType="Colorfun"/>
             </Suspense>
         </div>
     )

@@ -4,7 +4,8 @@ import Ecosystem from "../phaser/ecosystem";
 import Lab from "../phaser/lab";
 import Colorfun from "../phaser/colorfun";
 import Shaderfun from "../phaser/shaderfun";
-import Camerafun from "../phaser/camerafun";
+import Helix from "../phaser/helix";
+// import Clothfun from "../phaser/clothfun";
 // import World from "../phaser/world";
 const lodash = require('lodash');
 
@@ -14,6 +15,7 @@ class PhaserWorld extends Component {
    componentWillMount() {
       this.id = lodash.uniqueId("simulation-");
       let scene;
+      let physics = 'arcade';
       switch (this.props.worldType) {
         case "Ecosystem":
           scene = new Ecosystem(this.id, this.props.width, this.props.height, 'arcade');
@@ -27,9 +29,13 @@ class PhaserWorld extends Component {
         case "Shaderfun":
           scene = new Shaderfun(this.props.width, this.props.height);
           break;
-        case "Camerafun":
-          scene = new Camerafun(this.props.width, this.props.height);
+        case "Helix":
+          scene = new Helix(this.props.width, this.props.height);
           break;
+        // case "Clothfun":
+        //   scene = new Clothfun(this.props.width, this.props.height, 'matter');
+        //   physics = 'matter';
+        //   break;
       
         default:
           break;
@@ -44,7 +50,8 @@ class PhaserWorld extends Component {
     //     autoCenter: Phaser.Scale.CENTER_BOTH
     // },
       physics: {
-        default: 'arcade',
+        default: physics,
+        matter: {}
       },
       scene: scene
     };

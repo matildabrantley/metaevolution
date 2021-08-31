@@ -70,8 +70,7 @@ const HomePage = () => {
                         </Link>
                     </Popout>
                 <Card.Text style={{fontFamily:'Architects Daughter'}}>
-                    Some quick example text to build on the card title and make up the bulk
-                    of the card's content.
+                    Build neural networks and try them out.
                 </Card.Text>
                 </Card.Body>
             </Card>
@@ -98,8 +97,7 @@ const HomePage = () => {
                         </Link>
                     </Popout>
                 <Card.Text style={{fontFamily:'Architects Daughter'}} >
-                    Some quick example text to build on the card title and make up the bulk
-                    of the card's content.
+                    Explore the evolution of artificial life
                 </Card.Text>
                 </Card.Body>
             </Card>
@@ -126,8 +124,7 @@ const HomePage = () => {
                         </Link>
                     </Popout>
                 <Card.Text style={{fontFamily:'Architects Daughter'}}>
-                    Some quick example text to build on the card title and make up the bulk
-                    of the card's content.
+                    Under construction.
                 </Card.Text>
                 </Card.Body>
             </Card>

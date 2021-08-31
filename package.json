@@ -15,5 +15,7 @@
   "devDependencies": {
     "concurrently": "^5.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "patch-package": "^6.4.7"
+  }
 }
