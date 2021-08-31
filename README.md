@@ -1,6 +1,8 @@
 # Meta-Evolution Lab
 Online Lab for Open-ended AI through Hierarchical Evolution
 
+### By: Matilda Brantley
+
 ## Description
 This project is a custom neural network framework for creating artificial intelligence without the normal restrictions. The neural networks are trained through
 natural selection of partly random mutations (similar to genetic algorithms) rather than gradient descent (backpropagation). This frees the neural networks to grow 
