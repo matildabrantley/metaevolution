@@ -27,7 +27,7 @@ const userSchema = new Schema(
   }
 );
 
-// hash user password
+// hash password before it's saved with bcrypt
 userSchema.pre('save', async function (next) {
   if (this.isNew || this.isModified('password')) {
     const saltRounds = 10;
@@ -36,7 +36,7 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-//Checking passwords built into schema
+//compare password with bcrypt
 userSchema.methods.checkPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
