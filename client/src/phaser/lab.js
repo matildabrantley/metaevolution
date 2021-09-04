@@ -74,7 +74,8 @@ class Lab extends Phaser.Scene {
   }
 
   getBest() {
-    
+    //works for one genus now
+    return this.genera[0].getBestInGenus();
   }
 
   preload () {

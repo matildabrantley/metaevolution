@@ -2,7 +2,7 @@
 const saveMind = (mind) => {
         //fetch...
         return fetch(
-            '/api/users/saveMind', {
+            '/api/neural/saveMind', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(mind),
@@ -45,4 +45,4 @@ const getThisUser = (token) => {
         });
     }
     
-    module.exports = { register, login, getThisUser }
+    module.exports = { register, login, getThisUser, saveMind }

@@ -1,22 +1,5 @@
-const { signToken } = require('./authentication');
-const { User } = require('./models');
-const { Net } = require('./models');
-
-
-async function storeNet({ body }, res) {
-  const newNet = await Net.create(body);
-  res.json({ netNet });
-}
-
-async function getAllNets({ }, res) {
-  const retrievedNes = await Net.find();
-
-  if (!retrievedNets) {
-    return res.status(400).json({ message: 'No networks saved' });
-  }
-
-  res.json(retrievedNets);
-}
+const { signToken } = require('../authentication');
+const { User } = require('../models');
 
 //user registration route
 async function register({ body }, res) {
@@ -56,5 +39,5 @@ async function getUser({ user = null, params }, res) {
     res.json(retrievedUser);
 }
 
-module.exports = { register, login, getUser}
+module.exports = { register, login, getUser }
 

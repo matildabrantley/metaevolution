@@ -53,6 +53,11 @@ class Ecosystem extends Phaser.Scene {
     this.globalTimer = 0;
   }
 
+  getBest() {
+    //works for one genus now
+    return this.genera[0].getBestInGenus();
+  }
+
   preload () {
     //backgrounds
     this.backgrounds = ['background', 'background2'];

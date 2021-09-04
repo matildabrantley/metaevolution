@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import Phaser from "phaser";
 import Ecosystem from "../phaser/ecosystem";
 import Lab from "../phaser/lab";
-// import Clothfun from "../phaser/clothfun";
-// import World from "../phaser/world";
+import { saveMind } from '../utilities/react-api';
 
 import Glide from '../components/Glide';
 
@@ -13,9 +12,8 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import FavIcon from '@material-ui/icons/Favorite';
 
-
 const lodash = require('lodash');
-
+let scene;
 class PhaserWorld extends Component {
    componentWillMount() {
 
@@ -24,10 +22,10 @@ class PhaserWorld extends Component {
       let physics = 'arcade';
       switch (this.props.worldType) {
         case "Ecosystem":
-          this.scene = new Ecosystem(this.id, this.props.width, this.props.height, 'arcade');
+          scene = new Ecosystem(this.id, this.props.width, this.props.height, 'arcade');
           break;
         case "Lab":
-          this.scene = new Lab(this.id, this.props.width, this.props.height, 'arcade');
+          scene = new Lab(this.id, this.props.width, this.props.height, 'arcade');
           break;
         // case "Colorfun":
         //   scene = new Colorfun();
@@ -61,7 +59,7 @@ class PhaserWorld extends Component {
         default: physics,
         matter: {}
       },
-      scene: this.scene
+      scene: scene
     };
     //create the Phaser world
     this.game = new Phaser.Game(config);
@@ -72,20 +70,31 @@ componentWillUnmount() {
   this.game.destroy(true)
 }
 
-saveNet() {
-
+async save() {
+  console.log(this);
+  const bestMind = scene.getBest();
+  try {
+      const res = await saveMind({net: bestMind.senseNet});
+    if (!res.ok) {
+      throw new Error('Oh dear, neural net did not save/');
+    }
+    // console.log(await res.json());
+  } catch (err) {
+    console.error(err);
+    // setIsDisplayingMessage(true);
+  }
 }
 
 render() {
 	  return (
       <><div className="clickable">
-        <Fab color="primary" aria-label="add" onClick={this.saveNet} style={{ margin: '10px' }}>
+        {/* <Fab color="primary" aria-label="add" onClick={this.createNet} style={{ margin: '10px' }}>
           <AddIcon />
         </Fab>Create Net
         <Fab color="secondary" aria-label="edit" style={{ margin: '10px' }}>
           <EditIcon />
-        </Fab> Edit Net
-        <Fab color="secondary" aria-label="edit" style={{ margin: '10px' }}>
+        </Fab> Edit Net */}
+        <Fab onClick={this.save} color="secondary" aria-label="edit" style={{ margin: '10px' }}>
           <FavIcon />
         </Fab> Save Net
       </div><div id={this.id}></div></>

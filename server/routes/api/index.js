@@ -1,6 +1,8 @@
 const router = require('express').Router();
-const routes = require('./routes');
+const routesForUser = require('./user-routes');
+const routesForAgent = require('./neural-routes');
 
-router.use('/users', routes);
+router.use('/user', routesForUser);
+router.use('/neural', routesForAgent);
 
 module.exports = router;
