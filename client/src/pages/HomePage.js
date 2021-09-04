@@ -6,7 +6,7 @@ import { Button } from 'react-bootstrap';
 import SideNav from '../components/Controls';
 import labImage from '../assets/labpage.png';
 import ecoImage from '../assets/ecopage.png';
-import image from '../assets/ecopage.png';
+import gameImage from '../assets/gamepage.png';
 import Glide from '../components/Glide';
 import { Grid } from '@material-ui/core';
 
@@ -118,7 +118,7 @@ const HomePage = () => {
                                 width={171}
                                 height={380}
                                 alt="Ecosystem"
-                                src={image}
+                                src={gameImage}
                                 roundedCircle
                                 />
                         </Link>

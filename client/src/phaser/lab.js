@@ -71,7 +71,6 @@ class Lab extends Phaser.Scene {
     this.groupPop = 50;
     this.genera = [];
     this.globalTimer = 0;
-
   }
 
   preload () {
@@ -107,7 +106,7 @@ class Lab extends Phaser.Scene {
 
 create () {
   //this.physics.world.setBounds( 0, 0, width, height );
-  const cam = this.cameras.main.setBounds(0, 0, 1440, 1440);
+  const cam = this.cameras.main.setBounds(0, 0, this.config.width, this.config.height);
   this.cursors = this.input.keyboard.createCursorKeys();
   this.keys = this.input.keyboard.addKeys('R,A,S,D');
   this.cameras.main.centerToSize();
@@ -131,12 +130,12 @@ create () {
   loneStar.collideWorldBounds = true;
   goalGroup.add(loneStar);
   
-  blueStar = this.physics.add.image(this.config.width * (0.54 + goalDivergence), this.config.height * (0.55 - goalDivergence), 'bluestar');
-  blueStar.setCircle(30);
-  blueStar.setScale(4);
-  blueStar.setBounce(5);
-  blueStar.collideWorldBounds = true;
-  goalGroup.add(blueStar);
+  // blueStar = this.physics.add.image(this.config.width * (0.54 + goalDivergence), this.config.height * (0.55 - goalDivergence), 'bluestar');
+  // blueStar.setCircle(30);
+  // blueStar.setScale(4);
+  // blueStar.setBounce(5);
+  // blueStar.collideWorldBounds = true;
+  // goalGroup.add(blueStar);
   
   // blackStar = this.physics.add.image(this.config.width * (0.5 + goalDivergence), this.config.height * (0.5 + goalDivergence), 'blackstar');
   // blackStar.setCircle(30);
@@ -215,7 +214,7 @@ create () {
   // newSpecies.addPreySpecies(newSpecies3);
   // newSpecies3.addPredatorSpecies(newSpecies);
 
-  // this.physics.add.collider(loneStar, tileLayer);
+  // this.physics.add.collider(loneStar, this.tileLayer);
 
 
   this.timerText = this.add.text(10, 10, this.globalTime);

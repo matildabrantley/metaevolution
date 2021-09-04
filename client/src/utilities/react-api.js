@@ -1,13 +1,13 @@
 
-// const postNet = (net) => {
-//         //fetch...
-//         return fetch(
-//             '/api/users/postNet', {
-//                 method: 'POST',
-//                 headers: { 'Content-Type': 'application/json' },
-//                 body: JSON.stringify(net),
-//             });
-// }
+const saveMind = (mind) => {
+        //fetch...
+        return fetch(
+            '/api/users/saveMind', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(mind),
+            });
+}
 // const getAllNets = () => {
 //         //fetch...
 //         return fetch(

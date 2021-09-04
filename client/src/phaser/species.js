@@ -135,6 +135,9 @@ class Species extends Phaser.Physics.Arcade.Group {
 
         if (this.groupSelectionFreq + this.deltaSelectionFreq <= this.maxGroupSelectionFreq)
             this.groupSelectionFreq += this.deltaSelectionFreq;
+
+        if (this.timer > 600)
+            this.goalsAreMoving = true;
     }
 
     cloneSpecies(clonedSpecies){

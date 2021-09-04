@@ -1,5 +1,6 @@
 import Net from './net';
 const Phaser = require('phaser');
+const copyDeep = require('lodash.clonedeep');
 // const Vector = require('./vector');
 
 class Life extends Phaser.Physics.Arcade.Sprite {
@@ -26,6 +27,11 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         // this.y;?
     }
 
+    //return a deep copy of mind
+    getMindCopy() {
+        return copyDeep(this.mind);
+    }
+
     //for updating within update loop of Phaser or Matter
     update(goals, bonusGoal) {
         //let angle = Phaser.Math.Angle.BetweenPoints(this, goal);
@@ -34,8 +40,6 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         let inputs = [];
         //distance from goals and bonus goal
         for (let g=0; g < goals.length; g++){
-            inputs.push((this.x - goals[g].x) / 100); //x difference (not dist)
-            inputs.push((this.y - goals[g].y) / 100); //y difference
             inputs.push((this.x - goals[g].x) / 100); //x difference (not dist)
             inputs.push((this.y - goals[g].y) / 100); //y difference
             inputs.push((this.x - goals[g].x) / 100); //x difference (not dist)
@@ -58,6 +62,9 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         //     this.setVelocityY(100);
 
         //this.feed();
+
+        this.angle = this.body.angularVelocity;
+        // this.setAngle(this.body.angularAcceleration);
     }
 
     tryToJump(force=1) {
@@ -82,13 +89,13 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         // tileInputs.push(this.lookAtTile(this.x, this.y)); 
         //Go around clock-wise for nearest 8
         tileInputs.push(this.lookAtTile(this.x, this.y - tileSize)); //12:00, Up, North
-        //tileInputs.push(this.lookAtTile(this.x + tileSize, this.y - tileSize)); //1:30, Upper Right, Northeast
+        tileInputs.push(this.lookAtTile(this.x + tileSize, this.y - tileSize)); //1:30, Upper Right, Northeast
         tileInputs.push(this.lookAtTile(this.x + tileSize, this.y, true)); //3:00, Right, East
-        //tileInputs.push(this.lookAtTile(this.x + tileSize, this.y + tileSize)); //4:30, Bottom Right, Southeast
+        tileInputs.push(this.lookAtTile(this.x + tileSize, this.y + tileSize)); //4:30, Bottom Right, Southeast
         tileInputs.push(this.lookAtTile(this.x, this.y + tileSize)); //6:00, Bottom, South
-        //tileInputs.push(this.lookAtTile(this.x - tileSize, this.y + tileSize)); //7:30, Bottom Left, Southwest
+        tileInputs.push(this.lookAtTile(this.x - tileSize, this.y + tileSize)); //7:30, Bottom Left, Southwest
         tileInputs.push(this.lookAtTile(this.x - tileSize, this.y)); //9:00, Left, West
-        //tileInputs.push(this.lookAtTile(this.x - tileSize, this.y - tileSize)); //10:30, Upper Left, Northwest
+        tileInputs.push(this.lookAtTile(this.x - tileSize, this.y - tileSize)); //10:30, Upper Left, Northwest
         
         // tileInputs.push(this.lookAtTile(this.x, this.y - tileSize * 2)); //12:00, Up, North
         // tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y - tileSize  * 2)); //1:30, Upper Right, Northeast
@@ -110,9 +117,9 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         try {
             let tile = this.tiles.getTileAtWorldXY(x, y, true).index;
             //TODO: get these magic tile numbers from elsewhere
-            if (tile === 6 || tile === 48 || tile === 29){
-                tileInput = 0;
-                //this.fitness-=20;
+            if ( tile === 29){
+                tileInput = -2;
+                this.fitness-=10;
             }
             else if (tile === 1) {
                 tileInput = 2;

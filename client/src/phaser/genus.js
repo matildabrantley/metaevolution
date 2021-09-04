@@ -21,6 +21,9 @@ class Genus {
         for (const specie of this.species) {
             specie.scene.physics.add.collider(specie, specie.tiles); ;
         }
+        //just initialize "best" to first agent/group/species created for now
+        // this.bestGroup = this.groups[0].best;
+        // this.bestLife = this.bestGroup.best;
     }
 
     update() {

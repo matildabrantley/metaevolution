@@ -41,9 +41,11 @@ class Group extends Phaser.Physics.Arcade.Group {
                 life.startingDistFromGoal[g] = Phaser.Math.Distance.BetweenPoints(life, this.goals[g]);
         
             //Create minds based on number of goals= 3
-            const tileVisionInputs = this.species.seesTiles ? 4 : 0;
-            life.mind = new Mind(this.goals.length * 7 + tileVisionInputs, 5);
+            const tileVisionInputs = this.species.seesTiles ? 8 : 0;
+            life.mind = new Mind(this.goals.length * 5 + tileVisionInputs, 2);
         }
+        //initialize "best" to simply first created for now
+        this.best = this.lives[0];
     }
 
     //normal updating within Phaser's/Matter's loop
@@ -98,6 +100,7 @@ class Group extends Phaser.Physics.Arcade.Group {
 
         //fitness sorting function in which more fit lives move to front
         this.lives.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
+        this.best = this.lives[0]; //save the best so it can be saved to database when requested
 
         //vast majority of population replaced by sexual offspring of top X% (X = selectionCutoff)
         for (let i=this.lives.length-20; i > this.lives.length * this.selectionCutoff; i--) {

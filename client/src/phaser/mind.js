@@ -1,10 +1,10 @@
 import Net from './net';
 
 class Mind {
-    constructor(numSenses = 4, numBehaviors = 3, simple = true){
+    constructor(numSenses = 4, numBehaviors = 3, simple = false){
         this.simple = simple;
         //Sensory Net takes in input from world
-        this.senseNet = new Net({isRecurrent: true, isLongTerm: false}, numSenses, numSenses+10, 10, numBehaviors);
+        this.senseNet = new Net({isRecurrent: true, isLongTerm: false}, numSenses, numSenses+10, 10, 5, 3);
 
         //Keeping this here for now so I can control Mind building inside class better
         if (!simple)
