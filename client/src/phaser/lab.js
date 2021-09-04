@@ -73,6 +73,10 @@ class Lab extends Phaser.Scene {
     this.globalTimer = 0;
   }
 
+  getBest() {
+    
+  }
+
   preload () {
     //sprites
     this.load.image('star', star);

@@ -100,7 +100,7 @@ class Group extends Phaser.Physics.Arcade.Group {
 
         //fitness sorting function in which more fit lives move to front
         this.lives.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
-        this.best = this.lives[0]; //save the best so it can be saved to database when requested
+        this.bestMind = this.lives[0].getMindCopy(); //save the best so it can be saved to database when requested
 
         //vast majority of population replaced by sexual offspring of top X% (X = selectionCutoff)
         for (let i=this.lives.length-20; i > this.lives.length * this.selectionCutoff; i--) {

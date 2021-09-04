@@ -123,6 +123,7 @@ class Species extends Phaser.Physics.Arcade.Group {
 
         //replace worst group with best group
         this.groups[this.groups.length-1].cloneGroup(this.groups[0]);
+        this.bestGroup = this.groups[0];
 
         //the lower the fitness, the higher the mutation rate
         for (let g=0; g < this.groups.length - 1; g++){

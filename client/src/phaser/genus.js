@@ -16,14 +16,16 @@ class Genus {
     addSpecies(specie){
         this.species.push(specie);
     }
-
+    
     setupSpecies(){
         for (const specie of this.species) {
             specie.scene.physics.add.collider(specie, specie.tiles); ;
+            
+            //just initialize "best" group to first group for now
+            specie.bestGroup = specie.groups[0].best;
         }
-        //just initialize "best" to first agent/group/species created for now
-        // this.bestGroup = this.groups[0].best;
-        // this.bestLife = this.bestGroup.best;
+        //just set "best" species to first species for now
+        this.bestSpecies = this.species[0];
     }
 
     update() {
@@ -49,7 +51,8 @@ class Genus {
     speciesSelection() {
         this.species.sort((b, a) => (a.speciesFitness > b.speciesFitness) ? 1 : -1);
 
-          this.species[this.species.length-1].cloneSpecies(this.species[0]);
+        this.species[this.species.length-1].cloneSpecies(this.species[0]);
+        this.bestSpecies = this.species[0];
 
         //set mutation of mutation rate and reset fitness
         for (let s=0; s < this.species.length - 1; s++){
@@ -59,6 +62,10 @@ class Genus {
         
         if (this.speciesSelectionFreq + this.deltaSelectionFreq <= this.maxSpeciesSelectionFreq)
             this.speciesSelectionFreq += this.deltaSelectionFreq;
+    }
+
+    getBestInGenus(){
+        return this.bestSpecies.bestGroup.bestMind;
     }
 }
 
