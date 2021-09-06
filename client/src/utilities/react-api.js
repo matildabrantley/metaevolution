@@ -2,7 +2,7 @@
 const saveMind = (userToken, mind) => {
     return fetch(
         '/api/neural/saveMind', {
-            method: 'POST',
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json',
                         authorization: `Bearer ${userToken}` },
             body: JSON.stringify(mind),

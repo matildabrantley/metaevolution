@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import UserAuth from '../utilities/userAuthentication';
 import { register } from '../utilities/react-api';
-import PhaserWorld from './PhaserWorld';
 import Popout from './Popout';
 
 
@@ -43,7 +42,6 @@ const Register = () => {
 
   return (
     <>
-    < PhaserWorld width={1000} height={450} worldType="Shaderfun"/>
     <h3>Register to save and share your evolved agents</h3>
       <Form noValidate validated={isValidated} onSubmit={handleRegistration}>
         <Alert dismissible onClose={() => setIsDisplayingMessage(false)} show={isDisplayingMessage} variant='danger'>

@@ -6,7 +6,7 @@ import Login from './Login';
 import Settings from './Settings';
 import { Link } from 'react-router-dom';
 import Popout from './Popout';
-import Flipout from './/Flipout';
+import Flipout from './Flipout';
 import J from './Jumpout';
 // import Glide from './Glide';
 
@@ -39,7 +39,7 @@ const Navigation = () => {
                 <Flipout>
                 <Nav className="me-auto">
                     <NavDropdown title="Links" id="basic-nav-dropdown">
-                    <NavDropdown.Item href="https://matildabrantley.github.io/learning-rooms/">Learing Rooms</NavDropdown.Item>
+                    <NavDropdown.Item href="https://matildabrantley.github.io/learning-rooms/">Learning Rooms</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="https://github.com/matildabrantley">My GitHub</NavDropdown.Item>
                     <NavDropdown.Item href="https://matildabrantley.github.io/portfolio/">Portfolio</NavDropdown.Item>

@@ -4,8 +4,7 @@ const { Mind, User } = require('../models');
 //store entire mind object in database
 async function saveMind({ user, body }, res) {
   try {
-    const updatedUser = await User.findOneAndUpdate(
-      { _id: user._id },
+    const updatedUser = await User.findOneAndUpdate( { _id: user._id },
       { $addToSet: { savedMinds: body } },
       { new: true, runValidators: true }
     );
