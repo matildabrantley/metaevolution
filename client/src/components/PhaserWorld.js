@@ -3,6 +3,8 @@ import Phaser from "phaser";
 import Ecosystem from "../phaser/ecosystem";
 import Lab from "../phaser/lab";
 import { saveMind } from '../utilities/react-api';
+import UserAuth from '../utilities/userAuthentication';
+
 
 import Glide from '../components/Glide';
 
@@ -71,19 +73,26 @@ componentWillUnmount() {
 }
 
 async save() {
-  console.log(this);
   const bestMind = scene.getBest();
+
+  const userToken = UserAuth.loggedIn() ? UserAuth.getToken() : null;
+
+  if (!userToken)
+    return false;
+
   try {
-      const res = await saveMind({net: bestMind.senseNet});
-    if (!res.ok) {
-      throw new Error('Oh dear, neural net did not save/');
-    }
-    // console.log(await res.json());
+    const response = await saveMind(userToken, {net: bestMind.senseNet, name: "Filler Name"});
+
+    if (!response.ok) 
+      throw new Error('Oh dear, neural net did not save!');
+    
+
+    //TODO: Save mind to localStorage or IndexedDB
   } catch (err) {
     console.error(err);
-    // setIsDisplayingMessage(true);
   }
 }
+
 
 render() {
 	  return (
