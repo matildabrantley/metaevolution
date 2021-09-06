@@ -20,7 +20,7 @@ const saveMind = (mind) => {
 const register = (user) => {
     //fetch...
     return fetch(
-        '/api/users', {
+        '/api/user', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user),
@@ -30,7 +30,7 @@ const register = (user) => {
 const login = (user) => {
     //fetch...
     return fetch(
-        '/api/users/login', {
+        '/api/user/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user),
@@ -40,7 +40,7 @@ const login = (user) => {
 const getThisUser = (token) => {
     //fetch
     return fetch(
-        '/api/users/thisUser', {
+        '/api/user/thisUser', {
             headers: { 'Content-Type': 'application/json', authorization: `Bearer ${token}` },
         });
     }
