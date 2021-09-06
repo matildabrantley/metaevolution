@@ -8,6 +8,7 @@ const mindSchema = new Schema({
   },
 });
 
-const Mind = model('Mind', mindSchema);
+module.exports = mindSchema;
 
-module.exports = Mind;
+// const Mind = model('Mind', mindSchema);
+// module.exports = Mind;
