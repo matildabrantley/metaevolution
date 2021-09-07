@@ -75,18 +75,17 @@ class Group extends Phaser.Physics.Arcade.Group {
             let distScores = [];
             for (let g=0; g < this.goals.length; g++){
                 let newScore = life.startingDistFromGoal[g] / (Phaser.Math.Distance.BetweenPoints(life, this.goals[g]) + 1);
-                if (g == this.species.bonusGoal){
-                    //newScore += 10; 
-                    newScore *= 2.5; 
-                }
-                else {
-                    newScore *= -0.1;
-                }
+                (g == this.species.bonusGoal) ? newScore *= 2.5 : newScore *= -0.1;
                     
                 distScores.push(newScore);
             }
             //use reducer to get total product //(and divide by 1000 to keep values manageable)
             life.fitness += distScores.reduce((a,b) => a+b, 1)/1000;
+
+            
+
+
+
             allFitness.push(life.fitness);
         }
         this.groupFitness += average(allFitness);

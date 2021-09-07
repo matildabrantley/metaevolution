@@ -48,7 +48,7 @@ class Ecosystem extends Phaser.Scene {
     };
 
     this.worldSize = 1440; //size of whole world, not scene (which is canvas)
-    this.groupPop = 100;
+    this.groupPop = 50;
     this.genera = [];
     this.globalTimer = 0;
   }
@@ -201,7 +201,7 @@ create () {
  this.genera[0].addSpecies(newSpecies);
 
 
-  this.genera[0].setupSpecies();
+  this.genera[0].setupGenus();
 
   
   // newSpecies.addPreySpecies(newSpecies3);

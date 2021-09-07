@@ -17,12 +17,9 @@ class Genus {
         this.species.push(specie);
     }
     
-    setupSpecies(){
+    setupGenus(){
         for (const specie of this.species) {
-            specie.scene.physics.add.collider(specie, specie.tiles); ;
-            
-            //just initialize "best" group to first group for now
-            specie.bestGroup = specie.groups[0].best;
+            specie.setupSpecies();
         }
         //just set "best" species to first species for now
         this.bestSpecies = this.species[0];

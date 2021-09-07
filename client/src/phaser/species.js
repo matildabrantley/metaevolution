@@ -66,17 +66,27 @@ class Species extends Phaser.Physics.Arcade.Group {
         this.groups.push(newGroup);
     }
 
+    setupSpecies() {
+        //setup tile collisions
+        this.scene.physics.add.collider(this, this.tiles);
+
+        //just initialize "best" group to first group for now
+        this.bestGroup = this.groups[0].best;
+    }
+
     update(){
         this.timer++;
 
         let allGroupsFitness = []; //used to calculate average group fitness
 
+        //update each group, which will update each life
         for (let group of this.groups) {
             group.updateWithEngine();
             allGroupsFitness.push(group.groupFitness);
         }
         this.speciesFitness = average(allGroupsFitness);
         
+        //Rotate star goals
         if (this.timer % this.bonusLength === 0){
             if (this.bonusIsRandom) {
                 this.bonusGoal = Math.floor((Math.random() * this.goals.length)); //random goal rotation
