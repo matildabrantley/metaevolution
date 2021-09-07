@@ -4,13 +4,21 @@ const Phaser = require('phaser');
 // const Vector = require('./vector');
 
 class Group extends Phaser.Physics.Arcade.Group {
-    constructor(world, scene, config, tiles, species){
+    constructor(world, scene, config, tiles, species,
+            {pop = 100, mutRate = 0.1 , selectionCutoff = 0.1, maxGenLength = 500, initialGenLength = 10, deltaGenLength = 5}={}){
         super(world, scene, config);
         this.lives = [];
         this.scene = scene;
         this.world = world;
         this.tiles = tiles;
         this.species = species;
+        
+        this.mutRate = mutRate;
+        this.maxGenLength = maxGenLength;
+        this.genLength = initialGenLength;
+        this.deltaGenLength = deltaGenLength;
+        this.selectionCutoff = selectionCutoff;
+        this.numElites = 20;
 
         this.timer1 = 0;
         this.goals = species.goals;
@@ -22,15 +30,9 @@ class Group extends Phaser.Physics.Arcade.Group {
     }
 
     //maintains array of Life objects, sets initial distances from goals and create Minds
-    setup(pop = 100, mutRate = 0.1 , selectionCutoff = 0.1, maxGenLength = 500, initialGenLength = 10, deltaGenLength = 5) {
+    setup(goals = this.species.goals) {
         this.lives = this.getChildren();
-
-        this.mutRate = mutRate;
-        this.maxGenLength = maxGenLength;
-        this.genLength = initialGenLength;
-        this.deltaGenLength = deltaGenLength;
-        this.selectionCutoff = selectionCutoff;
-        this.numElites = 20;
+        this.goals = this.species.goals;
 
         this.preySpecies = [];
         this.predatorSpecies = [];
@@ -44,6 +46,7 @@ class Group extends Phaser.Physics.Arcade.Group {
             const tileVisionInputs = this.species.seesTiles ? 8 : 0;
             life.mind = new Mind(this.goals.length * 5 + tileVisionInputs, 2);
         }
+        
         //initialize "best" to simply first created for now
         this.best = this.lives[0];
     }

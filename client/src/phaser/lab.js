@@ -130,7 +130,7 @@ create () {
   let goalGroup = this.add.group();
   loneStar = this.physics.add.image(this.config.width * (0.54 - goalDivergence), this.config.height * (0.55 - goalDivergence), 'star');
   loneStar.setCircle(30);
-  loneStar.setScale(4);
+  loneStar.setScale(1);
   loneStar.setBounce(5);
   loneStar.collideWorldBounds = true;
   goalGroup.add(loneStar);
@@ -186,7 +186,7 @@ create () {
    //4 Groups per Species, 4 Species (16 groups total) each with different animations
    //Create empty Species with only goals defined
   let newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-  newSpecies.createGroup(redGroupAnim, {pop: this.groupPop}, fitnessConfig);
+  newSpecies.createGroup(redGroupAnim, {pop: this.groupPop});
   newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
   newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
   newSpecies.createGroup(brightGroupAnim, {pop: this.groupPop});
@@ -214,7 +214,7 @@ create () {
    newSpecies.createGroup(voidSpiralAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
-  this.genera[0].setupSpecies();
+  this.genera[0].setupGenus(fitnessConfig);
 
   
   // newSpecies.addPreySpecies(newSpecies3);

@@ -1,4 +1,5 @@
 //Genus-Species mirrors Species-Group relationship at a higher level
+import Group from './group';
 import Species from './species';
 const Phaser = require('phaser');
 
@@ -7,28 +8,45 @@ const Phaser = require('phaser');
 class Genus {
     constructor({world, scene, config, tiles, seesTiles = true} = {},
                 {speciesSelectionFreq = 100, maxSpeciesSelectionFreq = 600, deltaSelectionFreq = 50} = {}, species = []){
+
+        this.world = world;
+        this.scene = scene;            
+        this.config = config;            
+        this.tiles = tiles;    
+        this.seesTiles = seesTiles;        
+
         this.species = species;
         this.timer = 0;
         this.speciesSelectionFreq = speciesSelectionFreq;
         this.maxSpeciesSelectionFreq = maxSpeciesSelectionFreq;
     }
     
-    setupGenus(){
+    setupGenus({goals = [], preyGroups = [], predatorGroups = []}={}){
         for (const specie of this.species) {
-            specie.setupSpecies();
+            specie.setupSpecies({goals: goals, preyGroups: preyGroups, predatorGroups: predatorGroups});
         }
         //just set "best" species to first species for now
         this.bestSpecies = this.species[0];
     }
 
-    //Create a new species with all subgroups having same initial attributes (animation config, genetic config)
-    createSpecies({sprite, spritesheet, key, firstFrame, scale = 1} = {},
-        {goals = this.goals, preyGroups, predatorGroups} = {}) {
+    //Create a new species with all subgroups having same initial attributes (animation config, genetic config, fitness config)
+    createSpecies({sprite=null, spritesheet=null, key=null, firstFrame=null, scale = 1} = {}, //anim config
+        {numGroups = 4, pop = 200, groupPop = 50, mutRate = 0.05, selectionCutoff = 0.1, //population config
+            maxGenLength = 250, initialGenLength = 10, deltaGenLength = 5} = {}) { 
 
-        //Create Species object with general configuration and defaults for everything else
-        const newSpecies = new Species(this.world, this.scene, this.config, this.tiles);
+                
+            //Create Species object with general configuration and defaults for everything else
+            const newSpecies = new Species({world: this.world, scene: this.scene, config: this.config, tiles: this.tiles});
+                
+            let popPerGroup = pop / groupPop;
+            for (let i=0; i < numGroups; i++) {
+                newSpecies.createGroup({sprite, spritesheet, key, firstFrame, scale}
+                )
+            }
+        
 
         this.species.push(newSpecies);
+        return newSpecies;
     }
 
     //Let's pretend "specie" is the correct singular of "species" =)
