@@ -1,6 +1,5 @@
 import Life from './life';
 import Group from './group';
-import defaultSprite from './assets/sprites/default.png';
 
 const Phaser = require('phaser');
 
@@ -71,7 +70,7 @@ class Species extends Phaser.Physics.Arcade.Group {
             } else if (sprite != null) //static sprite provided
                 life = new Life(this.scene, 300, 400, {sprite: sprite, tiles: this.tiles}, this.seesTiles);
               else //no sprite provided, use default sprite
-                life = new Life(this.scene, 300, 400, {sprite: defaultSprite, tiles: this.tiles}, this.seesTiles);
+                life = new Life(this.scene, 300, 400, {sprite: 'default', tiles: this.tiles}, this.seesTiles);
             
             life.setScale(scale);
             life.alpha = 0.5;

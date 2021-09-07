@@ -5,6 +5,7 @@ import floral from './assets/sprites/floral-stunning.jpg';
 import floral2 from './assets/sprites/floral-colorful.jpg';
 
 //Import static sprites
+import defaultSprite from './assets/sprites/default.png';
 import star from './assets/sprites/star.png';
 import bluestar from './assets/sprites/bluestar.png';
 import blackstar from './assets/sprites/blackstar.png';
@@ -64,6 +65,7 @@ class Ecosystem extends Phaser.Scene {
     this.load.image(this.backgrounds[0], floral);
     this.load.image(this.backgrounds[1], floral2);
     //sprites
+    this.load.image('default', defaultSprite);
     this.load.image('star', star);
     this.load.image('bluestar', bluestar);
     this.load.image('blackstar', blackstar);
@@ -170,24 +172,27 @@ create () {
   //Create one Genus
   this.genera.push(new Genus(generalConfig));
   
-  let species1 = this.genera[0].createSpecies(darkrabbitAnim, {pop: this.groupPop});
+  // let species1 = this.genera[0].createSpecies(darkrabbitAnim, {pop: this.groupPop});
+  // let species2 = this.genera[0].createSpecies(bluerabbitAnim, {pop: this.groupPop});
+  // let species4 = this.genera[0].createSpecies(redrabbitAnim, {pop: this.groupPop});
+  let species3 = this.genera[0].createSpecies({pop: 500});
 
   
   //4 Groups per Species, 4 Species (16 groups total) each with different animations
   //Create empty Species with only goals defined
-  let species2 = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
- species2.createGroup(bluerabbitAnim, {pop: this.groupPop});
- species2.createGroup(bluerabbitAnim, {pop: this.groupPop});
-  species2.createGroup(bluerabbitAnim, {pop: this.groupPop});
-  species2.createGroup(bluerabbitAnim, {pop: this.groupPop});
- this.genera[0].addSpecies(species2);
+//   let species2 = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
+//  species2.createGroup(bluerabbitAnim, {pop: this.groupPop});
+//  species2.createGroup(bluerabbitAnim, {pop: this.groupPop});
+//   species2.createGroup(bluerabbitAnim, {pop: this.groupPop});
+//   species2.createGroup(bluerabbitAnim, {pop: this.groupPop});
+//  this.genera[0].addSpecies(species2);
 
- let species3 = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
- species3.createGroup(redrabbitAnim, {pop: this.groupPop});
- species3.createGroup(redrabbitAnim, {pop: this.groupPop});
- species3.createGroup(redrabbitAnim, {pop: this.groupPop});
- species3.createGroup(redrabbitAnim, {pop: this.groupPop});
- this.genera[0].addSpecies(species3);
+//  let species3 = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
+//  species3.createGroup(redrabbitAnim, {pop: this.groupPop});
+//  species3.createGroup(redrabbitAnim, {pop: this.groupPop});
+//  species3.createGroup(redrabbitAnim, {pop: this.groupPop});
+//  species3.createGroup(redrabbitAnim, {pop: this.groupPop});
+//  this.genera[0].addSpecies(species3);
  
 //  let species4 = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
 //  //species4.createGroup(brownGroupAnim, {pop: this.groupPop});
@@ -197,12 +202,12 @@ create () {
 //  species4.createGroup(darkrabbitAnim, {pop: this.groupPop});
 //  this.genera[0].addSpecies(species4);
  
- let species5 = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
- species5.createGroup(rabbitAnim, {pop: this.groupPop}, fitnessConfig);
- species5.createGroup(rabbitAnim, {pop: this.groupPop});
- species5.createGroup(rabbitAnim, {pop: this.groupPop});
- species5.createGroup(rabbitAnim, {pop: this.groupPop});
- this.genera[0].addSpecies(species5);
+//  let species5 = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
+//  species5.createGroup(rabbitAnim, {pop: this.groupPop}, fitnessConfig);
+//  species5.createGroup(rabbitAnim, {pop: this.groupPop});
+//  species5.createGroup(rabbitAnim, {pop: this.groupPop});
+//  species5.createGroup(rabbitAnim, {pop: this.groupPop});
+//  this.genera[0].addSpecies(species5);
 
 
   this.genera[0].setupGenus(fitnessConfig);

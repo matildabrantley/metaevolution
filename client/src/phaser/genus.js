@@ -38,9 +38,10 @@ class Genus {
             //Create Species object with general configuration and defaults for everything else
             const newSpecies = new Species({world: this.world, scene: this.scene, config: this.config, tiles: this.tiles});
                 
-            let popPerGroup = pop / groupPop;
+            let popPerGroup = Math.floor(pop / numGroups);
             for (let i=0; i < numGroups; i++) {
-                newSpecies.createGroup({sprite, spritesheet, key, firstFrame, scale}
+                newSpecies.createGroup({sprite, spritesheet, key, firstFrame, scale},
+                            {pop: popPerGroup}
                 )
             }
         
