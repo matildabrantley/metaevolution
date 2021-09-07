@@ -3,7 +3,7 @@ import Group from './group';
 const Phaser = require('phaser');
 
 class Species extends Phaser.Physics.Arcade.Group {
-    constructor({world, scene, config, tiles, seesTiles = true} = {}, //general config for species and its sub-groups
+    constructor({world, scene, config, tiles, seesTiles = false} = {}, //general config for species and its sub-groups
                 {goals, goalsAreMoving = false, bonusIsRandom = false, groupSelectionFreq = 40, 
                 maxGroupSelectionFreq = 500, deltaSelectionFreq = 20, mutMutRate = 0.05} = {}, groups = []) {
         
@@ -27,6 +27,21 @@ class Species extends Phaser.Physics.Arcade.Group {
         this.maxGroupSelectionFreq = maxGroupSelectionFreq;
         this.mutMutRate = mutMutRate;
         this.speciesFitness = 0;
+    }
+    
+    setupSpecies() {
+        //setup tile collisions
+        this.scene.physics.add.collider(this, this.tiles);
+
+        //setup prey collisions
+        // preySpecies.forEach(preySpecie => {
+        //     this.scene.physics.collide(this, preySpecie, (predator, prey) => {
+        //         prey.kill();
+        //     });
+        // })
+
+        //just initialize "best" group to first group for now
+        this.bestGroup = this.groups[0].best;
     }
 
     //Preferred (and simpler) method to create new groups
@@ -64,14 +79,6 @@ class Species extends Phaser.Physics.Arcade.Group {
     }
     addGroup(newGroup){
         this.groups.push(newGroup);
-    }
-
-    setupSpecies() {
-        //setup tile collisions
-        this.scene.physics.add.collider(this, this.tiles);
-
-        //just initialize "best" group to first group for now
-        this.bestGroup = this.groups[0].best;
     }
 
     update(){

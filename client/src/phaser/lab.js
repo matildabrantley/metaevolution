@@ -176,11 +176,12 @@ create () {
   const lightSpiralAnim = createAnimConfig (this, 'lightSpiralKey', 'lightSpiral', fps, 'light-spiral0.png', 0.4); 
   const voidSpiralAnim = createAnimConfig (this, 'voidSpiralKey', 'voidSpiral', fps, 'void-spiral0.png', 0.4); 
 
+  const generalConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: false};
   const speciesConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer};
   let fitnessConfig = {goals: goalGroup};
 
   //Create one Genus
-  this.genera.push(new Genus());
+  this.genera.push(new Genus(generalConfig));
 
    //4 Groups per Species, 4 Species (16 groups total) each with different animations
    //Create empty Species with only goals defined

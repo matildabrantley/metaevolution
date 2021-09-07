@@ -5,16 +5,12 @@ const Phaser = require('phaser');
 
 
 class Genus {
-    constructor({speciesSelectionFreq = 100, maxSpeciesSelectionFreq = 600, deltaSelectionFreq = 50} = {}, species = []){
+    constructor({world, scene, config, tiles, seesTiles = true} = {},
+                {speciesSelectionFreq = 100, maxSpeciesSelectionFreq = 600, deltaSelectionFreq = 50} = {}, species = []){
         this.species = species;
         this.timer = 0;
         this.speciesSelectionFreq = speciesSelectionFreq;
         this.maxSpeciesSelectionFreq = maxSpeciesSelectionFreq;
-    }
-
-    //Let's pretend "specie" is the correct singular of "species" =)
-    addSpecies(specie){
-        this.species.push(specie);
     }
     
     setupGenus(){
@@ -24,6 +20,22 @@ class Genus {
         //just set "best" species to first species for now
         this.bestSpecies = this.species[0];
     }
+
+    //Create a new species with all subgroups having same initial attributes (animation config, genetic config)
+    createSpecies({sprite, spritesheet, key, firstFrame, scale = 1} = {},
+        {goals = this.goals, preyGroups, predatorGroups} = {}) {
+
+        //Create Species object with general configuration and defaults for everything else
+        const newSpecies = new Species(this.world, this.scene, this.config, this.tiles);
+
+        this.species.push(newSpecies);
+    }
+
+    //Let's pretend "specie" is the correct singular of "species" =)
+    addSpecies(specie){
+        this.species.push(specie);
+    }
+    
 
     update() {
         this.timer++;
