@@ -46,7 +46,7 @@ class Group extends Phaser.Physics.Arcade.Group {
             const tileVisionInputs = this.species.seesTiles ? 8 : 0;
             life.mind = new Mind(this.goals.length * 5 + tileVisionInputs, 2);
         }
-        
+
         //initialize "best" to simply first created for now
         this.best = this.lives[0];
     }
@@ -77,7 +77,7 @@ class Group extends Phaser.Physics.Arcade.Group {
             //Fitness to be managed by group
             let distScores = [];
             for (let g=0; g < this.goals.length; g++){
-                let newScore = life.startingDistFromGoal[g] / (Phaser.Math.Distance.BetweenPoints(life, this.goals[g]) + 1);
+                let newScore = life.startingDistFromGoal[g] - (Phaser.Math.Distance.BetweenPoints(life, this.goals[g]));
                 (g == this.species.bonusGoal) ? newScore *= 2.5 : newScore *= -0.1;
                     
                 distScores.push(newScore);

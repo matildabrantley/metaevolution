@@ -6,7 +6,7 @@ const Phaser = require('phaser');
 
 
 class Genus {
-    constructor({world, scene, config, tiles, seesTiles = true} = {},
+    constructor({world, scene, config, tiles, seesTiles = false} = {},
                 {speciesSelectionFreq = 100, maxSpeciesSelectionFreq = 600, deltaSelectionFreq = 50} = {}, species = []){
 
         this.world = world;
@@ -36,7 +36,8 @@ class Genus {
 
                 
             //Create Species object with general configuration and defaults for everything else
-            const newSpecies = new Species({world: this.world, scene: this.scene, config: this.config, tiles: this.tiles});
+            const newSpecies = new Species({world: this.world, scene: this.scene, config: this.config, genus: this,
+                                             tiles: this.tiles, seesTiles: this.seesTiles});
                 
             let popPerGroup = Math.floor(pop / numGroups);
             for (let i=0; i < numGroups; i++) {

@@ -16,7 +16,9 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.tiles = tiles;
         this.tileSize = 32;
         this.seesTiles = seesTiles;
-        
+        this.resourceTiles = [{index: 2, need: 1} ];
+        this.blockedTiles = [{index: 1, effect: 0}, {index: 29, effect: -1}];
+
         this.fitness = 0;
 
         //for updateWithEngine
@@ -61,7 +63,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         // if (!this.body.touching.down)
         //     this.setVelocityY(100);
 
-        //this.feed();
+        //this.gather();
 
         this.angle = this.body.angularVelocity;
         // this.setAngle(this.body.angularAcceleration);
@@ -113,39 +115,45 @@ class Life extends Phaser.Physics.Arcade.Sprite {
     }
 
     lookAtTile(x, y){
-        let tileInput;
         try {
-            let tile = this.tiles.getTileAtWorldXY(x, y, true).index;
-            //TODO: get these magic tile numbers from elsewhere
-            if ( tile === 29){
-                tileInput = -2;
-                this.fitness-=10;
-            }
-            else if (tile === 1) {
-                tileInput = 2;
-            }
-            else {
-                tileInput = 0;
-            }
+            let tileIndex = this.tiles.getTileAtWorldXY(x, y, true).index;
+            //check through resources
+            this.resourceTiles.forEach(resource => {
+                if (tileIndex == resource.index){
+                    return resource.need;
+                }
+            });
+            this.blockedTiles.forEach(blocked => {
+                if (tileIndex == blocked.index){
+                    this.fitness += blocked.effect; //apply effect of being near 
+                    return -1;
+                }
+            });
+
+            //return 0 if doesn't match any tiles
+            return 0;
         }
-        catch { //treat out of bounds the same as blocking tile for neural input
-            tileInput = -2;
+        catch { //treat out of bounds as a strongly blocking tile
+            return -2;
         }
-        return tileInput;
     }
 
-    feed(food=35){
+    gather(){
         try{
-            let tile = this.tiles.getTileAtWorldXY(this.x, this.y, true).index;
-            if (tile == food)
-                this.fitness+=2;
+            let currentTile = this.tiles.getTileAtWorldXY(this.x, this.y, true);
+            currentTile.apple = 23;
+            this.resourceTiles.forEach(resource => {
+                if (currentTile.index == resource.index){
+                    this.fitness += resource.need;
+                }
+            });
             //else
                 //this.fitness--;
         }
         catch {}
     }
 
-    //This inidividual's Nets replaced with a clone's
+    //This individual's Nets replaced with a clone's
     clone(cloned, mutRate) {
         this.mind.cloneMind(cloned.mind, mutRate);
     }

@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 
 //Import static sprites
+import defaultSprite from './assets/sprites/default.png';
 import star from './assets/sprites/star.png';
 import bluestar from './assets/sprites/bluestar.png';
 import blackstar from './assets/sprites/blackstar.png';
@@ -70,7 +71,7 @@ class Lab extends Phaser.Scene {
 
     this.groupPop = 50;
     this.genera = [];
-    this.globalTimer = 0;
+    this.globalTime = 0;
   }
 
   getBest() {
@@ -80,6 +81,7 @@ class Lab extends Phaser.Scene {
 
   preload () {
     //sprites
+    this.load.image('default', defaultSprite);
     this.load.image('star', star);
     this.load.image('bluestar', bluestar);
     this.load.image('blackstar', blackstar);
@@ -176,12 +178,12 @@ create () {
   const lightSpiralAnim = createAnimConfig (this, 'lightSpiralKey', 'lightSpiral', fps, 'light-spiral0.png', 0.4); 
   const voidSpiralAnim = createAnimConfig (this, 'voidSpiralKey', 'voidSpiral', fps, 'void-spiral0.png', 0.4); 
 
-  const generalConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: false};
-  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer};
+  const generalConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: true};
   let fitnessConfig = {goals: goalGroup};
-
+  
   //Create one Genus
   this.genera.push(new Genus(generalConfig));
+  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, genus: this.genera[0], tiles: this.tileLayer, seesTiles: true};
 
    //4 Groups per Species, 4 Species (16 groups total) each with different animations
    //Create empty Species with only goals defined

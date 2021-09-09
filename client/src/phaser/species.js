@@ -4,7 +4,7 @@ import Group from './group';
 const Phaser = require('phaser');
 
 class Species extends Phaser.Physics.Arcade.Group {
-    constructor({world, scene, config, tiles, seesTiles = false} = {}, //general config for species and its sub-groups
+    constructor({world, scene, config, genus=null, tiles, seesTiles = false} = {}, //general config for species and its sub-groups
                 {goalsAreMoving = false, bonusIsRandom = false, groupSelectionFreq = 40, 
                 maxGroupSelectionFreq = 500, deltaSelectionFreq = 20, mutMutRate = 0.05} = {}, groups = []) {
         
@@ -15,6 +15,7 @@ class Species extends Phaser.Physics.Arcade.Group {
         this.tiles = tiles;
         this.seesTiles = seesTiles;
         this.scene.physics.add.collider(this, tiles);
+        this.genus = genus;
 
         this.groups = groups; //groups can be predefined, but it's better to use createGroup()
         this.bonusLength = 1;
@@ -29,25 +30,27 @@ class Species extends Phaser.Physics.Arcade.Group {
         this.speciesFitness = 0;
     }
     
-    setupSpecies({goals = [], preyGroups = [], predatorGroups = []} = {}) {
+    setupSpecies({goals = [], preySpecies = [], predatorSpecies = []} = {}) {
         //setup tile collisions
         this.scene.physics.add.collider(this, this.tiles);
 
         this.goals = goals.getChildren();
+        this.preySpecies = preySpecies;
+        this.predatorSpecies = predatorSpecies;
 
         //setup prey collisions
-        // preySpecies.forEach(preySpecie => {
-        //     this.scene.physics.collide(this, preySpecie, (predator, prey) => {
-        //         prey.kill();
-        //     });
-        // })
+        preySpecies.forEach(preySpecie => {
+            this.scene.physics.add.overlap(this, preySpecie, (predator, prey) => {
+                predator.fitness += 10;
+            }, null, this.scene);
+        })
 
         //Setup handles Group construction aspects that prefer the entire population exist first
         for (const group of this.groups) {
             group.setup();
         }
 
-
+        this.allLives = this.getChildren();
 
         //just initialize "best" group to first group for now
         this.bestGroup = this.groups[0].best;
@@ -103,6 +106,12 @@ class Species extends Phaser.Physics.Arcade.Group {
         }
         this.speciesFitness = average(allGroupsFitness);
         
+        for (const preySpecie of this.preySpecies) {
+            this.allLives.forEach(life => {
+                // life.closestPrey = preySpecie.getClosestTo(life);
+            })
+        }
+
         //Rotate star goals
         if (this.timer % this.bonusLength === 0){
             if (this.bonusIsRandom) {

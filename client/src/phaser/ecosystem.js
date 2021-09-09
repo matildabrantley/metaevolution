@@ -49,9 +49,9 @@ class Ecosystem extends Phaser.Scene {
     };
 
     this.worldSize = 1440; //size of whole world, not scene (which is canvas)
-    this.groupPop = 50;
+    this.pop = 200;
     this.genera = [];
-    this.globalTimer = 0;
+    this.globalTime = 0;
   }
 
   getBest() {
@@ -133,28 +133,28 @@ create () {
   let goalGroup = this.add.group();
   loneStar = this.physics.add.image(this.config.width * (0.54 - goalDivergence), this.config.height * (0.55 - goalDivergence), 'star');
   loneStar.setCircle(30);
-  loneStar.setScale(4);
+  loneStar.setScale(1);
   loneStar.setBounce(5);
   loneStar.collideWorldBounds = true;
   goalGroup.add(loneStar);
   
   blueStar = this.physics.add.image(this.config.width * (0.54 + goalDivergence), this.config.height * (0.55 - goalDivergence), 'bluestar');
   blueStar.setCircle(30);
-  blueStar.setScale(4);
+  blueStar.setScale(1);
   blueStar.setBounce(5);
   blueStar.collideWorldBounds = true;
   goalGroup.add(blueStar);
   
   // blackStar = this.physics.add.image(this.config.width * (0.5 + goalDivergence), this.config.height * (0.5 + goalDivergence), 'blackstar');
   // blackStar.setCircle(30);
-  // blackStar.setScale(5);
+  // blackStar.setScale(1);
   // blackStar.setBounce(5);
   // blackStar.collideWorldBounds = true;
   // goalGroup.add(blackStar);
   
   // greenStar = this.physics.add.image(this.config.width * (0.5 - goalDivergence), this.config.height * (0.5 + goalDivergence), 'greenstar');
   // greenStar.setCircle(30);
-  // greenStar.setScale(5);
+  // greenStar.setScale(1);
   // greenStar.setBounce(5);
   // greenStar.collideWorldBounds = true;
   // goalGroup.add(greenStar);
@@ -172,45 +172,20 @@ create () {
   //Create one Genus
   this.genera.push(new Genus(generalConfig));
   
-  // let species1 = this.genera[0].createSpecies(darkrabbitAnim, {pop: this.groupPop});
-  // let species2 = this.genera[0].createSpecies(bluerabbitAnim, {pop: this.groupPop});
-  // let species4 = this.genera[0].createSpecies(redrabbitAnim, {pop: this.groupPop});
-  let species3 = this.genera[0].createSpecies({pop: 500});
+  let species1 = this.genera[0].createSpecies(darkrabbitAnim, {pop: this.pop});
+  let species2 = this.genera[0].createSpecies(bluerabbitAnim, {pop: this.pop});
+  let species3 = this.genera[0].createSpecies(redrabbitAnim, {pop: this.pop});
+  let species4 = this.genera[0].createSpecies(rabbitAnim, {pop: this.pop});
 
-  
-  //4 Groups per Species, 4 Species (16 groups total) each with different animations
-  //Create empty Species with only goals defined
-//   let species2 = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-//  species2.createGroup(bluerabbitAnim, {pop: this.groupPop});
-//  species2.createGroup(bluerabbitAnim, {pop: this.groupPop});
-//   species2.createGroup(bluerabbitAnim, {pop: this.groupPop});
-//   species2.createGroup(bluerabbitAnim, {pop: this.groupPop});
-//  this.genera[0].addSpecies(species2);
+  //manual setup
+  this.genera[0].bestSpecies = this.genera[0].species[0];
+  species1.setupSpecies({goals: goalGroup, preySpecies: [species2, species3, species4]});
+  species2.setupSpecies({goals: goalGroup});
+  species3.setupSpecies({goals: goalGroup});
+  species4.setupSpecies({goals: goalGroup});
 
-//  let species3 = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-//  species3.createGroup(redrabbitAnim, {pop: this.groupPop});
-//  species3.createGroup(redrabbitAnim, {pop: this.groupPop});
-//  species3.createGroup(redrabbitAnim, {pop: this.groupPop});
-//  species3.createGroup(redrabbitAnim, {pop: this.groupPop});
-//  this.genera[0].addSpecies(species3);
- 
-//  let species4 = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-//  //species4.createGroup(brownGroupAnim, {pop: this.groupPop});
-//  species4.createGroup(darkrabbitAnim, {pop: this.groupPop});
-//  species4.createGroup(darkrabbitAnim, {pop: this.groupPop});
-//  species4.createGroup(darkrabbitAnim, {pop: this.groupPop});
-//  species4.createGroup(darkrabbitAnim, {pop: this.groupPop});
-//  this.genera[0].addSpecies(species4);
- 
-//  let species5 = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-//  species5.createGroup(rabbitAnim, {pop: this.groupPop}, fitnessConfig);
-//  species5.createGroup(rabbitAnim, {pop: this.groupPop});
-//  species5.createGroup(rabbitAnim, {pop: this.groupPop});
-//  species5.createGroup(rabbitAnim, {pop: this.groupPop});
-//  this.genera[0].addSpecies(species5);
-
-
-  this.genera[0].setupGenus(fitnessConfig);
+  //generic setup
+  //this.genera[0].setupGenus(fitnessConfig);
 
   
   // newSpecies.addPreySpecies(newSpecies3);
