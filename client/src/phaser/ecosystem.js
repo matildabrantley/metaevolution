@@ -165,9 +165,9 @@ create () {
   const redrabbitAnim = createAnimConfig (this, 'redrabbitKey', 'redrabbit', fps, 'Rabbit-red0.png');
   const bluerabbitAnim = createAnimConfig (this, 'bluerabbitKey', 'bluerabbit', fps, 'Rabbit-blue0.png');
   
-  const generalConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: false};
+  const generalConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: true};
   const speciesConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: false};
-  let fitnessConfig = {goals: goalGroup};
+  let fitnessConfig = {};
 
   //Create one Genus
   this.genera.push(new Genus(generalConfig));
@@ -179,13 +179,14 @@ create () {
 
   //manual setup
   this.genera[0].bestSpecies = this.genera[0].species[0];
-  species1.setupSpecies({goals: goalGroup, preySpecies: [species2, species3, species4]});
-  species2.setupSpecies({goals: goalGroup});
-  species3.setupSpecies({goals: goalGroup});
-  species4.setupSpecies({goals: goalGroup});
+  //species1.setupSpecies({goals: goalGroup, preySpecies: [species2, species3, species4]});
+  // species1.setupSpecies({goals: goalGroup});
+  // species2.setupSpecies({goals: goalGroup});
+  // species3.setupSpecies({goals: goalGroup});
+  // species4.setupSpecies({goals: goalGroup});
 
   //generic setup
-  //this.genera[0].setupGenus(fitnessConfig);
+  this.genera[0].setupGenus(fitnessConfig);
 
   
   // newSpecies.addPreySpecies(newSpecies3);

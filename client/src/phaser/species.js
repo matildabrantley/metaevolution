@@ -30,11 +30,12 @@ class Species extends Phaser.Physics.Arcade.Group {
         this.speciesFitness = 0;
     }
     
-    setupSpecies({goals = [], preySpecies = [], predatorSpecies = []} = {}) {
+    setupSpecies({goals, preySpecies = [], predatorSpecies = []} = {}) {
         //setup tile collisions
         this.scene.physics.add.collider(this, this.tiles);
 
-        this.goals = goals.getChildren();
+        this.goals = (goals) ? goals.getChildren() : [];
+        
         this.preySpecies = preySpecies;
         this.predatorSpecies = predatorSpecies;
 

@@ -60,10 +60,10 @@ class Group extends Phaser.Physics.Arcade.Group {
                     //goal.setVelocity((Math.random()-0.5) * 700, (Math.random()-0.5) * 700);
             //}
 
-            this.fitness();
-
+            
             life.update(this.goals, this.species.bonusGoal);
-
+            
+            this.fitness();
         }
 
         if (this.timer1 % this.genLength == 0){

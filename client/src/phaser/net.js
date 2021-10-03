@@ -1,7 +1,7 @@
 
 //Just a perceptron/feedforward net for now
 class Net {
-	constructor({isRecurrent = false, isLongTerm = false} = {}, ...layerSizes)
+	constructor({isRecurrent = false, isLongTerm = false, hasDynamicMemory = true} = {}, ...layerSizes)
 	{	
 		//First build the memory systems
 		let numOutputs = layerSizes[layerSizes.length - 1];	
@@ -15,6 +15,19 @@ class Net {
 		if (isLongTerm){
 			layerSizes[0] += numOutputs;
 			this.longMemory = new Array(numOutputs).fill(0);
+		}
+		//2D Dynamic Memory
+		if (hasDynamicMemory){
+			this.memorySize = 5;
+			this.dynamicMemory = new Array(this.memorySize);
+			for (let i=0; i < this.dynamicMemory.length; i++) {
+				this.dynamicMemory[i] = new Array(this.memorySize).fill(0);
+			}
+			this.iMemReadIndex = 0;
+			this.jMemReadIndex = 0;
+			layerSizes[0]++; //single dynamic memory input
+			 //5 extra outputs: 2 for x/y read target, 2 for x/y write target and 1 for write value 
+			layerSizes[layerSizes.length-1] += 5;
 		}
 
 		//Initialize all charges to zero
@@ -39,7 +52,7 @@ class Net {
 			}
 		}
 	}
-
+b
 	//Run the net, feeding charges forward based on weights
 	activate(input=[]) {
 		this.clearCharges();
@@ -51,6 +64,8 @@ class Net {
 			this.charges[0] = this.charges[0].concat(this.shortMemory);
 		if (this.longMemory)
 			this.charges[0] = this.charges[0].concat(this.longMemory);
+		if (this.dynamicMemory)
+			this.charges[0].push(this.dynamicMemory[this.iMemReadIndex][this.jMemReadIndex]);
 		
 		//index of output layer
 		const outputLayer = this.charges.length - 1;
@@ -87,6 +102,19 @@ class Net {
 				this.longMemory[i] += this.charges[outputLayer][i];
 				this.longMemory[i] = zeroCenteredCurve(this.longMemory[i]);
 			}
+		}
+		//TODO: Positive outputs
+		if (this.dynamicMemory){
+			//memory write value (5th from last output)
+			let writeValue = this.charges[outputLayer][this.charges[outputLayer].length-5]; 
+			//i & j memory write indices (4th and 3rd from last outputs)
+			let iMemWriteIndex = Math.floor(this.charges[outputLayer][this.charges[outputLayer].length-4] * this.memorySize); 
+			let jMemWriteIndex = Math.floor(this.charges[outputLayer][this.charges[outputLayer].length-3] * this.memorySize); 
+			//write to dynamic memory
+			this.dynamicMemory[iMemWriteIndex][jMemWriteIndex] = writeValue;
+			//i & j memory read indices (final 2 outputs)
+			this.iMemReadIndex = this.charges[outputLayer][this.charges[outputLayer].length-2]; 
+			this.jMemReadIndex = this.charges[outputLayer][this.charges[outputLayer].length-1]; 
 		}
 
 		//return output layer

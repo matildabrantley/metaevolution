@@ -1,7 +1,7 @@
 import Net from './net';
 
 class Mind {
-    constructor(numSenses = 4, numBehaviors = 3, simple = true){
+    constructor(numSenses = 4, numBehaviors = 3, simple = false){
         this.simple = simple;
         //Sensory Net takes in input from world
         this.senseNet = new Net({isRecurrent: true, isLongTerm: false}, numSenses, numSenses+10, 10, 10, 10, 10, 10, 5, 3);
@@ -26,7 +26,7 @@ class Mind {
         }
 
         //Behavior Net outputs actions
-        this.behaviorNet = new Net({isRecurrent: false, isLongTerm: false}, numRegionInputs, numBehaviors, numBehaviors);
+        this.behaviorNet = new Net({isRecurrent: false, isLongTerm: false, hasDynamicMemory: true}, numRegionInputs, numBehaviors, numBehaviors);
     }
 
     activateRegions() {
