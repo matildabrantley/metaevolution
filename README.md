@@ -61,11 +61,20 @@ each subgroup, the group-level selection and collision events between different 
 * Net
     * Object with all neural net data (weights, layers, connections to other nets, types of memory used) 
 
+## API Routes with Mongoose Query
+* User Routes
+    * register - User.create
+    * login - User.findOne
+    * getUser - User.findOne
+* Neural Routes
+    * saveNet - User.findOneAndUpdate
+
 ## Tools
 * Piskel used for small sprites and spritesheets design.
 * DeepDreamGenerator used to design or re-imagine many art assets and backgrounds.
 
 ## Screenshots
+![Banner](evobanner.png)
 #### Ecosystem
 ![Ecosystem](/client/src/assets/ecopage.png)
 
