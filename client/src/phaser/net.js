@@ -59,11 +59,12 @@ b
 		//set first layer to input array
 		this.charges[0] = input;
 
-		//Remember...
+		//Each memory system fed into network here
 		if (this.shortMemory)
 			this.charges[0] = this.charges[0].concat(this.shortMemory);
 		if (this.longMemory)
 			this.charges[0] = this.charges[0].concat(this.longMemory);
+		//Dynamic Memory is currently a 2D array of size 5x5 whose content can be read/written
 		if (this.dynamicMemory)
 			this.charges[0].push(this.dynamicMemory[this.iMemReadIndex][this.jMemReadIndex]);
 		
@@ -95,12 +96,14 @@ b
 		for (let neuron = 0; neuron < this.charges[outputLayer].length; neuron++)
 			this.charges[outputLayer][neuron] = zeroCenteredCurve(this.charges[outputLayer][neuron]);
 
+		//short-term recurrent memory saved here
 		if (this.shortMemory)
-			this.shortMemory = [...this.charges[outputLayer]];
+		this.shortMemory = [...this.charges[outputLayer]];
+		//long-term recurrent memory saved here
 		if (this.longMemory){
 			for (let i in this.longMemory){
-				this.longMemory[i] += this.charges[outputLayer][i];
-				this.longMemory[i] = zeroCenteredCurve(this.longMemory[i]);
+				this.longMemory[i] += this.charges[outputLayer][i]; //add output to long-term memory
+				this.longMemory[i] = zeroCenteredCurve(this.longMemory[i]); //squish memory with zero-centered sigmoid
 			}
 		}
 		//TODO: Positive outputs
@@ -136,6 +139,7 @@ b
 		for (let layer in mom.weights) {
 			for (let neuron in mom.weights[layer]) {
 				for (let w in mom.weights[layer][neuron]) {	
+					//mutate weights if mutation rate exceeds random number
 					if (mutationRate !== 0 && mutationRate > Math.random())
 						this.weights[layer][neuron][w] += randZeroCentered(0.1);
 					else
@@ -180,17 +184,5 @@ const relu = (x) => Math.max(0, x);
 
 //Random between -1 and 1
 const randZeroCentered = (scale=1) => ((Math.random() * 2 - 1) * scale);
-
-/*
-const testNet = () => {
-	const net = new Net(2, 20, 2);
-	console.log(net.activate([1,1]));
-	console.log(net.activate([-1,-1]));
-	console.log(net.activate([1,-1]));
-	console.log(net.activate([-1,1]));
-	console.log(net.activate([0,0]));
-}
-testNet() 
-*/
 
 export default Net;

@@ -11,14 +11,17 @@ class Mind {
             this.buildRegions(numSenses, numBehaviors, {regionHiddens:4}, 3, 3);
     }
 
+    //Establish the overall architecture of the mind, a network of networks
     buildRegions(numSenses, numBehaviors, {regionHiddens=4, regionOutputs=2}={}, ...regionSizes) {
 
+        //Build senseNet
         let numRegionInputs = this.senseNet.charges[this.senseNet.charges.length - 1].length;
-        this.nets = new Array(regionSizes);
+        this.nets = new Array(regionSizes); //initialize nets, an array of arrays
         for (let region=0; region < this.nets.length; region++) {
             this.nets[region] = new Array(regionSizes[region]);
             let numNextRegionInputs = 0;
             for (let net=0; net < this.nets[region].length; net++) {
+                //create each net in the region
                 this.nets[region][net] = new Net({isRecurrent: true, isLongTerm: false}, numRegionInputs, regionHiddens, regionHiddens,  regionOutputs);
                 numNextRegionInputs += numRegionInputs;
             }
@@ -36,7 +39,6 @@ class Mind {
         const outputRegion = this.nets.length - 1;
 
         //map outputs of senseNet into first region's inputs
-        //regionInputs set to regionOuputs at the end of each inner loop (lezz hope this works!:D)
         let regionInputs = senses.map((charge) => charge);
         for (let region=0, nextRegion=1; region < this.nets.length; region++, nextRegion++) {
             let regionOutputs = [];
@@ -44,11 +46,13 @@ class Mind {
                 const currentNet = this.nets[region][net];
                 currentNet.activate(regionInputs);
 
+                //
                 const currentOutputs = currentNet.charges[currentNet.charges.length - 1];
                 regionOutputs = regionOutputs.concat(currentOutputs);
             }
             regionInputs = regionOutputs;
         }
+        //regionInputs now contains the outputs of the last region
         const finalRegion = this.nets[outputRegion];
 
         //Pass the accumulated outputs of final regions into behaviorNet and return output

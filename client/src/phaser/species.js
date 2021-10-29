@@ -185,7 +185,7 @@ class Species extends Phaser.Physics.Arcade.Group {
         }
     }
 
-    //unidirectional migration (no immediate mating) of fittest lifeforms
+    //unidirectional migration (no mating during transfer) of fittest lifeforms
     // migrate(migrantGroupIndex, receivingGroupIndex, flowRate = 0.75){
     //     this.groups[receivingGroupIndex].lives
     // }
