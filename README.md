@@ -40,14 +40,26 @@ each subgroup, the group-level selection and collision events between different 
 * __PhaserWorld__: Builds Phaser config object from props and instantiates a Phaser game instance based on the type of scene passed as a prop, with options for lab, ecosystem, game, and a variety of example scenes. Also removes Phaser's canvas on component unmount.
 * __Register__ & __Login__: User registration/login forms that send authenticated data to server.
 * __Navigation__: Navbar with links to pages, external sites (Learning Rooms, my GitHub and portfolio) and Register/Login buttons. Uses react-bootstrap.
-* __HomePage__: Figures with popout image links to each other pages.
+* __HomePage__: Figures with pop-out image links to each other pages.
 * __LabPage__: Build and see neural networks here.
 * __EcosystemPage__: Instantiates a large PhaserWorld top-down scene.
-* __GamePage__: Instantiates platformer (sidescrolling) PhaserWorld scene.
+* __GamePage__: Instantiates platformer (side-scrolling) PhaserWorld scene.
 * __Popout__: Children wrapped in this component taps into react-spring to slightly pop out of the page in the third dimension (without moving around other elements). Used for buttons and links.
 * __Jumpout__: Children wrapped in this component leaps from the page and their state holds R, G and B values that can randomly when hovered over. Used for EvoLab logo letters.
 * __Flipout__: Children wrapped in this component swings back and forth like shop sign in the wind as long as user holds down mouse.
 * __Glide__: Children wrapped in this component smoothly glide onto the page.
+
+## Mongoose Models
+* User
+    * username - String: used to register/login
+    * email - String: used to register/login
+    * password - String: hashed and encrypted (with bcrypt)
+    * savedMinds - Array of Minds
+* Mind
+    * Nets - Array
+    * Architecture - String
+* Net
+    * Object with all neural net data (weights, layers, connections to other nets, types of memory used) 
 
 ## Tools
 * Piskel used for small sprites and spritesheets design.

@@ -43,9 +43,11 @@ class Net {
 		this.weights = new Array(layerSizes.length - 1);
 		for (let layer = 0; layer < this.weights.length; layer++)
 		{
+			//Initialize all weights to random values
 			this.weights[layer] = new Array(layerSizes[layer]);
 			for (let neuron = 0; neuron < layerSizes[layer]; neuron++)
 			{
+				//Connections to previous layer
 				this.weights[layer][neuron] = new Array(layerSizes[layer + 1])
 				for (let w = 0; w < layerSizes[layer + 1]; w++)
 					this.weights[layer][neuron][w] = randZeroCentered();
