@@ -16,6 +16,7 @@ class Mind {
 
         //Build senseNet
         let numRegionInputs = this.senseNet.charges[this.senseNet.charges.length - 1].length;
+        //Build all inner regions
         this.nets = new Array(regionSizes); //initialize nets, an array of arrays
         for (let region=0; region < this.nets.length; region++) {
             this.nets[region] = new Array(regionSizes[region]);

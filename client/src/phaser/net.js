@@ -1,7 +1,7 @@
 
 //Just a perceptron/feedforward net for now
 class Net {
-	constructor({isRecurrent = false, isLongTerm = false, hasDynamicMemory = true} = {}, ...layerSizes)
+	constructor({isRecurrent = false, isLongTerm = false, hasDynamicMemory = false} = {}, ...layerSizes)
 	{	
 		//First build the memory systems
 		let numOutputs = layerSizes[layerSizes.length - 1];	
@@ -109,6 +109,7 @@ b
 			}
 		}
 		//TODO: Positive outputs
+		//Final outputs of this network used for dynamic memory (if enabled)
 		if (this.dynamicMemory){
 			//memory write value (5th from last output)
 			let writeValue = this.charges[outputLayer][this.charges[outputLayer].length-5]; 
