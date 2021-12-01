@@ -110,18 +110,18 @@ b
 		}
 		//TODO: Positive outputs
 		//Final outputs of this network used for dynamic memory (if enabled)
-		if (this.dynamicMemory){
-			//memory write value (5th from last output)
-			let writeValue = this.charges[outputLayer][this.charges[outputLayer].length-5]; 
-			//i & j memory write indices (4th and 3rd from last outputs)
-			let iMemWriteIndex = Math.floor(this.charges[outputLayer][this.charges[outputLayer].length-4] * this.memorySize); 
-			let jMemWriteIndex = Math.floor(this.charges[outputLayer][this.charges[outputLayer].length-3] * this.memorySize); 
-			//write to dynamic memory
-			this.dynamicMemory[iMemWriteIndex][jMemWriteIndex] = writeValue;
-			//i & j memory read indices (final 2 outputs)
-			this.iMemReadIndex = this.charges[outputLayer][this.charges[outputLayer].length-2]; 
-			this.jMemReadIndex = this.charges[outputLayer][this.charges[outputLayer].length-1]; 
-		}
+		// if (this.dynamicMemory){
+		// 	//memory write value (5th from last output)
+		// 	let writeValue = this.charges[outputLayer][this.charges[outputLayer].length-5]; 
+		// 	//i & j memory write indices (4th and 3rd from last outputs)
+		// 	let iMemWriteIndex = Math.floor(this.charges[outputLayer][this.charges[outputLayer].length-4] * this.memorySize); 
+		// 	let jMemWriteIndex = Math.floor(this.charges[outputLayer][this.charges[outputLayer].length-3] * this.memorySize); 
+		// 	//write to dynamic memory
+		// 	this.dynamicMemory[iMemWriteIndex][jMemWriteIndex] = writeValue;
+		// 	//i & j memory read indices (final 2 outputs)
+		// 	this.iMemReadIndex = this.charges[outputLayer][this.charges[outputLayer].length-2]; 
+		// 	this.jMemReadIndex = this.charges[outputLayer][this.charges[outputLayer].length-1]; 
+		// }
 
 		//return output layer
 		return this.charges[outputLayer];
