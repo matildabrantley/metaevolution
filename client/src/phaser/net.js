@@ -94,8 +94,11 @@ b
 				this.charges[nextLayer][neuron] = zeroCenteredCurve(this.charges[nextLayer][neuron]);
 		}
 	
+		//width of final output layer
+		let numOutputs = this.charges[outputLayer].length;
+
 		//squish outputs with sigmoid
-		for (let neuron = 0; neuron < this.charges[outputLayer].length; neuron++)
+		for (let neuron = 0; neuron < numOutputs; neuron++)
 			this.charges[outputLayer][neuron] = zeroCenteredCurve(this.charges[outputLayer][neuron]);
 
 		//short-term recurrent memory saved here
@@ -117,24 +120,27 @@ b
 		 the first vector is the first row and the second vector is the second row, 
 		 the third vector is the first column and and the fourth vector is the second column.
 		 Thus, if the neural output (from 0 to 3) was 2, it would target the first column of the dynamic memory array.
-		 Each element of the vector is then multiplied by a value. 
-		 Another neural output controls the gradient, such that 0 affects the start of the vector,
+		 Each element of the vector is then multiplied by a value, the second neural output. 
+		 The third neural output controls the gradient, such that 0 affects the start of the vector more,
 		 0.5 affects the middle, and 1 affects the end.  
 		*/
+		if (this.dynamicMemory){
+			
+		}
 
 
 		// Single-Value Dynamic Memory
 		// if (this.dynamicMemory){
 		// 	//memory write value (5th from last output)
-		// 	let writeValue = this.charges[outputLayer][this.charges[outputLayer].length-5]; 
+		// 	let writeValue = this.charges[outputLayer][numOutputs-5]; 
 		// 	//i & j memory write indices (4th and 3rd from last outputs)
-		// 	let iMemWriteIndex = Math.floor(this.charges[outputLayer][this.charges[outputLayer].length-4] * this.memorySize); 
-		// 	let jMemWriteIndex = Math.floor(this.charges[outputLayer][this.charges[outputLayer].length-3] * this.memorySize); 
+		// 	let iMemWriteIndex = Math.floor(this.charges[outputLayer][numOutputs-4] * this.memorySize); 
+		// 	let jMemWriteIndex = Math.floor(this.charges[outputLayer][numOutputs-3] * this.memorySize); 
 		// 	//write to dynamic memory
 		// 	this.dynamicMemory[iMemWriteIndex][jMemWriteIndex] = writeValue;
 		// 	//i & j memory read indices (final 2 outputs)
-		// 	this.iMemReadIndex = this.charges[outputLayer][this.charges[outputLayer].length-2]; 
-		// 	this.jMemReadIndex = this.charges[outputLayer][this.charges[outputLayer].length-1]; 
+		// 	this.iMemReadIndex = this.charges[outputLayer][numOutputs-2]; 
+		// 	this.jMemReadIndex = this.charges[outputLayer][numOutputs-1]; 
 		// }
 
 		//return output layer
