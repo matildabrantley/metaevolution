@@ -114,12 +114,12 @@ b
 		//TODO: Positive outputs
 		//Final outputs of this network used for dynamic memory (if enabled)
 
-		/* Vector Targeting for Dynamic Memory with Gradient
+		/* Dynamic Memory using Vector Targeting with Gradient
 		Summary: Each vector is a slice (row or column) of the dynamic memory array, 
-		 For example: In a 2x2 dynamic memory array, 
-		 the first vector is the first row and the second vector is the second row, 
+		 For example: In a 2x2 array, the first potential target
+		 vector is the first row and the second vector is the second row, 
 		 the third vector is the first column and and the fourth vector is the second column.
-		 Thus, if the neural output (from 0 to 3) was 2, it would target the first column of the dynamic memory array.
+		 So, if the neural output (from 0 to 3) was 2, it would target the first column of the dynamic memory array.
 		 Each element of the vector is then multiplied by a value, the second neural output. 
 		 The third neural output controls the gradient, such that 0 affects the start of the vector more,
 		 0.5 affects the middle, and 1 affects the end.  
@@ -129,7 +129,7 @@ b
 		}
 
 
-		// Single-Value Dynamic Memory
+		// Dynamic Memory Targeting Single Value
 		// if (this.dynamicMemory){
 		// 	//memory write value (5th from last output)
 		// 	let writeValue = this.charges[outputLayer][numOutputs-5]; 

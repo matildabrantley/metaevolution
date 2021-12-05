@@ -9,17 +9,17 @@ class NeuralMemory {
         
     }
     
-    //builds and returns multidimensional array with shape of square, cube, tesseract, etc. (n dimensions with equal width)
+    //builds and returns multidimensional array with n-cube shape (n dimensions with equal width i.e. square, cube, tesseract..)
     function buildNDimensionalCube(numDimensions) {
-        if (numDimensions > 0) {
+        if (numDimensions > 1) {
             var arr = new Array();
             for (let i = 0; i < this.width; i++) {
-                //recurvisely build lower dimension
-                arr[i] = buildNDimensionalCube(numDimensions);
+                //recursively build lower dimensions
+                arr[i] = this.buildNDimensionalCube(numDimensions - 1);
             }
             return arr;
          } else {
-            return undefined;
+            return new Array(this.width).fill(0);
          }
     }
     
