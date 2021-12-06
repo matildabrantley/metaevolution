@@ -24,16 +24,97 @@ class NeuralMemory {
     }
 
     //get a vector that's the pointwise sum of all vectors intersecting that point in the n-cube
-    getVectorSumAtIntersection(point) {
-        
+    getVectorSumAtIntersection(point) { //point is an array of length numDimensions containing indices
+        let sum = new Array(this.width).fill(0);
+
     }
 
     //get a vector that's a 1D slice from any dimension of the n-cube (row, column, etc.)
     //dimension = 0 means rows, 1 means columns and so forth
-    getVector(dimension, index) {
-        switch (dimension) {
-            case 0:
-                return this.memory[index];
+    getVector(point, dimension) { //point is an array of length numDimensions containing indices
+        let v = Array(this.width);
+
+        //Up to 8 dimensions supported
+        //these nested switches are a mess right now, but it's quite fast
+        //need a solution with less repetitive code and scalable dimensions, so perhaps a different data structure
+        //the difficulty is needing to get a vector from any slice for all possible dimensionalities
+        switch(this.numDimensions) {
+            case 2:
+                //2D case
+                switch (dimension) {
+                    case 0:
+                        for (let i=0; i < this.width; i++) 
+                            v[i] = this.memory[i][point[1]];
+                        break;
+                    case 1:
+                        for (let i=0; i < this.width; i++) 
+                            v[i] = this.memory[point[0]][i];
+                        break;
+                }
+                break;
+            case 3:
+                //3D case
+                switch (dimension) {
+                    case 0:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[i][point[1]][point[2]];
+                        break;
+                    case 1:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][i][point[2]];
+                        break;
+                    case 2:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][i];
+                        break;
+                }
+            case 4:
+                //4D case
+                switch (dimension) {
+                    case 0:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[i][point[1]][point[2]][point[3]];
+                        break;
+                    case 1:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][i][point[2]][point[3]];
+                        break;
+                    case 2:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][i][point[3]];
+                        break;
+                    case 3:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][point[2]][i];
+                }
+                break;
+            case 5:
+                //5D case
+                switch (dimension) {
+                    case 0:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[i][point[1]][point[2]][point[3]][point[4]];
+                        break;
+                    case 1:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][i][point[2]][point[3]][point[4]];
+                        break;
+                    case 2:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][i][point[3]][point[4]];
+                        break;
+                    case 3:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][point[2]][i][point[4]];
+                        break;
+                    case 4:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][i];
+                        break;
+                }
+                break;
+        }
+        return v;
     }
     
 }
