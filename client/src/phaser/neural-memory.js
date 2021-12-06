@@ -269,6 +269,27 @@ class NeuralMemory {
         }
         return v;
     }
+    
+    scaleVectorInMemory(point, direction, operation, scalar) {
+        let v = this.getVectorInMemory(point, direction);
+        for (let i=0; i < this.width; i++) {
+            switch (operation) {
+                case 0:
+                    v[i] = v[i] * scalar;
+                    break;
+                case 1:
+                    v[i] = v[i] + scalar;
+                    break;
+                case 2:
+                    v[i] = v[i] - scalar;
+                    break;
+                case 3:
+                    v[i] = v[i] / scalar;
+                    break;
+            }
+        }
+        this.setVectorInMemory(point, direction, v);
+    }
 
     //pretty much a mirror image of getVectorInMemory
     setVectorInMemory(point, direction, v) {
