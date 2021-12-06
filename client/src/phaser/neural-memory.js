@@ -26,13 +26,22 @@ class NeuralMemory {
     //get a vector that's the pointwise sum of all vectors intersecting that point in the n-cube
     getVectorSumAtIntersection(point) { //point is an array of length numDimensions containing indices
         let sum = new Array(this.width).fill(0);
-        for (let i = 0; i < this.numDimensions; i++) {
+        //Add up all vectors intersecting the point
+        for (let i = 0; i < this.numDimensions; i++) 
             sum = addVectors(sum, getVector(point, i));
+        return sum;
     }
 
     addVectors(vector1, vector2) {
         for (let i = 0; i < vector1.length; i++) 
             vector1[i] = vector1[i] + vector2[i];
+        return vector1;
+    }
+    
+
+    multiplyVectors(vector1, vector2) {
+        for (let i = 0; i < vector1.length; i++)
+            vector1[i] = vector1[i] * vector2[i];
         return vector1;
     }
 
