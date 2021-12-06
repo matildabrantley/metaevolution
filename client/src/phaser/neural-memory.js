@@ -84,7 +84,7 @@ class NeuralMemory {
         let sum = new Array(this.width).fill(0);
         for (let i = 1; i < vectors.length; i++) 
             for (let j = 0; j < this.width; j++)
-                sum[j] = vectors[i-1] + vectors[i];
+                sum[j] = vectors[i-1][j] + vectors[i][j];
 
         return sum;
     }
@@ -252,40 +252,33 @@ class NeuralMemory {
                 break;
             case 8:
                 //8D case
-                switch (direction) {
-                    case 0:
-                        for (let i=0; i < this.width; i++)
-                            v[i] = this.memory[i][point[1]][point[2]][point[3]][point[4]][point[5]][point[6]][point[7]];
-                        break;
-                    case 1:
-                        for (let i=0; i < this.width; i++)
-                            v[i] = this.memory[point[0]][i][point[2]][point[3]][point[4]][point[5]][point[6]][point[7]];
-                        break;
-                    case 2:
-                        for (let i=0; i < this.width; i++)
-                            v[i] = this.memory[point[0]][point[1]][i][point[3]][point[4]][point[5]][point[6]][point[7]];
-                        break;
-                    case 3:
-                        for (let i=0; i < this.width; i++)
-                            v[i] = this.memory[point[0]][point[1]][point[2]][i][point[4]][point[5]][point[6]][point[7]];
-                        break;
-                    case 4:
-                        for (let i=0; i < this.width; i++)
-                            v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][i][point[5]][point[6]][point[7]];
-                        break;
-                    case 5:
-                        for (let i=0; i < this.width; i++)
-                            v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][point[4]][i][point[6]][point[7]];
-                        break;
-                    case 6:
-                        for (let i=0; i < this.width; i++)
-                            v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][point[4]][point[5]][i][point[7]];
-                        break;
-                    case 7:
-                        for (let i=0; i < this.width; i++)
-                            v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][point[4]][point[5]][point[6]][i];
-                        break;
-                }
+                for (let i=0; i < this.width; i++)
+                    switch (direction) {
+                        case 0:
+                                v[i] = this.memory[i][point[1]][point[2]][point[3]][point[4]][point[5]][point[6]][point[7]];
+                            break;
+                        case 1:
+                                v[i] = this.memory[point[0]][i][point[2]][point[3]][point[4]][point[5]][point[6]][point[7]];
+                            break;
+                        case 2:
+                                v[i] = this.memory[point[0]][point[1]][i][point[3]][point[4]][point[5]][point[6]][point[7]];
+                            break;
+                        case 3:
+                                v[i] = this.memory[point[0]][point[1]][point[2]][i][point[4]][point[5]][point[6]][point[7]];
+                            break;
+                        case 4:
+                                v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][i][point[5]][point[6]][point[7]];
+                            break;
+                        case 5:
+                                v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][point[4]][i][point[6]][point[7]];
+                            break;
+                        case 6:
+                                v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][point[4]][point[5]][i][point[7]];
+                            break;
+                        case 7:
+                                v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][point[4]][point[5]][point[6]][i];
+                            break;
+                    }
                 break;
         }
         return v;
