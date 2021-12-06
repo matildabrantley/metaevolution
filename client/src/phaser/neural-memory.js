@@ -106,6 +106,35 @@ class NeuralMemory {
         return this.addArrayOfVectors(vectors);
     }
 
+    //scales 1D slice of n-dimensional memory by the operation and scalar.
+    scaleVectorInMemory(point, direction, operation, scalar, gradient=0) {
+        let v = this.getVectorInMemory(point, direction);
+        for (let i=0; i < this.width; i++) {
+            let distanceFactor; //distance from point in current dimension (direction)
+            switch (operation) {
+                case 0:
+                    v[i] = v[i] * scalar;
+                    break;
+                case 1:
+                    v[i] = v[i] + scalar;
+                    break;
+                case 2:
+                    v[i] = v[i] - scalar;
+                    break;
+                case 3:
+                    v[i] = v[i] / scalar;
+                    break;
+            }
+        }
+        this.setVectorInMemory(point, direction, v);
+    }
+
+    scaleIntersectingVectors(point, operation, scalar) {
+        //scale intersecting vectors for each dimension
+        for (let i = 0; i < this.numDimensions; i++) 
+            this.scaleVectorInMemory(point, i, operation, scalar);
+    }
+
     //get a vector that's a 1D slice from any direction of the n-cube (row, column, etc.)
     //by passing a point inside desired vector and direction of the slice
     getVectorInMemory(point, direction) { //point is an array of length numDimensions containing indices
@@ -268,27 +297,6 @@ class NeuralMemory {
                 break;
         }
         return v;
-    }
-    
-    scaleVectorInMemory(point, direction, operation, scalar) {
-        let v = this.getVectorInMemory(point, direction);
-        for (let i=0; i < this.width; i++) {
-            switch (operation) {
-                case 0:
-                    v[i] = v[i] * scalar;
-                    break;
-                case 1:
-                    v[i] = v[i] + scalar;
-                    break;
-                case 2:
-                    v[i] = v[i] - scalar;
-                    break;
-                case 3:
-                    v[i] = v[i] / scalar;
-                    break;
-            }
-        }
-        this.setVectorInMemory(point, direction, v);
     }
 
     //pretty much a mirror image of getVectorInMemory
