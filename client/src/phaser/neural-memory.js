@@ -63,6 +63,13 @@ class NeuralMemory {
         return vector;
     }
 
+    averageVectors(vectors) {
+        let sum = new Array(this.width).fill(0);
+        for (let i = 0; i < vectors.length; i++)
+            sum = addVectors(sum, vectors[i]);
+        return this.divideVector(sum, vectors.length);
+    }
+
     //get a vector that's a 1D slice from any dimension of the n-cube (row, column, etc.)
     //dimension = 0 means rows, 1 means columns and so forth
     getVector(point, dimension) { //point is an array of length numDimensions containing indices
