@@ -113,6 +113,105 @@ class NeuralMemory {
                         break;
                 }
                 break;
+            case 6:
+                //6D case
+                switch (dimension) {
+                    case 0:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[i][point[1]][point[2]][point[3]][point[4]][point[5]];
+                        break;
+                    case 1:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][i][point[2]][point[3]][point[4]][point[5]];
+                        break;
+                    case 2:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][i][point[3]][point[4]][point[5]];
+                        break;
+                    case 3:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][point[2]][i][point[4]][point[5]];
+                        break;
+                    case 4:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][i][point[5]];
+                        break;
+                    case 5:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][point[4]][i];
+                        break;
+                }
+                break;
+            case 7:
+                //7D case
+                switch (dimension) {
+                    case 0:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[i][point[1]][point[2]][point[3]][point[4]][point[5]][point[6]];
+                        break;
+                    case 1: 
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][i][point[2]][point[3]][point[4]][point[5]][point[6]];
+                        break;
+                    case 2:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][i][point[3]][point[4]][point[5]][point[6]];
+                        break;
+                    case 3:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][point[2]][i][point[4]][point[5]][point[6]];
+                        break;
+                    case 4:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][i][point[5]][point[6]];
+                        break;
+                    case 5:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][point[4]][i][point[6]];
+                        break;
+                    case 6:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][point[4]][point[5]][i];
+                        break;
+                }
+                break;
+            case 8:
+                //8D case
+                switch (dimension) {
+                    case 0:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[i][point[1]][point[2]][point[3]][point[4]][point[5]][point[6]][point[7]];
+                        break;
+                    case 1:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][i][point[2]][point[3]][point[4]][point[5]][point[6]][point[7]];
+                        break;
+                    case 2:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][i][point[3]][point[4]][point[5]][point[6]][point[7]];
+                        break;
+                    case 3:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][point[2]][i][point[4]][point[5]][point[6]][point[7]];
+                        break;
+                    case 4:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][i][point[5]][point[6]][point[7]];
+                        break;
+                    case 5:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][point[4]][i][point[6]][point[7]];
+                        break;
+                    case 6:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][point[4]][point[5]][i][point[7]];
+                        break;
+                    case 7:
+                        for (let i=0; i < this.width; i++)
+                            v[i] = this.memory[point[0]][point[1]][point[2]][point[3]][point[4]][point[5]][point[6]][i];
+                        break;
+                }
+                break;
         }
         return v;
     }
