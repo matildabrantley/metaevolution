@@ -28,7 +28,7 @@ class NeuralMemory {
         let sum = new Array(this.width).fill(0);
         //Add up all vectors intersecting the point
         for (let i = 0; i < this.numDimensions; i++) 
-            sum = addVectors(sum, getVector(point, i));
+            sum = this.addVectors(sum, getVector(point, i));
         return sum;
     }
 
@@ -37,7 +37,12 @@ class NeuralMemory {
             vector1[i] = vector1[i] + vector2[i];
         return vector1;
     }
-    
+
+    subtractTwoVectors(vector1, vector2) {
+        for (let i = 0; i < vector1.length; i++)
+            vector1[i] = vector1[i] - vector2[i];
+        return vector1;
+    }
 
     multiplyTwoVectors(vector1, vector2) {
         for (let i = 0; i < vector1.length; i++)
@@ -49,6 +54,12 @@ class NeuralMemory {
         for (let i = 0; i < vector1.length; i++)
             vector1[i] = vector1[i] / vector2[i];
         return vector1;
+    }
+
+    addVector(vector, scalar) {
+        for (let i = 0; i < vector.length; i++)
+            vector[i] = vector[i] + scalar;
+        return vector;
     }
 
     multiplyVector(vector, scalar) {
@@ -66,7 +77,7 @@ class NeuralMemory {
     averageVectors(vectors) {
         let sum = new Array(this.width).fill(0);
         for (let i = 0; i < vectors.length; i++)
-            sum = addVectors(sum, vectors[i]);
+            sum = this.addTwoVectors(sum, vectors[i]);
         return this.divideVector(sum, vectors.length);
     }
 
