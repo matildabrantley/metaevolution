@@ -23,9 +23,10 @@ class NeuralMemory {
          }
     }
 
-    // *** Basic Vector Operations *** 
 
-    // Two Vectors Operations
+
+    // *** Basic Vector Operations *** 
+    // ** Two Vector Operations **
     // return sum of two vectors
     addTwoVectors(vector1, vector2) {
         for (let i = 0; i < vector1.length; i++) 
@@ -51,7 +52,7 @@ class NeuralMemory {
         return vector1;
     }
 
-    //Scalar Vector Operations
+    // ** Scalar Vector Operations **
     //return sum of a vector with scalar
     addVector(vector, scalar) {
         for (let i = 0; i < vector.length; i++)
@@ -77,25 +78,33 @@ class NeuralMemory {
         return vector;
     }
 
-    //Average any number of vectors
-    averageVectors(vectors) {
+    // ** Other Vector Operations **
+    //returns sum of many vectors
+    addArrayOfVectors(vectors) {
         let sum = new Array(this.width).fill(0);
-        for (let i = 0; i < vectors.length; i++)
-            sum = this.addTwoVectors(sum, vectors[i]);
-        return this.divideVector(sum, vectors.length);
-    }
+        for (let i = 1; i < vectors.length; i++) 
+            for (let j = 0; j < this.width; j++)
+                sum[j] = vectors[i-1] + vectors[i];
 
-    //get a vector that's the pointwise sum of all vectors intersecting that point in the n-cube
-    getVectorSumAtIntersection(point) { //point is an array of length numDimensions containing indices
-        let sum = new Array(this.width).fill(0);
-        //Add up all vectors intersecting the point
-        for (let i = 0; i < this.numDimensions; i++) 
-        sum = this.addTwoVectors(sum, getVectorByPoint(point, i));
         return sum;
     }
 
+    //returns average of many vectors
+    averageArrayOfVectors(vectors) {
+        return this.divideVector(this.addArrayOfVectors(vectors), vectors.length);
+    }
+
+    //get a vector that's the sum of all vectors intersecting that point in the n-cube
+    getVectorSumAtIntersection(point) { //point is an array of length numDimensions containing indices
+        let vectors = new Array(this.numDimensions);
+        //Add up all vectors intersecting the point
+        for (let i = 0; i < this.numDimensions; i++) 
+            vectors.push(this.getVectorByPoint(point, i));
+        return this.addArrayOfVectors(vectors);
+    }
+
     //get a vector that's a 1D slice from any direction of the n-cube (row, column, etc.)
-    //by passing a point inside that vector and the direction of the slice
+    //by passing a point inside desired vector and direction of the slice
     getVectorByPoint(point, direction) { //point is an array of length numDimensions containing indices
         let v = Array(this.width);
 
