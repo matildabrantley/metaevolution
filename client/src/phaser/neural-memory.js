@@ -32,17 +32,35 @@ class NeuralMemory {
         return sum;
     }
 
-    addVectors(vector1, vector2) {
+    addTwoVectors(vector1, vector2) {
         for (let i = 0; i < vector1.length; i++) 
             vector1[i] = vector1[i] + vector2[i];
         return vector1;
     }
     
 
-    multiplyVectors(vector1, vector2) {
+    multiplyTwoVectors(vector1, vector2) {
         for (let i = 0; i < vector1.length; i++)
             vector1[i] = vector1[i] * vector2[i];
         return vector1;
+    }
+
+    divideTwoVectors(vector1, vector2) {
+        for (let i = 0; i < vector1.length; i++)
+            vector1[i] = vector1[i] / vector2[i];
+        return vector1;
+    }
+
+    multiplyVector(vector, scalar) {
+        for (let i = 0; i < vector.length; i++)
+            vector[i] = vector[i] * scalar;
+        return vector;
+    }
+
+    divideVector(vector, scalar) {
+        for (let i = 0; i < vector.length; i++)
+            vector[i] = vector[i] / scalar;
+        return vector;
     }
 
     //get a vector that's a 1D slice from any dimension of the n-cube (row, column, etc.)
