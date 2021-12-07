@@ -1,4 +1,12 @@
+/*Summary:
+Neural Memory is an external memory block connected to the inputs and outputs of a Net.
+Originally designed to be a form of Random Access Memory to read/write values for each Net, 
+it's been updated to read/write vectors (or all intersecting vectors). This is because
+neural networks aren't so great at reading from/writing to highly specific addresses.
 
+The memory block is an n-dimensional cube (all dimensions are the same length).
+Inputs from its Net are used to target vectors in read/write operations.
+*/
 class NeuralMemory {
     constructor (numDimensions, width) {
         this.numDimensions = numDimensions;
