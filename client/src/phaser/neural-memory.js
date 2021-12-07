@@ -4,6 +4,9 @@ class NeuralMemory {
         this.numDimensions = numDimensions;
         this.width = width;
         this.memory = buildNDimensionalCube(numDimensions);
+        //an input for each dimension's index and one for scalar, gradient, and operation
+        this.writeInputs = new Array(numDimensions + 3);
+        this.readInputs = new Array(numDimensions + 1);
     }
 
     //builds and returns multidimensional array with n-cube shape (n dimensions with equal width i.e. square, cube, tesseract..)
@@ -23,7 +26,19 @@ class NeuralMemory {
          }
     }
 
+    update(inputs){
+        let point = new Array(this.numDimensions);
+        let index = 0;
+        for (; index < this.numDimensions; index++) {
+            point[index] = inputs[index];
+        }
+        let scalar = inputs[index++];
+        let operation = inputs[index++];
+        //TODO: add gradient
+        //let gradient = inputs[index++];
 
+        this.scaleIntersectingVectors(point, scalar, operation);  
+    }
 
     // *** Basic Vector Operations *** 
     // ** Two Vector Operations **
@@ -452,9 +467,6 @@ class NeuralMemory {
                             break;
                     }
                     break;
-                }
-
-
 
 }
 
