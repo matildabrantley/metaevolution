@@ -4,8 +4,16 @@ Originally designed to be a form of Random Access Memory to read/write values fo
 it's been updated to read/write vectors (or all intersecting vectors). This is because
 neural networks aren't so great at reading from/writing to highly specific addresses.
 
-The memory block is an n-dimensional cube (all dimensions are the same length).
+The memory block is an n-dimensional cube (any dimensions of the same length).
 Inputs from its Net are used to target vectors in read/write operations.
+Various mathematical operations can be performed with a scalar based on input.
+Gradients can be passed to change parts of a vector more or less.
+
+The reasoning behind an n-cube is tied to gradual evolutionary change with learned neural patterns.
+Ex: If neural inputs are all in middle of allowed range (such as ~0 when -1 to 1) with 3x3 memory,
+the second (middle) vectors will be targeted. If the memory grows to 3x3x3 then existing patterns will 
+still make sense while new patterns can grow naturally with newly allocated memory. 
+
 */
 class NeuralMemory {
     constructor (numDimensions, width) {
