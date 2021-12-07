@@ -37,6 +37,11 @@ class NeuralMemory {
         //TODO: add gradient
         //let gradient = inputs[index++];
 
+        //At this point, memory can be updated in a variety of ways
+        //1. Overwrite a specific element
+        //2. Scale a specific element
+        //3. Scale a vector
+        //4. Scale intersecting vectors (the one being used below, as its the most nonlinear)
         this.scaleIntersectingVectors(point, scalar, operation);  
     }
 
