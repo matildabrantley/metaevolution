@@ -76,38 +76,12 @@ class NeuralMemory {
         //     point[index] = inputs[index];
         // }
 
-        //for now just pass in inputs as point
-        return this.getVectorSumAtIntersection(inputs);
-
+        //for now just pass in inputs as the point
+        //sum up intersecting vectors and tanh each element
+        return this.tanhVector(this.getVectorSumAtIntersection(inputs));
     }
 
     // *** Basic Vector Operations *** 
-    // ** Two Vector Operations **
-    // return sum of two vectors
-    addTwoVectors(vector1, vector2) {
-        for (let i = 0; i < vector1.length; i++) 
-            vector1[i] = vector1[i] + vector2[i];
-        return vector1;
-    }
-    //return difference of two vectors
-    subtractTwoVectors(vector1, vector2) {
-        for (let i = 0; i < vector1.length; i++)
-            vector1[i] = vector1[i] - vector2[i];
-        return vector1;
-    }
-    //return product of two vectors
-    multiplyTwoVectors(vector1, vector2) {
-        for (let i = 0; i < vector1.length; i++)
-            vector1[i] = vector1[i] * vector2[i];
-        return vector1;
-    }
-    //return quotient of two vectors
-    divideTwoVectors(vector1, vector2) {
-        for (let i = 0; i < vector1.length; i++)
-            vector1[i] = vector1[i] / vector2[i];
-        return vector1;
-    }
-
     // ** Scalar Vector Operations **
     //return sum of a vector with scalar
     addVector(vector, scalar) {
@@ -134,7 +108,39 @@ class NeuralMemory {
         return vector;
     }
 
+    // ** Two Vector Operations **
+    // return sum of two vectors
+    addTwoVectors(vector1, vector2) {
+        for (let i = 0; i < vector1.length; i++) 
+            vector1[i] = vector1[i] + vector2[i];
+        return vector1;
+    }
+    //return difference of two vectors
+    subtractTwoVectors(vector1, vector2) {
+        for (let i = 0; i < vector1.length; i++)
+            vector1[i] = vector1[i] - vector2[i];
+        return vector1;
+    }
+    //return product of two vectors
+    multiplyTwoVectors(vector1, vector2) {
+        for (let i = 0; i < vector1.length; i++)
+            vector1[i] = vector1[i] * vector2[i];
+        return vector1;
+    }
+    //return quotient of two vectors
+    divideTwoVectors(vector1, vector2) {
+        for (let i = 0; i < vector1.length; i++)
+            vector1[i] = vector1[i] / vector2[i];
+        return vector1;
+    }
+
     // ** Other Vector Operations **
+    //tanh, zero-centered curve, applied to each element
+    tanhVector(vector, base=3) {
+        for (let i = 0; i < vector.length; i++)
+            vector[i] = 2 / (1 + Math.pow(base, -vector[i])) - 1;
+        return vector;
+    }
     //returns sum of many vectors
     addArrayOfVectors(vectors) {
         //return first vector (array) if only one
