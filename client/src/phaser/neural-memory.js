@@ -1,20 +1,29 @@
 /*Summary:
 Neural Memory is an external memory block connected to the inputs and outputs of a Net.
+NNs evolved instead of trained with gradient descent can use arbitrary I/O at any place
+in the network (provided consistency across generations).
+
 Originally designed to be a form of Random Access Memory to read/write values for each Net, 
-it's been updated to read/write vectors (or all intersecting vectors). This is because
+it's been updated to read/write whole vectors (or all intersecting vectors). This is because
 neural networks aren't so great at reading from/writing to highly specific addresses.
 
-The memory block is an n-dimensional cube (any dimensions of the same length).
-Inputs from its Net are used to target vectors in read/write operations.
-Various mathematical operations can be performed with a scalar based on input.
-Gradients can be passed to change parts of a vector more or less.
+Features:
+-Memory block is an n-dimensional cube (any dimensions of the same length).
+-Inputs from linked Net are used to target vectors in read/write operations.
+-Various mathematical operations can be performed along with a scalar.
+-Gradients can be passed to emphasize parts of a vector.
+-Supports up to 8 dimensions currently.
 
-The reasoning behind an n-cube is tied to gradual evolutionary change with learned neural patterns.
-Ex: If neural inputs are all in middle of allowed range (such as ~0 when -1 to 1) with 3x3 memory,
-the second (middle) vectors will be targeted. If the memory grows to 3x3x3 then existing patterns will 
-still make sense while new patterns can grow naturally with newly allocated memory. 
+Note: the reasoning behind an n-cube is gradual evolutionary change with learned neural patterns.
 
+Example: 
+If neural inputs (the Net's outputs) are all in middle of allowed range (such as ~0 when -1 to 1) 
+with 3x3 memory, the second (middle) vectors will be targeted. If the memory grows to 3x3x3 then 
+existing patterns will still make sense while new patterns can grow naturally with extra memory. 
+Likewise, growing to 5x5 instead of adding dimensions also allows for existing patterns to still
+work with just a little bit of adjustment.
 */
+
 class NeuralMemory {
     constructor (numDimensions, width) {
         this.numDimensions = numDimensions;
@@ -42,12 +51,11 @@ class NeuralMemory {
          }
     }
 
-    update(inputs){
+    write(inputs){
         let point = new Array(this.numDimensions);
         let index = 0;
-        for (; index < this.numDimensions; index++) {
+        for (; index < this.numDimensions; index++) 
             point[index] = inputs[index];
-        }
         let scalar = inputs[index++];
         let operation = inputs[index++];
         //TODO: add gradient
@@ -59,6 +67,18 @@ class NeuralMemory {
         //3. Scale a vector
         //4. Scale intersecting vectors (the one being used below, as its the most nonlinear)
         this.scaleIntersectingVectors(point, scalar, operation);  
+    }
+
+    read(inputs){
+        // let point = new Array(this.numDimensions);
+        // let index = 0;
+        // for (; index < this.numDimensions; index++) {
+        //     point[index] = inputs[index];
+        // }
+
+        //for now just pass in inputs as point
+        return this.getVectorSumAtIntersection(inputs);
+
     }
 
     // *** Basic Vector Operations *** 
