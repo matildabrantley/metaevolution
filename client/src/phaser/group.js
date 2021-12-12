@@ -1,5 +1,5 @@
 import Life from './life';
-import Mind from './mind';
+import Mind from '../neural/mind';
 const Phaser = require('phaser');
 // const Vector = require('./vector');
 
