@@ -1,5 +1,5 @@
 /*Summary:
-Neural Memory is an external memory block connected to the inputs and outputs of a Net.
+N-Dimension Memory is an external memory block connected to the inputs and outputs of a Net.
 NNs evolved instead of trained with gradient descent can use arbitrary I/O at any place
 in the network (provided consistency across generations).
 
@@ -12,7 +12,7 @@ Features:
 -Inputs from linked Net are used to target vectors in read/write operations.
 -Various mathematical operations can be performed along with a scalar.
 -Gradients can be passed to emphasize parts of a vector.
--Supports up to 8 dimensions currently.
+-Supports up to 9 dimensions currently.
 
 Note: the reasoning behind an n-cube is gradual evolutionary change with learned neural patterns.
 
@@ -24,7 +24,7 @@ Likewise, growing to 5x5 instead of adding dimensions also allows for existing p
 work with just a little bit of adjustment.
 */
 
-class NeuralMemory {
+class NDimensionMemory {
     constructor (numDimensions, width) {
         this.numDimensions = numDimensions;
         this.width = width;
@@ -202,11 +202,12 @@ class NeuralMemory {
     getVectorInMemory(point, direction) { //point is an array of length numDimensions containing indices
         let v = Array(this.width);
 
-        //Up to 8 dimensions supported
+        //Up to 9 dimensions supported
         //these nested switches are a mess right now, but it's quite fast
-        //need a solution with less repetitive code and scalable dimensions, 
+        //TODO: need a solution with less repetitive code and scalable dimensions, 
         //so something recursive or perhaps a different data structure
         //the difficulty is needing to get a vector from any slice for all possible dimensionalities
+        //(eval function with recursion would work, yet too slow with many nets and agents)
         switch(this.numDimensions) {
             case 1:
                 v = this.memory;
@@ -582,4 +583,4 @@ class NeuralMemory {
 
 }
 
-export default NeuralMemory;
+export default NDimensionMemory;
