@@ -1,4 +1,4 @@
-import Net from './net';
+//import Net from '../neural/net';
 const Phaser = require('phaser');
 const copyDeep = require('lodash.clonedeep');
 // const Vector = require('./vector');
