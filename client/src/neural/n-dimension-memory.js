@@ -34,17 +34,67 @@ class NDimensionMemory {
         this.readInputs = new Array(numDimensions + 1);
     }
 
-    //builds and returns multidimensional array with n-cube shape (n dimensions with equal width i.e. square, cube, tesseract..)
+    //returns 1D array representing an n-cube shape (n dimensions with equal width i.e. square, cube, tesseract..)
     buildNDimensionalCube(numDimensions) {
         //Equal width dimensions preferred due to the way the network reads and writes vectors in dynamic memory
         //and how the memory capacity grows through generations during evolution. 
         //In other words, complete symmetry is favorable.
 
-        //one dimensional array reprensenting a n-dimensional cube
-        let arr = new Array(Math.pow(this.width, numDimensions)).fill(0);
+        //Pre-calculate the total elements per dimension (vector=2, plane=4, cube=8, etc)
+        //to prevent repeatedly multiplying width every time an element is accessed.
+        this.elementsPerDim = new Array(numDimensions);
+        this.elementsPerDim[0] = 1; //only here for completeness
+        for (let i = 1; i <= numDimensions; i++) 
+            this.elementsPerDim[i] = Math.pow(this.width, i);
+        this.indexSum = 0;
+
+        //Return one dimensional array representing the n-dimensional cube
+        return new Array(this.elementsPerDim[numDimensions]).fill(0);
+
+
     }
 
     getElement(indices) {
+        switch (indices.length) {
+            case 1:
+                return this.memory[indices[0]];
+            case 2:
+                return this.memory[indices[0] * this.elementsPerDim[2] + indices[1]];
+            case 3:
+                return this.memory[indices[0] * this.elementsPerDim[3] + 
+                    indices[1] * this.elementsPerDim[2] + indices[2]];
+            case 4:
+                return this.memory[indices[0] * this.elementsPerDim[4] +
+                    indices[1] * this.elementsPerDim[3] + 
+                    indices[2] * this.elementsPerDim[2] + indices[3]];
+            case 5:
+                return this.memory[indices[0] * this.elementsPerDim[5] +
+                    indices[1] * this.elementsPerDim[4] +
+                    indices[2] * this.elementsPerDim[3] +
+                    indices[3] * this.elementsPerDim[2] + indices[4]];
+            case 6:
+                return this.memory[indices[0] * this.elementsPerDim[6] +
+                    indices[1] * this.elementsPerDim[5] +
+                    indices[2] * this.elementsPerDim[4] +
+                    indices[3] * this.elementsPerDim[3] +
+                    indices[4] * this.elementsPerDim[2] + indices[5]];
+            case 7:
+                return this.memory[indices[0] * this.elementsPerDim[7] +
+                    indices[1] * this.elementsPerDim[6] +
+                    indices[2] * this.elementsPerDim[5] +
+                    indices[3] * this.elementsPerDim[4] +
+                    indices[4] * this.elementsPerDim[3] +
+                    indices[5] * this.elementsPerDim[2] + indices[6]];
+            case 8:
+                let element = this.memory[indices[0] * this.elementsPerDim[8] +
+                    indices[1] * this.elementsPerDim[7] +
+                    indices[2] * this.elementsPerDim[6] +
+                    indices[3] * this.elementsPerDim[5] +
+                    indices[4] * this.elementsPerDim[4] +
+                    indices[5] * this.elementsPerDim[3] +
+                    indices[6] * this.elementsPerDim[2] + indices[7]];
+                this.indexSum = 0; //reset indexSum
+                return element;
     }
     write(inputs){
         let point = new Array(this.numDimensions);
