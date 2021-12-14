@@ -46,7 +46,13 @@ class NDimensionMemory {
         this.elementsPerDim[0] = 1; //only here for completeness
         for (let i = 1; i <= numDimensions; i++) 
             this.elementsPerDim[i] = Math.pow(this.width, i);
-        this.indexSum = 0;
+        
+        //variables for recursively calculating indices past hardcoded dimensions (8 dimensions)
+        //they're not passed recursively because it's a slowdown to normal use cases
+        if (numDimensions >= 8) {
+            this.indexSum = 0;
+            this.currentDim = 0;
+        }
 
         //Return one dimensional array representing the n-dimensional cube
         return new Array(this.elementsPerDim[numDimensions]).fill(0);
@@ -54,6 +60,9 @@ class NDimensionMemory {
 
     }
 
+    //calculates the n-dimensional index of memory's 1D array
+    //index-calculating of first 8 dimensions hardcoded as base cases for efficiency
+    //dimensions past 8 are recursively calculated until they reach a base case (8th dimension)
     getElement(indices) {
         switch (indices.length) {
             case 1:
@@ -92,9 +101,17 @@ class NDimensionMemory {
                     indices[3] * this.elementsPerDim[5] +
                     indices[4] * this.elementsPerDim[4] +
                     indices[5] * this.elementsPerDim[3] +
-                    indices[6] * this.elementsPerDim[2] + indices[7]];
-                this.indexSum = 0; //reset indexSum
+                    indices[6] * this.elementsPerDim[2] + indices[7]]
+                    + this.indexSum; //adds sum of all indices past 8 dimensions
+                //reset indexSum and currentDim
+                this.indexSum = 0; 
+                this.currentDim = this.numDimensions;
                 return element;
+            default:
+                this.indexSum += indices[0] * this.elementsPerDim[this.currentDim];
+                this.currentDim--;
+                return this.getElement(indices.slice(1));
+        }
     }
     write(inputs){
         let point = new Array(this.numDimensions);
