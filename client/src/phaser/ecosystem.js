@@ -12,16 +12,16 @@ import blackstar from './assets/sprites/blackstar.png';
 import greenstar from './assets/sprites/greenstar.png';
 import circle from './assets/sprites/circle.png';
 //Import spritesheets for animations
-import rabbit from './assets/sprites/Rabbit.png';
-import darkrabbit from './assets/sprites/Rabbit-dark.png';
-import redrabbit from './assets/sprites/Rabbit-red.png';
-import bluerabbit from './assets/sprites/Rabbit-blue.png';
+// import rabbit from './assets/sprites/Rabbit.png';
+// import darkrabbit from './assets/sprites/Rabbit-dark.png';
+// import redrabbit from './assets/sprites/Rabbit-red.png';
+// import bluerabbit from './assets/sprites/Rabbit-blue.png';
 
 // Export json frame data for animations
-import rabbitFrames from './assets/frameData/Rabbit.json';
-import darkrabbitFrames from './assets/frameData/Rabbit-dark.json';
-import redrabbitFrames from './assets/frameData/Rabbit-red.json';
-import bluerabbitFrames from './assets/frameData/Rabbit-blue.json';
+// import rabbitFrames from './assets/frameData/Rabbit.json';
+// import darkrabbitFrames from './assets/frameData/Rabbit-dark.json';
+// import redrabbitFrames from './assets/frameData/Rabbit-red.json';
+// import bluerabbitFrames from './assets/frameData/Rabbit-blue.json';
 
 //import tilesheet, tilemapping
 import tilesheet1 from './assets/tiles/all-tiles.png';
@@ -71,10 +71,10 @@ class Ecosystem extends Phaser.Scene {
     this.load.image('blackstar', blackstar);
     this.load.image('greenstar', greenstar);
     //spritesheets and json frame data
-    this.load.atlas('rabbit', rabbit, rabbitFrames);
-    this.load.atlas('darkrabbit', darkrabbit, darkrabbitFrames);
-    this.load.atlas('redrabbit', redrabbit, redrabbitFrames);
-    this.load.atlas('bluerabbit', bluerabbit, bluerabbitFrames);
+    // this.load.atlas('rabbit', rabbit, rabbitFrames);
+    // this.load.atlas('darkrabbit', darkrabbit, darkrabbitFrames);
+    // this.load.atlas('redrabbit', redrabbit, redrabbitFrames);
+    // this.load.atlas('bluerabbit', bluerabbit, bluerabbitFrames);
 
     //tiles
     this.load.image('tiles', tilesheet1);
@@ -160,10 +160,10 @@ create () {
   // goalGroup.add(greenStar);
 
   let fps = 20;
-  const rabbitAnim = createAnimConfig (this, 'rabbitKey', 'rabbit', fps, 'Rabbit0.png');
-  const darkrabbitAnim = createAnimConfig (this, 'darkrabbitKey', 'darkrabbit', fps, 'Rabbit-dark0.png');
-  const redrabbitAnim = createAnimConfig (this, 'redrabbitKey', 'redrabbit', fps, 'Rabbit-red0.png');
-  const bluerabbitAnim = createAnimConfig (this, 'bluerabbitKey', 'bluerabbit', fps, 'Rabbit-blue0.png');
+  // const rabbitAnim = createAnimConfig (this, 'rabbitKey', 'rabbit', fps, 'Rabbit0.png');
+  // const darkrabbitAnim = createAnimConfig (this, 'darkrabbitKey', 'darkrabbit', fps, 'Rabbit-dark0.png');
+  // const redrabbitAnim = createAnimConfig (this, 'redrabbitKey', 'redrabbit', fps, 'Rabbit-red0.png');
+  // const bluerabbitAnim = createAnimConfig (this, 'bluerabbitKey', 'bluerabbit', fps, 'Rabbit-blue0.png');
   
   const generalConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: true};
   const speciesConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: false};
@@ -172,10 +172,10 @@ create () {
   //Create one Genus
   this.genera.push(new Genus(generalConfig));
   
-  let species1 = this.genera[0].createSpecies(darkrabbitAnim, {pop: this.pop});
-  let species2 = this.genera[0].createSpecies(bluerabbitAnim, {pop: this.pop});
-  let species3 = this.genera[0].createSpecies(redrabbitAnim, {pop: this.pop});
-  let species4 = this.genera[0].createSpecies(rabbitAnim, {pop: this.pop});
+  // let species1 = this.genera[0].createSpecies(darkrabbitAnim, {pop: this.pop});
+  // let species2 = this.genera[0].createSpecies(bluerabbitAnim, {pop: this.pop});
+  // let species3 = this.genera[0].createSpecies(redrabbitAnim, {pop: this.pop});
+  // let species4 = this.genera[0].createSpecies(rabbitAnim, {pop: this.pop});
 
   //manual setup
   this.genera[0].bestSpecies = this.genera[0].species[0];
@@ -244,8 +244,8 @@ update () {
     
 
     //Update each genus
-    for (let genus of this.genera)
-      genus.update();
+    //for (let genus of this.genera)
+    //  genus.update();
 
     // if (this.globalTime === 200) {
     //     this.genera[0].species[0].createGroup(blueGroupAnim, {pop: this.groupPop});
