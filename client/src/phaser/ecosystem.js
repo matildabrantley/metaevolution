@@ -91,34 +91,34 @@ create () {
   cam.centerOn(200,180);
   cam.setBackgroundColor(0xffffff);
 
-  //Background images copied into four quadrants
-  let numStyles = 2;
-  this.bgs = [];
-  for (let i=0; i < numStyles; i++)  {
-      let newBg = this.backgrounds[i];
-      //four quadrants of background
-      const bg = new Array(4);
-      bg[0] = this.add.image(0, 0, newBg).setOrigin(0);
-      bg[1] = this.add.image(720, 0, newBg).setOrigin(0);
-      bg[1].flipX=true;
-      bg[2] = this.add.image(0, 720, newBg).setOrigin(0);
-      bg[2].flipY=true;
-      bg[3] = this.add.image(720, 720, newBg).setOrigin(0);
-      bg[3].flipX=true;
-      bg[3].flipY=true;
-      for (const quadrant of bg) {
-          quadrant.setDisplaySize(2048, 2048);
-          quadrant.setScale(0.5);
-          quadrant.alpha = 0.4;
-      }
-      this.bgs.push(bg);
-  } 
-  //Background image opacity management
-  this.maxOpacity = 0.7;
-  this.bgOpacity = new Array(numStyles);
-  this.bgOpacity[0] = this.maxOpacity;
-  this.bgOpacity[1] = 0;
-  this.bgOpacityDirection = 1;
+  // //Background images copied into four quadrants
+  // let numStyles = 2;
+  // this.bgs = [];
+  // for (let i=0; i < numStyles; i++)  {
+  //     let newBg = this.backgrounds[i];
+  //     //four quadrants of background
+  //     const bg = new Array(4);
+  //     bg[0] = this.add.image(0, 0, newBg).setOrigin(0);
+  //     bg[1] = this.add.image(720, 0, newBg).setOrigin(0);
+  //     bg[1].flipX=true;
+  //     bg[2] = this.add.image(0, 720, newBg).setOrigin(0);
+  //     bg[2].flipY=true;
+  //     bg[3] = this.add.image(720, 720, newBg).setOrigin(0);
+  //     bg[3].flipX=true;
+  //     bg[3].flipY=true;
+  //     for (const quadrant of bg) {
+  //         quadrant.setDisplaySize(2048, 2048);
+  //         quadrant.setScale(0.5);
+  //         quadrant.alpha = 0.4;
+  //     }
+  //     this.bgs.push(bg);
+  // } 
+  // //Background image opacity management
+  // this.maxOpacity = 0.7;
+  // this.bgOpacity = new Array(numStyles);
+  // this.bgOpacity[0] = this.maxOpacity;
+  // this.bgOpacity[1] = 0;
+  // this.bgOpacityDirection = 1;
   
 
   //Tiles
@@ -202,15 +202,15 @@ update () {
   this.timerText.setText("Update " + this.globalTime); 
   
    //Background styles imperceptibly alternate
-  if (this.bgOpacity[0] >= this.maxOpacity)
-            this.bgOpacityDirection = -1;
-        else if (this.bgOpacity[0] <= 0)
-            this.bgOpacityDirection = 1;
-        this.bgOpacity[0] += 0.001 * this.bgOpacityDirection;
-        this.bgOpacity[1] += 0.001 * this.bgOpacityDirection * -1;
-        for (let i in this.bgs) {
-            this.bgs[i].forEach(quadrant => { quadrant.alpha = this.bgOpacity[i] }) ;
-        }
+  // if (this.bgOpacity[0] >= this.maxOpacity)
+  //   this.bgOpacityDirection = -1;
+  // else if (this.bgOpacity[0] <= 0)
+  //   this.bgOpacityDirection = 1;
+  // this.bgOpacity[0] += 0.001 * this.bgOpacityDirection;
+  // this.bgOpacity[1] += 0.001 * this.bgOpacityDirection * -1;
+  // for (let i in this.bgs) {
+  //   this.bgs[i].forEach(quadrant => { quadrant.alpha = this.bgOpacity[i] }) ;
+  // }
 
         //Camera controls
         const cam = this.cameras.main;
