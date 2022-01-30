@@ -17,14 +17,6 @@ import crimsonPulse from './assets/sprites/pulsing-crimson-star.png';
 import grayPulse from './assets/sprites/pulsing-gray-star.png';
 import purplePulse from './assets/sprites/pulsing-purple-star.png';
 import yellowPulse from './assets/sprites/pulsing-yellow-star.png';
-import fireSpiral from './assets/sprites/fire-spiral.png';
-import waterSpiral from './assets/sprites/water-spiral.png';
-import natureSpiral from './assets/sprites/nature-spiral.png';
-import windSpiral from './assets/sprites/wind-spiral.png';
-import sparkSpiral from './assets/sprites/spark-spiral.png';
-import groundSpiral from './assets/sprites/ground-spiral.png';
-import lightSpiral from './assets/sprites/light-spiral.png';
-import voidSpiral from './assets/sprites/void-spiral.png';
 
 // Export json frame data for animations
 import redPulseFrames from './assets/frameData/pulsing-red-dot.json';
@@ -36,14 +28,6 @@ import crimsonPulseFrames from './assets/frameData/pulsing-crimson-star.json';
 import grayPulseFrames from './assets/frameData/pulsing-gray-star.json';
 import purplePulseFrames from './assets/frameData/pulsing-purple-star.json';
 import yellowPulseFrames from './assets/frameData/pulsing-yellow-star.json';
-import fireSpiralFrames from './assets/frameData/fire-spiral.json';
-import waterSpiralFrames from './assets/frameData/water-spiral.json';
-import natureSpiralFrames from './assets/frameData/nature-spiral.json';
-import windSpiralFrames from './assets/frameData/wind-spiral.json';
-import sparkSpiralFrames from './assets/frameData/spark-spiral.json';
-import groundSpiralFrames from './assets/frameData/ground-spiral.json';
-import lightSpiralFrames from './assets/frameData/light-spiral.json';
-import voidSpiralFrames from './assets/frameData/void-spiral.json';
 
 //import tilesheet, tilemapping
 import tilesheet1 from './assets/tiles/all-tiles.png';
@@ -97,14 +81,6 @@ class Lab extends Phaser.Scene {
     this.load.atlas('grayLife', grayPulse, grayPulseFrames);
     this.load.atlas('purpleLife', purplePulse, purplePulseFrames);
     this.load.atlas('yellowLife', yellowPulse, yellowPulseFrames);
-    this.load.atlas('fireSpiral', fireSpiral, fireSpiralFrames);
-    this.load.atlas('waterSpiral', waterSpiral, waterSpiralFrames);
-    this.load.atlas('natureSpiral', natureSpiral, natureSpiralFrames);
-    this.load.atlas('windSpiral', windSpiral, windSpiralFrames);
-    this.load.atlas('sparkSpiral', sparkSpiral, sparkSpiralFrames);
-    this.load.atlas('groundSpiral', groundSpiral, groundSpiralFrames);
-    this.load.atlas('lightSpiral', lightSpiral, lightSpiralFrames);
-    this.load.atlas('voidSpiral', voidSpiral, voidSpiralFrames);
     //tiles
     this.load.image('tiles', tilesheet1);
     this.load.tilemapTiledJSON('tilemap', tilemap1);
