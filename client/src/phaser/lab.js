@@ -168,15 +168,6 @@ create () {
   const grayGroupAnim = createAnimConfig (this, 'grayKey', 'grayLife', fps+2, 'pulsing-gray-star0.png'); 
   const purpleGroupAnim = createAnimConfig (this, 'purpleKey', 'purpleLife', fps+2, 'pulsing-purple-star0.png'); 
   const yellowGroupAnim = createAnimConfig (this, 'yellowKey', 'yellowLife', fps+2, 'pulsing-yellow-star0.png'); 
-  
-  const fireSpiralAnim = createAnimConfig (this, 'fireSpiralKey', 'fireSpiral', fps, 'fire-spiral0.png', 0.4); 
-  const waterSpiralAnim = createAnimConfig (this, 'waterSpiralKey', 'waterSpiral', fps, 'water-spiral0.png', 0.4); 
-  const natureSpiralAnim = createAnimConfig (this, 'natureSpiralKey', 'natureSpiral', fps, 'nature-spiral0.png', 0.4); 
-  const windSpiralAnim = createAnimConfig (this, 'windSpiralKey', 'windSpiral', fps, 'wind-spiral0.png', 0.4); 
-  const sparkSpiralAnim = createAnimConfig (this, 'sparkSpiralKey', 'sparkSpiral', fps, 'spark-spiral0.png', 0.4); 
-  const groundSpiralAnim = createAnimConfig (this, 'groundSpiralKey', 'groundSpiral', fps, 'ground-spiral0.png', 0.4); 
-  const lightSpiralAnim = createAnimConfig (this, 'lightSpiralKey', 'lightSpiral', fps, 'light-spiral0.png', 0.4); 
-  const voidSpiralAnim = createAnimConfig (this, 'voidSpiralKey', 'voidSpiral', fps, 'void-spiral0.png', 0.4); 
 
   const generalConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: true};
   let fitnessConfig = {goals: goalGroup};
@@ -200,20 +191,6 @@ create () {
   newSpecies.createGroup(grayGroupAnim, {pop: this.groupPop});
   newSpecies.createGroup(purpleGroupAnim, {pop: this.groupPop});
   newSpecies.createGroup(yellowGroupAnim, {pop: this.groupPop});
-  this.genera[0].addSpecies(newSpecies);
-
-  newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-  newSpecies.createGroup(fireSpiralAnim, {pop: this.groupPop});
-  newSpecies.createGroup(waterSpiralAnim, {pop: this.groupPop});
-  newSpecies.createGroup(natureSpiralAnim, {pop: this.groupPop});
-  newSpecies.createGroup(windSpiralAnim, {pop: this.groupPop});
-  this.genera[0].addSpecies(newSpecies);
-
-   newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-  newSpecies.createGroup(sparkSpiralAnim, {pop: this.groupPop});
-  newSpecies.createGroup(groundSpiralAnim, {pop: this.groupPop});
-   newSpecies.createGroup(lightSpiralAnim, {pop: this.groupPop});
-   newSpecies.createGroup(voidSpiralAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
   this.genera[0].setupGenus(fitnessConfig);

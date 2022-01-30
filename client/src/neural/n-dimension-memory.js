@@ -110,6 +110,7 @@ class NDimensionMemory {
             default:
                 this.indexSum += indices[0] * this.elementsPerDim[this.currentDim];
                 this.currentDim--;
+                //slice off highest dimension's index and recursively call getElement
                 return this.getElement(indices.slice(1));
         }
     }
