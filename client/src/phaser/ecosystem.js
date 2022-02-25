@@ -13,15 +13,8 @@ import greenstar from './assets/sprites/greenstar.png';
 import circle from './assets/sprites/circle.png';
 //Import spritesheets for animations
 // import rabbit from './assets/sprites/Rabbit.png';
-// import darkrabbit from './assets/sprites/Rabbit-dark.png';
-// import redrabbit from './assets/sprites/Rabbit-red.png';
-// import bluerabbit from './assets/sprites/Rabbit-blue.png';
 
 // Export json frame data for animations
-// import rabbitFrames from './assets/frameData/Rabbit.json';
-// import darkrabbitFrames from './assets/frameData/Rabbit-dark.json';
-// import redrabbitFrames from './assets/frameData/Rabbit-red.json';
-// import bluerabbitFrames from './assets/frameData/Rabbit-blue.json';
 
 //import tilesheet, tilemapping
 import tilesheet1 from './assets/tiles/all-tiles.png';
@@ -72,9 +65,6 @@ class Ecosystem extends Phaser.Scene {
     this.load.image('greenstar', greenstar);
     //spritesheets and json frame data
     // this.load.atlas('rabbit', rabbit, rabbitFrames);
-    // this.load.atlas('darkrabbit', darkrabbit, darkrabbitFrames);
-    // this.load.atlas('redrabbit', redrabbit, redrabbitFrames);
-    // this.load.atlas('bluerabbit', bluerabbit, bluerabbitFrames);
 
     //tiles
     this.load.image('tiles', tilesheet1);
@@ -144,26 +134,9 @@ create () {
   blueStar.setBounce(5);
   blueStar.collideWorldBounds = true;
   goalGroup.add(blueStar);
-  
-  // blackStar = this.physics.add.image(this.config.width * (0.5 + goalDivergence), this.config.height * (0.5 + goalDivergence), 'blackstar');
-  // blackStar.setCircle(30);
-  // blackStar.setScale(1);
-  // blackStar.setBounce(5);
-  // blackStar.collideWorldBounds = true;
-  // goalGroup.add(blackStar);
-  
-  // greenStar = this.physics.add.image(this.config.width * (0.5 - goalDivergence), this.config.height * (0.5 + goalDivergence), 'greenstar');
-  // greenStar.setCircle(30);
-  // greenStar.setScale(1);
-  // greenStar.setBounce(5);
-  // greenStar.collideWorldBounds = true;
-  // goalGroup.add(greenStar);
 
   let fps = 20;
   // const rabbitAnim = createAnimConfig (this, 'rabbitKey', 'rabbit', fps, 'Rabbit0.png');
-  // const darkrabbitAnim = createAnimConfig (this, 'darkrabbitKey', 'darkrabbit', fps, 'Rabbit-dark0.png');
-  // const redrabbitAnim = createAnimConfig (this, 'redrabbitKey', 'redrabbit', fps, 'Rabbit-red0.png');
-  // const bluerabbitAnim = createAnimConfig (this, 'bluerabbitKey', 'bluerabbit', fps, 'Rabbit-blue0.png');
   
   const generalConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: true};
   const speciesConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: false};
@@ -244,12 +217,12 @@ update () {
     
 
     //Update each genus
-    //for (let genus of this.genera)
-    //  genus.update();
+    for (let genus of this.genera)
+     genus.update();
 
-    // if (this.globalTime === 200) {
-    //     this.genera[0].species[0].createGroup(blueGroupAnim, {pop: this.groupPop});
-    // }
+    if (this.globalTime === 200) {
+        this.genera[0].species[0].createGroup(blueGroupAnim, {pop: this.groupPop});
+    }
 
     //example of collision handling
     //this.physics.collide(redGroup, blueGroup, eat);
