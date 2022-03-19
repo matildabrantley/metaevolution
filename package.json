@@ -1,7 +1,7 @@
 {
   "name": "meta-evolution-lab",
   "version": "1.0.0",
-  "description": "",
+  "description": "Online Lab for Open-ended AI through Hierarchical Evolution",
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
@@ -9,7 +9,7 @@
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build"
   },
-  "keywords": [],
+  "keywords": ["evolution"],
   "author": "",
   "license": "ISC",
   "devDependencies": {
