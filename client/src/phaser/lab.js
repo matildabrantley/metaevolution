@@ -8,6 +8,7 @@ import blackstar from './assets/sprites/blackstar.png';
 import greenstar from './assets/sprites/greenstar.png';
 import circle from './assets/sprites/circle.png';
 //Import spritesheets for animations
+import blackSprite from './assets/sprites/black-life.png';
 import redPulse from './assets/sprites/pulsing-red-dot.png';
 import bluePulse from './assets/sprites/pulsing-blue-dot.png';
 import greenPulse from './assets/sprites/pulsing-green-dot.png';
@@ -19,6 +20,7 @@ import purplePulse from './assets/sprites/pulsing-purple-star.png';
 import yellowPulse from './assets/sprites/pulsing-yellow-star.png'; 
 
 // Export json frame data for animations
+import blackFrames from './assets/frameData/black-life.json';
 import redPulseFrames from './assets/frameData/pulsing-red-dot.json';
 import bluePulseFrames from './assets/frameData/pulsing-blue-dot.json';
 import greenPulseFrames from './assets/frameData/pulsing-green-dot.json';
@@ -72,6 +74,7 @@ class Lab extends Phaser.Scene {
     this.load.image('greenstar', greenstar);
     this.load.image('circle', circle);
     //spritesheets and json frame data
+    this.load.atlas('blackLife', blackSprite, blackFrames);
     this.load.atlas('redLife', redPulse, redPulseFrames);
     this.load.atlas('blueLife', bluePulse, bluePulseFrames);
     this.load.atlas('greenLife', greenPulse, greenPulseFrames);
@@ -135,6 +138,7 @@ create () {
   // goalGroup.add(greenStar);
 
   let fps = 30;
+  const blackGroupAnim = createAnimConfig (this, 'blackKey', 'blackLife', fps, 'black-life0.png', 0.5);
   const redGroupAnim = createAnimConfig (this, 'redKey', 'redLife', fps, 'pulsing-red-dot0.png');
   const blueGroupAnim = createAnimConfig (this, 'blueKey', 'blueLife', fps, 'pulsing-blue-dot0.png'); 
   const greenGroupAnim = createAnimConfig (this, 'greenKey', 'greenLife', fps, 'pulsing-green-dot0.png'); 
@@ -145,21 +149,21 @@ create () {
   const purpleGroupAnim = createAnimConfig (this, 'purpleKey', 'purpleLife', fps+2, 'pulsing-purple-star0.png'); 
   const yellowGroupAnim = createAnimConfig (this, 'yellowKey', 'yellowLife', fps+2, 'pulsing-yellow-star0.png'); 
 
-  // const generalConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: true};
-  // let fitnessConfig = {goals: goalGroup};
+  const generalConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: true};
+  let fitnessConfig = {goals: goalGroup};
   
-  // //Create one Genus
-  // this.genera.push(new Genus(generalConfig));
-  // const speciesConfig = {world: this.physics.world, scene: this, config: this.config, genus: this.genera[0], tiles: this.tileLayer, seesTiles: true};
+  //Create one Genus
+  this.genera.push(new Genus(generalConfig));
+  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, genus: this.genera[0], tiles: this.tileLayer, seesTiles: true};
 
-  //  //4 Groups per Species, 4 Species (16 groups total) each with different animations
-  //  //Create empty Species with only goals defined
-  // let newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-  // newSpecies.createGroup(redGroupAnim, {pop: this.groupPop});
-  // newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
-  // newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
-  // newSpecies.createGroup(brightGroupAnim, {pop: this.groupPop});
-  // this.genera[0].addSpecies(newSpecies);
+   //4 Groups per Species, 4 Species (16 groups total) each with different animations
+   //Create empty Species with only goals defined
+  let newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
+  newSpecies.createGroup(blackGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(brightGroupAnim, {pop: this.groupPop});
+  this.genera[0].addSpecies(newSpecies);
 
   // newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
   // //newSpecies.createGroup(brownGroupAnim, {pop: this.groupPop});
@@ -169,7 +173,7 @@ create () {
   // newSpecies.createGroup(yellowGroupAnim, {pop: this.groupPop});
   // this.genera[0].addSpecies(newSpecies);
 
-  // this.genera[0].setupGenus(fitnessConfig);
+  this.genera[0].setupGenus(fitnessConfig);
 
   
   // newSpecies.addPreySpecies(newSpecies3);
@@ -215,8 +219,8 @@ update () {
     
 
     //Update each genus
-    // for (let genus of this.genera)
-    //   genus.update();
+    for (let genus of this.genera)
+      genus.update();
 
     // if (this.globalTime === 200) {
     //     this.genera[0].species[0].createGroup(blueGroupAnim, {pop: this.groupPop});
