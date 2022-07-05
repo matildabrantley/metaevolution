@@ -110,6 +110,8 @@ create () {
   // this.bgOpacity[1] = 0;
   // this.bgOpacityDirection = 1;
   
+  //Function that adds numbers
+  
 
   //Tiles
   this.map = this.make.tilemap({ key: 'tilemap', tileWidth: 32, tileHeight: 32 });
@@ -143,7 +145,7 @@ create () {
   let fitnessConfig = {};
 
   //Create one Genus
-  this.genera.push(new Genus(generalConfig));
+  // this.genera.push(new Genus(generalConfig));
   
   // let species1 = this.genera[0].createSpecies(darkrabbitAnim, {pop: this.pop});
   // let species2 = this.genera[0].createSpecies(bluerabbitAnim, {pop: this.pop});
@@ -151,7 +153,7 @@ create () {
   // let species4 = this.genera[0].createSpecies(rabbitAnim, {pop: this.pop});
 
   //manual setup
-  this.genera[0].bestSpecies = this.genera[0].species[0];
+  // this.genera[0].bestSpecies = this.genera[0].species[0];
   //species1.setupSpecies({goals: goalGroup, preySpecies: [species2, species3, species4]});
   // species1.setupSpecies({goals: goalGroup});
   // species2.setupSpecies({goals: goalGroup});
@@ -159,14 +161,13 @@ create () {
   // species4.setupSpecies({goals: goalGroup});
 
   //generic setup
-  this.genera[0].setupGenus(fitnessConfig);
+  // this.genera[0].setupGenus(fitnessConfig);
 
   
   // newSpecies.addPreySpecies(newSpecies3);
   // newSpecies3.addPredatorSpecies(newSpecies);
 
   // this.physics.add.collider(loneStar, tileLayer);
-
 
   this.timerText = this.add.text(10, 10, this.globalTime);
 }
@@ -220,9 +221,9 @@ update () {
     for (let genus of this.genera)
      genus.update();
 
-    if (this.globalTime === 200) {
-        this.genera[0].species[0].createGroup(blueGroupAnim, {pop: this.groupPop});
-    }
+    // if (this.globalTime === 200) {
+    //     this.genera[0].species[0].createGroup(blueGroupAnim, {pop: this.groupPop});
+    // } 
 
     //example of collision handling
     //this.physics.collide(redGroup, blueGroup, eat);

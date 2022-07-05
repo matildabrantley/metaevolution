@@ -197,6 +197,9 @@ class NDimensionMemory {
             this.scaleVectorInMemory(point, i, operation, scalar);
     }
 
+    
+
+
     //get a vector that's a 1D slice from any direction of the n-cube (row, column, etc.)
     //by passing a point inside desired vector and direction of the slice
     getVectorInMemory(point, direction) { //point is an array of length numDimensions containing indices
@@ -216,11 +219,11 @@ class NDimensionMemory {
                 //2D case
                 for (let i=0; i < this.width; i++)
                     switch (direction) {
-                        case 0: 
-                            v[i] = this.memory[i][point[1]];
+                        case 1: 
+                            v[i] = this.memory[point[1]][i];
                             break;
-                        case 1:
-                            v[i] = this.memory[point[0]][i];
+                        case 2:
+                            v[i] = this.memory[i][point[0]];
                             break;
                     }
                 break;
@@ -229,7 +232,7 @@ class NDimensionMemory {
                 for (let i=0; i < this.width; i++)
                     switch (direction) {
                         case 0:
-                            v[i] = this.memory[i][point[1]][point[2]];
+                            v[i] = this.memory[point[0]][point[1]][i];
                             break;
                         case 1:
                             v[i] = this.memory[point[0]][i][point[2]];
@@ -580,6 +583,9 @@ class NDimensionMemory {
                             this.memory[point[0]][point[1]][point[2]][point[3]][point[4]][point[5]][point[6]][point[7]][i] = v[i];
                             break;
                     }
+                }
+    }
+           
 
 }
 

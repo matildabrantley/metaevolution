@@ -9,7 +9,7 @@
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build"
   },
-  "keywords": ["evolution"],
+  "keywords": ["evolution", "ai", "hierarchical", "meta-evolution", "meta-evolution-lab"],
   "author": "",
   "license": "ISC",
   "devDependencies": {

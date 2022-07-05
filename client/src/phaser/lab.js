@@ -16,7 +16,7 @@ import brownPulse from './assets/sprites/pulsing-brown-star.png';
 import crimsonPulse from './assets/sprites/pulsing-crimson-star.png';
 import grayPulse from './assets/sprites/pulsing-gray-star.png';
 import purplePulse from './assets/sprites/pulsing-purple-star.png';
-import yellowPulse from './assets/sprites/pulsing-yellow-star.png';
+import yellowPulse from './assets/sprites/pulsing-yellow-star.png'; 
 
 // Export json frame data for animations
 import redPulseFrames from './assets/frameData/pulsing-red-dot.json';
@@ -31,7 +31,7 @@ import yellowPulseFrames from './assets/frameData/pulsing-yellow-star.json';
 
 //import tilesheet, tilemapping
 import tilesheet1 from './assets/tiles/all-tiles.png';
-import tilemap1 from './assets/tiles/tilemap-lab-data';
+import tilemap1 from './assets/tiles/tilemap-lab-data 3x3';
 
 
 import Genus from './genus';
@@ -145,31 +145,31 @@ create () {
   const purpleGroupAnim = createAnimConfig (this, 'purpleKey', 'purpleLife', fps+2, 'pulsing-purple-star0.png'); 
   const yellowGroupAnim = createAnimConfig (this, 'yellowKey', 'yellowLife', fps+2, 'pulsing-yellow-star0.png'); 
 
-  const generalConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: true};
-  let fitnessConfig = {goals: goalGroup};
+  // const generalConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: true};
+  // let fitnessConfig = {goals: goalGroup};
   
-  //Create one Genus
-  this.genera.push(new Genus(generalConfig));
-  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, genus: this.genera[0], tiles: this.tileLayer, seesTiles: true};
+  // //Create one Genus
+  // this.genera.push(new Genus(generalConfig));
+  // const speciesConfig = {world: this.physics.world, scene: this, config: this.config, genus: this.genera[0], tiles: this.tileLayer, seesTiles: true};
 
-   //4 Groups per Species, 4 Species (16 groups total) each with different animations
-   //Create empty Species with only goals defined
-  let newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-  newSpecies.createGroup(redGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(brightGroupAnim, {pop: this.groupPop});
-  this.genera[0].addSpecies(newSpecies);
+  //  //4 Groups per Species, 4 Species (16 groups total) each with different animations
+  //  //Create empty Species with only goals defined
+  // let newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
+  // newSpecies.createGroup(redGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(brightGroupAnim, {pop: this.groupPop});
+  // this.genera[0].addSpecies(newSpecies);
 
-  newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
-  //newSpecies.createGroup(brownGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(crimsonGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(grayGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(purpleGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(yellowGroupAnim, {pop: this.groupPop});
-  this.genera[0].addSpecies(newSpecies);
+  // newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
+  // //newSpecies.createGroup(brownGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(crimsonGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(grayGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(purpleGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(yellowGroupAnim, {pop: this.groupPop});
+  // this.genera[0].addSpecies(newSpecies);
 
-  this.genera[0].setupGenus(fitnessConfig);
+  // this.genera[0].setupGenus(fitnessConfig);
 
   
   // newSpecies.addPreySpecies(newSpecies3);
@@ -215,8 +215,8 @@ update () {
     
 
     //Update each genus
-    for (let genus of this.genera)
-      genus.update();
+    // for (let genus of this.genera)
+    //   genus.update();
 
     // if (this.globalTime === 200) {
     //     this.genera[0].species[0].createGroup(blueGroupAnim, {pop: this.groupPop});
