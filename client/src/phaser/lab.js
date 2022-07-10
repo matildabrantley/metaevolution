@@ -139,30 +139,30 @@ create () {
 
   let fps = 30;
   const blackGroupAnim = createAnimConfig (this, 'blackKey', 'blackLife', fps, 'black-life0.png', 0.5);
-  const redGroupAnim = createAnimConfig (this, 'redKey', 'redLife', fps, 'pulsing-red-dot0.png');
-  const blueGroupAnim = createAnimConfig (this, 'blueKey', 'blueLife', fps, 'pulsing-blue-dot0.png'); 
-  const greenGroupAnim = createAnimConfig (this, 'greenKey', 'greenLife', fps, 'pulsing-green-dot0.png'); 
-  const brightGroupAnim = createAnimConfig (this, 'brightKey', 'brightLife', fps, 'pulsing-white-star0.png'); 
-  const brownGroupAnim = createAnimConfig (this, 'brownKey', 'brownLife', fps+1, 'pulsing-brown-star0.png'); 
-  const crimsonGroupAnim = createAnimConfig (this, 'crimsonKey', 'crimsonLife', fps+2, 'pulsing-crimson-star0.png'); 
-  const grayGroupAnim = createAnimConfig (this, 'grayKey', 'grayLife', fps+2, 'pulsing-gray-star0.png'); 
-  const purpleGroupAnim = createAnimConfig (this, 'purpleKey', 'purpleLife', fps+2, 'pulsing-purple-star0.png'); 
-  const yellowGroupAnim = createAnimConfig (this, 'yellowKey', 'yellowLife', fps+2, 'pulsing-yellow-star0.png'); 
+  // const redGroupAnim = createAnimConfig (this, 'redKey', 'redLife', fps, 'pulsing-red-dot0.png');
+  // const blueGroupAnim = createAnimConfig (this, 'blueKey', 'blueLife', fps, 'pulsing-blue-dot0.png'); 
+  // const greenGroupAnim = createAnimConfig (this, 'greenKey', 'greenLife', fps, 'pulsing-green-dot0.png'); 
+  // const brightGroupAnim = createAnimConfig (this, 'brightKey', 'brightLife', fps, 'pulsing-white-star0.png'); 
+  // const brownGroupAnim = createAnimConfig (this, 'brownKey', 'brownLife', fps+1, 'pulsing-brown-star0.png'); 
+  // const crimsonGroupAnim = createAnimConfig (this, 'crimsonKey', 'crimsonLife', fps+2, 'pulsing-crimson-star0.png'); 
+  // const grayGroupAnim = createAnimConfig (this, 'grayKey', 'grayLife', fps+2, 'pulsing-gray-star0.png'); 
+  // const purpleGroupAnim = createAnimConfig (this, 'purpleKey', 'purpleLife', fps+2, 'pulsing-purple-star0.png'); 
+  // const yellowGroupAnim = createAnimConfig (this, 'yellowKey', 'yellowLife', fps+2, 'pulsing-yellow-star0.png'); 
 
   const generalConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: true};
   let fitnessConfig = {goals: goalGroup};
   
   //Create one Genus
   this.genera.push(new Genus(generalConfig));
-  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, genus: this.genera[0], tiles: this.tileLayer, seesTiles: true};
+  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, genus: this.genera[0], tiles: this.tileLayer, seesTiles: false};
 
    //4 Groups per Species, 4 Species (16 groups total) each with different animations
    //Create empty Species with only goals defined
   let newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
   newSpecies.createGroup(blackGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(brightGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(brightGroupAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
   // newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
@@ -174,7 +174,6 @@ create () {
   // this.genera[0].addSpecies(newSpecies);
 
   this.genera[0].setupGenus(fitnessConfig);
-
   
   // newSpecies.addPreySpecies(newSpecies3);
   // newSpecies3.addPredatorSpecies(newSpecies);
