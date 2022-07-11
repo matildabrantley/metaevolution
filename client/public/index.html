@@ -19,13 +19,13 @@
       background-size: cover;
     }
     #background1 {
-    background: url("./neurons-squared.jpg")  no-repeat center center fixed;
+    background: url("./neurons-quartic.jpg")  no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
   }
   #background2 {
-      background: url("./neurons-cubed.jpg")  no-repeat center center fixed;
+      background: url("./neurons-squared.jpg")  no-repeat center center fixed;
           -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
@@ -45,38 +45,33 @@
     <!-- <div id="background0" class="backgrounds"></div> -->
     <div id="background1" class="backgrounds"></div>
     <div id="background2" class="backgrounds"></div>
-    <div id="background3" class="backgrounds"></div>
+    <!-- <div id="background3" class="backgrounds"></div> -->
   </div>
 
   <script>
-    let maxOpacity = 0.8;
+    let maxOpacity = 0.52;
+    let minOpacity = 0.12;
     let bgOpacity = maxOpacity;
     let bgOpacity2 = 0;
-    let bgOpacity3 = 0;
+    // let bgOpacity3 = 0;
     let bgOpacityDirection = 1;
-    let bgOpacityDirection3 = -1;
+    // let bgOpacityDirection3 = -1;
 
     setInterval(() => { 
       const bg1 = document.getElementById('background1');
       const bg2 = document.getElementById('background2');
-      const bg3 = document.getElementById('background3');
+      // const bg3 = document.getElementById('background3');
       if (bgOpacity >= maxOpacity)
           bgOpacityDirection = -1;
-      else if (bgOpacity <= 0)
+      else if (bgOpacity <= minOpacity)
           bgOpacityDirection = 1;
-          
-      if (bgOpacity3 >= maxOpacity)
-              bgOpacityDirection3 = -1;
-      else if (bgOpacity3 <= -1 * (maxOpacity))
-              bgOpacityDirection3 = 1;
 
-      bgOpacity += 0.005 * bgOpacityDirection;
-      bgOpacity2 += 0.005 * bgOpacityDirection * -1;
-      bgOpacity3 += 0.005 * bgOpacityDirection3;
+      bgOpacity += 0.002 * bgOpacityDirection;
+      bgOpacity2 += 0.002 * bgOpacityDirection * -1;
 
       bg1.style.opacity = bgOpacity;
       bg2.style.opacity = bgOpacity2;
-      bg3.style.opacity = bgOpacity3;
+      // bg3.style.opacity = bgOpacity3;
   }, 30);
 
   </script>
