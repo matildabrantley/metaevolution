@@ -143,7 +143,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         let newStartingX = 400;
         let newStartingY = 300;
         for (let life of this.lives){
-            if (this.timer1 % 1000 == 0)
+            //if (this.timer1 % 1000 == 0)
                 life.setPosition(newStartingX, newStartingY);
 
             for (let g=0; g < this.goals.length; g++)

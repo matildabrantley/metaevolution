@@ -12,28 +12,17 @@ import blackSprite from './assets/sprites/black-life.png';
 import redPulse from './assets/sprites/pulsing-red-dot.png';
 import bluePulse from './assets/sprites/pulsing-blue-dot.png';
 import greenPulse from './assets/sprites/pulsing-green-dot.png';
-import brightPulse from './assets/sprites/pulsing-white-star.png';
-import brownPulse from './assets/sprites/pulsing-brown-star.png';
-import crimsonPulse from './assets/sprites/pulsing-crimson-star.png';
-import grayPulse from './assets/sprites/pulsing-gray-star.png';
-import purplePulse from './assets/sprites/pulsing-purple-star.png';
-import yellowPulse from './assets/sprites/pulsing-yellow-star.png'; 
 
 // Export json frame data for animations
 import blackFrames from './assets/frameData/black-life.json';
 import redPulseFrames from './assets/frameData/pulsing-red-dot.json';
 import bluePulseFrames from './assets/frameData/pulsing-blue-dot.json';
 import greenPulseFrames from './assets/frameData/pulsing-green-dot.json';
-import brightPulseFrames from './assets/frameData/pulsing-white-star.json';
-import brownPulseFrames from './assets/frameData/pulsing-brown-star.json';
-import crimsonPulseFrames from './assets/frameData/pulsing-crimson-star.json';
-import grayPulseFrames from './assets/frameData/pulsing-gray-star.json';
-import purplePulseFrames from './assets/frameData/pulsing-purple-star.json';
-import yellowPulseFrames from './assets/frameData/pulsing-yellow-star.json';
 
 //import tilesheet, tilemapping
 import tilesheet1 from './assets/tiles/all-tiles.png';
-import tilemap1 from './assets/tiles/tilemap-lab-data 3x3';
+import tilemap1 from './assets/tiles/tilemap-empty-data';
+// import tilemap1 from './assets/tiles/tilemap-lab-data 3x3';
 
 
 import Genus from './genus';
@@ -69,21 +58,12 @@ class Lab extends Phaser.Scene {
     //sprites
     this.load.image('default', defaultSprite);
     this.load.image('star', star);
-    this.load.image('bluestar', bluestar);
-    this.load.image('blackstar', blackstar);
-    this.load.image('greenstar', greenstar);
     this.load.image('circle', circle);
     //spritesheets and json frame data
     this.load.atlas('blackLife', blackSprite, blackFrames);
     this.load.atlas('redLife', redPulse, redPulseFrames);
     this.load.atlas('blueLife', bluePulse, bluePulseFrames);
     this.load.atlas('greenLife', greenPulse, greenPulseFrames);
-    this.load.atlas('brightLife', brightPulse, brightPulseFrames);
-    this.load.atlas('brownLife', brownPulse, brownPulseFrames);
-    this.load.atlas('crimsonLife', crimsonPulse, crimsonPulseFrames);
-    this.load.atlas('grayLife', grayPulse, grayPulseFrames);
-    this.load.atlas('purpleLife', purplePulse, purplePulseFrames);
-    this.load.atlas('yellowLife', yellowPulse, yellowPulseFrames);
     //tiles
     this.load.image('tiles', tilesheet1);
     this.load.tilemapTiledJSON('tilemap', tilemap1);
@@ -116,32 +96,26 @@ create () {
   loneStar.collideWorldBounds = true;
   goalGroup.add(loneStar);
 
-  let fps = 30;
+  let fps = 10;
   const blackGroupAnim = createAnimConfig (this, 'blackKey', 'blackLife', fps, 'black-life0.png', 0.5);
-  // const redGroupAnim = createAnimConfig (this, 'redKey', 'redLife', fps, 'pulsing-red-dot0.png');
-  // const blueGroupAnim = createAnimConfig (this, 'blueKey', 'blueLife', fps, 'pulsing-blue-dot0.png'); 
-  // const greenGroupAnim = createAnimConfig (this, 'greenKey', 'greenLife', fps, 'pulsing-green-dot0.png'); 
-  // const brightGroupAnim = createAnimConfig (this, 'brightKey', 'brightLife', fps, 'pulsing-white-star0.png'); 
-  // const brownGroupAnim = createAnimConfig (this, 'brownKey', 'brownLife', fps+1, 'pulsing-brown-star0.png'); 
-  // const crimsonGroupAnim = createAnimConfig (this, 'crimsonKey', 'crimsonLife', fps+2, 'pulsing-crimson-star0.png'); 
-  // const grayGroupAnim = createAnimConfig (this, 'grayKey', 'grayLife', fps+2, 'pulsing-gray-star0.png'); 
-  // const purpleGroupAnim = createAnimConfig (this, 'purpleKey', 'purpleLife', fps+2, 'pulsing-purple-star0.png'); 
-  // const yellowGroupAnim = createAnimConfig (this, 'yellowKey', 'yellowLife', fps+2, 'pulsing-yellow-star0.png'); 
+  const redGroupAnim = createAnimConfig (this, 'redKey', 'redLife', fps, 'pulsing-red-dot0.png');
+  const blueGroupAnim = createAnimConfig (this, 'blueKey', 'blueLife', fps, 'pulsing-blue-dot0.png'); 
+  const greenGroupAnim = createAnimConfig (this, 'greenKey', 'greenLife', fps, 'pulsing-green-dot0.png'); 
 
   const generalConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: true};
   let fitnessConfig = {goals: goalGroup};
   
   //Create one Genus
   this.genera.push(new Genus(generalConfig));
-  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, genus: this.genera[0], tiles: this.tileLayer, seesTiles: false};
+  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, genus: this.genera[0], tiles: this.tileLayer, seesTiles: true};
 
    //4 Groups per Species, 4 Species (16 groups total) each with different animations
    //Create empty Species with only goals defined
   let newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
   newSpecies.createGroup(blackGroupAnim, {pop: this.groupPop});
-  // newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
-  // newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
-  // newSpecies.createGroup(brightGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(redGroupAnim , {pop: this.groupPop});
+  newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
   this.genera[0].setupGenus(fitnessConfig);
@@ -152,41 +126,15 @@ create () {
   // this.physics.add.collider(loneStar, this.tileLayer);
 
 
-  this.timerText = this.add.text(10, 10, this.globalTime);
+  this.timerText = this.add.text(10, 10, this.globalTime, {
+        font: "25px Arial",
+        fill: "#ff0044",
+        align: "center"
+    });
 }
 
 update () {
-  this.timerText.setText("Update " + this.globalTime); 
-
-  // const cam = this.cameras.main;
-    
-  if (this.keys.R.isDown)
-  {
-    this.restart();
-  }
-  // else if (this.keys.D.isDown)
-  // {
-  //     cam.scrollX += 4;
-  // }
-
-  // if (this.keys.W.isDown)
-  // {
-  //     cam.scrollY -= 4;
-  // }
-  // else if (this.keys.S.isDown)
-  // {
-  //     cam.scrollY += 4;
-  // }
-
-  // if (this.cursors.left.isDown)
-  // {
-  //     cam.rotation -= 0.005;
-  // }
-  // else if (this.cursors.right.isDown)
-  // {
-  //     cam.rotation += 0.005;
-  // }
-    
+  this.timerText.setText("Updates: " + this.globalTime); 
 
     //Update each genus
     for (let genus of this.genera)

@@ -149,6 +149,7 @@ class Species extends Phaser.Physics.Arcade.Group {
         
     }
 
+    //selection of the best subpopulations in the species
     groupSelection(){
         this.groups.sort((b, a) => (a.groupFitness > b.groupFitness) ? 1 : -1);
 
