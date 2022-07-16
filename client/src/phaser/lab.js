@@ -20,9 +20,9 @@ import bluePulseFrames from './assets/frameData/pulsing-blue-dot.json';
 import greenPulseFrames from './assets/frameData/pulsing-green-dot.json';
 
 //import tilesheet, tilemapping
-import tilesheet1 from './assets/tiles/all-tiles.png';
-import tilemap1 from './assets/tiles/tilemap-empty-data';
-// import tilemap1 from './assets/tiles/tilemap-lab-data 3x3';
+import tilesheet1 from './assets/tiles/monocolor-tiles.png';
+//import tilemap1 from './assets/tiles/tilemap-empty-data';
+import tilemap1 from './assets/tiles/tilemap-5-color-data';
 
 
 import Genus from './genus';
@@ -30,7 +30,7 @@ import Species from './species';
 import Group from './group';
 
 class Lab extends Phaser.Scene {
-  constructor({parent, width = 800, height = 600, physicsType = 'arcade'} = {}) {
+  constructor({parent, width = 800, height = 608, physicsType = 'arcade'} = {}) {
     super("Launch");
     //Create a config object for scene
     this.config = {
@@ -84,7 +84,7 @@ create () {
   const tileset = this.map.addTilesetImage('tiles');
   this.tileLayer = this.map.createLayer('training-grounds', tileset);
 
-  this.map.setCollision([ 29, 6]);
+  this.map.setCollision([ 2]);
 
   let loneStar, blueStar, greenStar, blackStar;
   let goalDivergence = 0.2;

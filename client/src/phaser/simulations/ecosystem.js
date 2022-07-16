@@ -1,24 +1,24 @@
 import Phaser from "phaser";
 
 //Import backgrounds
-import floral from './assets/sprites/floral-stunning.jpg';
-import floral2 from './assets/sprites/floral-colorful.jpg';
+import floral from '../assets/sprites/floral-stunning.jpg';
+import floral2 from '../assets/sprites/floral-colorful.jpg';
 
 //Import static sprites
-import defaultSprite from './assets/sprites/default.png';
-import star from './assets/sprites/star.png';
-import bluestar from './assets/sprites/bluestar.png';
-import blackstar from './assets/sprites/blackstar.png';
-import greenstar from './assets/sprites/greenstar.png';
-import circle from './assets/sprites/circle.png';
+import defaultSprite from '../assets/sprites/default.png';
+import star from '../assets/sprites/star.png';
+import bluestar from '../assets/sprites/bluestar.png';
+import blackstar from '../assets/sprites/blackstar.png';
+import greenstar from '../assets/sprites/greenstar.png';
+import circle from '../assets/sprites/circle.png';
 //Import spritesheets for animations
-// import rabbit from './assets/sprites/Rabbit.png';
+// import rabbit from '../assets/sprites/Rabbit.png';
 
 // Export json frame data for animations
 
 //import tilesheet, tilemapping
-import tilesheet1 from './assets/tiles/all-tiles.png';
-import tilemap1 from './assets/tiles/tilemap-eco-data';
+import tilesheet1 from '../assets/tiles/all-tiles.png';
+import tilemap1 from '../assets/tiles/tilemap-eco-data';
 
 import Genus from '../genus';
 import Species from '../species';

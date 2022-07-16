@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Phaser from "phaser";
-import Ecosystem from "../phaser/ecosystem";
+import Ecosystem from "../phaser/simulations/ecosystem";
 import Lab from "../phaser/lab";
 import { saveMind } from '../utilities/react-api';
 import UserAuth from '../utilities/userAuthentication';
