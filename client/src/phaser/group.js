@@ -44,7 +44,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         
             //Create minds based on number of goals= 3
             const tileVisionInputs = this.species.seesTiles ? 8 : 0;
-            life.mind = new Mind(this.goals.length * 5 + tileVisionInputs, 2);
+            life.mind = new Mind(this.goals.length * 4 + tileVisionInputs, 2);
         }
 
         //initialize "best" to simply first created for now
