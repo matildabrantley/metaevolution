@@ -20,9 +20,9 @@ import circle from './assets/sprites/circle.png';
 import tilesheet1 from './assets/tiles/all-tiles.png';
 import tilemap1 from './assets/tiles/tilemap-eco-data';
 
-import Genus from './genus';
-import Species from './species';
-import Group from './group';
+import Genus from '../genus';
+import Species from '../species';
+import Group from '../group';
 
 // let chosenPoint;
 

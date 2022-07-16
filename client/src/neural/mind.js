@@ -61,12 +61,6 @@ class Mind {
 
     }
 
-    //Neural Editing Functions
-    //region editing
-    editRegion(region, net, charge, newCharge) {
-        this.nets[region][net].editCharge(charge, newCharge);
-    }
-
     update(inputs) {
         //TODO: Auto-Normalize inputs here if needed
 
@@ -106,6 +100,32 @@ class Mind {
             }
         }
     }
+
+    //*** Neural Editing Tools **
+    //* Region Editing Functions*
+    //Copy
+    copyRegion(region, targetRegion) {
+        for (let net in this.nets[region]) {
+            this.nets[targetRegion][net].copyNet(this.nets[region][net]);
+        }
+    }
+
+    //Swap
+    swapRegion(region, targetRegion) {
+        for (let net in this.nets[region]) {
+            this.nets[targetRegion][net].swapNet(this.nets[region][net]);
+        }
+    }
+
+    //Mutate
+    mutateRegion(region, mutRate) {
+        for (let net in this.nets[region]) {
+            this.nets[region][net].mutateNet(mutRate);
+        }
+    }
+
+
+
 }
 
 export default Mind;
