@@ -61,6 +61,12 @@ class Mind {
 
     }
 
+    //Neural Editing Functions
+    //region editing
+    editRegion(region, net, charge, newCharge) {
+        this.nets[region][net].editCharge(charge, newCharge);
+    }
+
     update(inputs) {
         //TODO: Auto-Normalize inputs here if needed
 

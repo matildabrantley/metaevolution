@@ -1,5 +1,5 @@
 
-//Just a perceptron/feedforward net for now
+//Customizable Neural Net
 class Net {
 	constructor({isRecurrent = false, isLongTerm = false, hasDynamicMemory = false} = {}, ...layerSizes)
 	{	

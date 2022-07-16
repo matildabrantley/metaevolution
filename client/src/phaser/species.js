@@ -114,20 +114,20 @@ class Species extends Phaser.Physics.Arcade.Group {
         }
 
         //Rotate star goals
-        if (this.timer % this.bonusLength === 0){
-            if (this.bonusIsRandom) {
-                this.bonusGoal = Math.floor((Math.random() * this.goals.length)); //random goal rotation
-            } else {
-                this.bonusGoal++;
-                if (this.bonusGoal >= this.goals.length)
-                    this.bonusGoal = 0;
-            }
-            //Scale bonus sprite bigger and all others smallers
-            for (let g=0; g < this.goals.length; g++)
-                g === this.bonusGoal ? this.goals[g].setScale(1) : this.goals[g].setScale(0.5);
+        // if (this.timer % this.bonusLength === 0){
+        //     if (this.bonusIsRandom) {
+        //         this.bonusGoal = Math.floor((Math.random() * this.goals.length)); //random goal rotation
+        //     } else {
+        //         this.bonusGoal++;
+        //         if (this.bonusGoal >= this.goals.length)
+        //             this.bonusGoal = 0;
+        //     }
+        //     //Scale bonus sprite bigger and all others smallers
+        //     for (let g=0; g < this.goals.length; g++)
+        //         g === this.bonusGoal ? this.goals[g].setScale(1) : this.goals[g].setScale(0.5);
             
-            this.bonusLength = Math.floor(this.groups[0].genLength / 2);
-        }
+        //     this.bonusLength = Math.floor(this.groups[0].genLength / 2);
+        // }
         //Move goals around randomly if flag is set true
         if (this.goalsAreMoving){
             if (this.timer % 30 === 0)

@@ -140,8 +140,8 @@ class Group extends Phaser.Physics.Arcade.Group {
         }
 
         //reset
-        let newStartingX = 400;
-        let newStartingY = 300;
+        let newStartingX = 400 + randIntBetween(-100, 100);
+        let newStartingY = 300 + randIntBetween(-100, 100);
         for (let life of this.lives){
             //if (this.timer1 % 1000 == 0)
                 life.setPosition(newStartingX, newStartingY);
@@ -163,7 +163,7 @@ class Group extends Phaser.Physics.Arcade.Group {
     }
 
     //Genetic flow from between population
-    //Best to call right after selection since they're already sorted
+    //Best to use right after selection since they're already sorted
     geneFlow(otherGroup, flowRatio = 0.1) {
         for (let i=0; i < this.lives.length * flowRatio; i++) {
             //avoid replacing best % or the Elites that replaced the least fit
