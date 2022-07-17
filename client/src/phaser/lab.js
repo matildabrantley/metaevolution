@@ -82,7 +82,7 @@ create () {
   const tileset = this.map.addTilesetImage('tiles');
   this.tileLayer = this.map.createLayer('training-grounds', tileset);
 
-  this.map.setCollision([ 2]);
+  this.map.setCollision([1]);
 
   let fps = 10;
   const blackGroupAnim = createAnimConfig (this, 'blackKey', 'blackLife', fps, 'black-life0.png', 0.5);
@@ -97,7 +97,7 @@ create () {
   this.genera.push(new Genus(generalConfig));
   const speciesConfig = {world: this.physics.world, scene: this, config: this.config, genus: this.genera[0], tiles: this.tileLayer, seesTiles: true};
 
-   //4 Groups per Species, 4 Species (16 groups total) each with different animations
+   //4 Groups per Species
    //Create empty Species
   let newSpecies = new Species(speciesConfig);
   newSpecies.createGroup(blackGroupAnim, {pop: this.groupPop});

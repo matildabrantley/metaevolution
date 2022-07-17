@@ -16,8 +16,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.tiles = tiles;
         this.tileSize = 32;
         this.seesTiles = seesTiles;
-        this.resourceTiles = [{index: 3, effect: 10}];
-        this.blockedTiles = [{index: 1, effect: 0}, {index: 1, effect: -1}];
+        this.resourceTiles = [{index: 2, effect: 1, reward:10}, {index: 3, effect: 1, reward:-10}];
+        this.blockedTiles = [{index: 1, effect: 0}];
 
         this.fitness = 0;
 
@@ -64,6 +64,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
         this.angle = this.body.angularVelocity;
         // this.setAngle(this.body.angularAcceleration);
+
+        this.checkCurrentTile();
     }
 
     tryToJump(force=1) {
@@ -122,7 +124,6 @@ class Life extends Phaser.Physics.Arcade.Sprite {
             });
             this.blockedTiles.forEach(blocked => {
                 if (tileIndex == blocked.index){
-                    this.fitness += blocked.effect; //apply effect of being near 
                     return -1;
                 }
             });
@@ -132,6 +133,26 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         }
         catch { //treat out of bounds as a strongly blocking tile
             return -2;
+        }
+    }
+
+    //Check current tile
+    checkCurrentTile(){
+
+        try {
+            let tileIndex = this.tiles.getTileAtWorldXY(this.x, this.y, true).index;
+            //check through resources
+            this.resourceTiles.forEach(resource => {
+                if (tileIndex == resource.index){
+                    this.fitness += resource.reward;
+                }
+            });
+
+            //return 0 if doesn't match any tiles
+            return 0;
+        }
+        catch { //treat out of bounds as a strongly blocking tile
+            return -1;
         }
     }
 
