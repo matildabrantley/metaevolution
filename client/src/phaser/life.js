@@ -16,12 +16,11 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.tiles = tiles;
         this.tileSize = 32;
         this.seesTiles = seesTiles;
-        this.resourceTiles = [{index: 3, effect: 100}];
+        this.resourceTiles = [{index: 3, effect: 10}];
         this.blockedTiles = [{index: 1, effect: 0}, {index: 1, effect: -1}];
 
         this.fitness = 0;
 
-        //for updateWithEngine
         // this.setBounce(10000);
 
         // only for fast updating (no rendering and only limited physics)
@@ -35,9 +34,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
     }
 
     //for updating within update loop of Phaser or Matter
-    update(goals, bonusGoal) {
+    update() {
         //let angle = Phaser.Math.Angle.BetweenPoints(this, goal);
-        //let dist = Phaser.Math.Distance.BetweenPoints(this, goal);
 
         let inputs = [];
 
@@ -47,14 +45,6 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         inputs.push((this.y / 304) - 1);
         inputs.push((this.y / 304) - 1);
 
-        //distance from goals and bonus goal
-        // for (let g=0; g < goals.length; g++){
-        //     inputs.push((this.x - goals[g].x) / 100); //x difference (not dist)
-        //     inputs.push((this.y - goals[g].y) / 100); //y difference
-        //     inputs.push((this.x - goals[g].x) / 100); //x difference (not dist)
-        //     inputs.push((this.y - goals[g].y) / 100); //y difference
-        //     inputs.push(g == bonusGoal ? 3 : -3) //bonus goal
-        // }
         if (this.seesTiles)
             inputs = inputs.concat(this.getTileInputs());
 

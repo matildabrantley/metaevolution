@@ -57,8 +57,6 @@ class Lab extends Phaser.Scene {
   preload () {
     //sprites
     this.load.image('default', defaultSprite);
-    this.load.image('star', star);
-    this.load.image('circle', circle);
     //spritesheets and json frame data
     this.load.atlas('blackLife', blackSprite, blackFrames);
     this.load.atlas('redLife', redPulse, redPulseFrames);
@@ -86,16 +84,6 @@ create () {
 
   this.map.setCollision([ 2]);
 
-  let loneStar, blueStar, greenStar, blackStar;
-  let goalDivergence = 0.2;
-  let goalGroup = this.add.group();
-  loneStar = this.physics.add.image(this.config.width * (0.54 - goalDivergence), this.config.height * (0.55 - goalDivergence), 'star');
-  loneStar.setCircle(30);
-  loneStar.setScale(1);
-  loneStar.setBounce(5);
-  loneStar.collideWorldBounds = true;
-  goalGroup.add(loneStar);
-
   let fps = 10;
   const blackGroupAnim = createAnimConfig (this, 'blackKey', 'blackLife', fps, 'black-life0.png', 0.5);
   const redGroupAnim = createAnimConfig (this, 'redKey', 'redLife', fps, 'pulsing-red-dot0.png');
@@ -103,22 +91,22 @@ create () {
   const greenGroupAnim = createAnimConfig (this, 'greenKey', 'greenLife', fps, 'pulsing-green-dot0.png'); 
 
   const generalConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: true};
-  let fitnessConfig = {goals: goalGroup};
+  let fitnessConfig = {};
   
   //Create one Genus
   this.genera.push(new Genus(generalConfig));
   const speciesConfig = {world: this.physics.world, scene: this, config: this.config, genus: this.genera[0], tiles: this.tileLayer, seesTiles: true};
 
    //4 Groups per Species, 4 Species (16 groups total) each with different animations
-   //Create empty Species with only goals defined
-  let newSpecies = new Species(speciesConfig, {goals: goalGroup, goalsAreMoving: false});
+   //Create empty Species
+  let newSpecies = new Species(speciesConfig);
   newSpecies.createGroup(blackGroupAnim, {pop: this.groupPop});
   newSpecies.createGroup(redGroupAnim , {pop: this.groupPop});
   newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
   newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
-  this.genera[0].setupGenus(fitnessConfig);
+  this.genera[0].setupGenus();
   
   // newSpecies.addPreySpecies(newSpecies3);
   // newSpecies3.addPredatorSpecies(newSpecies);

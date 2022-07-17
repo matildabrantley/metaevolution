@@ -5,8 +5,7 @@ const Phaser = require('phaser');
 
 class Species extends Phaser.Physics.Arcade.Group {
     constructor({world, scene, config, genus=null, tiles, seesTiles = false} = {}, //general config for species and its sub-groups
-                {goalsAreMoving = false, bonusIsRandom = false, groupSelectionFreq = 40, 
-                maxGroupSelectionFreq = 500, deltaSelectionFreq = 20, mutMutRate = 0.05} = {}, groups = []) {
+                {groupSelectionFreq = 40, maxGroupSelectionFreq = 500, deltaSelectionFreq = 20, mutMutRate = 0.05} = {}, groups = []) {
         
         super(world, scene, config);
         this.world = world;
@@ -18,23 +17,17 @@ class Species extends Phaser.Physics.Arcade.Group {
         this.genus = genus;
 
         this.groups = groups; //groups can be predefined, but it's better to use createGroup()
-        this.bonusLength = 1;
-        this.bonusGoal = 0;
         this.timer = 0;
-        this.mingleFreq = 50000000;
-        this.goalsAreMoving = goalsAreMoving;
-        this.bonusIsRandom = bonusIsRandom;
+        this.mingleFreq = 99999999;
         this.groupSelectionFreq = groupSelectionFreq;
         this.maxGroupSelectionFreq = maxGroupSelectionFreq;
         this.mutMutRate = mutMutRate;
         this.speciesFitness = 0;
     }
     
-    setupSpecies({goals, preySpecies = [], predatorSpecies = []} = {}) {
+    setupSpecies({preySpecies = [], predatorSpecies = []} = {}) {
         //setup tile collisions
         this.scene.physics.add.collider(this, this.tiles);
-
-        this.goals = (goals) ? goals.getChildren() : [];
         
         this.preySpecies = preySpecies;
         this.predatorSpecies = predatorSpecies;
@@ -102,7 +95,7 @@ class Species extends Phaser.Physics.Arcade.Group {
 
         //update each group, which will update each life
         for (let group of this.groups) {
-            group.updateWithEngine();
+            group.update();
             allGroupsFitness.push(group.groupFitness);
         }
         this.speciesFitness = average(allGroupsFitness);
@@ -111,31 +104,6 @@ class Species extends Phaser.Physics.Arcade.Group {
             this.allLives.forEach(life => {
                 // life.closestPrey = preySpecie.getClosestTo(life);
             })
-        }
-
-        //Rotate star goals
-        // if (this.timer % this.bonusLength === 0){
-        //     if (this.bonusIsRandom) {
-        //         this.bonusGoal = Math.floor((Math.random() * this.goals.length)); //random goal rotation
-        //     } else {
-        //         this.bonusGoal++;
-        //         if (this.bonusGoal >= this.goals.length)
-        //             this.bonusGoal = 0;
-        //     }
-        //     //Scale bonus sprite bigger and all others smallers
-        //     for (let g=0; g < this.goals.length; g++)
-        //         g === this.bonusGoal ? this.goals[g].setScale(1) : this.goals[g].setScale(0.5);
-            
-        //     this.bonusLength = Math.floor(this.groups[0].genLength / 2);
-        // }
-        //Move goals around randomly if flag is set true
-        if (this.goalsAreMoving){
-            if (this.timer % 30 === 0)
-                for (let goal of this.goals)
-                    goal.setVelocity((Math.random()-0.5) * 200, (Math.random()-0.5) * 200);
-            if (this.timer % 90 === 0)
-                for (let goal of this.goals)
-                    goal.setPosition(200 + Math.random() * 400, 150 + Math.random() * 300);
         }
 
         if (this.timer % this.mingleFreq === 0){
@@ -174,9 +142,6 @@ class Species extends Phaser.Physics.Arcade.Group {
 
         if (this.groupSelectionFreq + this.deltaSelectionFreq <= this.maxGroupSelectionFreq)
             this.groupSelectionFreq += this.deltaSelectionFreq;
-
-        if (this.timer > 600)
-            this.goalsAreMoving = true;
     }
 
     cloneSpecies(clonedSpecies){

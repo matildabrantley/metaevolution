@@ -5,12 +5,12 @@ import floral from '../assets/sprites/floral-stunning.jpg';
 import floral2 from '../assets/sprites/floral-colorful.jpg';
 
 //Import static sprites
-import defaultSprite from '../assets/sprites/default.png';
-import star from '../assets/sprites/star.png';
-import bluestar from '../assets/sprites/bluestar.png';
-import blackstar from '../assets/sprites/blackstar.png';
-import greenstar from '../assets/sprites/greenstar.png';
-import circle from '../assets/sprites/circle.png';
+// import defaultSprite from '../assets/sprites/default.png';
+// import star from '.. /assets/sprites/star.png';
+// import bluestar from '../assets/sprites/bluestar.png';
+// import blackstar from '../assets/sprites/blackstar.png';
+// import greenstar from '../assets/sprites/greenstar.png';
+// import circle from '../assets/sprites/circle.png';
 //Import spritesheets for animations
 // import rabbit from '../assets/sprites/Rabbit.png';
 
@@ -54,15 +54,15 @@ class Ecosystem extends Phaser.Scene {
 
   preload () {
     //backgrounds
-    this.backgrounds = ['background', 'background2'];
-    this.load.image(this.backgrounds[0], floral);
-    this.load.image(this.backgrounds[1], floral2);
+    // this.backgrounds = ['background', 'background2'];
+    // this.load.image(this.backgrounds[0], floral);
+    // this.load.image(this.backgrounds[1], floral2);
     //sprites
-    this.load.image('default', defaultSprite);
-    this.load.image('star', star);
-    this.load.image('bluestar', bluestar);
-    this.load.image('blackstar', blackstar);
-    this.load.image('greenstar', greenstar);
+    // this.load.image('default', defaultSprite);
+    // this.load.image('star', star);
+    // this.load.image('bluestar', bluestar);
+    // this.load.image('blackstar', blackstar);
+    // this.load.image('greenstar', greenstar);
     //spritesheets and json frame data
     // this.load.atlas('rabbit', rabbit, rabbitFrames);
 
@@ -120,23 +120,6 @@ create () {
 
   this.map.setCollision([ 1 ]);
 
-  let loneStar, blueStar, greenStar, blackStar;
-  let goalDivergence = 0.2;
-  let goalGroup = this.add.group();
-  loneStar = this.physics.add.image(this.config.width * (0.54 - goalDivergence), this.config.height * (0.55 - goalDivergence), 'star');
-  loneStar.setCircle(30);
-  loneStar.setScale(1);
-  loneStar.setBounce(5);
-  loneStar.collideWorldBounds = true;
-  goalGroup.add(loneStar);
-  
-  blueStar = this.physics.add.image(this.config.width * (0.54 + goalDivergence), this.config.height * (0.55 - goalDivergence), 'bluestar');
-  blueStar.setCircle(30);
-  blueStar.setScale(1);
-  blueStar.setBounce(5);
-  blueStar.collideWorldBounds = true;
-  goalGroup.add(blueStar);
-
   let fps = 20;
   // const rabbitAnim = createAnimConfig (this, 'rabbitKey', 'rabbit', fps, 'Rabbit0.png');
   
@@ -154,11 +137,11 @@ create () {
 
   //manual setup
   // this.genera[0].bestSpecies = this.genera[0].species[0];
-  //species1.setupSpecies({goals: goalGroup, preySpecies: [species2, species3, species4]});
-  // species1.setupSpecies({goals: goalGroup});
-  // species2.setupSpecies({goals: goalGroup});
-  // species3.setupSpecies({goals: goalGroup});
-  // species4.setupSpecies({goals: goalGroup});
+  //species1.setupSpecies({preySpecies: [species2, species3, species4]});
+  // species1.setupSpecies();
+  // species2.setupSpecies();
+  // species3.setupSpecies();
+  // species4.setupSpecies();
 
   //generic setup
   // this.genera[0].setupGenus(fitnessConfig);

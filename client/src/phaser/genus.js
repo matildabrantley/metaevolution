@@ -21,9 +21,9 @@ class Genus {
         this.maxSpeciesSelectionFreq = maxSpeciesSelectionFreq;
     }
     
-    setupGenus({goals, preyGroups = [], predatorGroups = []}={}){
+    setupGenus({preyGroups = [], predatorGroups = []}={}){
         for (const specie of this.species) {
-            specie.setupSpecies({goals: goals, preyGroups: preyGroups, predatorGroups: predatorGroups});
+            specie.setupSpecies({preyGroups: preyGroups, predatorGroups: predatorGroups});
         }
         //just set "best" species to first species for now
         this.bestSpecies = this.species[0];

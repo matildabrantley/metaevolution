@@ -21,7 +21,6 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.numElites = 20;
 
         this.timer1 = 0;
-        this.goals = species.goals;
         this.groupFitness = 0;
 
         //for updateFast()
@@ -29,22 +28,17 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.fastGenLength = 50;
     }
 
-    //maintains array of Life objects, sets initial distances from goals and create Minds
-    setup(goals = this.species.goals) {
+    //maintains array of Life objects and create Minds
+    setup() {
         this.lives = this.getChildren();
-        this.goals = this.species.goals;
 
         this.preySpecies = [];
         this.predatorSpecies = [];
 
         for (let life of this.lives){
-            life.startingDistFromGoal = new Array(this.goals.length);
-            for (let g=0; g < this.goals.length; g++)
-                life.startingDistFromGoal[g] = Phaser.Math.Distance.BetweenPoints(life, this.goals[g]);
-        
-            //Create minds based on number of goals= 3
+            //Create minds for each life
             const tileVisionInputs = this.species.seesTiles ? 8 : 0;
-            life.mind = new Mind(this.goals.length * 4 + tileVisionInputs, 2);
+            life.mind = new Mind(4 + tileVisionInputs, 2);
         }
 
         //initialize "best" to simply first created for now
@@ -52,16 +46,11 @@ class Group extends Phaser.Physics.Arcade.Group {
     }
 
     //normal updating within Phaser's/Matter's loop
-    updateWithEngine() {
+    update() {
         this.timer1++;
         for (let life of this.lives) {
-            //if (this.timer1 % 10 == 0){
-                //for (let goal of this.goals)
-                    //goal.setVelocity((Math.random()-0.5) * 700, (Math.random()-0.5) * 700);
-            //}
 
-            
-            life.update(this.goals, this.species.bonusGoal);
+            life.update();
             
             this.fitness();
         }
@@ -74,21 +63,6 @@ class Group extends Phaser.Physics.Arcade.Group {
     fitness(){
         let allFitness = []; //used to calculate average fitness
         for (let life of this.lives){
-            //Fitness to be managed by group
-            let distScores = [];
-            for (let g=0; g < this.goals.length; g++){
-                let newScore = life.startingDistFromGoal[g] - (Phaser.Math.Distance.BetweenPoints(life, this.goals[g]));
-                (g == this.species.bonusGoal) ? newScore *= 2.5 : newScore *= -0.1;
-                    
-                distScores.push(newScore);
-            }
-            //use reducer to get total product //(and divide by 1000 to keep values manageable)
-            life.fitness += distScores.reduce((a,b) => a+b, 1)/1000;
-
-            
-
-
-
             allFitness.push(life.fitness);
         }
         this.groupFitness += average(allFitness);
@@ -143,15 +117,8 @@ class Group extends Phaser.Physics.Arcade.Group {
         let newStartingX = 400 + randIntBetween(-100, 100);
         let newStartingY = 300 + randIntBetween(-100, 100);
         for (let life of this.lives){
-            //if (this.timer1 % 1000 == 0)
-                life.setPosition(newStartingX, newStartingY);
-
-            for (let g=0; g < this.goals.length; g++)
-                life.startingDistFromGoal[g] = Phaser.Math.Distance.BetweenPoints(life, this.goals[g]);
-
-            
-            life.fitness = 0;
-            
+            life.setPosition(newStartingX, newStartingY);
+            life.fitness = 0;   
         }
     }
 
