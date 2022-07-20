@@ -16,16 +16,12 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.tiles = tiles;
         this.tileSize = 32;
         this.seesTiles = seesTiles;
-        this.resourceTiles = [];//[{index: 2, effect: 1, reward:10}, {index: 3, effect: 1, reward:-10}];
-        this.blockedTiles = [{index: 1, effect: 0}];
+        this.resourceTiles = [{index: 2, seenAs: 1, effect: 1}, {index: 3, seenAs: 1, effect: 1}];
+        this.blockedTiles = [{index: 1, seenAs: -1, effect: 0}];
 
         this.fitness = 0;
 
         // this.setBounce(10000);
-
-        // only for fast updating (no rendering and only limited physics)
-        // this.x;?
-        // this.y;?
     }
 
     //return a deep copy of mind
@@ -42,8 +38,10 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         //input absolute position relative to center of simulation
         // inputs.push((this.x / 400) - 1);
         // inputs.push((this.x / 400) - 1);
+        inputs.push((this.x / 400) - 1);
         inputs.push((this.y / 304) - 1);
-        inputs.push((this.y / 304) - 1);
+        inputs.push(1);
+        inputs.push(1);
 
         if (this.seesTiles)
             inputs = inputs.concat(this.getTileInputs());
@@ -51,9 +49,10 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
         let outputs = this.mind.update(inputs);           
         // this.setAcceleration((outputs[0] + outputs[2]) * 500, (outputs[1] + outputs[3]) * 500);
-        // this.body.setVelocityX((outputs[0]) * 700);
-        this.body.setVelocityY((outputs[1]) * 500);
+        this.body.setVelocityX((outputs[0]) * 700);
+        this.body.setVelocityY((outputs[1]) * 700);
 
+        //Try to jump if neural output high enough
         // if (outputs[4] > 0.2)
         //    this.tryToJump();
         //this.setAngularVelocity(outputs[3]);
@@ -65,8 +64,9 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.angle = this.body.angularVelocity;
         // this.setAngle(this.body.angularAcceleration);
 
+        this.fitness += this.x/100;
         this.fitness += this.y/100;
-       // this.checkCurrentTile();
+    //    this.checkCurrentTile();
     }
 
     tryToJump(force=1) {
@@ -76,20 +76,15 @@ class Life extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityY(0);
     }
 
-    updateFast() {
-        let outputs = this.mind.update(1, 1);     
-        
-    }
-
     getTileInputs(){
         const tileSize = this.tileSize;
         const tileInputs = [];
 
-        //current tile, tripled input
-        // tileInputs.push(this.lookAtTile(this.x, this.y)); 
-        // tileInputs.push(this.lookAtTile(this.x, this.y)); 
-        // tileInputs.push(this.lookAtTile(this.x, this.y)); 
-        //Go around clock-wise for nearest 8
+        //current tile, doubled input
+        tileInputs.push(this.lookAtTile(this.x, this.y)); 
+        tileInputs.push(this.lookAtTile(this.x, this.y)); 
+
+        //Adjacent 8 tiles, clockwise
         tileInputs.push(this.lookAtTile(this.x, this.y - tileSize)); //12:00, Up, North
         tileInputs.push(this.lookAtTile(this.x + tileSize, this.y - tileSize)); //1:30, Upper Right, Northeast
         tileInputs.push(this.lookAtTile(this.x + tileSize, this.y, true)); //3:00, Right, East
@@ -99,6 +94,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         tileInputs.push(this.lookAtTile(this.x - tileSize, this.y)); //9:00, Left, West
         tileInputs.push(this.lookAtTile(this.x - tileSize, this.y - tileSize)); //10:30, Upper Left, Northwest
         
+        //Adjacent-adjacent (2 away) 8 tiles, clockwise 
         // tileInputs.push(this.lookAtTile(this.x, this.y - tileSize * 2)); //12:00, Up, North
         // tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y - tileSize  * 2)); //1:30, Upper Right, Northeast
         // tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y, true)); //3:00, Right, East
@@ -120,12 +116,13 @@ class Life extends Phaser.Physics.Arcade.Sprite {
             //check through resources
             this.resourceTiles.forEach(resource => {
                 if (tileIndex == resource.index){
-                    return resource.effect;
+                    return resource.seenAs;
                 }
             });
             this.blockedTiles.forEach(blocked => {
                 if (tileIndex == blocked.index){
-                    return -1;
+                    this.fitness += blocked.effect;
+                    return blocked.seenAs; //typically -1 for blocked tiles
                 }
             });
 
@@ -145,7 +142,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
             //check through resources
             this.resourceTiles.forEach(resource => {
                 if (tileIndex == resource.index){
-                    this.fitness += resource.reward;
+                    this.fitness += resource.effect;
                 }
             });
 
@@ -160,7 +157,6 @@ class Life extends Phaser.Physics.Arcade.Sprite {
     gather(){
         try{
             let currentTile = this.tiles.getTileAtWorldXY(this.x, this.y, true);
-            currentTile.apple = 23;
             this.resourceTiles.forEach(resource => {
                 if (currentTile.index == resource.index){
                     this.fitness += resource.effect;
