@@ -20,12 +20,8 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.selectionCutoff = selectionCutoff;
         this.numElites = 20;
 
-        this.timer1 = 0;
+        this.timer = 0;
         this.groupFitness = 0;
-
-        //for updateFast()
-        this.timer2 = 0;
-        this.fastGenLength = 50;
     }
 
     //maintains array of Life objects and create Minds
@@ -47,7 +43,7 @@ class Group extends Phaser.Physics.Arcade.Group {
 
     //normal updating within Phaser's/Matter's loop
     update() {
-        this.timer1++;
+        this.timer++;
         for (let life of this.lives) {
 
             life.update();
@@ -55,7 +51,7 @@ class Group extends Phaser.Physics.Arcade.Group {
             //this.fitness();
         }
 
-        if (this.timer1 % this.genLength == 0){
+        if (this.timer % this.genLength == 0){
            this.selection();
         }
     }

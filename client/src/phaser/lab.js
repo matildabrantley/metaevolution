@@ -44,7 +44,7 @@ class Lab extends Phaser.Scene {
       scene: this
     };
 
-    this.groupPop = 50;
+    this.groupPop = 150;
     this.genera = [];
     this.globalTime = 0;
   }
