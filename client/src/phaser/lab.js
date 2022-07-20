@@ -84,7 +84,7 @@ create () {
 
   this.map.setCollision([1]);
 
-  let fps = 10;
+  let fps = 10; //sprite's frame per second
   const blackGroupAnim = createAnimConfig (this, 'blackKey', 'blackLife', fps, 'black-life0.png', 0.5);
   const redGroupAnim = createAnimConfig (this, 'redKey', 'redLife', fps, 'pulsing-red-dot0.png');
   const blueGroupAnim = createAnimConfig (this, 'blueKey', 'blueLife', fps, 'pulsing-blue-dot0.png'); 
@@ -95,15 +95,15 @@ create () {
   
   //Create one Genus
   this.genera.push(new Genus(generalConfig));
-  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, genus: this.genera[0], tiles: this.tileLayer, seesTiles: true};
+  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, genus: this.genera[0], tiles: this.tileLayer, seesTiles: false};
 
    //4 Groups per Species
    //Create empty Species
   let newSpecies = new Species(speciesConfig);
   newSpecies.createGroup(blackGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(redGroupAnim , {pop: this.groupPop});
-  newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(redGroupAnim , {pop: this.groupPop});
+  // newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
+  // newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
   this.genera[0].setupGenus();

@@ -16,7 +16,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.tiles = tiles;
         this.tileSize = 32;
         this.seesTiles = seesTiles;
-        this.resourceTiles = [{index: 2, effect: 1, reward:10}, {index: 3, effect: 1, reward:-10}];
+        this.resourceTiles = [];//[{index: 2, effect: 1, reward:10}, {index: 3, effect: 1, reward:-10}];
         this.blockedTiles = [{index: 1, effect: 0}];
 
         this.fitness = 0;
@@ -40,8 +40,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         let inputs = [];
 
         //input absolute position relative to center of simulation
-        inputs.push((this.x / 400) - 1);
-        inputs.push((this.x / 400) - 1);
+        // inputs.push((this.x / 400) - 1);
+        // inputs.push((this.x / 400) - 1);
         inputs.push((this.y / 304) - 1);
         inputs.push((this.y / 304) - 1);
 
@@ -51,8 +51,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
         let outputs = this.mind.update(inputs);           
         // this.setAcceleration((outputs[0] + outputs[2]) * 500, (outputs[1] + outputs[3]) * 500);
-        this.body.setVelocityX((outputs[0]) * 700);
-        this.body.setVelocityY((outputs[1]) * 700);
+        // this.body.setVelocityX((outputs[0]) * 700);
+        this.body.setVelocityY((outputs[1]) * 500);
 
         // if (outputs[4] > 0.2)
         //    this.tryToJump();
@@ -65,7 +65,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.angle = this.body.angularVelocity;
         // this.setAngle(this.body.angularAcceleration);
 
-        this.checkCurrentTile();
+        this.fitness += this.y/100;
+       // this.checkCurrentTile();
     }
 
     tryToJump(force=1) {

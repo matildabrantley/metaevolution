@@ -38,7 +38,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         for (let life of this.lives){
             //Create minds for each life
             const tileVisionInputs = this.species.seesTiles ? 8 : 0;
-            life.mind = new Mind(4 + tileVisionInputs, 2);
+            life.mind = new Mind(2 + tileVisionInputs, 2);
         }
 
         //initialize "best" to simply first created for now
@@ -115,8 +115,8 @@ class Group extends Phaser.Physics.Arcade.Group {
         }
 
         //reset
-        let newStartingX = 400;// + randIntBetween(-100, 100);
-        let newStartingY = 300;// + randIntBetween(-100, 100);
+        let newStartingX = 400 + randIntBetween(-100, 100);
+        let newStartingY = 300 + randIntBetween(-100, 100);
         for (let life of this.lives){
             life.setPosition(newStartingX, newStartingY);
             life.fitness = 0;   
