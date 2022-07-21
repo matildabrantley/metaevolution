@@ -16,7 +16,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.tiles = tiles;
         this.tileSize = 32;
         this.seesTiles = seesTiles;
-        this.resourceTiles = [{index: 2, seenAs: 1, effect: 1}, {index: 3, seenAs: 1, effect: 1}];
+        this.resourceTiles = [{index: 2, seenAs: 1, effect: 1}, {index: 3, seenAs: 0, effect: 0}];
         this.blockedTiles = [{index: 1, seenAs: -1, effect: 0}];
 
         this.fitness = 0;
@@ -66,7 +66,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
         this.fitness += this.x/100;
         this.fitness += this.y/100;
-    //    this.checkCurrentTile();
+        this.checkCurrentTile();
     }
 
     tryToJump(force=1) {

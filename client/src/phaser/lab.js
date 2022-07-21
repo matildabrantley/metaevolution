@@ -101,7 +101,7 @@ create () {
    //Create empty Species
   let newSpecies = new Species(speciesConfig);
   newSpecies.createGroup(blackGroupAnim, {pop: this.groupPop});
-  // newSpecies.createGroup(redGroupAnim , {pop: this.groupPop});
+  newSpecies.createGroup(redGroupAnim , {pop: this.groupPop});
   // newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
   // newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);

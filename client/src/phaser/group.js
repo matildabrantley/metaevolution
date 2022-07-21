@@ -5,7 +5,7 @@ const Phaser = require('phaser');
 
 class Group extends Phaser.Physics.Arcade.Group {
     constructor(world, scene, config, tiles, species,
-            {pop = 100, mutRate = 0.1 , selectionCutoff = 0.1, maxGenLength = 500, initialGenLength = 10, deltaGenLength = 5}={}){
+            {pop = 100, mutRate = 0.1 , selectionCutoff = 0.1, maxGenLength = 500, initialGenLength = 250, deltaGenLength = 5}={}){
         super(world, scene, config);
         this.lives = [];
         this.scene = scene;
@@ -48,7 +48,7 @@ class Group extends Phaser.Physics.Arcade.Group {
 
             life.update();
             
-            //this.fitness();
+            this.fitness();
         }
 
         if (this.timer % this.genLength == 0){
@@ -68,7 +68,7 @@ class Group extends Phaser.Physics.Arcade.Group {
     //generational change in group where fitness is sorted and replacement and mutation occur
     selection() {
         if (this.genLength < this.maxGenLength)
-            this.genLength += this.deltaGenLength;
+            this.genLength += 100;
 
         //fitness sorting function in which more fit lives move to front
         this.lives.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
