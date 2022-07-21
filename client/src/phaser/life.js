@@ -16,8 +16,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.tiles = tiles;
         this.tileSize = 32;
         this.seesTiles = seesTiles;
-        this.resourceTiles = [{index: 2, seenAs: 1, effect: 1}, {index: 3, seenAs: 0, effect: 0}];
-        this.blockedTiles = [{index: 1, seenAs: -1, effect: 0}];
+        this.resourceTiles = [{index: 2, seenAs: 1, effect: 4}, {index: 3, seenAs: 0, effect: 0}];
+        this.blockedTiles = [{index: 1, seenAs: -1, effect: 4}];
 
         this.fitness = 0;
 
@@ -64,8 +64,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.angle = this.body.angularVelocity;
         // this.setAngle(this.body.angularAcceleration);
 
-        this.fitness += this.x/100;
-        this.fitness += this.y/100;
+        this.fitness += this.x/50;
+        this.fitness += this.y/50;
         this.checkCurrentTile();
     }
 
@@ -95,14 +95,14 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         tileInputs.push(this.lookAtTile(this.x - tileSize, this.y - tileSize)); //10:30, Upper Left, Northwest
         
         //Adjacent-adjacent (2 away) 8 tiles, clockwise 
-        // tileInputs.push(this.lookAtTile(this.x, this.y - tileSize * 2)); //12:00, Up, North
-        // tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y - tileSize  * 2)); //1:30, Upper Right, Northeast
-        // tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y, true)); //3:00, Right, East
-        // tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y + tileSize  * 2)); //4:30, Bottom Right, Southeast
-        // tileInputs.push(this.lookAtTile(this.x, this.y + tileSize  * 2)); //6:00, Bottom, South
-        // tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y + tileSize  * 2)); //7:30, Bottom Left, Southwest
-        // tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y)); //9:00, Left, West
-        // tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y - tileSize  * 2)); //10:30, Upper Left, Northwest
+        tileInputs.push(this.lookAtTile(this.x, this.y - tileSize * 2)); //12:00, Up, North
+        tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y - tileSize  * 2)); //1:30, Upper Right, Northeast
+        tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y, true)); //3:00, Right, East
+        tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y + tileSize  * 2)); //4:30, Bottom Right, Southeast
+        tileInputs.push(this.lookAtTile(this.x, this.y + tileSize  * 2)); //6:00, Bottom, South
+        tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y + tileSize  * 2)); //7:30, Bottom Left, Southwest
+        tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y)); //9:00, Left, West
+        tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y - tileSize  * 2)); //10:30, Upper Left, Northwest
 
 
         //Generate array of inputs based on if the tiles collide or not

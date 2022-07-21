@@ -44,7 +44,7 @@ class Lab extends Phaser.Scene {
       scene: this
     };
 
-    this.groupPop = 150;
+    this.groupPop = 100;
     this.genera = [];
     this.globalTime = 0;
   }
@@ -102,8 +102,8 @@ create () {
   let newSpecies = new Species(speciesConfig);
   newSpecies.createGroup(blackGroupAnim, {pop: this.groupPop});
   newSpecies.createGroup(redGroupAnim , {pop: this.groupPop});
-  // newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
-  // newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
   this.genera[0].setupGenus();

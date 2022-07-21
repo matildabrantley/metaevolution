@@ -13,7 +13,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.tiles = tiles;
         this.species = species;
         
-        this.mutRate = mutRate;
+        this.mutRate = 0.3;//mutRate;
         this.maxGenLength = maxGenLength;
         this.genLength = initialGenLength;
         this.deltaGenLength = deltaGenLength;
@@ -33,7 +33,7 @@ class Group extends Phaser.Physics.Arcade.Group {
 
         for (let life of this.lives){
             //Create minds for each life
-            const tileVisionInputs = this.species.seesTiles ? 10 : 0;
+            const tileVisionInputs = this.species.seesTiles ? 18 : 0;
             life.mind = new Mind(4 + tileVisionInputs, 2);
         }
 

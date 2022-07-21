@@ -31,7 +31,7 @@ class Genus {
 
     //Create a new species with all subgroups having same initial attributes (animation config, genetic config, fitness config)
     createSpecies({sprite=null, spritesheet=null, key=null, firstFrame=null, scale = 1} = {}, //anim config
-        {numGroups = 4, pop = 200, groupPop = 50, mutRate = 0.05, selectionCutoff = 0.1, //population config
+        {numGroups = 4, pop = 200, groupPop = 50, mutRate = 0.11, selectionCutoff = 0.1, //population config
             maxGenLength = 250, initialGenLength = 10, deltaGenLength = 5} = {}) { 
 
                 
