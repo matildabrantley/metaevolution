@@ -16,9 +16,10 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.tiles = tiles;
         this.tileSize = 32;
         this.seesTiles = seesTiles;
-        this.resourceTiles = [{index: 2, seenAs: 1, effect: 4}, {index: 3, seenAs: 0, effect: 0}];
+        this.resourceTiles = [{index: 2, effect: 4}, {index: 3, resourceType: 0, effect: 0}, {index: 4, resourceType: 1, effect: 0}];
         this.blockedTiles = [{index: 1, seenAs: -1, effect: 4}];
 
+        this.resources = [0, 0, 0]; //represented as red, green, and blue
         this.fitness = 0;
 
         // this.setBounce(10000);
@@ -95,14 +96,14 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         tileInputs.push(this.lookAtTile(this.x - tileSize, this.y - tileSize)); //10:30, Upper Left, Northwest
         
         //Adjacent-adjacent (2 away) 8 tiles, clockwise 
-        tileInputs.push(this.lookAtTile(this.x, this.y - tileSize * 2)); //12:00, Up, North
-        tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y - tileSize  * 2)); //1:30, Upper Right, Northeast
-        tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y, true)); //3:00, Right, East
-        tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y + tileSize  * 2)); //4:30, Bottom Right, Southeast
-        tileInputs.push(this.lookAtTile(this.x, this.y + tileSize  * 2)); //6:00, Bottom, South
-        tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y + tileSize  * 2)); //7:30, Bottom Left, Southwest
-        tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y)); //9:00, Left, West
-        tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y - tileSize  * 2)); //10:30, Upper Left, Northwest
+        // tileInputs.push(this.lookAtTile(this.x, this.y - tileSize * 2)); //12:00, Up, North
+        // tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y - tileSize  * 2)); //1:30, Upper Right, Northeast
+        // tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y, true)); //3:00, Right, East
+        // tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y + tileSize  * 2)); //4:30, Bottom Right, Southeast
+        // tileInputs.push(this.lookAtTile(this.x, this.y + tileSize  * 2)); //6:00, Bottom, South
+        // tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y + tileSize  * 2)); //7:30, Bottom Left, Southwest
+        // tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y)); //9:00, Left, West
+        // tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y - tileSize  * 2)); //10:30, Upper Left, Northwest
 
 
         //Generate array of inputs based on if the tiles collide or not
@@ -116,6 +117,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
             //check through resources
             this.resourceTiles.forEach(resource => {
                 if (tileIndex == resource.index){
+                    this.fitness += resource.effect;
                     return resource.seenAs;
                 }
             });
@@ -142,7 +144,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
             //check through resources
             this.resourceTiles.forEach(resource => {
                 if (tileIndex == resource.index){
-                    this.fitness += resource.effect;
+                    this.resources[resource.resourceType] += resource.effect;
+                    this.fitness += resource.effect * 5;
                 }
             });
 
@@ -154,18 +157,23 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
-    gather(){
-        try{
-            let currentTile = this.tiles.getTileAtWorldXY(this.x, this.y, true);
-            this.resourceTiles.forEach(resource => {
-                if (currentTile.index == resource.index){
-                    this.fitness += resource.effect;
-                }
-            });
-            //else
-                //this.fitness--;
-        }
-        catch {}
+    // gather(){
+    //     try{
+    //         let currentTile = this.tiles.getTileAtWorldXY(this.x, this.y, true);
+    //         this.resourceTiles.forEach(resource => {
+    //             if (currentTile.index == resource.index){
+    //                 this.fitness += resource.effect;
+    //             }
+    //         });
+    //         //else
+    //             //this.fitness--;
+    //     }
+    //     catch {}
+    // }
+
+    //Give the lifeform a bonus for diversity of resources
+    giveBonus(){
+        this.fitness += (this.resources[0] * this.resources[1] * this.resources[2]) / 100;
     }
 
     //This individual's Nets replaced with a clone's

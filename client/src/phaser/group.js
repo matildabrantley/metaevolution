@@ -33,8 +33,8 @@ class Group extends Phaser.Physics.Arcade.Group {
 
         for (let life of this.lives){
             //Create minds for each life
-            const tileVisionInputs = this.species.seesTiles ? 18 : 0;
-            life.mind = new Mind(4 + tileVisionInputs, 2);
+            const tileVisionInputs = this.species.seesTiles ? 10 : 0;
+            life.mind = new Mind(4 + tileVisionInputs, 8);
         }
 
         //initialize "best" to simply first created for now
@@ -82,7 +82,8 @@ class Group extends Phaser.Physics.Arcade.Group {
         }
 
         //Elite Selection: Best 10 always get spot(s) in next generation without mutation,
-        //                 with certain matings guaranteed (1st & 2nd, 1st & 3rd, etc)
+        //                 with certain matings guaranteed (1st & 2nd, 1st & 3rd, etc).
+        //                 Ensures genetic diversity in the best performing agents.
         if (this.lives.length > 3) { //two clones of 1st and one clone of 2nd
             this.lives[this.lives.length - 1].clone(this.lives[0], 0);
             this.lives[this.lives.length - 2].clone(this.lives[0], 0);
@@ -111,8 +112,8 @@ class Group extends Phaser.Physics.Arcade.Group {
         }
 
         //reset
-        let newStartingX = 400 + randIntBetween(-100, 100);
-        let newStartingY = 300 + randIntBetween(-100, 100);
+        let newStartingX = 400 + randIntBetween(-10, 10);
+        let newStartingY = 300 + randIntBetween(-10, 10);
         for (let life of this.lives){
             life.setPosition(newStartingX, newStartingY);
             life.fitness = 0;   
