@@ -18,7 +18,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.tiles = tiles;
         this.tileSize = 32;
         this.seesTiles = seesTiles;
-        this.resourceTiles = [{index: 2, effect: 4}, {index: 3, resourceType: 0, effect: 0}, {index: 4, resourceType: 1, effect: 0}];
+        this.resourceTiles = [{index: 2, effect: 0}, {index: 3, effect: 0}, {index: 4, effect: 0}, {index: 5, effect: 10}];
         this.blockedTiles = [{index: 1, effect: 4}];
 
         this.resources = [0, 0, 0]; //represented as red, green, and blue
@@ -39,8 +39,6 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         let inputs = [];
 
         //input absolute position relative to center of simulation
-        // inputs.push((this.x / 400) - 1);
-        // inputs.push((this.x / 400) - 1);
         inputs.push((this.x / this.midWidth) - 1);
         inputs.push((this.y / this.midHeight) - 1);
         inputs.push(1);
@@ -52,14 +50,14 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
         let outputs = this.mind.update(inputs);           
         // this.setAcceleration((outputs[0] + outputs[2]) * 500, (outputs[1] + outputs[3]) * 500);
-        this.body.setVelocityX((outputs[0]) * 700);
-        this.body.setVelocityY((outputs[1]) * 700);
+        this.body.setVelocityX((outputs[0]) * 100);
+        this.body.setVelocityY((outputs[1]) * 100);
 
         this.angle = this.body.angularVelocity;
         // this.setAngle(this.body.angularAcceleration);
 
-        this.fitness += this.x/50;
-        this.fitness += this.y/50;
+        // this.fitness += this.x/50;
+        // this.fitness += this.y/50;
         this.currentTileEffects();
     }
 
@@ -81,7 +79,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         tileInputs.push(this.lookAtTile(this.x - tileSize, this.y)); //9:00, Left, West
         tileInputs.push(this.lookAtTile(this.x - tileSize, this.y - tileSize)); //10:30, Upper Left, Northwest
         
-        //Adjacent-adjacent (2 away) 8 tiles, clockwise 
+        /*//Adjacent-adjacent (2 away) 8 tiles, clockwise 
         // tileInputs.push(this.lookAtTile(this.x, this.y - tileSize * 2)); //12:00, Up, North
         // tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y - tileSize  * 2)); //1:30, Upper Right, Northeast
         // tileInputs.push(this.lookAtTile(this.x + tileSize  * 2, this.y, true)); //3:00, Right, East
@@ -90,7 +88,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         // tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y + tileSize  * 2)); //7:30, Bottom Left, Southwest
         // tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y)); //9:00, Left, West
         // tileInputs.push(this.lookAtTile(this.x - tileSize  * 2, this.y - tileSize  * 2)); //10:30, Upper Left, Northwest
-
+        */
 
         //Generate array of inputs based on if the tiles collide or not
         //return nearbyTiles.map((a) => (a === 70 || a === 48 || a === 29)  ? -3 : 0); 
@@ -113,7 +111,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
             this.blockedTiles.forEach(blocked => {
                 if (tileIndex == blocked.index){
                     // Side effects for viewing a blocked tile 
-                    this.fitness += blocked.effect;
+                    // this.fitness += blocked.effect;
 
                     return -1; //typically -1 for blocked tiles
                 }
@@ -135,7 +133,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
             //check through resources
             this.resourceTiles.forEach(resource => {
                 if (tileIndex == resource.index){
-                    this.resources[resource.resourceType] += resource.effect;
+                    //white = 0, red = 1, green = 2, blue = 3 (black is border)
+                    this.resources[resource.index - 2] += resource.effect; //minus 2 because black is the border color and white's tile index is 2
                 }
             });
         }
@@ -147,7 +146,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
     updateFitness(){
         //Give lifeform a bonus for diversity of resources by multiplying resources together (and dividing by 100)
-        this.fitness += (this.resources[0] * this.resources[1] * this.resources[2]) / 100;
+        // this.fitness += this.resources.reduce((a, b) => a + b, 0);
+        this.fitness += ((1+this.resources[0]) * (1+this.resources[1]) * (1+this.resources[2])) / 100;
     }
 
     //This individual's Nets replaced with a clone's

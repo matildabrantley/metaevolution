@@ -5,7 +5,7 @@ const Phaser = require('phaser');
 
 class Group extends Phaser.Physics.Arcade.Group {
     constructor(world, scene, config, tiles, species,
-            {pop = 100, mutRate = 0.1 , selectionCutoff = 0.1, maxGenLength = 500, initialGenLength = 250, deltaGenLength = 5}={}){
+            {pop = 100, mutRate = 0.1 , selectionCutoff = 0.1, maxGenLength = 500, initialGenLength = 50, deltaGenLength = 5}={}){
         super(world, scene, config);
         this.lives = [];
         this.scene = scene;
@@ -13,7 +13,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.tiles = tiles;
         this.species = species;
         
-        this.mutRate = 0.3;//mutRate;
+        this.mutRate = 0.1;//mutRate;
         this.maxGenLength = maxGenLength;
         this.genLength = initialGenLength;
         this.deltaGenLength = deltaGenLength;
