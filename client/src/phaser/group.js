@@ -5,7 +5,7 @@ const Phaser = require('phaser');
 
 class Group extends Phaser.Physics.Arcade.Group {
     constructor(world, scene, config, tiles, species,
-            {pop = 100, mutRate = 0.1 , selectionCutoff = 0.1, maxGenLength = 500, initialGenLength = 50, deltaGenLength = 5}={}){
+            {pop = 100, mutRate = 0.1 , selectionCutoff = 0.1, maxGenLength = 1500, initialGenLength = 50, deltaGenLength = 5}={}){
         super(world, scene, config);
         this.lives = [];
         this.scene = scene;
@@ -34,7 +34,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         for (let life of this.lives){
             //Create minds for each life
             const tileVisionInputs = this.species.seesTiles ? 10 : 0;
-            life.mind = new Mind(4 + tileVisionInputs, 8);
+            life.mind = new Mind(5 + tileVisionInputs, 8);
         }
 
         //initialize "best" to simply first created for now
@@ -110,10 +110,14 @@ class Group extends Phaser.Physics.Arcade.Group {
             this.lives[this.lives.length - 19].clone(this.lives[8], 0);
             this.lives[this.lives.length - 20].clone(this.lives[9], 0);
         }
+        this.lives[this.lives.length - 21].clone(this.lives[0], 0.8);
 
+
+        let midX = this.scene.scale.displaySize._width / 2;
+        let midY = this.scene.scale.displaySize._height / 2;
         //reset
-        let newStartingX = 400 + randIntBetween(-10, 10);
-        let newStartingY = 300 + randIntBetween(-10, 10);
+        let newStartingX = midX + randIntBetween(-10, 10);
+        let newStartingY = midY + randIntBetween(-10, 10);
         for (let life of this.lives){
             life.setPosition(newStartingX, newStartingY);
             life.fitness = 0;   

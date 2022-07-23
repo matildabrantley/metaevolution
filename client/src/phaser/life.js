@@ -18,10 +18,14 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.tiles = tiles;
         this.tileSize = 32;
         this.seesTiles = seesTiles;
-        this.resourceTiles = [{index: 2, effect: 0}, {index: 3, effect: 1}, {index: 4, effect: 1}, {index: 5, effect: 1}, {index: 6, effect: 1}];
+        this.resourceTiles = [{index: 2, effect: 0}, {index: 3, effect: 1, satiation: 0}, 
+            {index: 4, effect: 1, satiation: 0}, {index: 5, effect: 1, satiation: 0}, 
+            {index: 6, effect: 1, satiation: 0}];
         this.blockedTiles = [{index: 1, effect: 4}];
 
-        this.resources = [0, 0, 0, 0]; //represented as red, green, and blue
+        this.currentTileResource = 0;
+        this.resources = [0, 0, 0, 0, 0]; //represented as red, green, and blue
+        this.satiation = [0, 0, 0, 0, 0];
         this.fitness = 0;
 
         // this.setBounce(10000);
@@ -43,7 +47,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         inputs.push((this.y / this.midHeight) - 1);
         inputs.push(1);
         inputs.push(1);
-
+        inputs.push(this.currentTile());
         if (this.seesTiles)
             inputs = inputs.concat(this.getTileInputs());
 
@@ -58,7 +62,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
         // this.fitness += this.x/50;
         // this.fitness += this.y/50;
-        this.currentTileEffects();
+        this.updateFitness();
     }
 
     getTileInputs(){
@@ -96,7 +100,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
     }
 
     //returns 3-element array representing RGB used for neural input
-    lookAtTile(x, y){
+    lookAtTile(x, y, isCurrent=false){
         try {
             let tileIndex = this.tiles.getTileAtWorldXY(x, y, true).index;
             //check through resources
@@ -104,8 +108,10 @@ class Life extends Phaser.Physics.Arcade.Sprite {
                 if (tileIndex == resource.index){
                     // Side effects for viewing a tile 
                     // this.fitness += resource.effect;
+                    if (isCurrent) 
+                        this.currentTileResource = resource.index - 2;
                     
-                    return 1;
+                    return resource.effect;
                 }
             });
             this.blockedTiles.forEach(blocked => {
@@ -126,29 +132,39 @@ class Life extends Phaser.Physics.Arcade.Sprite {
     }
 
     //Check current tile for effects, like resource gathering
-    currentTileEffects(){
+    currentTile(){
+        
+        const tileInput = this.lookAtTile(this.x, this.y, true);
+        this.resources[this.currentTileResource]++;
+        return tileInput;
+        
+        // try {
+        //     let tileIndex = this.tiles.getTileAtWorldXY(this.x, this.y, true).index;
 
-        try {
-            let tileIndex = this.tiles.getTileAtWorldXY(this.x, this.y, true).index;
-            //check through resources
-            this.resourceTiles.forEach(resource => {
-                if (tileIndex == resource.index){
-                    //white = 0, red = 1, green = 2, blue = 3 (black is border)
-                    this.resources[resource.index - 3] += resource.effect; //minus 3 because black is the border color and white's tile index is 2
-                    this.fitness += resource.effect;
-                }
-            });
-        }
-        catch { //return to middle if out of bounds
-            this.x = this.midWidth;
-            this.y = this.midHeight;
-        }
+
+
+        //     //check through resources
+        //     this.resourceTiles.forEach(resource => {
+        //         if (tileIndex == resource.index){
+        //             //white = 0, red = 1, green = 2, blue = 3 (black is border)
+        //             this.resources[resource.index - 2] += resource.effect; //minus 2 because black is the border color and white's tile index is 2
+        //             resource.satiation = Math.min(100, resource.satiation + 2);
+        //             //this.fitness += resource.effect;
+        //             return resource.effect;
+        //         }
+        //         this.resourceTiles.satiation--;
+        //     });
+        // }
+        // catch { //return to middle if out of bounds
+        //     this.x = this.midWidth;
+        //     this.y = this.midHeight;
+        // }
     }
 
     updateFitness(){
         //Give lifeform a bonus for diversity of resources by multiplying resources together (and dividing by 100)
         // this.fitness += this.resources.reduce((a, b) => a + b, 0);
-        this.fitness += ((1+this.resources[0]) * (1+this.resources[1]) * (1+this.resources[2]) * (1+this.resources[3])) / 100;
+        this.fitness += ((1+this.resources[0]) * (1+this.resources[1]) * (1+this.resources[2]) * (1+this.resources[3]) * (1+this.resources[4])) / 100000;
     }
 
     //This individual's Nets replaced with a clone's

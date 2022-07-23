@@ -52,22 +52,25 @@ class Species extends Phaser.Physics.Arcade.Group {
 
     //Preferred (and simpler) method to create new groups
     createGroup({sprite, spritesheet, key, firstFrame, scale = 1} = {}, //animation config for all sprites in group
-                {pop = 100, mutRate = 0.15, selectionCutoff = 0.1, maxGenLength = 150, initialGenLength = 50, deltaGenLength = 5} = {} //genetic config
+                {pop = 100, mutRate = 0.15, selectionCutoff = 0.1, maxGenLength = 450, initialGenLength = 50, deltaGenLength = 5} = {} //genetic config
         ){
 
         //Create Group object with general configuration
         const newGroup = new Group(this.world, this.scene, this.config, this.tiles, this,
             {pop, mutRate, selectionCutoff, maxGenLength, initialGenLength, deltaGenLength});
+
         //Add the population
+        let midX = this.scene.scale.displaySize._width / 2;
+        let midY = this.scene.scale.displaySize._height / 2;
         for (let i=0; i < pop; i++){
             let life;
             if (spritesheet != null) { //animated sprite provided
-                life = new Life(this.scene, 300, 400, {sprite: spritesheet, frame: firstFrame, tiles: this.tiles}, this.seesTiles);
+                life = new Life(this.scene, midX, midY, {sprite: spritesheet, frame: firstFrame, tiles: this.tiles}, this.seesTiles);
                 life.play(key);
             } else if (sprite != null) //static sprite provided
-                life = new Life(this.scene, 300, 400, {sprite: sprite, tiles: this.tiles}, this.seesTiles);
+                life = new Life(this.scene, midX, midY, {sprite: sprite, tiles: this.tiles}, this.seesTiles);
               else //no sprite provided, use default sprite
-                life = new Life(this.scene, 300, 400, {sprite: 'default', tiles: this.tiles}, this.seesTiles);
+                life = new Life(this.scene, midX, midY, {sprite: 'default', tiles: this.tiles}, this.seesTiles);
             
             life.setScale(scale);
             life.alpha = 0.5;
