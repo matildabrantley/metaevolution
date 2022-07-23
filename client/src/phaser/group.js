@@ -21,6 +21,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.numElites = 20;
 
         this.timer = 0;
+        this.currentGenTimer = 0;
         this.groupFitness = 0;
     }
 
@@ -34,7 +35,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         for (let life of this.lives){
             //Create minds for each life
             const tileVisionInputs = this.species.seesTiles ? 10 : 0;
-            life.mind = new Mind(5 + tileVisionInputs, 8);
+            life.mind = new Mind(5 + tileVisionInputs, 3);
         }
 
         //initialize "best" to simply first created for now
@@ -44,6 +45,7 @@ class Group extends Phaser.Physics.Arcade.Group {
     //normal updating within Phaser's/Matter's loop
     update() {
         this.timer++;
+        this.currentGenTimer++;
         for (let life of this.lives) {
 
             life.update();
@@ -51,7 +53,7 @@ class Group extends Phaser.Physics.Arcade.Group {
             this.fitness();
         }
 
-        if (this.timer % this.genLength == 0){
+        if (this.currentGenTimer % this.genLength == 0){
            this.selection();
         }
     }
@@ -68,22 +70,22 @@ class Group extends Phaser.Physics.Arcade.Group {
     //generational change in group where fitness is sorted and replacement and mutation occur
     selection() {
         if (this.genLength < this.maxGenLength)
-            this.genLength += 100;
+            this.genLength += this.deltaGenLength;
 
         //fitness sorting function in which more fit lives move to front
         this.lives.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
         this.bestMind = this.lives[0].getMindCopy(); //save the best so it can be saved to database when requested
 
         //vast majority of population replaced by sexual offspring of top X% (X = selectionCutoff)
-        for (let i=this.lives.length-20; i > this.lives.length * this.selectionCutoff; i--) {
+        for (let i=this.lives.length-1; i > this.lives.length * this.selectionCutoff; i--) {
             let mom = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
             let dad = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
             this.lives[i].mate(this.lives[mom], this.lives[dad], this.mutRate);
         }
 
         //Elite Selection: Best 10 always get spot(s) in next generation without mutation,
-        //                 with certain matings guaranteed (1st & 2nd, 1st & 3rd, etc).
-        //                 Ensures genetic diversity in the best performing agents.
+                        // with certain matings guaranteed (1st & 2nd, 1st & 3rd, etc).
+                        // Ensures genetic diversity in the best performing agents.
         if (this.lives.length > 3) { //two clones of 1st and one clone of 2nd
             this.lives[this.lives.length - 1].clone(this.lives[0], 0);
             this.lives[this.lives.length - 2].clone(this.lives[0], 0);
@@ -102,20 +104,22 @@ class Group extends Phaser.Physics.Arcade.Group {
             this.lives[this.lives.length - 12].clone(this.lives[3], 0);
             this.lives[this.lives.length - 13].clone(this.lives[4], 0);
             this.lives[this.lives.length - 14].clone(this.lives[4], 0);
-            this.lives[this.lives.length - 15].clone(this.lives[5], 0);
+            this.lives[this.lives.length - 6].mate(this.lives[0], this.lives[3], 0);
         } if (this.lives.length > 20) {         
-            this.lives[this.lives.length - 16].clone(this.lives[5], 0);
-            this.lives[this.lives.length - 17].clone(this.lives[6], 0);
-            this.lives[this.lives.length - 18].clone(this.lives[7], 0);
-            this.lives[this.lives.length - 19].clone(this.lives[8], 0);
-            this.lives[this.lives.length - 20].clone(this.lives[9], 0);
+            this.lives[this.lives.length - 6].mate(this.lives[0], this.lives[3], 0);
+            this.lives[this.lives.length - 6].mate(this.lives[1], this.lives[3], 0);
+            this.lives[this.lives.length - 18].clone(this.lives[5], 0);
+            this.lives[this.lives.length - 19].clone(this.lives[6], 0);
+            this.lives[this.lives.length - 20].clone(this.lives[7], 0);
         }
+        //Highly mutated version of fittest agent to prevent stagnation
         this.lives[this.lives.length - 21].clone(this.lives[0], 0.8);
 
 
         let midX = this.scene.scale.displaySize._width / 2;
         let midY = this.scene.scale.displaySize._height / 2;
         //reset
+        this.currentGenTimer = 0;
         let newStartingX = midX + randIntBetween(-10, 10);
         let newStartingY = midY + randIntBetween(-10, 10);
         for (let life of this.lives){

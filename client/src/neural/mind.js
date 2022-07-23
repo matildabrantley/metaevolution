@@ -4,7 +4,7 @@ class Mind {
     constructor(numSenses = 4, numBehaviors = 3, simple = true){
         this.simple = simple;
         //Sensory Net takes in input from world
-        this.senseNet = new Net({isRecurrent: true, isMediumTerm: true}, numSenses, 12, numBehaviors);
+        this.senseNet = new Net({isRecurrent: true, isMediumTerm: true}, numSenses, 6, numBehaviors);
 
         //Keeping this here for now so I can control Mind building inside class better
         if (!simple)

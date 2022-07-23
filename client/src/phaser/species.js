@@ -52,7 +52,7 @@ class Species extends Phaser.Physics.Arcade.Group {
 
     //Preferred (and simpler) method to create new groups
     createGroup({sprite, spritesheet, key, firstFrame, scale = 1} = {}, //animation config for all sprites in group
-                {pop = 100, mutRate = 0.15, selectionCutoff = 0.1, maxGenLength = 450, initialGenLength = 50, deltaGenLength = 5} = {} //genetic config
+                {pop = 100, mutRate = 0.15, selectionCutoff = 0.1, maxGenLength = 150, initialGenLength = 50, deltaGenLength = 5} = {} //genetic config
         ){
 
         //Create Group object with general configuration

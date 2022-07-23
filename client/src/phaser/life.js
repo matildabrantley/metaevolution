@@ -23,7 +23,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
             {index: 6, effect: 1, satiation: 0}];
         this.blockedTiles = [{index: 1, effect: 4}];
 
-        this.currentTileResource = 0;
+        this.currentResource = 0;
         this.resources = [0, 0, 0, 0, 0]; //represented as red, green, and blue
         this.satiation = [0, 0, 0, 0, 0];
         this.fitness = 0;
@@ -45,9 +45,10 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         //input absolute position relative to center of simulation
         inputs.push((this.x / this.midWidth) - 1);
         inputs.push((this.y / this.midHeight) - 1);
+        // inputs.push(this.currentTile());
         inputs.push(1);
         inputs.push(1);
-        inputs.push(this.currentTile());
+        inputs.push(1);
         if (this.seesTiles)
             inputs = inputs.concat(this.getTileInputs());
 
@@ -57,11 +58,11 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.body.setVelocityX((outputs[0]) * 300);
         this.body.setVelocityY((outputs[1]) * 300);
 
-        this.angle = this.body.angularVelocity;
+        // this.angle = this.body.angularVelocity;
         // this.setAngle(this.body.angularAcceleration);
 
-        // this.fitness += this.x/50;
-        // this.fitness += this.y/50;
+        this.fitness += this.x/50;
+        this.fitness += this.y/50;
         this.updateFitness();
     }
 
@@ -109,7 +110,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
                     // Side effects for viewing a tile 
                     // this.fitness += resource.effect;
                     if (isCurrent) 
-                        this.currentTileResource = resource.index - 2;
+                        this.currentResource = resource.index - 2;
                     
                     return resource.effect;
                 }
@@ -135,7 +136,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
     currentTile(){
         
         const tileInput = this.lookAtTile(this.x, this.y, true);
-        this.resources[this.currentTileResource]++;
+        this.resources[this.currentResource] += this.resourceTiles[this.currentResource].effect;
         return tileInput;
         
         // try {
@@ -163,8 +164,9 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
     updateFitness(){
         //Give lifeform a bonus for diversity of resources by multiplying resources together (and dividing by 100)
-        // this.fitness += this.resources.reduce((a, b) => a + b, 0);
-        this.fitness += ((1+this.resources[0]) * (1+this.resources[1]) * (1+this.resources[2]) * (1+this.resources[3]) * (1+this.resources[4])) / 100000;
+        // this.fitness += this.x;
+        this.fitness += this.y;
+        // this.fitness += ((1+this.resources[0]) * (1+this.resources[1]) * (1+this.resources[2]) * (1+this.resources[3]) * (1+this.resources[4])) / 100000;
     }
 
     //This individual's Nets replaced with a clone's
