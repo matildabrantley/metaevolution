@@ -22,8 +22,8 @@ import greenPulseFrames from './assets/frameData/pulsing-green-dot.json';
 //import tilesheet, tilemapping
 import tilesheet1 from './assets/tiles/monocolor-tiles.png';
 //import tilemap1 from './assets/tiles/tilemap-empty-data';
-import tilemap1 from './assets/tiles/tilemap-5-color-data';
-// import tilemap1 from './assets/tiles/tilemap-lab-data 5x5 bordered';
+//import tilemap1 from './assets/tiles/tilemap-5-color-data';
+import tilemap1 from './assets/tiles/tilemap-lab-data 5x5 bordered';
 
 
 import Genus from './genus';
@@ -31,7 +31,7 @@ import Species from './species';
 import Group from './group';
 
 class Lab extends Phaser.Scene {
-  constructor({parent, width = 800, height = 608, physicsType = 'arcade'} = {}) {
+  constructor({parent, width = 224, height = 224, physicsType = 'arcade'} = {}) {
     super("Launch");
     //Create a config object for scene
     this.config = {
@@ -45,7 +45,7 @@ class Lab extends Phaser.Scene {
       scene: this
     };
 
-    this.groupPop = 50;
+    this.groupPop = 26;
     this.genera = [];
     this.globalTime = 0;
   }
@@ -66,7 +66,6 @@ class Lab extends Phaser.Scene {
     //tiles
     this.load.image('tiles', tilesheet1);
     this.load.tilemapTiledJSON('tilemap', tilemap1);
-    // this.load.tilemapTiledJSON('tilemap', tilemap2);
 }
 
 create () {
@@ -102,9 +101,9 @@ create () {
    //Create empty Species
   let newSpecies = new Species(speciesConfig);
   newSpecies.createGroup(blackGroupAnim, {pop: this.groupPop});
-  // newSpecies.createGroup(redGroupAnim , {pop: this.groupPop});
-  // newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
-  // newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(redGroupAnim , {pop: this.groupPop});
+  newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
+  newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
   this.genera[0].addSpecies(newSpecies);
 
   this.genera[0].setupGenus();
