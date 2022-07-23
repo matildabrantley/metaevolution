@@ -1,7 +1,7 @@
 
 //Customizable Neural Net
 class Net {
-	constructor({isRecurrent = false, isLongTerm = false, hasDynamicMemory = false} = {}, ...layerSizes)
+	constructor({isRecurrent = false, isMediumTerm = false, hasDynamicMemory = false} = {}, ...layerSizes)
 	{	
 		//First build the memory systems
 		let numOutputs = layerSizes[layerSizes.length - 1];	
@@ -12,7 +12,7 @@ class Net {
 			this.shortMemory = new Array(numOutputs).fill(0);
 		}
 		//Long-term Memory
-		if (isLongTerm){
+		if (isMediumTerm){
 			layerSizes[0] += numOutputs;
 			this.longMemory = new Array(numOutputs).fill(0);
 		}
@@ -106,9 +106,11 @@ b
 		this.shortMemory = [...this.charges[outputLayer]];
 		//long-term recurrent memory saved here
 		if (this.longMemory){
+			let maxCharge = 5; //max absolute charge (i.e. negative of this value is minimum charge, such as -5)
 			for (let i in this.longMemory){
+				this.longMemory[i] *= 0.75; //slightly squish 
 				this.longMemory[i] += this.charges[outputLayer][i]; //add output to long-term memory
-				this.longMemory[i] = zeroCenteredCurve(this.longMemory[i]); //squish memory with zero-centered sigmoid
+				this.longMemory[i] = Math.abs(this.longMemory[i]) < maxCharge ? this.longMemory[i] : maxCharge; //cap charge 
 			}
 		}
 		//TODO: Positive outputs

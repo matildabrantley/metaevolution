@@ -18,10 +18,10 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.tiles = tiles;
         this.tileSize = 32;
         this.seesTiles = seesTiles;
-        this.resourceTiles = [{index: 2, effect: 0}, {index: 3, effect: 0}, {index: 4, effect: 0}, {index: 5, effect: 10}];
+        this.resourceTiles = [{index: 2, effect: 0}, {index: 3, effect: 1}, {index: 4, effect: 1}, {index: 5, effect: 1}, {index: 6, effect: 1}];
         this.blockedTiles = [{index: 1, effect: 4}];
 
-        this.resources = [0, 0, 0]; //represented as red, green, and blue
+        this.resources = [0, 0, 0, 0]; //represented as red, green, and blue
         this.fitness = 0;
 
         // this.setBounce(10000);
@@ -50,8 +50,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
         let outputs = this.mind.update(inputs);           
         // this.setAcceleration((outputs[0] + outputs[2]) * 500, (outputs[1] + outputs[3]) * 500);
-        this.body.setVelocityX((outputs[0]) * 100);
-        this.body.setVelocityY((outputs[1]) * 100);
+        this.body.setVelocityX((outputs[0]) * 300);
+        this.body.setVelocityY((outputs[1]) * 300);
 
         this.angle = this.body.angularVelocity;
         // this.setAngle(this.body.angularAcceleration);
@@ -134,7 +134,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
             this.resourceTiles.forEach(resource => {
                 if (tileIndex == resource.index){
                     //white = 0, red = 1, green = 2, blue = 3 (black is border)
-                    this.resources[resource.index - 2] += resource.effect; //minus 2 because black is the border color and white's tile index is 2
+                    this.resources[resource.index - 3] += resource.effect; //minus 3 because black is the border color and white's tile index is 2
+                    this.fitness += resource.effect;
                 }
             });
         }
@@ -147,7 +148,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
     updateFitness(){
         //Give lifeform a bonus for diversity of resources by multiplying resources together (and dividing by 100)
         // this.fitness += this.resources.reduce((a, b) => a + b, 0);
-        this.fitness += ((1+this.resources[0]) * (1+this.resources[1]) * (1+this.resources[2])) / 100;
+        this.fitness += ((1+this.resources[0]) * (1+this.resources[1]) * (1+this.resources[2]) * (1+this.resources[3])) / 100;
     }
 
     //This individual's Nets replaced with a clone's

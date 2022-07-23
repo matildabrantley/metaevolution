@@ -4,7 +4,7 @@ class Mind {
     constructor(numSenses = 4, numBehaviors = 3, simple = true){
         this.simple = simple;
         //Sensory Net takes in input from world
-        this.senseNet = new Net({isRecurrent: true, isLongTerm: false}, numSenses, 12, 12, 6, numBehaviors);
+        this.senseNet = new Net({isRecurrent: true, isMediumTerm: true}, numSenses, 12, 12, numBehaviors);
 
         //Keeping this here for now so I can control Mind building inside class better
         if (!simple)
@@ -23,14 +23,14 @@ class Mind {
             let numNextRegionInputs = 0;
             for (let net=0; net < this.nets[region].length; net++) {
                 //create each net in the region
-                this.nets[region][net] = new Net({isRecurrent: true, isLongTerm: false}, numRegionInputs, regionHiddens, regionHiddens,  regionOutputs);
+                this.nets[region][net] = new Net({isRecurrent: true, isMediumTerm: false}, numRegionInputs, regionHiddens, regionHiddens,  regionOutputs);
                 numNextRegionInputs += numRegionInputs;
             }
             numRegionInputs = numNextRegionInputs;
         }
 
         //Behavior Net outputs actions
-        this.behaviorNet = new Net({isRecurrent: false, isLongTerm: false, hasDynamicMemory: true}, numRegionInputs, numBehaviors, numBehaviors);
+        this.behaviorNet = new Net({isRecurrent: false, isMediumTerm: false, hasDynamicMemory: true}, numRegionInputs, numBehaviors, numBehaviors);
     }
 
     activateRegions() {
