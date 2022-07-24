@@ -57,7 +57,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         //New generation if timer is up
         if (this.currentGenTimer >= this.genLength){
            this.selection();
-           this.currentGenTimer = 0;
+           this.reset();
            //stretch out the generation length incrementally until maxed
            if (this.genLength < this.maxGenLength)
             this.genLength += this.deltaGenLength;
@@ -129,13 +129,17 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.lives[this.lives.length - 26].clone(this.lives[0], 0.8);
 
         this.lives[this.lives.length - 27].mind = copyDeep(this.bestEverMind);
+    }
 
-
+    reset(){
+        //reset timer
+        this.currentGenTimer = 0;
+        //get current midpoints
         let midX = this.scene.scale.displaySize._width / 2;
         let midY = this.scene.scale.displaySize._height / 2;
-        //reset
-        let newStartingX = midX + randIntBetween(-10, 10);
-        let newStartingY = midY + randIntBetween(-10, 10);
+        //reset fitness and location
+        let newStartingX = midX + randIntBetween(-5, 5);
+        let newStartingY = midY + randIntBetween(-5, 5);
         for (let life of this.lives){
             life.setPosition(newStartingX, newStartingY);
             life.fitness = 0;   
