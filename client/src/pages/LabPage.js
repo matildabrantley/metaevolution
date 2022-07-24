@@ -75,7 +75,7 @@ const LabPage = () => {
             ))} */}
                 
             <Suspense fallback={<div>Loading...</div>}>
-                < PhaserWorld width={224} height={224} worldType="Lab"/>
+                < PhaserWorld width={288} height={288} worldType="Lab"/>
             </Suspense>
         </div>
     )

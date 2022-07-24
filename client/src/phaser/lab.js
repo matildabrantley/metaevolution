@@ -23,7 +23,7 @@ import greenPulseFrames from './assets/frameData/pulsing-green-dot.json';
 import tilesheet1 from './assets/tiles/monocolor-tiles.png';
 //import tilemap1 from './assets/tiles/tilemap-empty-data';
 //import tilemap1 from './assets/tiles/tilemap-5-color-data';
-import tilemap1 from './assets/tiles/tilemap-lab-data 5x5 bordered';
+import tilemap1 from './assets/tiles/tilemap-lab-data 7x7 bordered';
 
 
 import Genus from './genus';
@@ -31,7 +31,7 @@ import Species from './species';
 import Group from './group';
 
 class Lab extends Phaser.Scene {
-  constructor({parent, width = 224, height = 224, physicsType = 'arcade'} = {}) {
+  constructor({parent, width = 288, height = 288, physicsType = 'arcade'} = {}) {
     super("Launch");
     //Create a config object for scene
     this.config = {
