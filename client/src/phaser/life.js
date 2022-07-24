@@ -18,7 +18,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.tiles = tiles;
         this.tileSize = 32;
         this.seesTiles = seesTiles;
-        this.resourceTiles = [{index: 2, effect: 0.5, satiation: 0}, {index: 3, effect: 1, satiation: 0}, 
+        this.resourceTiles = [{index: 2, effect: 0.3, satiation: 0}, {index: 3, effect: 1, satiation: 0}, 
             {index: 4, effect: 1, satiation: 0}, {index: 5, effect: 1, satiation: 0}, 
             {index: 6, effect: 1, satiation: 0}];
         this.blockedTiles = [{index: 1, effect: 4}];
@@ -53,8 +53,8 @@ class Life extends Phaser.Physics.Arcade.Sprite {
 
         let outputs = this.mind.update(inputs);           
         // this.setAcceleration((outputs[0] + outputs[2]) * 500, (outputs[1] + outputs[3]) * 500);
-        this.body.setVelocityX((outputs[0]) * 300);
-        this.body.setVelocityY((outputs[1]) * 300);
+        this.body.setVelocityX((outputs[0]) * 500);
+        this.body.setVelocityY((outputs[1]) * 500);
 
         // this.angle = this.body.angularVelocity;
         // this.setAngle(this.body.angularAcceleration);

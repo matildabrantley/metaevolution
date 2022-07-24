@@ -2,6 +2,7 @@ import Life from './life';
 import Group from './group';
 
 const Phaser = require('phaser');
+const copyDeep = require('lodash.clonedeep');
 
 class Species extends Phaser.Physics.Arcade.Group {
     constructor({world, scene, config, genus=null, tiles, seesTiles = false} = {}, //general config for species and its sub-groups
@@ -23,6 +24,7 @@ class Species extends Phaser.Physics.Arcade.Group {
         this.maxGroupSelectionFreq = maxGroupSelectionFreq;
         this.mutMutRate = mutMutRate;
         this.speciesFitness = 0;
+        this.bestEverGroup = {groupFitness: 1};
     }
     
     setupSpecies({preySpecies = [], predatorSpecies = []} = {}) {
@@ -52,7 +54,7 @@ class Species extends Phaser.Physics.Arcade.Group {
 
     //Preferred (and simpler) method to create new groups
     createGroup({sprite, spritesheet, key, firstFrame, scale = 1} = {}, //animation config for all sprites in group
-                {pop = 100, mutRate = 0.15, selectionCutoff = 0.1, maxGenLength = 150, initialGenLength = 50, deltaGenLength = 5} = {} //genetic config
+                {pop = 100, mutRate = 0.08, selectionCutoff = 0.1, maxGenLength = 250, initialGenLength = 50, deltaGenLength = 5} = {} //genetic config
         ){
 
         //Create Group object with general configuration
@@ -122,6 +124,7 @@ class Species extends Phaser.Physics.Arcade.Group {
 
     //selection of the best subpopulations in the species
     groupSelection(){
+        //TODO: Compare ancient elite fitness scores and reload an ancient population if better
         this.groups.sort((b, a) => (a.groupFitness > b.groupFitness) ? 1 : -1);
 
         //migrate genes from more fit groups to less fit groups
@@ -139,6 +142,14 @@ class Species extends Phaser.Physics.Arcade.Group {
             this.groups[g].mutRate = g/(this.groups.length*10) + this.mutMutRate; 
             this.groups[g].groupFitness = 0;
         }
+
+        if (this.bestEverGroup.groupFitness < this.bestGroup.groupFitness){
+            this.bestEverGroup = copyDeep(this.bestGroup);
+        } else {
+            this.groups[this.groups.length-1].cloneGroup(this.bestEverGroup);
+        }
+            
+
         //reset fitness
         for (let group of this.groups)
             group.groupFitness = 0;

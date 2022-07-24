@@ -50,7 +50,7 @@ class Group extends Phaser.Physics.Arcade.Group {
 
             life.update();
             
-            this.fitness();
+            this.updateGroupFitness();
         }
 
         if (this.currentGenTimer % this.genLength == 0){
@@ -58,7 +58,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         }
     }
 
-    fitness(){
+    updateGroupFitness(){
         let allFitness = []; //used to calculate average fitness
         for (let life of this.lives){
             allFitness.push(life.fitness);
@@ -77,66 +77,34 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.bestMind = this.lives[0].getMindCopy(); //save the best so it can be saved to database when requested
 
         //vast majority of population replaced by sexual offspring of top X% (X = selectionCutoff)
-        for (let i=this.lives.length-25; i > this.lives.length * this.selectionCutoff; i--) {
+        for (let i=this.lives.length-1; i > this.lives.length * this.selectionCutoff; i--) {
             let mom = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
             let dad = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
             this.lives[i].mate(this.lives[mom], this.lives[dad], this.mutRate);
         }
 
-        //Elite Selection: Best 10 always get spot(s) in next generation without mutation,
+        //Elite Selection: Best 10 always get spot(s) in next generation with low or no mutation,
                         // with certain matings guaranteed (1st & 2nd, 1st & 3rd, etc).
                         // Ensures genetic diversity in the best performing agents.
-        if (this.lives.length > 3) { //two clones of 1st and one clone of 2nd
-            this.lives[this.lives.length - 1].clone(this.lives[0], 0);
-            this.lives[this.lives.length - 2].clone(this.lives[0], 0);
-            this.lives[this.lives.length - 3].clone(this.lives[1], 0);
-        } if (this.lives.length > 6) { //three children of mating 1st/2nd
-            this.lives[this.lives.length - 4].clone(this.lives[0], 0);            
-            this.lives[this.lives.length - 5].clone(this.lives[1], 0);
-            this.lives[this.lives.length - 6].clone(this.lives[2], 0);
-        } if (this.lives.length > 10) {   //mating between 1st/3rd and 2nd/3rd, and clones of 3rd and 4th      
-            this.lives[this.lives.length - 7].clone(this.lives[0], 0.025);
-            this.lives[this.lives.length - 8].clone(this.lives[0], 0.025);
-            this.lives[this.lives.length - 9].clone(this.lives[1], 0.025);
-            this.lives[this.lives.length - 10].clone(this.lives[2], 0.025);
-        } if (this.lives.length > 15) {         
-            this.lives[this.lives.length - 11].clone(this.lives[0], 0.05);
-            this.lives[this.lives.length - 12].clone(this.lives[0], 0.05);
-            this.lives[this.lives.length - 13].clone(this.lives[1], 0.05);
-            this.lives[this.lives.length - 14].clone(this.lives[1], 0.05);
-            this.lives[this.lives.length - 15].clone(this.lives[2], 0.05);
-        } if (this.lives.length > 20) {         
-            this.lives[this.lives.length - 16].mate(this.lives[0], this.lives[3], 0);
-            this.lives[this.lives.length - 17].mate(this.lives[1], this.lives[3], 0);
-            this.lives[this.lives.length - 18].clone(this.lives[5], 0);
-            this.lives[this.lives.length - 19].clone(this.lives[6], 0);
-            this.lives[this.lives.length - 20].clone(this.lives[7], 0);
-        } if (this.lives.length > 25) {         
-            this.lives[this.lives.length - 21].mate(this.lives[0], this.lives[1], 0);
-            this.lives[this.lives.length - 22].mate(this.lives[0], this.lives[2], 0);
-            this.lives[this.lives.length - 23].mate(this.lives[0], this.lives[3], 0);
-            this.lives[this.lives.length - 24].mate(this.lives[0], this.lives[4], 0);
-            this.lives[this.lives.length - 25].mate(this.lives[1], this.lives[2], 0);
-        }
         // if (this.lives.length > 3) { //two clones of 1st and one clone of 2nd
         //     this.lives[this.lives.length - 1].clone(this.lives[0], 0);
         //     this.lives[this.lives.length - 2].clone(this.lives[0], 0);
         //     this.lives[this.lives.length - 3].clone(this.lives[1], 0);
         // } if (this.lives.length > 6) { //three children of mating 1st/2nd
-        //     this.lives[this.lives.length - 4].mate(this.lives[0], this.lives[1], 0);
-        //     this.lives[this.lives.length - 5].mate(this.lives[0], this.lives[1], 0);
-        //     this.lives[this.lives.length - 6].mate(this.lives[0], this.lives[1], 0);
+        //     this.lives[this.lives.length - 4].clone(this.lives[0], 0);            
+        //     this.lives[this.lives.length - 5].clone(this.lives[1], 0);
+        //     this.lives[this.lives.length - 6].clone(this.lives[2], 0);
         // } if (this.lives.length > 10) {   //mating between 1st/3rd and 2nd/3rd, and clones of 3rd and 4th      
-        //     this.lives[this.lives.length - 7].mate(this.lives[0], this.lives[2], 0);
-        //     this.lives[this.lives.length - 8].mate(this.lives[1], this.lives[2], 0);
-        //     this.lives[this.lives.length - 9].clone(this.lives[2], 0);
-        //     this.lives[this.lives.length - 10].clone(this.lives[3], 0);
+        //     this.lives[this.lives.length - 7].clone(this.lives[0], 0.025);
+        //     this.lives[this.lives.length - 8].clone(this.lives[0], 0.025);
+        //     this.lives[this.lives.length - 9].clone(this.lives[1], 0.025);
+        //     this.lives[this.lives.length - 10].clone(this.lives[2], 0.025);
         // } if (this.lives.length > 15) {         
-        //     this.lives[this.lives.length - 11].clone(this.lives[3], 0);
-        //     this.lives[this.lives.length - 12].clone(this.lives[3], 0);
-        //     this.lives[this.lives.length - 13].clone(this.lives[4], 0);
-        //     this.lives[this.lives.length - 14].clone(this.lives[4], 0);
-        //     this.lives[this.lives.length - 15].mate(this.lives[0], this.lives[3], 0);
+        //     this.lives[this.lives.length - 11].clone(this.lives[0], 0.05);
+        //     this.lives[this.lives.length - 12].clone(this.lives[0], 0.05);
+        //     this.lives[this.lives.length - 13].clone(this.lives[1], 0.05);
+        //     this.lives[this.lives.length - 14].clone(this.lives[1], 0.05);
+        //     this.lives[this.lives.length - 15].clone(this.lives[2], 0.05);
         // } if (this.lives.length > 20) {         
         //     this.lives[this.lives.length - 16].mate(this.lives[0], this.lives[3], 0);
         //     this.lives[this.lives.length - 17].mate(this.lives[1], this.lives[3], 0);
@@ -149,9 +117,41 @@ class Group extends Phaser.Physics.Arcade.Group {
         //     this.lives[this.lives.length - 23].mate(this.lives[0], this.lives[3], 0);
         //     this.lives[this.lives.length - 24].mate(this.lives[0], this.lives[4], 0);
         //     this.lives[this.lives.length - 25].mate(this.lives[1], this.lives[2], 0);
-        // }
+        //}
+        if (this.lives.length > 3) { //two clones of 1st and one clone of 2nd
+            this.lives[this.lives.length - 1].clone(this.lives[0], 0);
+            this.lives[this.lives.length - 2].clone(this.lives[0], 0);
+            this.lives[this.lives.length - 3].clone(this.lives[1], 0);
+        } if (this.lives.length > 6) { //three children of mating 1st/2nd
+            this.lives[this.lives.length - 4].mate(this.lives[0], this.lives[1], 0);
+            this.lives[this.lives.length - 5].mate(this.lives[0], this.lives[1], 0);
+            this.lives[this.lives.length - 6].mate(this.lives[0], this.lives[1], 0);
+        } if (this.lives.length > 10) {   //mating between 1st/3rd and 2nd/3rd, and clones of 3rd and 4th      
+            this.lives[this.lives.length - 7].mate(this.lives[0], this.lives[2], 0);
+            this.lives[this.lives.length - 8].mate(this.lives[1], this.lives[2], 0);
+            this.lives[this.lives.length - 9].clone(this.lives[2], 0);
+            this.lives[this.lives.length - 10].clone(this.lives[3], 0);
+        } if (this.lives.length > 15) {         
+            this.lives[this.lives.length - 11].clone(this.lives[0], 0.03);
+            this.lives[this.lives.length - 12].clone(this.lives[0], 0.05);
+            this.lives[this.lives.length - 13].clone(this.lives[1], 0.05);
+            this.lives[this.lives.length - 14].clone(this.lives[1], 0.05);
+            this.lives[this.lives.length - 15].mate(this.lives[2], this.lives[3], 0);
+        } if (this.lives.length > 20) {         
+            this.lives[this.lives.length - 16].mate(this.lives[0], this.lives[3], 0);
+            this.lives[this.lives.length - 17].mate(this.lives[1], this.lives[3], 0);
+            this.lives[this.lives.length - 18].clone(this.lives[5], 0.05);
+            this.lives[this.lives.length - 19].clone(this.lives[6], 0.06);
+            this.lives[this.lives.length - 20].clone(this.lives[7], 0.07);
+        } if (this.lives.length > 25) {         
+            this.lives[this.lives.length - 21].mate(this.lives[0], this.lives[1], 0);
+            this.lives[this.lives.length - 22].mate(this.lives[0], this.lives[2], 0);
+            this.lives[this.lives.length - 23].mate(this.lives[0], this.lives[3], 0);
+            this.lives[this.lives.length - 24].mate(this.lives[0], this.lives[4], 0);
+            this.lives[this.lives.length - 25].mate(this.lives[1], this.lives[2], 0);
+        }
         //Highly mutated version of fittest agent to prevent stagnation
-        this.lives[this.lives.length - 21].clone(this.lives[0], 0.8);
+        this.lives[this.lives.length - 26].clone(this.lives[0], 0.8);
 
 
         let midX = this.scene.scale.displaySize._width / 2;
