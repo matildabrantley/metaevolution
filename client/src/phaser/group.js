@@ -2,6 +2,7 @@ import Life from './life';
 import Mind from '../neural/mind';
 const Phaser = require('phaser');
 // const Vector = require('./vector');
+const copyDeep = require('lodash.clonedeep');
 
 class Group extends Phaser.Physics.Arcade.Group {
     constructor(world, scene, config, tiles, species,
@@ -20,9 +21,10 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.selectionCutoff = selectionCutoff;
         this.numElites = 20;
 
-        this.timer = 0;
         this.currentGenTimer = 0;
         this.groupFitness = 0;
+        this.bestEverFitness = 0;
+        this.bestEverMind = null;
     }
 
     //maintains array of Life objects and create Minds
@@ -44,7 +46,6 @@ class Group extends Phaser.Physics.Arcade.Group {
 
     //normal updating within Phaser's/Matter's loop
     update() {
-        this.timer++;
         this.currentGenTimer++;
         for (let life of this.lives) {
 
@@ -53,8 +54,13 @@ class Group extends Phaser.Physics.Arcade.Group {
             this.updateGroupFitness();
         }
 
-        if (this.currentGenTimer % this.genLength == 0){
+        //New generation if timer is up
+        if (this.currentGenTimer >= this.genLength){
            this.selection();
+           this.currentGenTimer = 0;
+           //stretch out the generation length incrementally until maxed
+           if (this.genLength < this.maxGenLength)
+            this.genLength += this.deltaGenLength;
         }
     }
 
@@ -69,12 +75,13 @@ class Group extends Phaser.Physics.Arcade.Group {
 
     //generational change in group where fitness is sorted and replacement and mutation occur
     selection() {
-        if (this.genLength < this.maxGenLength)
-            this.genLength += this.deltaGenLength;
-
         //fitness sorting function in which more fit lives move to front
         this.lives.sort((b, a) => (a.fitness > b.fitness) ? 1 : -1);
-        this.bestMind = this.lives[0].getMindCopy(); //save the best so it can be saved to database when requested
+        //save the best so it can be saved to database when requested or used as ancient elite
+        if (this.lives[0].fitness > this.bestEverFitness) {
+            this.bestEverFitness = this.lives[0].fitness;
+            this.bestEverMind = this.lives[0].getMindCopy();
+        }
 
         //vast majority of population replaced by sexual offspring of top X% (X = selectionCutoff)
         for (let i=this.lives.length-1; i > this.lives.length * this.selectionCutoff; i--) {
@@ -86,38 +93,6 @@ class Group extends Phaser.Physics.Arcade.Group {
         //Elite Selection: Best 10 always get spot(s) in next generation with low or no mutation,
                         // with certain matings guaranteed (1st & 2nd, 1st & 3rd, etc).
                         // Ensures genetic diversity in the best performing agents.
-        // if (this.lives.length > 3) { //two clones of 1st and one clone of 2nd
-        //     this.lives[this.lives.length - 1].clone(this.lives[0], 0);
-        //     this.lives[this.lives.length - 2].clone(this.lives[0], 0);
-        //     this.lives[this.lives.length - 3].clone(this.lives[1], 0);
-        // } if (this.lives.length > 6) { //three children of mating 1st/2nd
-        //     this.lives[this.lives.length - 4].clone(this.lives[0], 0);            
-        //     this.lives[this.lives.length - 5].clone(this.lives[1], 0);
-        //     this.lives[this.lives.length - 6].clone(this.lives[2], 0);
-        // } if (this.lives.length > 10) {   //mating between 1st/3rd and 2nd/3rd, and clones of 3rd and 4th      
-        //     this.lives[this.lives.length - 7].clone(this.lives[0], 0.025);
-        //     this.lives[this.lives.length - 8].clone(this.lives[0], 0.025);
-        //     this.lives[this.lives.length - 9].clone(this.lives[1], 0.025);
-        //     this.lives[this.lives.length - 10].clone(this.lives[2], 0.025);
-        // } if (this.lives.length > 15) {         
-        //     this.lives[this.lives.length - 11].clone(this.lives[0], 0.05);
-        //     this.lives[this.lives.length - 12].clone(this.lives[0], 0.05);
-        //     this.lives[this.lives.length - 13].clone(this.lives[1], 0.05);
-        //     this.lives[this.lives.length - 14].clone(this.lives[1], 0.05);
-        //     this.lives[this.lives.length - 15].clone(this.lives[2], 0.05);
-        // } if (this.lives.length > 20) {         
-        //     this.lives[this.lives.length - 16].mate(this.lives[0], this.lives[3], 0);
-        //     this.lives[this.lives.length - 17].mate(this.lives[1], this.lives[3], 0);
-        //     this.lives[this.lives.length - 18].clone(this.lives[5], 0);
-        //     this.lives[this.lives.length - 19].clone(this.lives[6], 0);
-        //     this.lives[this.lives.length - 20].clone(this.lives[7], 0);
-        // } if (this.lives.length > 25) {         
-        //     this.lives[this.lives.length - 21].mate(this.lives[0], this.lives[1], 0);
-        //     this.lives[this.lives.length - 22].mate(this.lives[0], this.lives[2], 0);
-        //     this.lives[this.lives.length - 23].mate(this.lives[0], this.lives[3], 0);
-        //     this.lives[this.lives.length - 24].mate(this.lives[0], this.lives[4], 0);
-        //     this.lives[this.lives.length - 25].mate(this.lives[1], this.lives[2], 0);
-        //}
         if (this.lives.length > 3) { //two clones of 1st and one clone of 2nd
             this.lives[this.lives.length - 1].clone(this.lives[0], 0);
             this.lives[this.lives.length - 2].clone(this.lives[0], 0);
@@ -153,11 +128,12 @@ class Group extends Phaser.Physics.Arcade.Group {
         //Highly mutated version of fittest agent to prevent stagnation
         this.lives[this.lives.length - 26].clone(this.lives[0], 0.8);
 
+        this.lives[this.lives.length - 27].mind = copyDeep(this.bestEverMind);
+
 
         let midX = this.scene.scale.displaySize._width / 2;
         let midY = this.scene.scale.displaySize._height / 2;
         //reset
-        this.currentGenTimer = 0;
         let newStartingX = midX + randIntBetween(-10, 10);
         let newStartingY = midY + randIntBetween(-10, 10);
         for (let life of this.lives){

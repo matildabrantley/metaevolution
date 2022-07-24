@@ -2,7 +2,6 @@ import Life from './life';
 import Group from './group';
 
 const Phaser = require('phaser');
-const copyDeep = require('lodash.clonedeep');
 
 class Species extends Phaser.Physics.Arcade.Group {
     constructor({world, scene, config, genus=null, tiles, seesTiles = false} = {}, //general config for species and its sub-groups
@@ -18,13 +17,13 @@ class Species extends Phaser.Physics.Arcade.Group {
         this.genus = genus;
 
         this.groups = groups; //groups can be predefined, but it's better to use createGroup()
-        this.timer = 0;
+        this.globalTimer = 0;
+        this.currentCycleTimer = 0;
         this.mingleFreq = 11500;
         this.groupSelectionFreq = groupSelectionFreq;
         this.maxGroupSelectionFreq = maxGroupSelectionFreq;
         this.mutMutRate = mutMutRate;
         this.speciesFitness = 0;
-        this.bestEverGroup = {groupFitness: 1};
     }
     
     setupSpecies({preySpecies = [], predatorSpecies = []} = {}) {
@@ -94,7 +93,8 @@ class Species extends Phaser.Physics.Arcade.Group {
     }
 
     update(){
-        this.timer++;
+        this.globalTimer++;
+        this.currentCycleTimer++;
 
         let allGroupsFitness = []; //used to calculate average group fitness
 
@@ -111,14 +111,16 @@ class Species extends Phaser.Physics.Arcade.Group {
             })
         }
 
-        if (this.timer % this.mingleFreq === 0){
+        if (this.globalTimer % this.mingleFreq === 0){
             this.mingleAllGroups(0.15);
             if (this.mingleFreq < 500)
                 this.mingleFreq+=10;
         }
 
-        if (this.timer % this.groupSelectionFreq === 0)
+        if (this.currentCycleTimer >= this.groupSelectionFreq){
             this.groupSelection();
+            this.currentCycleTimer = 0;
+        }
         
     }
 
@@ -134,6 +136,7 @@ class Species extends Phaser.Physics.Arcade.Group {
         // }
 
         //replace worst group with best group
+        
         this.groups[this.groups.length-1].cloneGroup(this.groups[0]);
         this.bestGroup = this.groups[0];
 
@@ -143,17 +146,18 @@ class Species extends Phaser.Physics.Arcade.Group {
             this.groups[g].groupFitness = 0;
         }
 
-        if (this.bestEverGroup.groupFitness < this.bestGroup.groupFitness){
-            this.bestEverGroup = copyDeep(this.bestGroup);
-        } else {
-            this.groups[this.groups.length-1].cloneGroup(this.bestEverGroup);
-        }
+        // if (this.bestEverFitness < this.bestGroup){
+        //     this.bestEverFitness = copyDeep(this.bestEverMind);
+        // } else {
+        //     this.groups[this.groups.length-1].cloneGroup(this.bestEverGroup);
+        // }
             
 
         //reset fitness
         for (let group of this.groups)
             group.groupFitness = 0;
 
+        this.currentCycleTimer = 0;
         if (this.groupSelectionFreq + this.deltaSelectionFreq <= this.maxGroupSelectionFreq)
             this.groupSelectionFreq += this.deltaSelectionFreq;
     }

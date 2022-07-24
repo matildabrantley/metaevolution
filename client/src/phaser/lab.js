@@ -45,7 +45,7 @@ class Lab extends Phaser.Scene {
       scene: this
     };
 
-    this.groupPop = 26;
+    this.groupPop = 40;
     this.genera = [];
     this.globalTime = 0;
   }
@@ -95,7 +95,7 @@ create () {
   
   //Create one Genus
   this.genera.push(new Genus(generalConfig));
-  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, genus: this.genera[0], tiles: this.tileLayer, seesTiles: true};
+  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, genus: this.genera[0], tiles: this.tileLayer, seesTiles: false};
 
    //4 Groups per Species
    //Create empty Species
