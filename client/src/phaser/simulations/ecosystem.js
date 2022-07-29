@@ -20,7 +20,7 @@ import floral2 from '../assets/sprites/floral-colorful.jpg';
 import tilesheet1 from '../assets/tiles/all-tiles.png';
 import tilemap1 from '../assets/tiles/tilemap-eco-data';
 
-import Genus from '../genus';
+import Genus from '../ecosystem';
 import Species from '../species';
 import Group from '../group';
 

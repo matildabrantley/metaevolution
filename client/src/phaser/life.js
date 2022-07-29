@@ -18,10 +18,12 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.tiles = tiles;
         this.tileSize = 32;
         this.seesTiles = seesTiles;
-        this.resourceTiles = [{index: 2, effect: 0.3, satiation: 0}, {index: 3, effect: 1, satiation: 0}, 
-            {index: 4, effect: 1, satiation: 0}, {index: 5, effect: 1, satiation: 0}, 
-            {index: 6, effect: 1, satiation: 0}];
-        this.blockedTiles = [{index: 1, effect: 4}];
+        this.resourceTiles = [{index: 2, effect: 0.3, satiation: 0, current: 0}, 
+            {index: 3, effect: 1, satiation: 0, amount: 0}, 
+            {index: 4, effect: 1, satiation: 0, amount: 0}, 
+            {index: 5, effect: 1, satiation: 0, amount: 0}, 
+            {index: 6, effect: 1, satiation: 0, amount: 0}];
+        this.blockedTiles = [{index: 1, effect: -1}];
 
         this.currentResource = 0;
         this.resources = [0, 0, 0, 0, 0]; //represented as red, green, and blue
@@ -125,7 +127,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         
         const tileInput = this.lookAtTile(this.x, this.y, true);
         //add current resource to resources array
-        this.resources[this.currentResource] += this.resourceTiles[this.currentResource].effect;
+        this.resourceTiles[this.currentResource].amount += this.resourceTiles[this.currentResource].effect;
         //reduce satiation (increase desire) of all resources by 2, down to 100
         this.resourceTiles.forEach(resource => {
             resource.satiation = Math.max(0, resource.satiation - 2);
@@ -161,7 +163,9 @@ class Life extends Phaser.Physics.Arcade.Sprite {
                 
                 updateFitness(){
                     //Give lifeform a bonus for diversity of resources by multiplying resources together (and dividing by 100)
-                    this.fitness += ((1+this.resources[0]) * (1+this.resources[1]) * (1+this.resources[2]) * (1+this.resources[3]) * (1+this.resources[4])) / 1000000;
+                    this.fitness += ((1+this.resourceTiles[0].amount) * (1+this.resourceTiles[0].amount)
+                                   * (1+this.resourceTiles[0].amount) * (1+this.resourceTiles[0].amount) 
+                                   * (1+this.resourceTiles[0].amount)) / 1000000;
                     
                     //Calibrating evolution by testing very simple pressures like moving a certain direction 
                     // this.fitness += this.x/50;

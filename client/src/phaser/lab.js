@@ -26,7 +26,7 @@ import tilesheet1 from './assets/tiles/monocolor-tiles.png';
 import tilemap1 from './assets/tiles/tilemap-lab-data 7x7 bordered';
 
 
-import Genus from './genus';
+import Ecosystem from './ecosystem';
 import Species from './species';
 import Group from './group';
 
@@ -46,14 +46,14 @@ class Lab extends Phaser.Scene {
     };
 
     this.groupPop = 100;
-    this.genera = [];
+    this.ecosystem = null;
     this.species = [];
     this.globalTime = 0;
   }
 
   getBest() {
-    //works for one genus now
-    return this.genera[0].getBestInGenus();
+    //works for one ecosystem now
+    return this.ecosystem.getBestInEcosystem();
   }
 
   preload () {
@@ -94,9 +94,9 @@ create () {
   const generalConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: false};
   let fitnessConfig = {};
   
-  //Create one Genus
-  // this.genera.push(new Genus(generalConfig));
-  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, genus: this.genera[0], tiles: this.tileLayer, seesTiles: true};
+  //Create one Ecosystem
+  // this.genera.push(new Ecosystem(generalConfig));
+  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, ecosystem: this.ecosystem, tiles: this.tileLayer, seesTiles: true};
 
    //4 Groups per Species
    //Create empty Species
@@ -107,9 +107,9 @@ create () {
   this.species[0].createGroup(blueGroupAnim, {pop: this.groupPop});
   this.species[0].createGroup(greenGroupAnim, {pop: this.groupPop});
   this.species[0].setupSpecies();
-  // this.genera[0].addSpecies(newSpecies);
+  // this.ecosystem.addSpecies(newSpecies);
 
-  // this.genera[0].setupGenus();
+  // this.ecosystem.setupEcosystem();
   
   // newSpecies.addPreySpecies(newSpecies3);
   // newSpecies3.addPredatorSpecies(newSpecies);
@@ -127,9 +127,8 @@ create () {
 update () {
   this.timerText.setText("Updates: " + this.globalTime); 
 
-    //Update each genus
-    // for (let genus of this.genera)
-    //   genus.update();
+    //Update all species of ecosystem
+    this.ecosystem.update();
 
     //Update each species
     for (let specie of this.species)
@@ -137,7 +136,7 @@ update () {
 
 
     // if (this.globalTime === 200) {
-    //     this.genera[0].species[0].createGroup(blueGroupAnim, {pop: this.groupPop});
+    //     this.ecosystem.species[0].createGroup(blueGroupAnim, {pop: this.groupPop});
     // }
 
     //example of collision handling

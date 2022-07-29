@@ -1,11 +1,11 @@
-//Genus-Species mirrors Species-Group relationship at a higher level
+//Ecosystem harbors all Species
 import Group from './group';
 import Species from './species';
 const Phaser = require('phaser');
 
 
 
-class Genus {
+class Ecosystem {
     constructor({world, scene, config, tiles, seesTiles = false} = {},
                 {speciesSelectionFreq = 100, maxSpeciesSelectionFreq = 600, deltaSelectionFreq = 50} = {}, species = []){
 
@@ -21,7 +21,7 @@ class Genus {
         this.maxSpeciesSelectionFreq = maxSpeciesSelectionFreq;
     }
     
-    setupGenus({preyGroups = [], predatorGroups = []}={}){
+    setupEcosystem({preyGroups = [], predatorGroups = []}={}){
         for (const specie of this.species) {
             specie.setupSpecies({preyGroups: preyGroups, predatorGroups: predatorGroups});
         }
@@ -36,7 +36,7 @@ class Genus {
 
                 
             //Create Species object with general configuration and defaults for everything else
-            const newSpecies = new Species({world: this.world, scene: this.scene, config: this.config, genus: this,
+            const newSpecies = new Species({world: this.world, scene: this.scene, config: this.config, ecosystem: this,
                                              tiles: this.tiles, seesTiles: this.seesTiles});
                 
             let popPerGroup = Math.floor(pop / numGroups);
@@ -64,16 +64,16 @@ class Genus {
             specie.update();
             allSpeciesFitness.push(specie.speciesFitness);
         }
-        this.genusFitness = average(allSpeciesFitness);
+        this.ecosystemFitness = average(allSpeciesFitness);
 
         if (this.timer % this.speciesSelectionFreq == 0)
             this.speciesSelection();
     }
 
-    // cloneGenus(clonedGenus){
-    //     //Replace each species in a genus with another genus' species
+    // cloneEcosystem(clonedEcosystem){
+    //     //Replace each species in a ecosystem with another ecosystem' species
     //     for (let s in this.species){
-    //         this.cloneSpecies(clonedGenus.species[s]);
+    //         this.cloneSpecies(clonedEcosystem.species[s]);
     //     }
     // }
 
@@ -93,12 +93,12 @@ class Genus {
             this.speciesSelectionFreq += this.deltaSelectionFreq;
     }
 
-    getBestInGenus(){
+    getBestInEcosystem(){
         return this.bestSpecies.bestGroup.bestMind;
     }
 }
 
-export default Genus;
+export default Ecosystem;
 
 const total = (nums) => nums.reduce((a, b) => (a + b));
 const average = (nums) => total(nums) / nums.length;
