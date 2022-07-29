@@ -82,15 +82,15 @@ const HomePage = () => {
                 style={{ width: '15rem' }}
                 className="mb-2 pageCard"
             >
-                <Card.Header>Ecosystem</Card.Header>
+                <Card.Header>OpenWorld</Card.Header>
                 <Card.Body>
                 <Popout>
-                        <Link as={Link} to='/ecosystem'>
+                        <Link as={Link} to='/openWorld'>
                             <Figure.Image
                                 className="pageImage"
                                 width={171}
                                 height={380}
-                                alt="Ecosystem"
+                                alt="OpenWorld"
                                 src={ecoImage}
                                 roundedCircle
                                 />
@@ -117,7 +117,7 @@ const HomePage = () => {
                                 className="pageImage"
                                 width={171}
                                 height={380}
-                                alt="Ecosystem"
+                                alt="Open World"
                                 src={gameImage}
                                 roundedCircle
                                 />

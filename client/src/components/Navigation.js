@@ -34,7 +34,7 @@ const Navigation = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Popout><Nav.Link as={Link} to='/lab'><h4 className="labLink">Lab</h4></Nav.Link></Popout>
-                <Popout><Nav.Link as={Link} to='/ecosystem'><h4 className="ecoLink">Ecosystem</h4></Nav.Link></Popout>
+                <Popout><Nav.Link as={Link} to='/openWorld'><h4 className="ecoLink">Open World</h4></Nav.Link></Popout>
                 <Popout><Nav.Link as={Link} to='/game'><h4 className="gameLink">Game</h4></Nav.Link></Popout>
                 <Flipout>
                 <Nav className="me-auto">

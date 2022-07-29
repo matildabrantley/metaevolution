@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const EcosystemPage = () => {
+const OpenWorldPage = () => {
 
     const history = useHistory()
     const previous = () => { history.goBack() }
@@ -29,7 +29,7 @@ const EcosystemPage = () => {
 
     return (
         <div>
-            <h1>Ecosystem</h1>
+            <h1>Open World</h1>
             <Glide>
             <Button variant="danger" className="clickable" onClick={previous} style={{padding: '20px'}}>Back</Button>
             <div className="clickable">
@@ -50,10 +50,10 @@ const EcosystemPage = () => {
             </div>
             </Glide>
                 <Suspense fallback={<div>Loading...</div>}>
-            < PhaserWorld width={800} height={600} worldType="Ecosystem"/>
+            < PhaserWorld width={800} height={600} worldType="OpenWorld"/>
             </Suspense>
         </div>
     )
 };
 
-export default EcosystemPage;
+export default OpenWorldPage;

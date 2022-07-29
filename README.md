@@ -34,15 +34,15 @@ SenseNet is the entry point and BehaviorNet is the endpoint. All other Nets are 
 * __Species__: Also extends Phaser's Group class. Manages fitness calculations of
 each subgroup, the group-level selection and collision events between different species. Each Group within a Species also has the same higher-level Mind architecture (Net of Nets), and also a very similar Net-level architecture to enable gene flow. Different Species can have predator/prey relationships.
 * __Genus__: Basically just a higher level version of Species to enable selection of entire Species over one another. Also highly divergent neural architectures can arise at this level of selection. Will use _cloneDeep when overwriting Minds of entirely different architectures.
-* __World__: Extends Phaser's Scene. The world can be a room, an environment, a level of a game. Enable gravity for platformer or leave it disabled for top-down scenes (like Ecosystem). Assets are imported here so tiles (tileset + JSON tilemap data), sprites (single image) and animations (spritesheet + JSON frame data) can be configured and passed into different Groups.
+* __World__: Extends Phaser's Scene. The world can be a room, an environment, a level of a game. Enable gravity for platformer or leave it disabled for top-down scenes (like Open World). Assets are imported here so tiles (tileset + JSON tilemap data), sprites (single image) and animations (spritesheet + JSON frame data) can be configured and passed into different Groups.
 
 ## Components and Pages
-* __PhaserWorld__: Builds Phaser config object from props and instantiates a Phaser game instance based on the type of scene passed as a prop, with options for lab, ecosystem, game, and a variety of example scenes. Also removes Phaser's canvas on component unmount.
+* __PhaserWorld__: Builds Phaser config object from props and instantiates a Phaser game instance based on the type of scene passed as a prop, with options for lab, open world, game, and a variety of example scenes. Also removes Phaser's canvas on component unmount.
 * __Register__ & __Login__: User registration/login forms that send authenticated data to server.
 * __Navigation__: Navbar with links to pages, external sites (Learning Rooms, my GitHub and portfolio) and Register/Login buttons. Uses react-bootstrap.
 * __HomePage__: Figures with pop-out image links to each other pages.
 * __LabPage__: Build and see neural networks here.
-* __EcosystemPage__: Instantiates a large PhaserWorld top-down scene.
+* __OpenWorldPage__: Instantiates a large PhaserWorld top-down scene.
 * __GamePage__: Instantiates platformer (side-scrolling) PhaserWorld scene.
 * __Popout__: Children wrapped in this component taps into react-spring to slightly pop out of the page in the third dimension (without moving around other elements). Used for buttons and links.
 * __Jumpout__: Children wrapped in this component leaps from the page and their state holds R, G and B values that can randomly when hovered over. Used for EvoLab logo letters.
@@ -75,8 +75,8 @@ each subgroup, the group-level selection and collision events between different 
 
 ## Screenshots
 ![Banner](evobanner.png)
-#### Ecosystem
-![Ecosystem](/client/src/assets/ecopage.png)
+#### Open World
+![Open World](/client/src/assets/ecopage.png)
 
 #### Lab
 ![Lab](/client/src/assets/labpage.png)

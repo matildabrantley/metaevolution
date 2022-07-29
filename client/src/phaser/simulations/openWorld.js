@@ -26,7 +26,7 @@ import Group from '../group';
 
 // let chosenPoint;
 
-class Ecosystem extends Phaser.Scene {
+class OpenWorld extends Phaser.Scene {
   constructor({parent, width = 800, height = 600, physicsType = 'arcade'} = {}) {
     super("Launch");
     //Create a config object for scene
@@ -226,4 +226,4 @@ const createAnimConfig = (scene, keyName, spritesheet, fps, firstFrame, animScal
   return {spritesheet: animConfig.frames, key: animConfig.key, firstFrame: firstFrame, scale: animScale};
 }
 
-export default Ecosystem;
+export default OpenWorld;

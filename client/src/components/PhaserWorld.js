@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Phaser from "phaser";
-import Ecosystem from "../phaser/simulations/ecosystem";
+import OpenWorld from "../phaser/simulations/openWorld";
 import Lab from "../phaser/lab";
 import { saveMind } from '../utilities/react-api';
 import UserAuth from '../utilities/userAuthentication';
@@ -23,8 +23,8 @@ class PhaserWorld extends Component {
       // let scene;
       let physics = 'arcade';
       switch (this.props.worldType) {
-        case "Ecosystem":
-          scene = new Ecosystem(this.id, this.props.width, this.props.height, 'arcade');
+        case "OpenWorld":
+          scene = new OpenWorld(this.id, this.props.width, this.props.height, 'arcade');
           break;
         case "Lab":
           scene = new Lab(this.id, this.props.width, this.props.height, 'arcade');
