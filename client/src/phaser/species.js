@@ -105,11 +105,11 @@ class Species extends Phaser.Physics.Arcade.Group {
         }
         this.speciesFitness = average(allGroupsFitness);
         
-        for (const preySpecie of this.preySpecies) {
-            this.allLives.forEach(life => {
-                // life.closestPrey = preySpecie.getClosestTo(life);
-            })
-        }
+        // for (const preySpecie of this.preySpecies) {
+        //     this.allLives.forEach(life => {
+        //         // life.closestPrey = preySpecie.getClosestTo(life);
+        //     })
+        // }
 
         if (this.globalTimer % this.mingleFreq === 0){
             this.mingleAllGroups(0.15);

@@ -31,7 +31,7 @@ import Species from './species';
 import Group from './group';
 
 class Lab extends Phaser.Scene {
-  constructor({parent, width = 288, height = 288, physicsType = 'arcade'} = {}) {
+  constructor({parent, width = 1, height = 1, physicsType = 'arcade'} = {}) {
     super("Launch");
     //Create a config object for scene
     this.config = {
@@ -45,8 +45,9 @@ class Lab extends Phaser.Scene {
       scene: this
     };
 
-    this.groupPop = 40;
+    this.groupPop = 100;
     this.genera = [];
+    this.species = [];
     this.globalTime = 0;
   }
 
@@ -94,19 +95,21 @@ create () {
   let fitnessConfig = {};
   
   //Create one Genus
-  this.genera.push(new Genus(generalConfig));
+  // this.genera.push(new Genus(generalConfig));
   const speciesConfig = {world: this.physics.world, scene: this, config: this.config, genus: this.genera[0], tiles: this.tileLayer, seesTiles: true};
 
    //4 Groups per Species
    //Create empty Species
-  let newSpecies = new Species(speciesConfig);
-  newSpecies.createGroup(blackGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(redGroupAnim , {pop: this.groupPop});
-  newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop});
-  newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop});
-  this.genera[0].addSpecies(newSpecies);
+  // let newSpecies = new Species(speciesConfig);
+  this.species.push(new Species(speciesConfig));
+  this.species[0].createGroup(blackGroupAnim, {pop: this.groupPop});
+  this.species[0].createGroup(redGroupAnim , {pop: this.groupPop});
+  this.species[0].createGroup(blueGroupAnim, {pop: this.groupPop});
+  this.species[0].createGroup(greenGroupAnim, {pop: this.groupPop});
+  this.species[0].setupSpecies();
+  // this.genera[0].addSpecies(newSpecies);
 
-  this.genera[0].setupGenus();
+  // this.genera[0].setupGenus();
   
   // newSpecies.addPreySpecies(newSpecies3);
   // newSpecies3.addPredatorSpecies(newSpecies);
@@ -125,8 +128,13 @@ update () {
   this.timerText.setText("Updates: " + this.globalTime); 
 
     //Update each genus
-    for (let genus of this.genera)
-      genus.update();
+    // for (let genus of this.genera)
+    //   genus.update();
+
+    //Update each species
+    for (let specie of this.species)
+      specie.update();
+
 
     // if (this.globalTime === 200) {
     //     this.genera[0].species[0].createGroup(blueGroupAnim, {pop: this.groupPop});
@@ -137,6 +145,7 @@ update () {
     this.globalTime++;
   }
 
+  
 }
 
 const createAnimConfig = (scene, keyName, spritesheet, fps, firstFrame, animScale = 1) => {

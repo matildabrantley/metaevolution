@@ -161,12 +161,12 @@ class Life extends Phaser.Physics.Arcade.Sprite {
                 
                 updateFitness(){
                     //Give lifeform a bonus for diversity of resources by multiplying resources together (and dividing by 100)
-                    this.fitness += ((1+this.resources[0]) * (1+this.resources[1]) * (1+this.resources[2]) * (1+this.resources[3]) * (1+this.resources[4])) / 100000;
+                    this.fitness += ((1+this.resources[0]) * (1+this.resources[1]) * (1+this.resources[2]) * (1+this.resources[3]) * (1+this.resources[4])) / 1000000;
                     
                     //Calibrating evolution by testing very simple pressures like moving a certain direction 
                     // this.fitness += this.x/50;
                     // this.fitness -= Math.abs(this.midWidth - this.x);
-                    // this.fitness -= this.y;
+                    // this.fitness += this.y;
                 }
                 
                 //This individual's Nets replaced with a clone's

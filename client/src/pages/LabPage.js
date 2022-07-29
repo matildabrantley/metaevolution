@@ -74,7 +74,12 @@ const LabPage = () => {
             </React.Fragment>
             ))} */}
                 
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense style={{display: 'inline-block'}} fallback={<div>Loading...</div>}>
+                {/* < PhaserWorld width={288} height={288} worldType="Lab" style={{display: 'inline-block'}}/>
+                < PhaserWorld width={288} height={288} worldType="Lab" style={{display: 'inline-block'}}/>
+                < PhaserWorld width={288} height={288} worldType="Lab" style={{display: 'inline'}}/>
+                < PhaserWorld width={288} height={288} worldType="Lab" style={{display: 'block'}}/>
+                < PhaserWorld width={288} height={288} worldType="Lab" style={{display: 'block'}}/> */}
                 < PhaserWorld width={288} height={288} worldType="Lab"/>
             </Suspense>
         </div>

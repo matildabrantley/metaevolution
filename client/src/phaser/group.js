@@ -50,7 +50,6 @@ class Group extends Phaser.Physics.Arcade.Group {
         for (let life of this.lives) {
 
             life.update();
-            
             this.updateGroupFitness();
         }
 
@@ -84,11 +83,16 @@ class Group extends Phaser.Physics.Arcade.Group {
         }
 
         //vast majority of population replaced by sexual offspring of top X% (X = selectionCutoff)
-        for (let i=this.lives.length-1; i > this.lives.length * this.selectionCutoff; i--) {
+        for (let i=this.lives.length-27; i > this.lives.length * this.selectionCutoff; i--) {
             let mom = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
             let dad = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
             this.lives[i].mate(this.lives[mom], this.lives[dad], this.mutRate);
         }
+
+        for (let i=1; i < this.lives.length; i++) {
+            this.lives[i].alpha = 0.06;
+        }   
+        this.lives[0].alpha = 1;
 
         //Elite Selection: Best 10 always get spot(s) in next generation with low or no mutation,
                         // with certain matings guaranteed (1st & 2nd, 1st & 3rd, etc).
