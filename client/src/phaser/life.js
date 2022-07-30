@@ -19,10 +19,10 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.tileSize = 32;
         this.seesTiles = seesTiles;
         this.resourceTiles = [{index: 2, effect: 0.3, satiation: 0, current: 0}, 
-            {index: 3, effect: 1, satiation: 0, amount: 0}, 
-            {index: 4, effect: 1, satiation: 0, amount: 0}, 
-            {index: 5, effect: 1, satiation: 0, amount: 0}, 
-            {index: 6, effect: 1, satiation: 0, amount: 0}];
+            {index: 3, effect: 10, satiation: 0, amount: 0}, 
+            {index: 4, effect: 0.1, satiation: 0, amount: 0}, 
+            {index: 5, effect: 0.1, satiation: 0, amount: 0}, 
+            {index: 6, effect: 0.1, satiation: 0, amount: 0}];
         this.blockedTiles = [{index: 1, effect: -1}];
 
         this.currentResource = 0;

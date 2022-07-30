@@ -6,13 +6,15 @@ const copyDeep = require('lodash.clonedeep');
 
 class Group extends Phaser.Physics.Arcade.Group {
     constructor(world, scene, config, tiles, species,
-            {pop = 100, mutRate = 0.1 , selectionCutoff = 0.1, maxGenLength = 1500, initialGenLength = 50, deltaGenLength = 5}={}){
+            {pop = 100, mutRate = 0.1 , selectionCutoff = 0.1, maxGenLength = 1500, initialGenLength = 50, deltaGenLength = 5}={},
+            id = Math.random() * 1000) {
         super(world, scene, config);
         this.lives = [];
         this.scene = scene;
         this.world = world;
         this.tiles = tiles;
         this.species = species;
+        this.id = id;
         
         this.mutRate = 0.1;//mutRate;
         this.maxGenLength = maxGenLength;
@@ -133,6 +135,8 @@ class Group extends Phaser.Physics.Arcade.Group {
         this.lives[this.lives.length - 26].clone(this.lives[0], 0.8);
 
         this.lives[this.lives.length - 27].mind = copyDeep(this.bestEverMind);
+
+        this.species = this.species;
     }
 
     reset(){

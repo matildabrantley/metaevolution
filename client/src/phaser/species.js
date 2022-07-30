@@ -4,7 +4,7 @@ import Group from './group';
 const Phaser = require('phaser');
 
 class Species extends Phaser.Physics.Arcade.Group {
-    constructor({world, scene, config, genus=null, tiles, seesTiles = false} = {}, //general config for species and its sub-groups
+    constructor({world, scene, config, ecosystem=null, tiles, seesTiles = false} = {}, //general config for species and its sub-groups
                 {groupSelectionFreq = 40, maxGroupSelectionFreq = 500, deltaSelectionFreq = 20, mutMutRate = 0.12} = {}, groups = []) {
         
         super(world, scene, config);
@@ -14,7 +14,7 @@ class Species extends Phaser.Physics.Arcade.Group {
         this.tiles = tiles;
         this.seesTiles = seesTiles;
         this.scene.physics.add.collider(this, tiles);
-        this.genus = genus;
+        this.ecosystem = ecosystem;
 
         this.groups = groups; //groups can be predefined, but it's better to use createGroup()
         this.globalTimer = 0;
@@ -53,12 +53,12 @@ class Species extends Phaser.Physics.Arcade.Group {
 
     //Preferred (and simpler) method to create new groups
     createGroup({sprite, spritesheet, key, firstFrame, scale = 1} = {}, //animation config for all sprites in group
-                {pop = 100, mutRate = 0.08, selectionCutoff = 0.1, maxGenLength = 450, initialGenLength = 50, deltaGenLength = 5} = {} //genetic config
-        ){
+                {pop = 100, mutRate = 0.08, selectionCutoff = 0.1, maxGenLength = 450, initialGenLength = 50, deltaGenLength = 5} = {}, //genetic config
+                id=-1){
 
         //Create Group object with general configuration
         const newGroup = new Group(this.world, this.scene, this.config, this.tiles, this,
-            {pop, mutRate, selectionCutoff, maxGenLength, initialGenLength, deltaGenLength});
+            {pop, mutRate, selectionCutoff, maxGenLength, initialGenLength, deltaGenLength}, id);
 
         //Add the population
         let midX = this.scene.scale.displaySize._width / 2;

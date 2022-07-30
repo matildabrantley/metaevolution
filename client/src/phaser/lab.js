@@ -45,7 +45,7 @@ class Lab extends Phaser.Scene {
       scene: this
     };
 
-    this.groupPop = 100;
+    this.groupPop = 30;
     this.ecosystem = null;
     this.species = [];
     this.globalTime = 0;
@@ -94,22 +94,22 @@ create () {
   const generalConfig = {world: this.physics.world, scene: this, config: this.config, tiles: this.tileLayer, seesTiles: false};
   let fitnessConfig = {};
   
-  //Create one Ecosystem
-  // this.genera.push(new Ecosystem(generalConfig));
+  //Create Ecosystem
+  this.ecosystem = new Ecosystem(generalConfig);
   const speciesConfig = {world: this.physics.world, scene: this, config: this.config, ecosystem: this.ecosystem, tiles: this.tileLayer, seesTiles: true};
 
    //4 Groups per Species
    //Create empty Species
-  // let newSpecies = new Species(speciesConfig);
-  this.species.push(new Species(speciesConfig));
-  this.species[0].createGroup(blackGroupAnim, {pop: this.groupPop});
-  this.species[0].createGroup(redGroupAnim , {pop: this.groupPop});
-  this.species[0].createGroup(blueGroupAnim, {pop: this.groupPop});
-  this.species[0].createGroup(greenGroupAnim, {pop: this.groupPop});
-  this.species[0].setupSpecies();
-  // this.ecosystem.addSpecies(newSpecies);
+  let newSpecies = new Species(speciesConfig);
+  let id = 0;
+  newSpecies.createGroup(blackGroupAnim, {pop: this.groupPop}, id++);
+  newSpecies.createGroup(redGroupAnim , {pop: this.groupPop}, id++);
+  newSpecies.createGroup(blueGroupAnim, {pop: this.groupPop}, id++);
+  newSpecies.createGroup(greenGroupAnim, {pop: this.groupPop}, id++);
+  // newSpecies.setupSpecies();
+  this.ecosystem.addSpecies(newSpecies);
 
-  // this.ecosystem.setupEcosystem();
+  this.ecosystem.setupEcosystem();
   
   // newSpecies.addPreySpecies(newSpecies3);
   // newSpecies3.addPredatorSpecies(newSpecies);
@@ -131,8 +131,8 @@ update () {
     this.ecosystem.update();
 
     //Update each species
-    for (let specie of this.species)
-      specie.update();
+    // for (let specie of this.species)
+    //   specie.update();
 
 
     // if (this.globalTime === 200) {
