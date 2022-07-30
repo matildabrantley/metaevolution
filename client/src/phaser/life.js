@@ -18,16 +18,14 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.tiles = tiles;
         this.tileSize = 32;
         this.seesTiles = seesTiles;
-        this.resourceTiles = [{index: 2, effect: 0.3, satiation: 0, current: 0}, 
-            {index: 3, effect: 10, satiation: 0, amount: 0}, 
-            {index: 4, effect: 0.1, satiation: 0, amount: 0}, 
-            {index: 5, effect: 0.1, satiation: 0, amount: 0}, 
-            {index: 6, effect: 0.1, satiation: 0, amount: 0}];
+        this.resourceTiles = [{index: 2, effect: 0.3, satiation: 0, amount: 0}, 
+            {index: 3, effect: 100, satiation: 0, amount: 0}, 
+            {index: 4, effect: 1, satiation: 0, amount: 0}, 
+            {index: 5, effect: 1, satiation: 0, amount: 0}, 
+            {index: 6, effect: 1, satiation: 0, amount: 0}];
         this.blockedTiles = [{index: 1, effect: -1}];
 
         this.currentResource = 0;
-        this.resources = [0, 0, 0, 0, 0]; //represented as red, green, and blue
-        this.satiation = [0, 0, 0, 0, 0];
         this.fitness = 0;
 
         // this.setBounce(10000);
@@ -137,61 +135,40 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         
         
         return tileInput;
-        
-        // try {
-            //     let tileIndex = this.tiles.getTileAtWorldXY(this.x, this.y, true).index;
-            
-            
-            
-            //     //check through resources
-            //     this.resourceTiles.forEach(resource => {
-                //         if (tileIndex == resource.index){
-                    //             //white = 0, red = 1, green = 2, blue = 3 (black is border)
-                    //             this.resources[resource.index - 2] += resource.effect; //minus 2 because black is the border color and white's tile index is 2
-                    //             resource.satiation = Math.min(100, resource.satiation + 2);
-                    //             //this.fitness += resource.effect;
-                    //             return resource.effect;
-                    //         }
-                    //         this.resourceTiles.satiation--;
-                    //     });
-                    // }
-                    // catch { //return to middle if out of bounds
-                    //     this.x = this.midWidth;
-                    //     this.y = this.midHeight;
-                    // }
-                }
+        }
                 
-                updateFitness(){
-                    //Give lifeform a bonus for diversity of resources by multiplying resources together (and dividing by 100)
-                    this.fitness += ((1+this.resourceTiles[0].amount) * (1+this.resourceTiles[0].amount)
-                                   * (1+this.resourceTiles[0].amount) * (1+this.resourceTiles[0].amount) 
-                                   * (1+this.resourceTiles[0].amount)) / 1000000;
+        updateFitness(){
+            //Give lifeform a bonus for diversity of resources by multiplying resources together (and dividing by 100)
+            this.fitness += ((1+this.resourceTiles[0].amount) + (1+this.resourceTiles[0].amount)
+                           + (1+this.resourceTiles[0].amount) + (1+this.resourceTiles[0].amount) 
+                           + (1+this.resourceTiles[0].amount)) / 100000;
                     
-                    //Calibrating evolution by testing very simple pressures like moving a certain direction 
-                    // this.fitness += this.x/50;
-                    // this.fitness -= Math.abs(this.midWidth - this.x);
-                    // this.fitness += this.y;
+            //Calibrating evolution by testing very simple pressures like moving a certain direction 
+            // this.fitness += this.x/50;
+            // this.fitness -= Math.abs(this.midWidth - this.x);
+            // this.fitness -= Math.abs(this.midHeight - this.y);
+            // this.fitness += this.y/50;
                 }
                 
-                //This individual's Nets replaced with a clone's
-                clone(cloned, mutRate) {
-                    this.mind.cloneMind(cloned.mind, mutRate);
-                }
-                //This is replaced with offspring of mating
-                mate(mom, dad, mutRate) {
-                    this.mind.mateMind(mom.mind, dad.mind, mutRate);
-                }
+        //This individual's Nets replaced with a clone's
+        clone(cloned, mutRate) {
+            this.mind.cloneMind(cloned.mind, mutRate);
+        }
+        //This is replaced with offspring of mating
+         mate(mom, dad, mutRate) {
+             this.mind.mateMind(mom.mind, dad.mind, mutRate);
+           }
                 
-                mutate() {
+         mutate() {
                     
-                }
+         }
                 
-                //return a deep copy of mind
-                getMindCopy() {
-                    return copyDeep(this.mind);
-                }
-            }
+          //return a deep copy of mind
+        getMindCopy() {
+            return copyDeep(this.mind);
+        }
+    }
             
-            //const squish = (x) => x * 0.01;
+    //const squish = (x) => x * 0.01;
             
 export default Life;

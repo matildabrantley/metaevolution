@@ -62,12 +62,12 @@ class Ecosystem {
         let allSpeciesFitness = [];
         for (let specie of this.species) {
             specie.update();
-            allSpeciesFitness.push(specie.speciesFitness);
+            // allSpeciesFitness.push(specie.speciesFitness);
         }
-        this.ecosystemFitness = average(allSpeciesFitness);
+        // this.ecosystemFitness = average(allSpeciesFitness);
 
-        if (this.timer % this.speciesSelectionFreq == 0)
-            this.speciesSelection();
+        // if (this.timer % this.speciesSelectionFreq == 0)
+        //     this.speciesSelection();
     }
 
     // cloneEcosystem(clonedEcosystem){

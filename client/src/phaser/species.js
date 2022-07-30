@@ -118,7 +118,7 @@ class Species extends Phaser.Physics.Arcade.Group {
         }
 
         if (this.currentCycleTimer >= this.groupSelectionFreq){
-            this.groupSelection();
+            //this.groupSelection();
             this.currentCycleTimer = 0;
         }
         

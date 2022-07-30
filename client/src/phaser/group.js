@@ -134,7 +134,7 @@ class Group extends Phaser.Physics.Arcade.Group {
         //Highly mutated version of fittest agent to prevent stagnation
         this.lives[this.lives.length - 26].clone(this.lives[0], 0.8);
 
-        this.lives[this.lives.length - 27].mind = copyDeep(this.bestEverMind);
+        //this.lives[this.lives.length - 27].mind = copyDeep(this.bestEverMind);
 
         this.species = this.species;
     }

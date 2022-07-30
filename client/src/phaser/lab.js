@@ -24,6 +24,7 @@ import tilesheet1 from './assets/tiles/monocolor-tiles.png';
 //import tilemap1 from './assets/tiles/tilemap-empty-data';
 //import tilemap1 from './assets/tiles/tilemap-5-color-data';
 import tilemap1 from './assets/tiles/tilemap-lab-data 7x7 bordered';
+// import tilemap1 from './assets/tiles/tilemap-lab-data 7x7 test';
 
 
 import Ecosystem from './ecosystem';
@@ -45,7 +46,7 @@ class Lab extends Phaser.Scene {
       scene: this
     };
 
-    this.groupPop = 30;
+    this.groupPop = 50;
     this.ecosystem = null;
     this.species = [];
     this.globalTime = 0;
