@@ -18,12 +18,12 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.tiles = tiles;
         this.tileSize = 32;
         this.seesTiles = seesTiles;
-        this.resourceTiles = [{index: 2, effect: 0.3, satiation: 0, amount: 0}, 
-            {index: 3, effect: 100, satiation: 0, amount: 0}, 
-            {index: 4, effect: 1, satiation: 0, amount: 0}, 
-            {index: 5, effect: 1, satiation: 0, amount: 0}, 
-            {index: 6, effect: 1, satiation: 0, amount: 0}];
-        this.blockedTiles = [{index: 1, effect: -1}];
+        this.resources = [{tileIndex: 2, effect: 0, satiation: 1, amount: 0}, 
+            {tileIndex: 3, effect: 100, satiation: 1, amount: 0}, 
+            {tileIndex: 4, effect: 1, satiation: 1, amount: 0}, 
+            {tileIndex: 5, effect: 1, satiation: 1, amount: 0}, 
+            {tileIndex: 6, effect: 1, satiation: 1, amount: 0}];
+        this.blockedTiles = [{tileIndex: 1, effect: -1}];
 
         this.currentResource = 0;
         this.fitness = 0;
@@ -93,24 +93,22 @@ class Life extends Phaser.Physics.Arcade.Sprite {
     }
     
     //returns 3-element array representing RGB used for neural input
-    lookAtTile(x, y, isCurrent=false){
+    lookAtTile(x, y, isCurrentTile=false){
         try {
             let tileIndex = this.tiles.getTileAtWorldXY(x, y, true).index;
-            //check through resources
-            this.resourceTiles.forEach(resource => {
-                if (tileIndex == resource.index){
-                    // Side effects for viewing a tile 
-                    if (isCurrent) 
-                    this.currentResource = resource.index - 2;
-                    
-                    return resource.effect;
-                }
-            });
-            this.blockedTiles.forEach(blocked => {
-                if (tileIndex == blocked.index){
-                    return -1; //typically -1 for blocked tiles
-                }
-            });
+
+            //blocked tile seen as -1 in neural net
+            if (tileIndex == 1)
+                return -1;
+                
+            if (isCurrentTile)
+                this.currentResource = tileIndex - 2;
+              
+            //blank tile
+            if (tileIndex == 2)
+                return 0;
+            //TODO: return an RGB array 
+            return 1;
             
             //return 0 if doesn't match any tiles
             return 0;
@@ -125,13 +123,15 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         
         const tileInput = this.lookAtTile(this.x, this.y, true);
         //add current resource to resources array
-        this.resourceTiles[this.currentResource].amount += this.resourceTiles[this.currentResource].effect;
         //reduce satiation (increase desire) of all resources by 2, down to 100
-        this.resourceTiles.forEach(resource => {
-            resource.satiation = Math.max(0, resource.satiation - 2);
+        this.resources.forEach(resource => {
+            resource.satiation = Math.max(1, resource.satiation - 2);
         });
+        let cr = this.resources[this.currentResource];
         //increase satiation (reduce desire) of current resource by 5, up to 100 (net change of +3)
-        this.resourceTiles[this.currentResource].satiation = Math.min(100, this.resourceTiles[this.currentResource].satiation + 5);
+        cr.satiation = Math.min(100, cr.satiation + 5);
+        
+        cr.amount += cr.effect / cr.satiation;
         
         
         return tileInput;
@@ -139,9 +139,9 @@ class Life extends Phaser.Physics.Arcade.Sprite {
                 
         updateFitness(){
             //Give lifeform a bonus for diversity of resources by multiplying resources together (and dividing by 100)
-            this.fitness += ((1+this.resourceTiles[0].amount) + (1+this.resourceTiles[0].amount)
-                           + (1+this.resourceTiles[0].amount) + (1+this.resourceTiles[0].amount) 
-                           + (1+this.resourceTiles[0].amount)) / 100000;
+            this.fitness += ((1+this.resources[0].amount) + (1+this.resources[0].amount)
+                           + (1+this.resources[0].amount) + (1+this.resources[0].amount) 
+                           + (1+this.resources[0].amount)) / 100000;
                     
             //Calibrating evolution by testing very simple pressures like moving a certain direction 
             // this.fitness += this.x/50;
