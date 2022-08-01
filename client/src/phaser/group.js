@@ -86,13 +86,14 @@ class Group extends Phaser.Physics.Arcade.Group {
 
         //vast majority of population replaced by sexual offspring of top X% (X = selectionCutoff)
         for (let i=this.lives.length-27; i > this.lives.length * this.selectionCutoff; i--) {
-            let mom = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
-            let dad = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
-            this.lives[i].mate(this.lives[mom], this.lives[dad], this.mutRate);
+            // let mom = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
+            // let dad = Math.floor(Math.random() * Math.floor(this.lives.length * this.selectionCutoff));
+            // this.lives[i].mate(this.lives[mom], this.lives[dad], this.mutRate);
+            this.lives[i].clone(this.lives[0], 0.02);
         }
 
         for (let i=1; i < this.lives.length; i++) {
-            this.lives[i].alpha = 0.06;
+            this.lives[i].alpha = 0.03;
         }   
         this.lives[0].alpha = 1;
 
@@ -173,6 +174,31 @@ class Group extends Phaser.Physics.Arcade.Group {
             this.lives[replaced].mate(this.lives[mom], otherGroup.lives[dad], 0.1);
         }
     }
+
+    //add new life to group
+    addLife() {
+        let midX = this.scene.scale.displaySize._width / 2;
+        let midY = this.scene.scale.displaySize._height / 2;
+        let newStartingX = midX + randIntBetween(-5, 5);
+        let newStartingY = midY + randIntBetween(-5, 5);
+
+        let newLife = new Life(this.scene, newStartingX, newStartingY, this.species.animConfig, this.species.seesTiles);
+        this.lives.push(newLife);
+
+        let tileVisionInputs = this.species.seesTiles ? 10 : 0;
+        newLife.mind = new Mind(3 + tileVisionInputs, 3);
+    }
+
+    setPopulation(newPop){
+        if (newPop > this.lives.length) 
+            for (let i = this.lives.length; i < newPop; i++)
+                this.addLife();
+        else if (newPop < this.lives.length) 
+            for (let i = this.lives.length; i > newPop; i--)
+                this.lives[this.lives.length - 1].destroy();
+    }
+
+
 
 }
 

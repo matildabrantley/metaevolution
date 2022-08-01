@@ -19,7 +19,7 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         this.tileSize = 32;
         this.seesTiles = seesTiles;
         this.resources = [{tileIndex: 2, effect: 0, satiation: 1, amount: 0}, 
-            {tileIndex: 3, effect: 100, satiation: 1, amount: 0}, 
+            {tileIndex: 3, effect: 1, satiation: 1, amount: 0}, 
             {tileIndex: 4, effect: 1, satiation: 1, amount: 0}, 
             {tileIndex: 5, effect: 1, satiation: 1, amount: 0}, 
             {tileIndex: 6, effect: 1, satiation: 1, amount: 0}];
@@ -125,11 +125,11 @@ class Life extends Phaser.Physics.Arcade.Sprite {
         //add current resource to resources array
         //reduce satiation (increase desire) of all resources by 2, down to 100
         this.resources.forEach(resource => {
-            resource.satiation = Math.max(1, resource.satiation - 2);
+            resource.satiation = Math.max(1, resource.satiation - 0.2);
         });
         let cr = this.resources[this.currentResource];
-        //increase satiation (reduce desire) of current resource by 5, up to 100 (net change of +3)
-        cr.satiation = Math.min(100, cr.satiation + 5);
+        //increase satiation (reduce desire) of current resource by 0.3, up to 100 (net change of +0.1)
+        cr.satiation = Math.min(100, cr.satiation + 0.3);
         
         cr.amount += cr.effect / cr.satiation;
         
@@ -139,9 +139,9 @@ class Life extends Phaser.Physics.Arcade.Sprite {
                 
         updateFitness(){
             //Give lifeform a bonus for diversity of resources by multiplying resources together (and dividing by 100)
-            this.fitness += ((1+this.resources[0].amount) + (1+this.resources[0].amount)
-                           + (1+this.resources[0].amount) + (1+this.resources[0].amount) 
-                           + (1+this.resources[0].amount)) / 100000;
+            this.fitness += ((1+this.resources[0].amount) * (1+this.resources[0].amount)
+                           * (1+this.resources[0].amount) * (1+this.resources[0].amount) 
+                           * (1+this.resources[0].amount)) / 1000;
                     
             //Calibrating evolution by testing very simple pressures like moving a certain direction 
             // this.fitness += this.x/50;

@@ -56,6 +56,9 @@ class Species extends Phaser.Physics.Arcade.Group {
                 {pop = 100, mutRate = 0.08, selectionCutoff = 0.1, maxGenLength = 450, initialGenLength = 50, deltaGenLength = 5} = {}, //genetic config
                 id=-1){
 
+        //save animation config to make new sprites later as needed 
+        this.animConfig = {sprite, spritesheet, key, firstFrame, scale};
+
         //Create Group object with general configuration
         const newGroup = new Group(this.world, this.scene, this.config, this.tiles, this,
             {pop, mutRate, selectionCutoff, maxGenLength, initialGenLength, deltaGenLength}, id);
@@ -118,7 +121,7 @@ class Species extends Phaser.Physics.Arcade.Group {
         }
 
         if (this.currentCycleTimer >= this.groupSelectionFreq){
-            //this.groupSelection();
+            this.groupSelection();
             this.currentCycleTimer = 0;
         }
         
@@ -202,6 +205,13 @@ class Species extends Phaser.Physics.Arcade.Group {
         for (let group of this.groups) 
             group.predatorGroups.push(predator);
     }
+
+    // setGroupPopulation(newPop){
+    //     for (let group of this.groups) {
+    //         if (newPop > group.lives.length) {
+
+    //     }
+    // }
 }
 
 const total = (nums) => nums.reduce((a, b) => (a + b));

@@ -46,7 +46,7 @@ class Lab extends Phaser.Scene {
       scene: this
     };
 
-    this.groupPop = 50;
+    this.groupPop = 40;
     this.ecosystem = null;
     this.species = [];
     this.globalTime = 0;
@@ -97,7 +97,7 @@ create () {
   
   //Create Ecosystem
   this.ecosystem = new Ecosystem(generalConfig);
-  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, ecosystem: this.ecosystem, tiles: this.tileLayer, seesTiles: false};
+  const speciesConfig = {world: this.physics.world, scene: this, config: this.config, ecosystem: this.ecosystem, tiles: this.tileLayer, seesTiles: true};
 
    //4 Groups per Species
    //Create empty Species
