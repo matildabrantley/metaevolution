@@ -56,6 +56,11 @@ class Ecosystem {
         this.species.push(specie);
     }
     
+    //set a new population for each species
+    setGroupPopulation(pop){
+        for (const specie of this.species) 
+            specie.setGroupPopulation(pop);
+    }
 
     update() {
         this.timer++;

@@ -133,7 +133,7 @@ class Group extends Phaser.Physics.Arcade.Group {
             this.lives[this.lives.length - 25].mate(this.lives[1], this.lives[2], 0);
         }
         //Highly mutated version of fittest agent to prevent stagnation
-        this.lives[this.lives.length - 26].clone(this.lives[0], 0.8);
+        //this.lives[this.lives.length - 26].clone(this.lives[0], 0.8);
 
         //this.lives[this.lives.length - 27].mind = copyDeep(this.bestEverMind);
 
@@ -175,24 +175,22 @@ class Group extends Phaser.Physics.Arcade.Group {
         }
     }
 
-    //add new life to group
-    addLife() {
-        let midX = this.scene.scale.displaySize._width / 2;
-        let midY = this.scene.scale.displaySize._height / 2;
-        let newStartingX = midX + randIntBetween(-5, 5);
-        let newStartingY = midY + randIntBetween(-5, 5);
-
-        let newLife = new Life(this.scene, newStartingX, newStartingY, this.species.animConfig, this.species.seesTiles);
+    //add new life to group by creating a slightly altered version of the best agent in its current location and 99% of its fitness
+    createLife() {
+        let newLife = new Life(this.scene, this.best.x, this.best.y, this.species.animConfig, this.species.seesTiles);
         this.lives.push(newLife);
 
         let tileVisionInputs = this.species.seesTiles ? 10 : 0;
         newLife.mind = new Mind(3 + tileVisionInputs, 3);
+
+        newLife.fitness = this.best.fitness * 0.99;
+        newLife.clone(this.best, 0.03);
     }
 
     setPopulation(newPop){
         if (newPop > this.lives.length) 
             for (let i = this.lives.length; i < newPop; i++)
-                this.addLife();
+                this.createLife();
         else if (newPop < this.lives.length) 
             for (let i = this.lives.length; i > newPop; i--)
                 this.lives[this.lives.length - 1].destroy();

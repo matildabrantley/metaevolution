@@ -46,7 +46,7 @@ class Lab extends Phaser.Scene {
       scene: this
     };
 
-    this.groupPop = 40;
+    this.groupPop = 50;
     this.ecosystem = null;
     this.species = [];
     this.globalTime = 0;
@@ -145,6 +145,11 @@ update () {
     this.globalTime++;
   }
 
+  //set population
+  setPopulation(pop) {
+    this.groupPop = pop;
+    this.ecosystem.setGroupPopulation(pop);
+  }
   
 }
 

@@ -206,12 +206,10 @@ class Species extends Phaser.Physics.Arcade.Group {
             group.predatorGroups.push(predator);
     }
 
-    // setGroupPopulation(newPop){
-    //     for (let group of this.groups) {
-    //         if (newPop > group.lives.length) {
-
-    //     }
-    // }
+    setGroupPopulation(newPop){
+        for (let group of this.groups)
+            group.setPopulation(newPop);
+    }
 }
 
 const total = (nums) => nums.reduce((a, b) => (a + b));
